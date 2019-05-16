@@ -1,39 +1,17 @@
 # vue-plugins
 
-## Project setup
-```
-npm install
-```
+vue plugins development environment
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## vue plugin list
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [v-selectpage](https://github.com/TerryZ/v-selectpage)
+- [v-selectmenu](https://github.com/TerryZ/v-selectpage)
+- [v-page](https://github.com/TerryZ/v-selectpage)
+- [v-region](https://github.com/TerryZ/v-selectpage)
+- [v-playback](https://github.com/TerryZ/v-selectpage)
+- [v-uploader](https://github.com/TerryZ/v-selectpage)
+- [v-dropdown](https://github.com/TerryZ/v-selectpage)
+- [v-ztree](https://github.com/TerryZ/v-selectpage)
+- [v-suggest](https://github.com/TerryZ/v-selectpage)
+- [v-gallery](https://github.com/TerryZ/v-selectpage)
+- [v-tablegrid](https://github.com/TerryZ/v-selectpage)
