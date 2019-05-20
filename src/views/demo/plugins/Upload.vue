@@ -58,10 +58,9 @@
                 this.list.splice(idx, 1);
             },
             beforeUpload(id, name){
-                let that = this;
                 return new Promise((resolve, reject) => {
-                    if(that.list.length >= 2){
-                        that.$vDialog.alert('只允许上传 2 张图片！',()=>{
+                    if(this.list.length >= 2){
+						this.$dlg.alert('只允许上传 2 张图片！',()=>{
                             reject(false);
                         });
                     }else resolve(true);
