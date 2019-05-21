@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { routerGuards } from '@/utils/auth/router';
 
 Vue.use(Router);
 
@@ -16,6 +15,5 @@ const root = [
 const routes = [...root, ...demo];
 const routerConfig = new Router({routes});
 
-routerGuards(routerConfig);
 
 export default routerConfig;
