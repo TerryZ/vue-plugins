@@ -1,4 +1,4 @@
-import { shallowMount, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import dialogs from '@/components/v-dialogs/Container';
 import demo from '@/views/demo/Profile';
 
