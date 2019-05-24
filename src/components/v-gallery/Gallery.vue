@@ -40,6 +40,9 @@
 <script>
     import 'blueimp-gallery/css/blueimp-gallery.min.css';
     import gallery from 'blueimp-gallery';
+    import './gallery.scss';
+
+
     export default {
         name: "v-gallery",
         props: {
@@ -181,92 +184,3 @@
         }
     }
 </script>
-
-<style lang="scss" >
-    .v-gallery {
-        .blueimp-gallery-controls {
-            h3.title, a.prev, a.next, a.close { color: white !important; }
-        }
-        .lightBoxGallery{
-            display: inline-block;
-            a { text-decoration: none; }
-        }
-        .light-carousel {
-            background-color: white;
-            box-shadow: none;
-            max-width: 1000px;
-            .next, .prev{
-                border-color: white !important;
-                background-color: transparent;
-                /*text-shadow:1px 1px 2px black;*/
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-            }
-            .title {
-                bottom: 0;
-                top: unset;
-                margin: 0;
-                width: 100%;
-                text-align: center;
-                padding-right: 35px;
-                text-shadow:1px 1px 4px black;
-                white-space: nowrap;
-            }
-        }
-        .light-gallery {
-            display: block;
-            position: relative;
-            a {
-                border: 1px solid #DDDDDD;
-                padding: 5px;
-                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-                margin: 0 10px 10px 0;
-                position: relative;
-                display:inline-block;
-                background-color: white;
-                vertical-align: middle;
-                transition: all .3s;
-                -webkit-transition: all .3s;
-                border-radius: 2px;
-                text-decoration: none;
-
-                .image-container {
-                    display: table-cell;
-                    vertical-align: middle;
-                    height: 120px;
-                    background-color: black;
-                    img{
-                        width: 160px;
-                        display: block;
-                        vertical-align: middle;
-                    }
-                }
-                .image-caption {
-                    color: #999999;
-                    text-align: center;
-                    white-space: nowrap;
-                    padding-top: 5px;
-                }
-                &:hover {
-                    border: 1px solid #AAAAAA;
-                    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-                    .image-caption {
-                        color: #232323;
-                    }
-                }
-            }
-            &.dark-theme {
-                a {
-                    border: 1px solid #232323;
-                    padding: 3px;
-                    background-color: #232323;
-                    &:hover {
-                        box-shadow: 0 2px 20px rgba(0, 0, 0, 1);
-                        .image-caption {
-                            color: white;
-                        }
-                    }
-                }
-            }
-        }
-    }
-</style>
