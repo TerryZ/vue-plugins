@@ -44,7 +44,7 @@
     import './page.scss';
     
     const FIRST = 1;
-    
+
     export default {
         name: "v-page",
         props: {
