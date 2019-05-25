@@ -11,9 +11,7 @@
                 </a>
             </li>
             <!-- page info -->
-            <li class="v-pagination__info" v-if="info">
-                <a v-text="pageInfo"></a>
-            </li>
+            <li class="v-pagination__info" v-if="info"><a v-text="pageInfo"></a></li>
 
             <li :class="{disabled:currentPage === 1||disabled} " v-if="first">
                 <a href="javascript:void(0);" @click="switchPage('first')" v-text="i18n.first"></a>
@@ -99,13 +97,15 @@
         data() {
             return {
                 pageSize: this.pageSizeMenu === false ? 10 : this.pageSizeMenu[0],
-                totalPage: 0,
                 currentPage: 0,
                 pageNumberSize: 5,
                 i18n: languages[this.language] || languages['cn']
             };
         },
         computed: {
+            totalPage(){
+                return Math.ceil(this.totalRow / this.pageSize);
+            },
             pageNumbers() {
                 let start = 1, end, nums = [], half = Math.floor(this.pageNumberSize / 2);
                 if (this.totalPage < this.pageNumberSize) end = this.totalPage;
@@ -139,9 +139,6 @@
         watch: {
             value(val){
                 this.goPage(val, false);
-            },
-            totalRow() {
-                this.calcTotalPage();
             }
         },
         methods: {
@@ -156,7 +153,6 @@
                 // update v-model value
                 if(respond) this.$emit('input', this.currentPage);
                 this.change();
-                this.calcTotalPage();
             },
             reload(){
                 this.change();
@@ -166,9 +162,6 @@
                     pageNumber: this.currentPage,
                     pageSize: Number(this.pageSize)
                 });
-            },
-            calcTotalPage() {
-                this.totalPage = Math.ceil(this.totalRow / this.pageSize);
             },
             position(target){
                 if (typeof target === 'string') {
