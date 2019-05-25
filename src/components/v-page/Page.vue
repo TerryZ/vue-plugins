@@ -3,7 +3,8 @@
         <ul>
             <!-- page length list -->
             <li class="v-pagination__list" v-if="pageSizeMenu">
-                <a>{{i18n.pageLength}}
+                <a>
+                    <span v-text="i18n.pageLength"></span>
                     <select @change="switchLength" v-model="pageSize" :disabled="disabled">
                         <option :key="index" v-for="(len,index) in pageSizeMenu">{{len}}</option>
                     </select>
@@ -40,9 +41,9 @@
 </template>
 
 <script>
-    import languages from './language';
     import './page.scss';
-    
+    import languages from './language';
+
     const FIRST = 1;
 
     export default {
