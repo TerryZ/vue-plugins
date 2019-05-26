@@ -13,25 +13,25 @@
             <!-- page info -->
             <li class="v-pagination__info" v-if="info"><a v-text="pageInfo"></a></li>
 
-            <li :class="{disabled:currentPage === 1||disabled} " v-if="first">
+            <li :class="{disabled:currentPage === 1} " v-if="first">
                 <a href="javascript:void(0);" @click="switchPage('first')" v-text="i18n.first"></a>
             </li>
-            <li :class="{disabled:currentPage === 1||disabled}">
+            <li :class="{disabled:currentPage === 1}">
                 <a href="javascript:void(0);" @click="switchPage('previous')" v-text="i18n.previous"></a>
             </li>
 
             <!-- page numbers -->
             <template v-if="pageNumber">
-            <li :class="{active:(num === currentPage),disabled:disabled&&num !== currentPage}"
+            <li :class="{active:num === currentPage}"
                 v-for="(num,index) in pageNumbers" :key="index">
                 <a href="javascript:void(0);" @click="switchPage(num)" v-text="num"></a>
             </li>
             </template>
 
-            <li :class="{disabled:currentPage === totalPage||disabled}">
+            <li :class="{disabled:currentPage === totalPage}">
                 <a href="javascript:void(0);" @click="switchPage('next')" v-text="i18n.next"></a>
             </li>
-            <li :class="{disabled:currentPage === totalPage||disabled}" v-if="last">
+            <li :class="{disabled:currentPage === totalPage}" v-if="last">
                 <a href="javascript:void(0);" @click="switchPage('last')" v-text="i18n.last"></a>
             </li>
         </ul>
