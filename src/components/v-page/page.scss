@@ -41,7 +41,6 @@ div.v-pagination {
                 background-color: white;
                 font-size: 14px;
                 display: inline-block;
-                float: left;
                 text-decoration: none;
                 color: #333;
                 @include vendor-prefix('transition', all .5s cubic-bezier(.175, .885, .32, 1));
