@@ -1,17 +1,25 @@
 $borderRadius: 2px;
+@mixin disabled {
+    color: #999;cursor: default;
+    &:hover { color: #999;background-color: white;box-shadow: none; }
+}
+
 div.v-pagination {
     margin: 0;display: block;
 
     &.v-pagination--right { text-align: right; }
     &.v-pagination--center { text-align: center; }
+    &.v-pagination--disabled {
+        a { @include disabled; }
+    }
 
     & > ul {
         display: inline-block;
         list-style: none;
         margin: 0;
         padding: 0;
-        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        //-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        //-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
         & > li {
@@ -41,12 +49,8 @@ div.v-pagination {
                 }
             }
 
-            &.disabled > a,
             &.v-pagination__list > a,
-            &.v-pagination__info > a {
-                color: #999;cursor: default;
-                &:hover { color: #999;background-color: white;box-shadow: none; }
-            }
+            &.v-pagination__info > a { @include disabled; }
 
             &.active > a,
             &.active > span {

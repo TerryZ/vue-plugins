@@ -132,7 +132,8 @@
                 return {
                     'v-pagination--no-border': !this.border,
                     'v-pagination--right': this.align === 'right',
-                    'v-pagination--center': this.align === 'center'
+                    'v-pagination--center': this.align === 'center',
+                    'v-pagination--disabled': this.disabled
                 };
             }
         },
