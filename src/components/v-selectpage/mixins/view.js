@@ -6,7 +6,7 @@ export default {
         value: Number
     },
     methods: {
-        click(row){
+		rowClick(row){
             this.$emit('select', row);
         },
 		rowClass(row, index){

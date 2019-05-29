@@ -7,7 +7,7 @@
         </thead>
         <tbody @mouseleave="highlight(-1)">
         <tr :key="index" v-for="(row,index) in list" :class="rowClass(row, index)"
-            @click.stop="click(row)" @mouseenter="highlight(!picked.includes(row)?index:-1)" >
+            @click.stop="rowClick(row)" @mouseenter="highlight(!picked.includes(row)?index:-1)" >
             <td :key="idx" v-for="(col,idx) in tbColumns" v-html="row[col.data]"></td>
         </tr>
         </tbody>
