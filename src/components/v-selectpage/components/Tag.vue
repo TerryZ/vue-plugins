@@ -12,6 +12,7 @@
         	if(this.picked.length){
         		this.picked.forEach((val, index) => {
         			const tag = [];
+        			// tag content
         			tag.push(h('span',{
 						domProps:{
 							innerHTML: this.renderCell(val)
@@ -30,7 +31,8 @@
 					tags.push(h('span', {class: 'sp-selected-tag',key: index}, tag));
                 });
             }else{
-				tags.push(h('span', {class: 'sp-placeholder'}, this.placeholder));
+				// display placeholder message when there is no tag
+        		tags.push(h('span', {class: 'sp-placeholder'}, this.placeholder));
             }
         	return h('div', {class: 'sp-base sp-inputs'}, tags);
         },
