@@ -79,6 +79,9 @@ export default {
             type: Number,
             default: 0
         },
+		/**
+		 * pagination bar
+		 */
         pagination: {
             type: Boolean,
             default: true
