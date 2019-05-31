@@ -1,14 +1,16 @@
-<template>
-    <!-- plain text only -->
-    <span v-text="selectedText"></span>
-</template>
-
 <script>
     import mixins from '../mixins';
-    export default {
+
+	/**
+     * plain text only
+	 */
+	export default {
         name: "TextRegion",
         mixins: [mixins],
         inheritAttrs: false,
+        render(h){
+        	return h('span', this.selectedText);
+        },
         methods: {
             provinceChange(newVal, oldVal){
                 this.baseProvinceChange(newVal, oldVal);
