@@ -173,7 +173,7 @@
         methods: {
             goPage(pNum = FIRST, respond = true) {
                 if(typeof pNum !== 'number') return;
-                let num = pNum;
+                let num = pNum < FIRST ? FIRST : pNum;
                 if(pNum > this.totalPage && this.totalPage > 0) num = this.totalPage;
 
                 if(num === this.currentPage) return;
