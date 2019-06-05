@@ -13,7 +13,7 @@
             </v-page>
 
             <h5 class="my-3">完整分页栏</h5>
-            <v-page align="left" :total-row="100" v-model="current" ref="page"></v-page>
+            <v-page align="left" :total-row="101" v-model="current" ref="page"></v-page>
 
             <div class="row mt-2">
                 <div class="col-md-1">

@@ -1,43 +1,3 @@
-<template>
-    <div class="v-pagination" :class="classes">
-        <ul>
-            <!-- page length list -->
-            <li class="v-pagination__list" v-if="pageSizeMenu">
-                <a>
-                    <span v-text="i18n.pageLength"></span>
-                    <select @change="switchLength" v-model="pageSize" :disabled="disabled">
-                        <option :key="index" v-for="(len,index) in pageSizeMenu">{{len}}</option>
-                    </select>
-                </a>
-            </li>
-            <!-- page info -->
-            <li class="v-pagination__info" v-if="info"><a v-text="pageInfo"></a></li>
-
-            <li :class="{disabled:currentPage === 1} " v-if="first">
-                <a href="javascript:void(0);" @click="switchPage('first')" v-text="i18n.first"></a>
-            </li>
-            <li :class="{disabled:currentPage === 1}">
-                <a href="javascript:void(0);" @click="switchPage('previous')" v-text="i18n.previous"></a>
-            </li>
-
-            <!-- page numbers -->
-            <template v-if="pageNumber">
-            <li :class="{active:num === currentPage}"
-                v-for="(num,index) in pageNumbers" :key="index">
-                <a href="javascript:void(0);" @click="switchPage(num)" v-text="num"></a>
-            </li>
-            </template>
-
-            <li :class="{disabled:currentPage === totalPage}">
-                <a href="javascript:void(0);" @click="switchPage('next')" v-text="i18n.next"></a>
-            </li>
-            <li :class="{disabled:currentPage === totalPage}" v-if="last">
-                <a href="javascript:void(0);" @click="switchPage('last')" v-text="i18n.last"></a>
-            </li>
-        </ul>
-    </div>
-</template>
-
 <script>
     import './page.scss';
     import languages from './language';
@@ -107,7 +67,7 @@
                 return Math.ceil(this.totalRow / this.pageSize);
             },
             pageNumbers() {
-                let start = 1, end, nums = [], half = Math.floor(this.pageNumberSize / 2);
+                let start = 1, end, half = Math.floor(this.pageNumberSize / 2);
                 if (this.totalPage < this.pageNumberSize) end = this.totalPage;
                 else if (this.currentPage <= half) end = this.pageNumberSize;
                 else if (this.currentPage >= (this.totalPage - half)) {
@@ -118,10 +78,7 @@
                     end = start + this.pageNumberSize - 1;
                 }
 
-                for (let i = start; i <= end; i++) {
-                    nums.push(i);
-                }
-                return nums;
+                return Array.apply(null, {length:end-start+1}).map((val,index)=>start+index);
             },
             pageInfo() {
                 return this.i18n.pageInfo.replace('#pageNumber#', this.currentPage)
@@ -135,18 +92,88 @@
                     'v-pagination--center': this.align === 'center',
                     'v-pagination--disabled': this.disabled
                 };
+            },
+            isFirst(){
+                return this.currentPage === FIRST;
+            },
+            isLast(){
+                return this.currentPage === this.totalPage;
             }
         },
         watch: {
             value(val){
-                this.goPage(val, false);
+                if(typeof val === 'number' && val > 0) this.goPage(val, false);
             }
         },
+        render(h){
+            const items = [];
+            //page length list
+            if(Array.isArray(this.pageSizeMenu) && this.pageSizeMenu.length){
+                items.push(h('li',{class:'v-pagination__list'},[h('a',[
+                    h('span',this.i18n.pageLength),
+                    h('select',{
+                        attrs:{disabled: this.disabled},
+                        on:{
+                            change: e => {
+                                if(e.srcElement && e.srcElement.value){
+                                    this.pageSize = Number(e.srcElement.value);
+                                }
+                                this.goPage();
+                            }
+                        }
+                    },this.pageSizeMenu.map(val=>{
+                        return h('option',{attrs:{value:val}},val);
+                    }))
+                ])]));
+            }
+            //page info
+            if(this.info){
+                items.push(h('li',{class:'v-pagination__info'},[h('a', this.pageInfo)]));
+            }
+            /**
+             * page number generator
+             * @param classes
+             * @param num
+             * @param text
+             * @return VNode
+             */
+            const genItem = (classes, num, text) => {
+                return h('li',{class:classes},[
+                    h('a',{
+                        attrs:{href:'javascript:void(0);'},
+                        on:{click:()=>this.switchPage(num)}
+                    }, text)
+                ]);
+            };
+            //first
+            if(this.first){
+                items.push(genItem({disabled:this.isFirst}, 'first', this.i18n.first));
+            }
+            //previous
+            items.push(genItem({disabled:this.isFirst}, 'previous', this.i18n.previous));
+            //page numbers
+            if(this.pageNumber){
+                this.pageNumbers.forEach(val => {
+                    items.push(genItem({active:val === this.currentPage}, val, val));
+                });
+            }
+            //next
+            items.push(genItem({disabled:this.isLast}, 'next', this.i18n.next));
+            //last
+            if(this.last){
+                items.push(genItem({disabled:this.isLast}, 'last', this.i18n.last));
+            }
+            return h('div',{
+                class:{
+                    'v-pagination': true,
+                    ...this.classes
+                }
+            },[h('ul', items)]);
+        },
         methods: {
-            goPage(pNum, respond = true) {
+            goPage(pNum = FIRST, respond = true) {
                 if(typeof pNum !== 'number') return;
-                let num = FIRST;
-                if(pNum > num) num = pNum;
+                let num = pNum;
                 if(pNum > this.totalPage && this.totalPage > 0) num = this.totalPage;
 
                 if(num === this.currentPage) return;
@@ -177,9 +204,6 @@
             switchPage(target) {
                 if (this.disabled) return;
                 this.goPage(this.position(target));
-            },
-            switchLength() {
-                this.goPage(FIRST);
             }
         },
         mounted() {
