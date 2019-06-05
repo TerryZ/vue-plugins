@@ -1,0 +1,87 @@
+.slide-bar-container {
+    position: fixed;
+    top: 0;right: 0;bottom: 0;left: 0;
+    z-index: 200;
+    .slide-bar__dialog {
+        display: flex;
+        flex-direction: row-reverse;
+        height: 100%;
+        .slide-bar__content {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            min-width: 400px;
+            -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            -moz-box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            .slide-bar__title{
+                display: flex;
+                .slide-bar__title-content{
+                    flex: 1;
+                    font-size: 18px;
+                    padding: 10px;
+                }
+                .slide-bar__title-close{
+                    display: flex;
+                    align-items: center;
+                    padding: 0 10px;
+                    cursor: pointer;
+                    color: #aaa;
+                    &:hover{ color: #333; }
+                    i{ font-size: 20px;font-weight: bold; }
+                }
+            }
+            .slide-bar__body {
+                padding: 10px;
+                display: block;
+                flex: 1;
+                overflow: auto;
+            }
+
+            &.slide-bar--dark {
+                background-color: #454C4D;
+                .slide-bar__title{
+                    .slide-bar__title-content{ color: white; }
+                    .slide-bar__title-close{
+                        color: #aaa;
+                        &:hover{ color: white; }
+                    }
+                }
+            }
+        }
+    }
+}
+
+div.slide-bar__overlay {
+    position: fixed;
+    top: 0;right: 0;bottom: 0;left: 0;
+    z-index: 190;
+    opacity: 0.5;
+    background-color: black;
+}
+
+/* overlay fade in and out */
+.slide-bar--fade-enter-active,
+.slide-bar--fade-leave-active {
+    will-change: opacity;
+    -webkit-transition: opacity 200ms;
+    transition: opacity 200ms;
+}
+.slide-bar--fade-enter,
+.slide-bar--fade-leave-to {
+    will-change: opacity;
+    opacity: 0 !important;
+}
+
+/* slide bar fade in right */
+.slide-bar--fade-right-enter-active,
+.slide-bar--fade-right-leave-active {
+    transition: transform .2s ease;
+    will-change: transform;
+}
+.slide-bar--fade-right-enter,
+.slide-bar--fade-right-leave-to {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    will-change: transform;
+}
