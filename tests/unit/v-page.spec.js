@@ -33,5 +33,13 @@ describe('v-page', function() {
 		it('the page numbers should be [3,4,5,6,7]', ()=>{
 			expect(wapper.vm.pageNumbers.sort().join('')).to.equal([3,4,5,6,7].sort().join(''));
 		});
+		it('the current page should be 1 when change page size in list', ()=>{
+			//设置下拉列表选择第三个项目（每页50条）
+			wapper.find('select').findAll('option').at(2).setSelected();
+			expect(wapper.vm.currentPage).to.equal(1);
+		});
+		it('after page size change, the total pages should be 2', ()=>{
+			expect(wapper.vm.totalPage).to.equal(2);
+		})
 	});
 });
