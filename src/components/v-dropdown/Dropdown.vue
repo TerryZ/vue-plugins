@@ -1,16 +1,30 @@
-<template>
-    <transition :name="animate">
-    <div :class="[dropdownClass,{'v-dropdown-embed': embed}]" :style="[styleSheet]" v-show="show">
-        <slot></slot>
-    </div>
-    </transition>
-</template>
+<!--<template>-->
+    <!--<transition :name="animate">-->
+    <!--<div :class="[dropdownClass,{'v-dropdown-embed': embed}]" :style="[styleSheet]" v-show="show">-->
+        <!--<slot></slot>-->
+    <!--</div>-->
+    <!--</transition>-->
+<!--</template>-->
 
 <script>
     import './dropdown.scss';
 
     export default {
         name: "v-dropdown",
+        render(h){
+            return h('transition',{
+                props: {
+                    name: this.animate
+                }
+            },[h('div',{
+                class: {
+                    [this.dropdownClass]: true,
+                    'v-dropdown-embed': this.embed
+                },
+                style: this.styleSheet,
+                directives: [{name: 'show', value: this.show}]
+            },this.$slots.default)]);
+        },
         props:{
             align: {
                 type: String,
