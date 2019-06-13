@@ -1,7 +1,7 @@
 <template>
     <div class="panel panel-default">
         <div class="panel-body">
-            <h3>v-suggest <button type="button" class="btn btn-inverse btn-xs" @click="$router.push({path: '/demo'});">Back to List</button></h3>
+            <h3>v-suggest <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button></h3>
 
             <h5>输入自动完成 ( {{input}} )</h5>
             <p>

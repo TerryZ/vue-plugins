@@ -27,6 +27,7 @@
 <script>
     import './suggest.scss';
     import drop from 'v-dropdown';
+    // import drop from '../v-dropdown/Dropdown';
     export default {
         name: "v-suggest",
         components: { 'v-drop-down': drop },

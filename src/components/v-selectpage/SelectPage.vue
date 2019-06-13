@@ -59,7 +59,8 @@
     import data from './mixins/data';
     import methods from './mixins/methods';
 
-    import dropdown from 'v-dropdown';
+    //import dropdown from 'v-dropdown';
+    import dropdown from '../v-dropdown/Dropdown';
     import tag from './components/Tag';
     import select from './components/Select';
     import page from './components/Pagination';
