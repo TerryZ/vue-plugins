@@ -12,7 +12,7 @@
                     @page-change="pagePhotoChange">
             </v-page>
 
-            <h5 class="my-3">完整分页栏</h5>
+            <h5 class="mt-5 mb-3">完整分页栏</h5>
             <v-page align="left" :total-row="101" v-model="current" ref="page"></v-page>
 
             <div class="row mt-2">
@@ -23,13 +23,13 @@
                 <button class="btn btn-primary" type="button" @click="current=current+1">page + 1</button>
             </div>
 
-            <h5 class="my-3">无页数选择列表</h5>
+            <h5 class="mt-5 mb-3">无页数选择列表</h5>
             <v-page :total-row="100" :page-size-menu="false" align="left"></v-page>
 
-            <h5 class="my-3">无分页信息栏</h5>
+            <h5 class="mt-5 mb-3">无分页信息栏</h5>
             <v-page :page-size-menu="false" :info="false" align="left" :total-row="100"></v-page>
 
-            <h5 class="my-3">无首页、尾页</h5>
+            <h5 class="mt-5 mb-3">无首页、尾页</h5>
             <v-page :page-size-menu="false"
                     :info="false"
                     :total-row="100"
@@ -37,7 +37,7 @@
                     :last="false"
                     align="left"></v-page>
 
-            <h5 class="my-3">无分页码</h5>
+            <h5 class="mt-5 mb-3">无分页码</h5>
             <v-page :page-size-menu="false"
                     :info="false"
                     :total-row="100"
@@ -46,14 +46,14 @@
                     :page-number="false"
                     align="left"></v-page>
 
-            <h5 class="my-3">禁用</h5>
+            <h5 class="mt-5 mb-3">禁用</h5>
             <v-page :total-row="100"  align="left" :disabled="disabled" ></v-page>
             <div class="btn-group mt-2" role="group" aria-label="...">
                 <button type="button" class="btn btn-outline-dark" :disabled="!disabled" @click="disabled=false">Enabled</button>
                 <button type="button" class="btn btn-danger" :disabled="disabled" @click="disabled=true">Disabled</button>
             </div>
 
-            <h5 class="my-3">无边框</h5>
+            <h5 class="mt-5 mb-3">无边框</h5>
             <v-page :total-row="100"  align="left" :border="false" ></v-page>
         </div>
     </div>

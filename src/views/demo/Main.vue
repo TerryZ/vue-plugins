@@ -12,6 +12,7 @@
 
         <h3 class="page-header">功能组件</h3>
         <p>
+            <router-link to="/demo/dropdown" class="btn btn-dark">Dropdown</router-link>
             <router-link to="/demo/page" class="btn btn-dark">Pagination</router-link>
             <router-link to="/demo/list" class="btn btn-dark">Search and Grid</router-link>
             <router-link to="/demo/gallery" class="btn btn-outline-secondary">Image gallery</router-link>

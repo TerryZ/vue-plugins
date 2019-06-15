@@ -4,6 +4,7 @@ export default [
 	{path:'/demo/form', component: resolve=>require(['@/views/demo/Form'], resolve)},
 	{path:'/demo/datetime', component: resolve=>require(['@/views/demo/plugins/DateTime'], resolve)},
 	{path:'/demo/dialog', component: resolve=>require(['@/views/demo/plugins/Dialog'], resolve)},
+    {path:'/demo/dropdown', component: resolve => require(['@/views/demo/plugins/Dropdown'], resolve)},
 	{path:'/demo/selectMenu', component: resolve => require(['@/views/demo/plugins/SelectMenu'], resolve)},
 	{path:'/demo/selectPage', component: resolve => require(['@/views/demo/plugins/SelectPage'], resolve)},
 	{path:'/demo/tree', component: resolve => require(['@/views/demo/plugins/Tree'], resolve)},
