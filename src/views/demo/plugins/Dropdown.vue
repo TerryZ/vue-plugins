@@ -7,7 +7,9 @@
 
             <h5 class="mt-5 mb-3">默认</h5>
             <p>
-                <button type="button"></button>
+                <dropdown>
+                    <button type="button"></button>
+                </dropdown>
             </p>
         </div>
     </div>

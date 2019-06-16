@@ -2,21 +2,11 @@ import './dropdown.scss';
 
 export default {
     name: "v-dropdown",
-    render(h){
-        return h('transition',{
-            props: {
-                name: this.animate
-            }
-        },[h('div',{
-            class: {
-                [this.dropdownClass]: true,
-                'v-dropdown-embed': this.embed
-            },
-            style: this.styleSheet,
-            directives: [{name: 'show', value: this.show}]
-        },this.$slots.default)]);
-    },
     props:{
+        value:{
+            type: Boolean,
+            default: false
+        },
         align: {
             type: String,
             default: 'left'
@@ -51,7 +41,7 @@ export default {
     },
     data(){
         return {
-            show: false,
+            show: this.value,
             styleSheet: { top: '',left: '' },
             dropdownClass: 'v-dropdown-container',
             dropUp: false,
@@ -65,6 +55,21 @@ export default {
             if(typeof this.animated === 'string') cls = this.animated;
             return cls;
         }
+    },
+    render(h){
+        console.log(this.$slots)
+        return h('transition',{
+            props: {
+                name: this.animate
+            }
+        },[h('div',{
+            class: {
+                [this.dropdownClass]: true,
+                'v-dropdown-embed': this.embed
+            },
+            style: this.styleSheet,
+            directives: [{name: 'show', value: this.show}]
+        },this.$slots.default)]);
     },
     methods: {
         visible(caller){
