@@ -1,5 +1,8 @@
 div.v-dropdown-caller{
     display: inline-block;
+    &.v-dropdown-caller--full-width{
+        display: block;
+    }
 }
 div.v-dropdown-container{
     border: 1px solid #D6D7D7;

@@ -36,8 +36,12 @@ export default {
          * min-width: 80
          */
         width: Number,
-        x: Number,
-        y: Number
+		fullWidth: {
+        	type: Boolean,
+			default: false
+		}
+        //x: Number,
+        //y: Number
     },
     data(){
         return {
@@ -45,7 +49,9 @@ export default {
             styleSheet: { top: '',left: '' },
             dropdownClass: 'v-dropdown-container',
             dropUp: false,
-            lastCaller: null
+            lastCaller: null,
+			x: null,
+			y: null
         };
     },
     computed: {
@@ -71,7 +77,13 @@ export default {
 			},
 			style: this.styleSheet,
 			directives: [{name: 'show', value: this.show}],
-			ref: 'dropdown'
+			ref: 'dropdown',
+			on:{
+				mousedown: e=>{
+					//do not close dropdown container layer when do some operations in that
+        			e.stopPropagation();
+				}
+			}
 		},this.$slots.default));
 
         return h('transition',{
@@ -79,11 +91,26 @@ export default {
                 name: this.animate
             }
         },[h('div',{
-        	class: 'v-dropdown-caller',
+        	class: {
+        		'v-dropdown-caller': true,
+				'v-dropdown-caller--full-width': this.fullWidth
+			},
 			on: {
         		click: e=>{
+        			if(this.embed || this.rightClick) return;
         			e.stopPropagation();
         			this.visible();
+				},
+				//mouse right button click
+				contextmenu: e=>{
+					if(this.embed || !this.rightClick) return;
+        			e.stopPropagation();
+					e.preventDefault();
+
+					const info = this.scrollInfo();
+					this.x = e.pageX || (e.clientX + info.x);
+					this.y = e.pageY || (e.clientY + info.y);
+					this.visible();
 				}
 			}
 		},children)]);
@@ -169,13 +196,25 @@ export default {
         },
         whole(e){
             if(this.show){
-                let callerClick = false, idx = e.path.findIndex(val=>val.className &&
-                    typeof val.className === 'string' &&
-                    val.className.includes(this.dropdownClass));
-                if(!this.reOpen && e.path.find(val=>val === this.lastCaller) && !this.rightClick) callerClick = true;
-                if(idx === -1 && !callerClick) this.visible();
+				//is caller click
+				const inCaller = e.path.findIndex(val=>val === this.$el);
+				/**
+				 * close the dropdown when clicking outside the dropdown container
+				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
+				 */
+				if(inCaller === -1 || (inCaller !== -1 && (this.reOpen || this.rightClick ))){
+					this.visible();
+				}
             }
         },
+		scrollInfo(){
+			const supportPageOffset = window.pageXOffset !== undefined;
+			const isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+
+			const x = supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
+			const y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+			return { x: x, y: y };
+		},
         MouseEventPolyfill(){
             if (!('path' in Event.prototype)) {
                 Object.defineProperty(Event.prototype, 'path', {
