@@ -57,46 +57,61 @@ export default {
         }
     },
     render(h){
-        console.log(this.$slots)
+        //console.log(this.$slots)
+		const children = [];
+        if(this.$slots.caller && Object.keys(this.$slots.caller).length && !this.embed){
+        	children.push(this.$slots.caller);
+		}
+        children.push(h('div',{
+        	class: {
+				[this.dropdownClass]: true,
+				'v-dropdown-embed': this.embed
+			},
+			style: this.styleSheet,
+			directives: [{name: 'show', value: this.show}],
+			ref: 'dropdown'
+		},this.$slots.default));
+
         return h('transition',{
             props: {
                 name: this.animate
             }
         },[h('div',{
-            class: {
-                [this.dropdownClass]: true,
-                'v-dropdown-embed': this.embed
-            },
-            style: this.styleSheet,
-            directives: [{name: 'show', value: this.show}]
-        },this.$slots.default)]);
+        	class: 'v-dropdown-caller',
+			on: {
+        		click: e=>{
+        			e.stopPropagation();
+        			this.visible();
+				}
+			}
+		},children)]);
     },
     methods: {
         visible(caller){
             this.$nextTick(()=>{
                 //calculation show direction(up or down) and top axis
-                if(!this.show && !this.embed && caller) this.adjust(caller);
+                if(!this.show && !this.embed && this.$slots.caller) this.adjust();
 
                 this.show = !this.show;
 
-                this.lastCaller = caller;
+                //this.lastCaller = caller;
                 this.$emit('show-change', this.show);
             });
         },
         adjust(caller){
-            const pos = caller.getBoundingClientRect();
+            const pos = this.$el.getBoundingClientRect();
             let menu = null;
 
-            if(this.show) menu = this.$el.getBoundingClientRect();
+            if(this.show) menu = this.$refs.dropdown.getBoundingClientRect();
             else{
                 //change hide drop down container way from 'display:none' to 'visibility:hidden',
                 //be used for get width and height
-                this.$el.style.visibility = 'hidden';
-                this.$el.style.display = 'inline-block';
-                menu = this.$el.getBoundingClientRect();
+				this.$refs.dropdown.style.visibility = 'hidden';
+				this.$refs.dropdown.style.display = 'inline-block';
+                menu = this.$refs.dropdown.getBoundingClientRect();
                 //restore style
-                this.$el.style.visibility = 'visible';
-                this.$el.style.display = 'none';
+				this.$refs.dropdown.style.visibility = 'visible';
+				this.$refs.dropdown.style.display = 'none';
             }
 
             this.adjustTop(pos, menu);
@@ -182,10 +197,11 @@ export default {
     },
     mounted(){
         if(this.width) this.styleSheet.width = this.width + 'px';
+        console.log(this.$el)
 
         if(this.embed) this.visible();
         else{
-            document.body.appendChild(this.$el);
+            document.body.appendChild(this.$refs.dropdown);
 
             this.$on('show', this.visible);
             this.$on('adjust', this.adjust);

@@ -8,7 +8,12 @@
             <h5 class="mt-5 mb-3">默认</h5>
             <p>
                 <dropdown>
-                    <button type="button"></button>
+                    <template #caller>
+                        <button type="button">abc</button>
+                    </template>
+                    <div>123</div>
+                    <div>456</div>
+                    <div>789</div>
                 </dropdown>
             </p>
         </div>
