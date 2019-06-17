@@ -59,9 +59,11 @@ export default {
     render(h){
         //console.log(this.$slots)
 		const children = [];
-        if(this.$slots.caller && Object.keys(this.$slots.caller).length && !this.embed){
+        //the dropdown layer caller
+		if(this.$slots.caller && Object.keys(this.$slots.caller).length && !this.embed){
         	children.push(this.$slots.caller);
 		}
+		//the dropdown layer container
         children.push(h('div',{
         	class: {
 				[this.dropdownClass]: true,
