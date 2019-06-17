@@ -9,7 +9,7 @@
             <p>
                 <dropdown>
                     <template #caller>
-                        <button type="button">abc</button>
+                        <button type="button" class="btn btn-secondary">abc</button>
                     </template>
                     <div>123</div>
                     <div>456</div>

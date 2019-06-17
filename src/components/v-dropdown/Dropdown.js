@@ -87,7 +87,7 @@ export default {
 		},children)]);
     },
     methods: {
-        visible(caller){
+        visible(){
             this.$nextTick(()=>{
                 //calculation show direction(up or down) and top axis
                 if(!this.show && !this.embed && this.$slots.caller) this.adjust();
@@ -98,7 +98,7 @@ export default {
                 this.$emit('show-change', this.show);
             });
         },
-        adjust(caller){
+        adjust(){
             const pos = this.$el.getBoundingClientRect();
             let menu = null;
 
@@ -197,7 +197,6 @@ export default {
     },
     mounted(){
         if(this.width) this.styleSheet.width = this.width + 'px';
-        console.log(this.$el)
 
         if(this.embed) this.visible();
         else{
@@ -208,6 +207,12 @@ export default {
             document.body.addEventListener('mousedown', this.whole);
         }
     },
+	beforeDestroy(){
+    	//remove drop down layer
+		if(!this.embed) {
+			this.$refs.dropdown.remove();
+		}
+	},
     destroyed(){
         if(!this.embed) {
             document.body.removeEventListener('mousedown', this.whole);
