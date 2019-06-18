@@ -117,7 +117,7 @@ export default {
     methods: {
         visible(){
             this.$nextTick(()=>{
-                //calculation show direction(up or down) and top axis
+                //calculation display direction(up or down) and top axis
                 if(!this.show && !this.embed && this.$slots.caller) this.adjust();
 
                 this.show = !this.show;
