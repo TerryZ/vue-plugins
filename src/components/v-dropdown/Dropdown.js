@@ -55,14 +55,13 @@ export default {
     },
     computed: {
         animate(){
-            let cls = '';
-            if(!this.embed && this.animated) cls = this.dropUp ? 'animate-up' : 'animate-down';
-            if(typeof this.animated === 'string') cls = this.animated;
-            return cls;
+            if(typeof this.animated === 'string') return this.animated;
+            if(!this.embed && this.animated) return this.dropUp ? 'animate-up' : 'animate-down';
+            return '';
         }
     },
     render(h){
-        //console.log(this.$slots)
+        //console.log(this.animate)
 		const children = [];
         //the dropdown layer caller
 		if(this.$slots.caller && Object.keys(this.$slots.caller).length && !this.embed){
@@ -142,7 +141,7 @@ export default {
             }
 
             this.adjustTop(pos, menu);
-            this.adjustLeft(pos, menu);
+			this.styleSheet.left = `${this.adjustLeft(pos, menu)}px`;
         },
         //get container show up direction and top axis
         adjustTop(pos, menu){
@@ -150,9 +149,7 @@ export default {
                 scrollTop = window.pageYOffset,
                 viewHeight = document.documentElement.clientHeight,
                 srcTop = this.rightClick ? this.y : pos.top + scrollTop;
-            let t = 0, u = false;
-
-            t = this.rightClick ? this.y : pos.top + pos.height + gap + scrollTop;
+            let t = this.rightClick ? this.y : pos.top + pos.height + gap + scrollTop;
             let overDown = false, overUp = false;
             //list over screen
             if((t + menu.height) > (scrollTop + viewHeight)) overDown = true;
@@ -160,15 +157,13 @@ export default {
 
             if(!overUp && overDown){
                 t = srcTop - gap - menu.height;
-                u = true;
+				this.dropUp = true;
             }
-            this.dropUp = u;
             this.styleSheet.top = `${t}px`;
         },
         adjustLeft(pos, menu){
-            const scrollLeft = window.pageXOffset,
-                viewWid = document.documentElement.clientWidth;
-            let l = 0, wid = this.rightClick ? 0 : pos.width,
+            const scrollLeft = window.pageXOffset, viewWid = document.documentElement.clientWidth;
+            const wid = this.rightClick ? 0 : pos.width,
                 //align left's left
                 left = this.rightClick ? this.x : pos.left + scrollLeft,
                 //align center's left
@@ -177,20 +172,13 @@ export default {
                 right = (left + wid) - menu.width;
 
             switch (this.align){
-                case 'left':
-                    l = (left + menu.width) > (scrollLeft + viewWid) ? right : left;
-                    break;
+                case 'left': return (left + menu.width) > (scrollLeft + viewWid) ? right : left;
                 case 'center':
-                    if((center + menu.width) > (scrollLeft + viewWid)) l = right;
-                    else if(right < scrollLeft) l = left;
-                    else l = center;
-                    break;
-                case 'right':
-                    l = (right < scrollLeft) ? left : right;
-                    break;
+                    if((center + menu.width) > (scrollLeft + viewWid)) return right;
+                    else if(right < scrollLeft) return left;
+                    else return center;
+                case 'right': return (right < scrollLeft) ? left : right;
             }
-
-            this.styleSheet.left = `${l}px`;
         },
 		/**
 		 * the dropdown container outside click handle
