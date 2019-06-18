@@ -68,8 +68,13 @@ export default {
         	children.push(this.$slots.caller);
 		}
 		//the dropdown layer container
-        children.push(h('div',{
-        	class: {
+		children.push(h('transition',{
+			props: {
+				name: this.animate,
+				type: 'transition'
+			}
+		},[h('div',{
+			class: {
 				[this.dropdownClass]: true,
 				'v-dropdown-embed': this.embed
 			},
@@ -79,16 +84,12 @@ export default {
 			on:{
 				mousedown: e=>{
 					//do not close dropdown container layer when do some operations in that
-        			e.stopPropagation();
+					e.stopPropagation();
 				}
 			}
-		},this.$slots.default));
+		},this.$slots.default)]));
 
-        return h('transition',{
-            props: {
-                name: this.animate
-            }
-        },[h('div',{
+        return h('div',{
         	class: {
         		'v-dropdown-caller': true,
 				'v-dropdown-caller--full-width': this.fullWidth
@@ -111,7 +112,7 @@ export default {
 					this.visible();
 				}
 			}
-		},children)]);
+		},children);
     },
     methods: {
         visible(){
