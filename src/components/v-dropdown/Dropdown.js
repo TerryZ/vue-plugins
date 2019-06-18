@@ -49,7 +49,6 @@ export default {
             styleSheet: { top: '',left: '' },
             dropdownClass: 'v-dropdown-container',
             dropUp: false,
-            lastCaller: null,
 			x: null,
 			y: null
         };
@@ -123,7 +122,6 @@ export default {
 
                 this.show = !this.show;
 
-                //this.lastCaller = caller;
                 this.$emit('show-change', this.show);
             });
         },
@@ -194,10 +192,14 @@ export default {
 
             this.styleSheet.left = `${l}px`;
         },
+		/**
+		 * the dropdown container outside click handle
+		 * @param e - MouseEvent
+		 */
         whole(e){
             if(this.show){
 				//is caller click
-				const inCaller = e.path.findIndex(val=>val === this.$el);
+				const inCaller = this.eventPath(e).findIndex(val=>val === this.$el);
 				/**
 				 * close the dropdown when clicking outside the dropdown container
 				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
@@ -215,26 +217,25 @@ export default {
 			const y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
 			return { x: x, y: y };
 		},
-        MouseEventPolyfill(){
-            if (!('path' in Event.prototype)) {
-                Object.defineProperty(Event.prototype, 'path', {
-                    get() {
-                        const path = [];
-                        let currentElem = this.target;
-                        while (currentElem) {
-                            path.push(currentElem);
-                            currentElem = currentElem.parentElement;
-                        }
-                        if (path.indexOf(window) === -1 && path.indexOf(document) === -1) path.push(document);
-                        if (path.indexOf(window) === -1) path.push(window);
-                        return path;
-                    }
-                });
-            }
-        }
-    },
-    created(){
-        this.MouseEventPolyfill();
+		/**
+		 * returns the event’s path which is an array of the objects on which listeners will be invoked
+		 * @param e - MouseEvent
+		 * @returns {Array|EventTarget[]|*}
+		 */
+		eventPath(e){
+        	if('composedPath' in e) return e.composedPath();
+        	if('path' in e) return e.path;
+        	//polyfill
+			const path = [];
+			let currentElem = e.target;
+			while (currentElem) {
+				path.push(currentElem);
+				currentElem = currentElem.parentElement;
+			}
+			if (path.indexOf(window) === -1 && path.indexOf(document) === -1) path.push(document);
+			if (path.indexOf(window) === -1) path.push(window);
+			return path;
+		}
     },
     mounted(){
         if(this.width) this.styleSheet.width = this.width + 'px';
