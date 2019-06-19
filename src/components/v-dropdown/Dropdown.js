@@ -7,21 +7,29 @@ export default {
             type: Boolean,
             default: false
         },
+		/**
+		 * align with the dropdown layer direction
+		 */
         align: {
             type: String,
             default: 'left'
         },
+		/**
+		 * dropdown layer embedded to page/component
+		 */
         embed: {
             type: Boolean,
             default: false
         },
+		/**
+		 * mouse right click caller area to display dropdown
+		 */
         rightClick: {
             type: Boolean,
             default: false
         },
         /**
-         * when the drop-down container is already open, whether to open the drop-down container
-         * again after clicking the caller
+		 * whether to reopen dropdown when caller click
          */
         reOpen: {
             type: Boolean,
@@ -36,12 +44,15 @@ export default {
          * min-width: 80
          */
         width: Number,
+		/**
+		 * container with
+		 * false: inline-block
+		 * true: block
+		 */
 		fullWidth: {
         	type: Boolean,
 			default: false
 		}
-        //x: Number,
-        //y: Number
     },
     data(){
         return {
