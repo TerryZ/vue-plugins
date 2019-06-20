@@ -19,6 +19,20 @@
                 </dropdown>
             </p>
 
+            <h5 class="mt-5 mb-3">重新打开</h5>
+            <p>
+                <dropdown :toggle-close="false">
+                    <template #caller>
+                        <button type="button" class="btn btn-secondary">dropdown</button>
+                    </template>
+                    <div class="p-5">
+                        <div>0123456789</div>
+                        <div>0123456789</div>
+                        <div>0123456789</div>
+                    </div>
+                </dropdown>
+            </p>
+
             <h5 class="mt-5 mb-3">对齐方向</h5>
             <div class="row">
                 <div class="col-md-4">

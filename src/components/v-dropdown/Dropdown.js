@@ -29,12 +29,16 @@ export default {
             default: false
         },
         /**
-		 * whether to reopen dropdown when caller click
+		 * click caller and display dropdown, the caller click again whether to close dropdown
          */
-        reOpen: {
+        toggleClose: {
             type: Boolean,
-            default: false
+            default: true
         },
+		disabled: {
+        	type: Boolean,
+			default: false
+		},
 		/**
 		 * open / close dropdown animation
 		 * true: use default animation
@@ -115,6 +119,8 @@ export default {
         		click: e=>{
         			if(this.embed || this.rightClick) return;
         			e.stopPropagation();
+					console.log(2)
+        			console.log('caller------------')
         			this.visible();
 				},
 				//mouse right button click
@@ -132,8 +138,9 @@ export default {
 		},children);
     },
     methods: {
-        visible(){
+        visible(outside = false){
             this.$nextTick(()=>{
+            	if(this.show && !this.toggleClose && !outside) return;
                 //calculation display direction(up or down) and top axis
                 if(!this.show && !this.embed && this.$slots.caller) this.adjust();
 
@@ -204,14 +211,20 @@ export default {
 		 */
         whole(e){
             if(this.show){
+            	console.log(1)
 				//is caller click
-				const inCaller = this.eventPath(e).findIndex(val=>val === this.$el);
+				const inCaller = this.eventPath(e).findIndex(val=>val === this.$el) !== -1;
+
+				if(inCaller && !this.toggleClose && !this.rightClick)  return;
+
+				console.log('toggleClose:', this.toggleClose)
+				console.log('isCaller:', inCaller)
 				/**
 				 * close the dropdown when clicking outside the dropdown container
 				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
 				 */
-				if(inCaller === -1 || (inCaller !== -1 && (this.reOpen || this.rightClick ))){
-					this.visible();
+				if(!inCaller || (inCaller && (!this.toggleClose || this.rightClick ))){
+					this.visible(true);
 				}
             }
         },
