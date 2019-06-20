@@ -35,6 +35,12 @@ export default {
             type: Boolean,
             default: false
         },
+		/**
+		 * open / close dropdown animation
+		 * true: use default animation
+		 * false: don't show animation
+		 * string value: customized animation
+		 */
         animated: {
             type: [String, Boolean],
             default: true
