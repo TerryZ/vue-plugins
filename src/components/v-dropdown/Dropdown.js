@@ -91,8 +91,7 @@ export default {
 		//the dropdown layer container
 		children.push(h('transition',{
 			props: {
-				name: this.animate,
-				type: 'transition'
+				name: this.animate
 			}
 		},[h('div',{
 			class: {
