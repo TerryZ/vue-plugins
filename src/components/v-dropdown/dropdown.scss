@@ -47,6 +47,8 @@ div.v-dropdown-container{
 //.animate-down-enter { transform: translate3d(0, -20px, 0);-webkit-transform: translate3d(0, -20px, 0); }
 //.animate-up-enter { transform: translate3d(0, 20px, 0);-webkit-transform: translate3d(0, 20px, 0); }
 
+$duration: 200ms;
+
 .animate-down-enter,
 .animate-down-leave-to{
     opacity: 0;
@@ -58,8 +60,8 @@ div.v-dropdown-container{
 .animate-down-enter-active,
 .animate-down-leave-active{
     //transition: all 200ms ease;
-    -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
-    transition: opacity 0.2s, transform 0.2s;
+    -webkit-transition: opacity $duration, -webkit-transform $duration;
+    transition: opacity $duration, transform $duration;
 }
 .animate-down-enter-to,
 .animate-down-leave {
