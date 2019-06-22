@@ -52,10 +52,10 @@ $duration: 200ms;
 .animate-down-enter,
 .animate-down-leave-to{
     opacity: 0;
-    //transform: scale3d(1,0,1);
-    //transform-origin: center bottom;
-    -webkit-transform: translateY(-20px) scale(0.93);
-    transform: translateY(-20px) scale(0.93);
+    transform: scale3d(1,0,1);
+    transform-origin: center bottom;
+    //-webkit-transform: translateY(10px) scale(0.93);
+    //transform: translateY(10px) scale(0.93);
 }
 .animate-down-enter-active,
 .animate-down-leave-active{
@@ -65,11 +65,9 @@ $duration: 200ms;
 }
 .animate-down-enter-to,
 .animate-down-leave {
-    //-webkit-animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
-    //animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
-    //transform: scale3d(1,1,1);
-    //transform-origin: center top;
-    -webkit-transform: none;
-    transform: none;
     opacity: 1;
+    transform: scale3d(1,1,1);
+    transform-origin: center top;
+    //-webkit-transform: none;
+    //transform: none;
 }

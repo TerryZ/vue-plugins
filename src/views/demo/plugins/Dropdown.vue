@@ -19,11 +19,11 @@
                 </dropdown>
             </p>
 
-            <h5 class="mt-5 mb-3">重新打开</h5>
+            <h5 class="mt-5 mb-3">关闭循环切换</h5>
             <p>
-                <dropdown :toggle-close="false">
+                <dropdown :toggle="false">
                     <template #caller>
-                        <button type="button" class="btn btn-secondary">dropdown</button>
+                        <input type="text" class="form-control">
                     </template>
                     <div class="p-5">
                         <div>0123456789</div>

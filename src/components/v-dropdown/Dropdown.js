@@ -31,7 +31,7 @@ export default {
         /**
 		 * click caller and display dropdown, the caller click again whether to close dropdown
          */
-        toggleClose: {
+        toggle: {
             type: Boolean,
             default: true
         },
@@ -139,13 +139,13 @@ export default {
     methods: {
         visible(outside = false){
             this.$nextTick(()=>{
-            	if(this.show && !this.toggleClose && !outside) return;
+            	if(this.show && !this.toggle && !outside) return;
                 //calculation display direction(up or down) and top axis
                 if(!this.show && !this.embed && this.$slots.caller) this.adjust();
 
                 this.show = !this.show;
 
-                this.$emit('show-change', this.show);
+                this.$emit('show', this.show);
             });
         },
         adjust(){
@@ -214,15 +214,15 @@ export default {
 				//is caller click
 				const inCaller = this.eventPath(e).findIndex(val=>val === this.$el) !== -1;
 
-				if(inCaller && !this.toggleClose && !this.rightClick)  return;
+				if(inCaller && !this.toggle && !this.rightClick)  return;
 
-				console.log('toggleClose:', this.toggleClose)
+				console.log('toggle:', this.toggle)
 				console.log('isCaller:', inCaller)
 				/**
 				 * close the dropdown when clicking outside the dropdown container
 				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
 				 */
-				if(!inCaller || (inCaller && (!this.toggleClose || this.rightClick ))){
+				if(!inCaller || (inCaller && (!this.toggle || this.rightClick ))){
 					this.visible(true);
 				}
             }
@@ -262,8 +262,8 @@ export default {
         else{
             document.body.appendChild(this.$refs.dropdown);
 
-            this.$on('show', this.visible);
-            this.$on('adjust', this.adjust);
+            //this.$on('show', this.visible);
+            //this.$on('adjust', this.adjust);
             document.body.addEventListener('mousedown', this.whole);
         }
     },
@@ -276,8 +276,8 @@ export default {
     destroyed(){
         if(!this.embed) {
             document.body.removeEventListener('mousedown', this.whole);
-            this.$off('show', this.visible);
-            this.$off('adjust', this.adjust);
+            //this.$off('show', this.visible);
+            //this.$off('adjust', this.adjust);
             this.$el.remove();
         }
     }
