@@ -52,10 +52,10 @@ $duration: 200ms;
 .animate-down-enter,
 .animate-down-leave-to{
     opacity: 0;
-    transform: scale3d(1,0,1);
-    transform-origin: center bottom;
-    //-webkit-transform: translateY(10px) scale(0.93);
-    //transform: translateY(10px) scale(0.93);
+    //transform: scale3d(1,0,1);
+    //transform-origin: center bottom;
+    -webkit-transform: translateY(-5px) scale(0.95);
+    transform: translateY(-5px) scale(0.95);
 }
 .animate-down-enter-active,
 .animate-down-leave-active{
@@ -66,8 +66,8 @@ $duration: 200ms;
 .animate-down-enter-to,
 .animate-down-leave {
     opacity: 1;
-    transform: scale3d(1,1,1);
-    transform-origin: center top;
-    //-webkit-transform: none;
-    //transform: none;
+    //transform: scale3d(1,1,1);
+    //transform-origin: center top;
+    -webkit-transform: none;
+    transform: none;
 }
