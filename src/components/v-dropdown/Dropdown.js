@@ -118,8 +118,6 @@ export default {
         		click: e=>{
         			if(this.embed || this.rightClick) return;
         			e.stopPropagation();
-					console.log(2)
-        			console.log('caller------------')
         			this.visible();
 				},
 				//mouse right button click
@@ -210,19 +208,16 @@ export default {
 		 */
         whole(e){
             if(this.show){
-            	console.log(1)
 				//is caller click
 				const inCaller = this.eventPath(e).findIndex(val=>val === this.$el) !== -1;
-
+                //do not toggle show/close when it is set to false
 				if(inCaller && !this.toggle && !this.rightClick)  return;
 
-				console.log('toggle:', this.toggle)
-				console.log('isCaller:', inCaller)
 				/**
 				 * close the dropdown when clicking outside the dropdown container
 				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
 				 */
-				if(!inCaller || (inCaller && (!this.toggle || this.rightClick ))){
+				if(!inCaller || (inCaller && this.rightClick)){
 					this.visible(true);
 				}
             }
@@ -261,9 +256,6 @@ export default {
         if(this.embed) this.visible();
         else{
             document.body.appendChild(this.$refs.dropdown);
-
-            //this.$on('show', this.visible);
-            //this.$on('adjust', this.adjust);
             document.body.addEventListener('mousedown', this.whole);
         }
     },
@@ -276,8 +268,6 @@ export default {
     destroyed(){
         if(!this.embed) {
             document.body.removeEventListener('mousedown', this.whole);
-            //this.$off('show', this.visible);
-            //this.$off('adjust', this.adjust);
             this.$el.remove();
         }
     }
