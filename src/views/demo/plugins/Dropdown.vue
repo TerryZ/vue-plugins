@@ -33,6 +33,32 @@
                 </dropdown>
             </p>
 
+            <h5 class="mt-5 mb-3">禁用</h5>
+            <p>
+                <dropdown :disabled="true">
+                    <template #caller>
+                        <button type="button" class="btn btn-secondary">dropdown</button>
+                    </template>
+                    <div class="p-5">
+                        <div>0123456789</div>
+                        <div>0123456789</div>
+                        <div>0123456789</div>
+                    </div>
+                </dropdown>
+            </p>
+
+            <h5 class="mt-5 mb-3">手动显示/关闭 dropdown</h5>
+            <p>
+                <dropdown :manual="true" @show="showChange">
+                    <template #caller>
+                        <input type="text" class="form-control">
+                    </template>
+                    <div class="p-5">
+                        <div v-for="item in list" v-text="item"></div>
+                    </div>
+                </dropdown>
+            </p>
+
             <h5 class="mt-5 mb-3">对齐方向</h5>
             <div class="row">
                 <div class="col-md-4">
@@ -127,6 +153,13 @@
         components: { dropdown },
         data(){
 			return {
+			    show: false,
+                list: [1,2,3,4,5,6,7,8,9,10]
+            }
+        },
+        methods: {
+		    showChange(state){
+                this.show = state;
             }
         }
 	};

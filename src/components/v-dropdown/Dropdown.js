@@ -35,6 +35,13 @@ export default {
             type: Boolean,
             default: true
         },
+        /**
+         * manual show / close the dropdown
+         */
+        manual: {
+            type: Boolean,
+            default: false
+        },
 		disabled: {
         	type: Boolean,
 			default: false
@@ -116,13 +123,13 @@ export default {
 			},
 			on: {
         		click: e=>{
-        			if(this.embed || this.rightClick) return;
+        			if(this.embed || this.rightClick || this.manual) return;
         			e.stopPropagation();
         			this.visible();
 				},
 				//mouse right button click
 				contextmenu: e=>{
-					if(this.embed || !this.rightClick) return;
+					if(this.embed || this.manual || !this.rightClick) return;
         			e.stopPropagation();
 					e.preventDefault();
 
@@ -136,6 +143,7 @@ export default {
     },
     methods: {
         visible(outside = false){
+            if(this.disabled) return;
             this.$nextTick(()=>{
             	if(this.show && !this.toggle && !outside) return;
                 //calculation display direction(up or down) and top axis
