@@ -9,7 +9,6 @@ div.v-dropdown-container{
     margin: 0;padding: 0;
     display: inline-block;
     position: absolute;top:0;left:0;
-    vertical-align: middle;
     box-sizing: border-box;
     background-color: white;
     -webkit-border-radius: 2px;
@@ -20,8 +19,8 @@ div.v-dropdown-container{
     z-index: 3000;
     &.v-dropdown-embed {
         position: relative;
-        -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.05);
-        box-shadow: 0 1px 3px rgba(0,0,0,.05);
+        -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+        box-shadow: 0 1px 6px rgba(0,0,0,0.12);
         z-index: 100;
     }
 }
@@ -54,20 +53,26 @@ $duration: 200ms;
     opacity: 0;
     //transform: scale3d(1,0,1);
     //transform-origin: center bottom;
-    -webkit-transform: translateY(-5px) scale(0.95);
-    transform: translateY(-5px) scale(0.95);
+    transform: translateY(-5px) scale(0.95);-webkit-transform: translateY(-5px) scale(0.95);
+}
+.animate-up-enter,
+.animate-up-leave-to{
+    opacity: 0;
+    transform: translateY(5px) scale(0.95);-webkit-transform: translateY(5px) scale(0.95);
 }
 .animate-down-enter-active,
-.animate-down-leave-active{
-    //transition: all 200ms ease;
+.animate-up-enter-active,
+.animate-down-leave-active,
+.animate-up-leave-active{
     -webkit-transition: opacity $duration, -webkit-transform $duration;
     transition: opacity $duration, transform $duration;
 }
 .animate-down-enter-to,
-.animate-down-leave {
+.animate-up-enter-to,
+.animate-down-leave,
+.animate-up-leave {
     opacity: 1;
     //transform: scale3d(1,1,1);
     //transform-origin: center top;
-    -webkit-transform: none;
-    transform: none;
+    transform: none;-webkit-transform: none;
 }
