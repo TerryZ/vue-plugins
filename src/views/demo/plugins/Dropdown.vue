@@ -49,9 +49,9 @@
 
             <h5 class="mt-5 mb-3">手动显示/关闭 dropdown</h5>
             <p>
-                <dropdown :manual="true" @show="showChange">
+                <dropdown :manual="true" @show="showChange" ref="dropdown">
                     <template #caller>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" v-model="query" placeholder="try enter 3">
                     </template>
                     <div class="p-5">
                         <div v-for="item in list" v-text="item"></div>
@@ -154,12 +154,23 @@
         data(){
 			return {
 			    show: false,
+                query: '',
                 list: [1,2,3,4,5,6,7,8,9,10]
             }
         },
         methods: {
 		    showChange(state){
                 this.show = state;
+            }
+        },
+        watch: {
+			query(val){
+				if(val === '3'){
+					console.log(val)
+					this.$refs.dropdown.visible();
+                }else{
+                    if(this.show) this.$refs.dropdown.visible();
+                }
             }
         }
 	};

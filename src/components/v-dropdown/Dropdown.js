@@ -145,6 +145,7 @@ export default {
         visible(outside = false){
             if(this.disabled) return;
             this.$nextTick(()=>{
+            	console.log(this.show)
             	if(this.show && !this.toggle && !outside) return;
                 //calculation display direction(up or down) and top axis
                 if(!this.show && !this.embed && this.$slots.caller) this.adjust();
@@ -234,9 +235,10 @@ export default {
 			const supportPageOffset = window.pageXOffset !== undefined;
 			const isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
 
-			const x = supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
-			const y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-			return { x: x, y: y };
+			return {
+				x: supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft,
+				y: supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop
+			};
 		},
 		/**
 		 * returns the event’s path which is an array of the objects on which listeners will be invoked
