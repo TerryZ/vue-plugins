@@ -166,7 +166,6 @@
         watch: {
 			query(val){
 				if(val === '3'){
-					console.log(val)
 					this.$refs.dropdown.visible();
                 }else{
                     if(this.show) this.$refs.dropdown.visible();

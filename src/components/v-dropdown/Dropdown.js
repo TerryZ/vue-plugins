@@ -145,7 +145,6 @@ export default {
         visible(outside = false){
             if(this.disabled) return;
             this.$nextTick(()=>{
-            	console.log(this.show)
             	if(this.show && !this.toggle && !outside) return;
                 //calculation display direction(up or down) and top axis
                 if(!this.show && !this.embed && this.$slots.caller) this.adjust();
