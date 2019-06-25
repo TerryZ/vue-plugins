@@ -144,16 +144,13 @@ export default {
 			 * do not toggle show/close when 'toggle' option is set to false
 			 */
 			if(this.show && !this.toggle && !outside) return;
-            // this.$nextTick(()=>{
 			/**
 			 * calculation display direction(up or down) and top axis
 			 */
 			if(!this.show && !this.embed && this.$slots.caller) this.adjust();
 
 			this.show = !this.show;
-
 			this.$emit('show', this.show);
-            // });
         },
 		/**
 		 * the dropdown container outside click handle
@@ -172,7 +169,7 @@ export default {
 
 				/**
 				 * close the dropdown when clicking outside the dropdown container
-				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
+				 * reopen the dropdown when right-click in caller(rightClick = true)
 				 */
 				if(!inCaller || (inCaller && this.rightClick)){
 					this.visible(true);
@@ -188,12 +185,16 @@ export default {
 
             if(this.show) menu = this.$refs.dropdown.getBoundingClientRect();
             else{
-                //change hide drop down container way from 'display:none' to 'visibility:hidden',
-                //be used for get width and height
+				/**
+				 * change the way to hide dropdown container from 'display:none' to 'visibility:hidden'
+				 * be used for get width and height
+				 */
 				this.$refs.dropdown.style.visibility = 'hidden';
 				this.$refs.dropdown.style.display = 'inline-block';
                 menu = this.$refs.dropdown.getBoundingClientRect();
-                //restore style
+				/**
+				 * restore dropdown style after getting position data
+				 */
 				this.$refs.dropdown.style.visibility = 'visible';
 				this.$refs.dropdown.style.display = 'none';
             }
@@ -283,13 +284,11 @@ export default {
 	beforeDestroy(){
     	//remove drop down layer
 		if(!this.embed) {
+			document.body.removeEventListener('mousedown', this.whole);
 			this.$refs.dropdown.remove();
 		}
 	},
     destroyed(){
-        if(!this.embed) {
-            document.body.removeEventListener('mousedown', this.whole);
-            this.$el.remove();
-        }
+        if(!this.embed) this.$el.remove();
     }
 }
