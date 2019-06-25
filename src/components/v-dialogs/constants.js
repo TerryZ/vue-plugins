@@ -1,4 +1,4 @@
-const messageTypes = {
+export const messageTypes = {
     info: 'info',
     success: 'success',
     warning: 'warning',
@@ -7,7 +7,7 @@ const messageTypes = {
     inputConfirm: 'inputConfirm'
 };
 
-const toastConstants = {
+export const toastConstants = {
     contentClass : {
         info: '',
         warning: 'toast-warning',
@@ -22,7 +22,7 @@ const toastConstants = {
     }
 };
 
-const alertIconClass = {
+export const alertIconClass = {
     info: 'alertInfo',
     warning: 'alertWarning',
     success: 'alertSuccess',
@@ -30,7 +30,7 @@ const alertIconClass = {
     confirm: 'alertConfirm'
 };
 
-const languages = {
+export const languages = {
     cn : {
         titleInfo : '提示',
         titleWarning : '警告',
@@ -73,12 +73,6 @@ const languages = {
     }
 };
 
-const commonConstants = {
+export const commonConstants = {
     baseZIndex: 5100
 };
-
-export { messageTypes };
-export { toastConstants };
-export { alertIconClass };
-export { languages };
-export { commonConstants };

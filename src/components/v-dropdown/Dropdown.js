@@ -144,16 +144,42 @@ export default {
     methods: {
         visible(outside = false){
             if(this.disabled) return;
-            this.$nextTick(()=>{
-            	if(this.show && !this.toggle && !outside) return;
-                //calculation display direction(up or down) and top axis
-                if(!this.show && !this.embed && this.$slots.caller) this.adjust();
+			if(this.show && !this.toggle && !outside) return;
+            // this.$nextTick(()=>{
+			/**
+			 * calculation display direction(up or down) and top axis
+			 */
+			if(!this.show && !this.embed && this.$slots.caller) this.adjust();
 
-                this.show = !this.show;
+			this.show = !this.show;
 
-                this.$emit('show', this.show);
-            });
+			this.$emit('show', this.show);
+            // });
         },
+		/**
+		 * the dropdown container outside click handle
+		 * @param e - MouseEvent
+		 */
+		whole(e){
+			if(this.show){
+				/**
+				 * is caller element click
+				 */
+				const inCaller = this.eventPath(e).findIndex(val=>val === this.$el) !== -1;
+				/**
+				 * do not toggle show/close when 'toggle' option is set to false
+				 */
+				if(inCaller && !this.toggle && !this.rightClick)  return;
+
+				/**
+				 * close the dropdown when clicking outside the dropdown container
+				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
+				 */
+				if(!inCaller || (inCaller && this.rightClick)){
+					this.visible(true);
+				}
+			}
+		},
         adjust(){
             const pos = this.$el.getBoundingClientRect();
             let menu = null;
@@ -208,26 +234,6 @@ export default {
                     else if(right < scrollLeft) return left;
                     else return center;
                 case 'right': return (right < scrollLeft) ? left : right;
-            }
-        },
-		/**
-		 * the dropdown container outside click handle
-		 * @param e - MouseEvent
-		 */
-        whole(e){
-            if(this.show){
-				//is caller click
-				const inCaller = this.eventPath(e).findIndex(val=>val === this.$el) !== -1;
-                //do not toggle show/close when it is set to false
-				if(inCaller && !this.toggle && !this.rightClick)  return;
-
-				/**
-				 * close the dropdown when clicking outside the dropdown container
-				 * reopen the dropdown when caller click(reOpen = true) or right-click in caller(rightClick = true)
-				 */
-				if(!inCaller || (inCaller && this.rightClick)){
-					this.visible(true);
-				}
             }
         },
 		scrollInfo(){

@@ -2,7 +2,7 @@
     <div class="card">
         <div class="panel-body p-5">
             <h3 class="mb-5">v-dropdown
-                <button type="button" class="btn btn-outline-dark btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
+                <button type="button" class="btn btn-outline-dark btn-sm" @click="$router.push({path: '/demo'})">Back to List</button>
             </h3>
 
             <h5 class="mt-5 mb-3">默认</h5>
