@@ -69,7 +69,7 @@ export default {
     },
     data(){
         return {
-            show: this.value,
+            show: false,
             styleSheet: { top: '',left: '' },
             dropdownClass: 'v-dropdown-container',
             dropUp: false,
