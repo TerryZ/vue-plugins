@@ -117,7 +117,7 @@
             </p>
 
             <h5 class="mt-5 mb-3">鼠标右键</h5>
-            <dropdown :right-click="true" :full-width="true">
+            <dropdown :right-click="true" :toggle="false" :full-width="true">
                 <template #caller>
                     <div class="card text-center bg-light text-secondary justify-content-center"
                          style="height: 20rem;font-size: 30px;">鼠标右键点击</div>

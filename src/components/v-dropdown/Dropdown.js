@@ -3,10 +3,6 @@ import './dropdown.scss';
 export default {
     name: "v-dropdown",
     props:{
-        value:{
-            type: Boolean,
-            default: false
-        },
 		/**
 		 * align with the dropdown layer direction
 		 */
@@ -143,7 +139,10 @@ export default {
     },
     methods: {
         visible(outside = false){
-            if(this.disabled) return;
+        	if(this.disabled) return;
+			/**
+			 * do not toggle show/close when 'toggle' option is set to false
+			 */
 			if(this.show && !this.toggle && !outside) return;
             // this.$nextTick(()=>{
 			/**
@@ -180,6 +179,9 @@ export default {
 				}
 			}
 		},
+		/**
+		 * adjust dropdown display position
+		 */
         adjust(){
             const pos = this.$el.getBoundingClientRect();
             let menu = null;
@@ -199,7 +201,11 @@ export default {
             this.adjustTop(pos, menu);
 			this.styleSheet.left = `${this.adjustLeft(pos, menu)}px`;
         },
-        //get container show up direction and top axis
+		/**
+		 * calculation direction and top axis
+		 * @param pos
+		 * @param menu
+		 */
         adjustTop(pos, menu){
             const gap = 5,
                 scrollTop = window.pageYOffset,
