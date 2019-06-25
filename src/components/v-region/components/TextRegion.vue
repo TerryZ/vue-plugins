@@ -9,7 +9,7 @@
         mixins: [mixins],
         inheritAttrs: false,
         render(h){
-        	return h('span', this.selectedText);
+            return h('span', this.selectedText);
         },
         methods: {
             provinceChange(newVal, oldVal){
