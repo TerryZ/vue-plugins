@@ -144,13 +144,15 @@ export default {
 			 * do not toggle show/close when 'toggle' option is set to false
 			 */
 			if(this.show && !this.toggle && !outside) return;
-			/**
-			 * calculation display direction(up or down) and top axis
-			 */
-			if(!this.show && !this.embed && this.$slots.caller) this.adjust();
+			this.$nextTick(()=>{
+				/**
+				 * calculation display direction(up or down) and top axis
+				 */
+				if(!this.show && !this.embed && this.$slots.caller) this.adjust();
 
-			this.show = !this.show;
-			this.$emit('show', this.show);
+				this.show = !this.show;
+				this.$emit('show', this.show);
+			});
         },
 		/**
 		 * the dropdown container outside click handle
@@ -233,6 +235,7 @@ export default {
                 center = (left + (wid / 2)) - (menu.width / 2),
                 //align right's left
                 right = (left + wid) - menu.width;
+            console.log(right)
 
             switch (this.align){
                 case 'left': return (left + menu.width) > (scrollLeft + viewWid) ? right : left;
