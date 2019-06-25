@@ -235,7 +235,6 @@ export default {
                 center = (left + (wid / 2)) - (menu.width / 2),
                 //align right's left
                 right = (left + wid) - menu.width;
-            console.log(right)
 
             switch (this.align){
                 case 'left': return (left + menu.width) > (scrollLeft + viewWid) ? right : left;
