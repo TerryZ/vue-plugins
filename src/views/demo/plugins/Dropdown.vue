@@ -43,8 +43,12 @@
             </p>
 
             <h5 class="mt-5 mb-3">禁用</h5>
+            <div class="custom-control custom-switch mb-3">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" v-model="disabled">
+                <label class="custom-control-label" for="customSwitch1">禁止打开 dropdown</label>
+            </div>
             <p>
-                <dropdown :disabled="true">
+                <dropdown :disabled="disabled">
                     <template #caller>
                         <button type="button" class="btn btn-secondary">dropdown</button>
                     </template>
@@ -164,6 +168,7 @@
 			return {
 			    show: false,
                 query: '',
+                disabled: false,
                 list: [1,2,3,4,5,6,7,8,9,10]
             }
         },
