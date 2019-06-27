@@ -66,7 +66,7 @@ export default {
             });
         },
         adjustList(){
-            this.$refs.drop.$emit('adjust', this.$refs.caller);
+            this.$refs.drop.adjust();
         },
         getResults(){
             if(!this.picked.length || this.multiple) return;
@@ -258,13 +258,6 @@ export default {
                     this.pageNumber = Math.ceil((index + 1) / this.pageSize);
                 }
             }
-        },
-        scrollPolyfill(){
-            const supportPageOffset = window.pageXOffset !== undefined,
-                isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-
-            supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
-            supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
         },
         isChrome(){
             return navigator.vendor !== undefined && navigator.vendor.indexOf("Google") !== -1;

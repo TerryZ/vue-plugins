@@ -108,8 +108,6 @@
             }
         },
         mounted(){
-            this.scrollPolyfill();
-
             //switch class name
             //let className = this.$el.className;
             //this.$el.className = 'v-selectpage';
