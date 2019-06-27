@@ -4,6 +4,7 @@
                 ref="drop"
                 @show="showChange"
                 :full-width="true"
+                :disabled="disabled"
                 :width="width"
                 :align="rtl?'right':'left'" >
         <template #caller>

@@ -197,18 +197,17 @@ div.sp-header {
     .sp-search-input {
         display: block;
         background-color: #F8F8F8;
+        border: 1px solid #e6e6e6;
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
         line-height: 20px;
         min-height: 20px;
         padding: 4px 6px;
-        vertical-align: middle;
         box-sizing: border-box;
         outline: none !important;
         height: 30px;
         border-radius: 2px;
-        border: 1px solid #ddd;
 
         will-change: border-color, box-shadow, background-color;
         transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out, background-color .3s ease-in-out;
@@ -235,7 +234,7 @@ div.sp-result-area {
             line-height: 1;
             margin: 0;
             overflow: hidden;
-            padding: 4px 8px;
+            padding: 6px 8px;
             position: relative;
             text-align: left;
             white-space: nowrap;
@@ -243,7 +242,7 @@ div.sp-result-area {
             color: #333;
             cursor: pointer;
 
-            &.sp-over { background-color: #2196F3 /*#53A4EA*/!important;color: #fff !important;cursor: pointer; }
+            &.sp-over { background-color: #eee /*#53A4EA #2196F3*/!important;color: black !important;cursor: pointer; }
             &.sp-selected { color: #ccc;cursor: default; }
             &.sp-rtl { direction: rtl;text-align: right; }
         }
