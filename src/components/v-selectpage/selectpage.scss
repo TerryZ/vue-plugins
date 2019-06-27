@@ -196,7 +196,7 @@ div.sp-header {
 
     .sp-search-input {
         display: block;
-        background-color: #F6F6F6;
+        background-color: #F8F8F8;
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
@@ -214,8 +214,8 @@ div.sp-header {
         transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out, background-color .3s ease-in-out;
 
         &:focus {
-            border: 1px solid #aaa;
-            box-shadow: 0 0 0 3px rgba(150, 150, 150, 0.2);
+            border: 1px solid #ccc;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
             background-color: white;
         }
     }

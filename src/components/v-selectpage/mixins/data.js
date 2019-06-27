@@ -139,8 +139,8 @@ export default {
             if(this.picked.length) this.picked = [];
             else this.initSelection();
         },
-        pageNumber(){
-            this.populate();
+        pageNumber(val, oldVal){
+            if(val !== oldVal) this.populate();
         },
         disabled(val){
             if(val && this.show) this.close();
