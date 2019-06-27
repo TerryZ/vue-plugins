@@ -36,7 +36,7 @@
                    @keyup="processKey" @keydown.stop="processControl" class="sp-search-input">
         </div>
         <!-- message bar -->
-        <transition name="sp-message-slide" :appear="true">
+        <transition name="sp-message-slide" :appear="true" @enter="adjustList" @after-leave="adjustList">
             <div class="sp-message" v-if="message">
                 <i class="sp-iconfont sp-icon-warning"></i>
                 <span v-html="message"></span>

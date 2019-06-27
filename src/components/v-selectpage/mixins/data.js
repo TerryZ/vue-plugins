@@ -123,6 +123,9 @@ export default {
     watch: {
         picked(val){
             if(this.message && this.maxSelectLimit && val.length < this.maxSelectLimit) this.message = '';
+			this.$nextTick(()=>{
+				this.adjustList();
+			});
             this.$emit('input', val.map(value => value[this.keyField]).join(','));
             this.$emit('values', this.picked.concat());
         },

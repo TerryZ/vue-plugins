@@ -313,8 +313,9 @@ div.sp-message {
     span { margin-left: 30px;font-size: 16px; }
 }
 
-.sp-message-slide-enter-active, .sp-message-slide-leave-active { transition: opacity .5s; }
+.sp-message-slide-enter-active, .sp-message-slide-leave-active { transition: opacity 300ms; }
 .sp-message-slide-enter, .sp-message-slide-leave-to { opacity: 0; }
+.sp-message-slide-enter-to, .sp-message-slide-leave { opacity: 1; }
 
 
 /* icons */

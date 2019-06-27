@@ -35,7 +35,7 @@
                 </p>
 
                 <h5>动态修改选中值
-                    <button type="button" class="btn btn-default btn-xs" @click="selected='22'">修改选中项目</button>
+                    <button type="button" class="btn btn-outline-dark btn-sm" @click="selected='22'">修改选中项目</button>
                 </h5>
                 <p>
                     <v-selectpage :data="sample"

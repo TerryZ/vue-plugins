@@ -128,18 +128,15 @@ export default {
             if(this.picked.includes(row)) return;
             // multiple selection by tag form
             if(this.multiple){
-                if((this.maxSelectLimit && (this.picked.length < this.maxSelectLimit)) || !this.maxSelectLimit)
-                    this.picked.push(row);
-                else{
+                if((this.maxSelectLimit && (this.picked.length < this.maxSelectLimit)) || !this.maxSelectLimit){
+					this.picked.push(row);
+				}else{
 					this.message = this.i18n.max_selected.replace('max_selected_limit', `<b>${this.maxSelectLimit}</b>`);
 					setTimeout(() => {
 						this.message = '';
 					}, 3000);
 				}
-                this.$nextTick(()=>{
-                    this.adjustList();
-                    this.inputFocus();
-                });
+				this.inputFocus();
             }else{
                 this.picked = [row];
                 this.close();
