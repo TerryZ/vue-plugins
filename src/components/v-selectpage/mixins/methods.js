@@ -70,9 +70,14 @@ export default {
         },
         getResults(){
             if(!this.picked.length || this.multiple) return;
-            switch (typeof this.showField){
-                case 'string': return this.picked[0][this.showField];
-                case 'function': return this.showField(this.picked[0]);
+            return this.renderCell(this.picked[0]);
+        },
+        renderCell(row){
+            if(row && Object.keys(row).length){
+                switch (typeof this.showField){
+                    case 'string': return row[this.showField];
+                    case 'function': return this.showField(row);
+                }
             }
         },
         processKey(e){
@@ -116,12 +121,6 @@ export default {
             if(this.highlight < (this.list.length - 1)){
                 const nextIndex = this.list.findIndex((val, idx) => (idx > this.highlight) && !this.picked.includes(val));
                 if(nextIndex !== -1) this.highlight = nextIndex;
-            }
-        },
-        renderCell(row){
-            if(row && Object.keys(row).length){
-                if(typeof this.showField === 'string') return row[this.showField];
-                else if(typeof this.showField === 'function') return this.showField(row);
             }
         },
         selectItem(row){

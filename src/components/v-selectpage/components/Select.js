@@ -1,22 +1,22 @@
 export default {
     name: "SelectPageSelect",
     props: {
-        results: String,
+        picked: Array,
         disabled: Boolean,
         placeholder: String
     },
-    inject: ['i18n'],
+    inject: ['i18n', 'renderCell'],
     render(h){
         const children = [];
         let result = null;
-        if(this.results){
-            result = h('span',{domProps:{innerHTML:this.results}});
+        if(this.picked && this.picked.length){
+            result = h('span',{domProps:{innerHTML:this.renderCell(this.picked[0])}});
         }else{
             result = h('span',{class:'sp-placeholder'},this.placeholder);
         }
         children.push(h('div',{class:'sp-base sp-input'},[result]));
         //clear button
-        if(this.results && !this.disabled){
+        if(this.picked && this.picked.length && !this.disabled){
             children.push(h('div',{
                 class:'sp-clear',
                 attrs:{
