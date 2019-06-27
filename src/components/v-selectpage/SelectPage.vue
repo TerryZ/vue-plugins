@@ -9,7 +9,7 @@
                 :align="rtl?'right':'left'" >
         <template #caller>
             <!-- select panel -->
-            <div :class="inputClasses" ref="caller" >
+            <div :class="inputClasses">
                 <!-- multiple with tag form -->
                 <sp-tag :disabled="disabled" :placeholder="placeholderString" @remove="remove"
                         :picked="picked" v-if="multiple" />

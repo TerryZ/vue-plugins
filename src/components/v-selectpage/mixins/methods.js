@@ -11,10 +11,12 @@ export default {
             if(!val) this.highlight = -1;
         },
         inputFocus(){
+			if(!this.show) return;
             this.$nextTick(()=>{
-                if(!this.show) return;
-                //fix open drop down list and set input focus, the page will scroll to top
-                //that.$refs.search.focus({preventScroll:true}); only work on Chrome and EDGE
+				/**
+				 * fix open drop down list and set input focus, the page will scroll to top
+				 * that.$refs.search.focus({preventScroll:true}); only work on Chrome and EDGE
+				 */
                 if(this.isChrome() || this.isEdge()) this.$refs.search.focus({preventScroll:true});
                 else{
                     const x = window.pageXOffset, y = window.pageYOffset;
@@ -38,7 +40,6 @@ export default {
 
             if(this.multiple && this.show){
                 this.$nextTick(()=>{
-                    this.adjustList();
                     this.inputFocus();
                 });
             }
@@ -61,7 +62,6 @@ export default {
 
             if(!check) this.$emit('removed', removed);
             this.$nextTick(()=>{
-                this.adjustList();
                 this.inputFocus();
             });
         },
