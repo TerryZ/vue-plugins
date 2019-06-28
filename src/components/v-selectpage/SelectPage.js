@@ -102,7 +102,7 @@ export default {
         buildHeader(h){
             const header = [];
             header.push(h('h3',{domProps:{innerHTML:this.headerTitle}}));
-            const genButton = (title, btnClass, iconClass, event)=>{
+            const genBtn = (title, btnClass, iconClass, event)=>{
                 return h('button',{
                     attrs:{
                         type: 'button',
@@ -116,22 +116,87 @@ export default {
             };
 
             if(this.multiple){
-                header.push(genButton(this.i18n.select_all, 'sp-select-all-btn', 'sp-icon-select-all'), ()=>{this.pickPage(true)});
-                header.push(genButton(this.i18n.unselect_all, 'sp-remove-all-btn', 'sp-icon-unselect-all'), ()=>{this.pickPage(false)});
+                header.push(genBtn(this.i18n.select_all, 'sp-select-all-btn', 'sp-icon-select-all', ()=>{this.pickPage(true)}));
+                header.push(genBtn(this.i18n.unselect_all, 'sp-remove-all-btn', 'sp-icon-unselect-all', ()=>{this.pickPage(false)}));
             }
-            header.push(genButton(this.i18n.clear_all, 'sp-clear-all-btn', 'sp-icon-clear'), this.remove);
-            header.push(genButton(this.i18n.close_btn, 'sp-close-btn', 'sp-icon-close'), this.close);
+            header.push(genBtn(this.i18n.clear_all, 'sp-clear-all-btn', 'sp-icon-clear', this.remove));
+            header.push(genBtn(this.i18n.close_btn, 'sp-close-btn', 'sp-icon-close', this.close));
 
             return h('div',{class:'sp-header'},header);
         },
+		/**
+		 * search bar
+		 */
         buildSearch(h){
-
+			return h('div',{class:'sp-search'},[
+				h('input',{
+					attrs:{
+						type:'text',
+						autocomplete:'off',
+						value:this.search
+					},
+					class:'sp-search-input',
+					on:{
+						keyup:e=>this.processKey(e),
+						keydown:e=>{
+							e.stopPropagation();
+							this.processControl(e);
+						},
+						input:e=>this.search = e.target.value
+					},
+					ref:'search'
+				})
+			]);
         },
         buildMessage(h){
-
+        	if(this.message){
+				return h('transition',{
+					props:{
+						name:'sp-message-slide',
+						appear: true
+					},
+					on:{
+						'enter':()=>this.adjustList(),
+						'after-leave':()=>this.adjustList()
+					}
+				},[
+					h('div',{class:'sp-message'},[
+						h('i',{class:'sp-iconfont sp-icon-warning'}),
+						h('span',{domProps: {innerHTML: this.message}})
+					])
+				]);
+			}
         },
         buildContent(h){
-
+			const child = [];
+			if(this.list.length){
+				const contentAttrs = {
+					//directives: [{name: 'show', value: this.list.length}],
+					props:{
+						'list':this.list,
+						'picked':this.picked
+					},
+					model:{
+						value:this.highlight,
+						callback:value=>this.highlight = value
+					},
+					on:{
+						select:row=>this.selectItem(row)
+					}
+				};
+				if(this.tbColumns && this.tbColumns.length){
+					//multiple columns(table) mode
+					contentAttrs.props['tb-columns'] = this.tbColumns;
+					child.push(h('sp-table',contentAttrs));
+				}else{
+					//single column(list) mode
+					child.push(h('sp-list',contentAttrs));
+				}
+			}else{
+				//no result message
+				child.push(h('div',{class:'sp-result-message'},this.i18n.not_found));
+			}
+			return h('div',{class:'sp-result-area'},child);
         },
         /**
          * pagination bar
@@ -145,7 +210,7 @@ export default {
                     },
                     model:{
                         value:this.pageNumber,
-                        callback:value=>{}
+                        callback:value=>this.pageNumber = value
                     },
                     ref:'page'
                 });
@@ -153,11 +218,6 @@ export default {
         }
     },
 	mounted(){
-		//switch class name
-		//let className = this.$el.className;
-		//this.$el.className = 'v-selectpage';
-		//this.$refs.input.className += ' ' + className;
-
 		//set searchField when user not config
 		if(!this.searchField){
 			if(typeof this.showField === 'string') this.searchColumn = this.showField;

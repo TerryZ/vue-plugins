@@ -21,7 +21,8 @@ export default {
                 if(!this.disabled) {
                     tag.push(h('span', {
                         on: {
-                            click: ()=>{
+                            click: e=>{
+                            	e.stopPropagation();
                                 this.remove(index);
                             }
                         }

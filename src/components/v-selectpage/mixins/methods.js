@@ -38,11 +38,9 @@ export default {
                 this.picked.splice(index, 1);
             }
 
-            if(this.multiple && this.show){
-                this.$nextTick(()=>{
-                    this.inputFocus();
-                });
-            }
+			if(this.multiple && !this.show && !this.picked.length){
+				this.$refs.drop.visible();
+			}
             this.$emit('removed', removed);
         },
         pickPage(check){
@@ -61,9 +59,7 @@ export default {
             }
 
             if(!check) this.$emit('removed', removed);
-            this.$nextTick(()=>{
-                this.inputFocus();
-            });
+			this.inputFocus();
         },
         adjustList(){
             this.$refs.drop.adjust();
@@ -87,13 +83,13 @@ export default {
             if ([LEFT, UP, RIGHT, DOWN, ESCAPE, ENTER, TAB].includes(e.keyCode)) {
                 switch (e.keyCode) {
                     case LEFT:
-                        this.$refs.page.switchPage('previous');
+                        if(this.pagination) this.$refs.page.switchPage('previous');
                         break;
                     case UP:
                         this.previous();
                         break;
                     case RIGHT:
-                        this.$refs.page.switchPage('next');
+						if(this.pagination) this.$refs.page.switchPage('next');
                         break;
                     case DOWN:
                         this.next();
