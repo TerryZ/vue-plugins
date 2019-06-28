@@ -44,24 +44,24 @@ export default {
 		}
 	},
     render(h){
-	    const child = [];
-	    child.push(this.buildCaller(h));
+		const child = [];
+		child.push(this.buildCaller(h));
         child.push(this.buildHeader(h));
         child.push(this.buildSearch(h));
         child.push(this.buildMessage(h));
         child.push(this.buildContent(h));
         child.push(this.buildPagination(h));
 
-	    return h('v-dropdown',{
-	        props: {
-	            'full-width': true,
+		return h('v-dropdown',{
+			props: {
+				'full-width': true,
                 'width': this.width,
                 'disabled': this.disabled,
                 'align': this.rtl ? 'right' : 'left'
             },
             class: 'v-selectpage',
             on: {
-	            show: this.showChange
+				show: this.showChange
             },
             ref: 'drop'
         },child);
@@ -70,7 +70,7 @@ export default {
         /**
          * select panel
          */
-	    buildCaller(h){
+		buildCaller(h){
             const input = [];
             const inputAttrs = {
                 props: {
@@ -146,7 +146,7 @@ export default {
 			]);
         },
         buildMessage(h){
-        	if(this.message){
+			if(this.message){
 				return h('transition',{
 					props:{
 						name:'sp-message-slide',

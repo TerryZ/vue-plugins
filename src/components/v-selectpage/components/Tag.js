@@ -22,8 +22,8 @@ export default {
                     tag.push(h('span', {
                         on: {
                             click: e=>{
-                            	e.stopPropagation();
-                                this.remove(index);
+								e.stopPropagation();
+								this.remove(index);
                             }
                         }
                     }, [h('i', {class:'sp-iconfont sp-icon-close'})]));

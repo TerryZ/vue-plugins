@@ -43,7 +43,7 @@ export default {
     },
     inject: ['i18n'],
 	data(){
-    	return {
+		return {
 			lastNumber: -1
 		}
 	},
