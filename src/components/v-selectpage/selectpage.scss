@@ -196,12 +196,11 @@ div.sp-header {
 
     .sp-search-input {
         display: block;
-        background-color: #F8F8F8;
         border: 1px solid #e6e6e6;
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
-        line-height: 20px;
+        line-height: 1.43;
         min-height: 20px;
         padding: 4px 6px;
         box-sizing: border-box;
@@ -231,15 +230,15 @@ div.sp-result-area {
         background-color: white;list-style: none;margin: 0;padding: 0;
         li {
             height: auto !important;
-            line-height: 1;
+            line-height: 1.43;
             margin: 0;
             overflow: hidden;
-            padding: 6px 8px;
+            padding: 3px 10px;
             position: relative;
             text-align: left;
             white-space: nowrap;
             font-size: 14px;
-            color: #333;
+            color: #666;
             cursor: pointer;
 
             &.sp-over { background-color: #eee /*#53A4EA #2196F3*/!important;color: black !important;cursor: pointer; }
@@ -251,11 +250,11 @@ div.sp-result-area {
     div.sp-result-message { font-family: $font;padding: 10px;text-align: center; }
     table.sp-table {
         width: 100%;
-        td, th { font-size: 14px;line-height: 1.43; border: 0 !important; }
+        td, th { font-size: 14px;line-height: 1.43; border: 0 !important;color: #666; }
         th { background-color: #F5F5F5;padding: 5px 8px; }
         td { padding: 4px 8px; }
         tbody tr {
-            &.sp-over td { background-color: #2196F3 !important;color: #fff !important;cursor: pointer; }
+            &.sp-over td { background-color: #eee/*2196F3*/ !important;color: black !important;cursor: pointer; }
             &.sp-selected { color: #ccc;cursor: default; }
         }
         thead tr.sp-rtl th, tbody tr.sp-rtl td { direction: rtl;text-align: right; }

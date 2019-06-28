@@ -15,10 +15,11 @@
                     </v-selectpage>
                 </p>
 
-                <h5>自定义内容渲染
+                <h5>自定义内容渲染</h5>
+                <p>
                     <button type="button" class="btn btn-danger btn-sm mr-2" @click="disabled=true">禁用插件</button>
                     <button type="button" class="btn btn-outline-dark btn-sm" @click="disabled=false">启用插件</button>
-                </h5>
+                </p>
                 <p>
                     <v-selectpage :data="sample"
                                   key-field="id"
