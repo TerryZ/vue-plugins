@@ -37,7 +37,7 @@ export default {
 			else return this.title;
 		},
 		placeholderString(){
-			return this.placeholder?this.placeholder:this.i18n.placeholder;
+			return this.placeholder || this.i18n.placeholder;
 		},
 		inputClasses(){
 			return { 'sp-input-container': true, 'sp-open': this.show, 'sp-disabled': this.disabled };

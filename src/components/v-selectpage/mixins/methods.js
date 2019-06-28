@@ -198,7 +198,7 @@ export default {
                         // eslint-disable-next-line no-console
                         console.error('Your "showField" was a function, in server side mode, your need specified "searchField" to search content.');
                     }else{
-                        const field = this.searchField ? this.searchField : this.showField;
+                        const field = this.searchField || this.showField;
                         queryParams[field] = this.search;
                     }
                 }
