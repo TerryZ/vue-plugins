@@ -36,9 +36,6 @@ export default {
 			if(this.picked.length) return this.multiple?replace(this.picked.length):this.getResults();
 			else return this.title;
 		},
-		results(){
-			return this.getResults();
-		},
 		placeholderString(){
 			return this.placeholder?this.placeholder:this.i18n.placeholder;
 		},
