@@ -23,7 +23,7 @@ export default {
                         e.stopPropagation();
                         this.rowClick(val);
                     },
-                    mouseenter: ()=> this.highlight(!this.picked.includes(val) ? index : -1)
+                    mouseenter: ()=> this.highlight(this.inPicked(val) ? -1 : index)
                 }
             });
         }));

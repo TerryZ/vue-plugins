@@ -1,5 +1,5 @@
 export default {
-    inject: ['keyField', 'showField', 'renderCell', 'rtl'],
+    inject: ['keyField', 'showField', 'renderCell', 'rtl', 'inPicked'],
     props: {
         list: Array,
         picked: Array,
@@ -12,7 +12,7 @@ export default {
 		rowClass(row, index){
 			return {
 				'sp-over': this.value === index,
-				'sp-selected': this.picked.findIndex(val => val[this.keyField] === row[this.keyField]) !== -1,
+				'sp-selected': this.inPicked(row),
 				'sp-rtl': this.rtl
 			};
 		},

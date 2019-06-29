@@ -28,7 +28,7 @@ export default {
                             e.stopPropagation();
                             this.rowClick(val);
                         },
-                        mouseenter: ()=>this.highlight(!this.picked.includes(val)?index:-1)
+                        mouseenter: ()=>this.highlight(this.inPicked(val)?index:-1)
                     }
                 },this.tbColumns.map((col,idx)=>{//table cells
                     return h('td',{

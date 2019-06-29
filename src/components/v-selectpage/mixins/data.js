@@ -120,21 +120,46 @@ export default {
             totalRows: 0
         };
     },
+    computed: {
+        headerTitle(){
+            const headerStr = this.i18n.items_selected,
+                replace = val => headerStr.replace('selected_count', `<b>${val}</b>`);
+            if(this.picked.length) return this.multiple?replace(this.picked.length):this.getResults();
+            else return this.title;
+        },
+        placeholderString(){
+            return this.placeholder || this.i18n.placeholder;
+        },
+        inputClasses(){
+            return { 'sp-input-container': true, 'sp-open': this.show, 'sp-disabled': this.disabled };
+        },
+        keys(){
+            return this.picked.map(value => value[this.keyField]).join(',');
+        }
+    },
     watch: {
         picked(val){
             if(this.message && this.maxSelectLimit && val.length < this.maxSelectLimit) this.message = '';
 			this.$nextTick(()=>{
-				if(this.show) this.adjustList();
+				if(this.show){
+                    this.adjust();
+                    this.inputFocus();
+                }else{
+				    if(this.multiple && !val.length){
+				        this.$refs.drop.visible();
+                    }
+                }
 			});
-            this.$emit('input', val.map(value => value[this.keyField]).join(','));
+            this.$emit('input', this.keys);
             this.$emit('values', this.picked.concat());
         },
-        value: {
-            handler(){
-                //console.log(234)
-                //this.initSelection();
-            },
-            immediate: true
+        value(val) {
+            console.log('value:',val)
+            console.log('keys:',this.keys)
+            if(val && this.keys && val.toLowerCase() !== this.keys.toLowerCase()){
+                console.log('value watch!')
+                this.initSelection();
+            }
         },
         data(){
             this.sortList();

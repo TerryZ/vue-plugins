@@ -13,7 +13,7 @@ div.v-selectpage {
         }
 
         &.sp-disabled {
-            div.sp-input, div.sp-inputs { cursor: not-allowed;color: #555;background-color: #eee; }
+            div.sp-input, div.sp-inputs { cursor: not-allowed;color: #aaa;background-color: #eee; }
             div.sp-button { cursor: not-allowed; }
         }
 
@@ -255,7 +255,7 @@ div.sp-result-area {
         td { padding: 4px 8px; }
         tbody tr {
             &.sp-over td { background-color: #eee/*2196F3*/ !important;color: black !important;cursor: pointer; }
-            &.sp-selected { color: #ccc;cursor: default; }
+            &.sp-selected td { color: #ccc;cursor: default; }
         }
         thead tr.sp-rtl th, tbody tr.sp-rtl td { direction: rtl;text-align: right; }
     }

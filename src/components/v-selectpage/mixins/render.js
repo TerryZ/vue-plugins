@@ -109,8 +109,8 @@ export default {
                         appear: true
                     },
                     on:{
-                        'enter':()=>this.adjustList(),
-                        'after-leave':()=>this.adjustList()
+                        'enter':()=>this.adjust(),
+                        'after-leave':()=>this.adjust()
                     }
                 },[
                     h('div',{class:'sp-message'},[

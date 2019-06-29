@@ -7,8 +7,11 @@ export default {
 		},
         showChange(val){
             this.show = val;
-            val && this.inputFocus();
-            if(!val) this.highlight = -1;
+            if(val){
+                this.inputFocus();
+            }else{
+                this.highlight = -1;
+            }
         },
         inputFocus(){
 			if(!this.show) return;
@@ -37,31 +40,36 @@ export default {
                 removed = [this.picked[index]];
                 this.picked.splice(index, 1);
             }
-
-			if(this.multiple && !this.show && !this.picked.length){
-				this.$refs.drop.visible();
-			}
             this.$emit('removed', removed);
         },
+        /**
+         * pick page items
+         * @param check
+         * true: pick
+         * false: remove
+         */
         pickPage(check){
             const removed = [];
-            for(let row of this.list){
-                if(!this.picked.includes(row) && check &&
-                    (!this.maxSelectLimit || (this.maxSelectLimit && this.picked.length < this.maxSelectLimit)))
-                    this.picked.push(row);//picked current page items
-                if(this.picked.includes(row) && !check){//removed current page items
-                    const idx = this.picked.findIndex(value => Object.is(value, row));
-                    if(idx !== -1) {
-                        removed.push(this.picked[idx]);
-                        this.picked.splice(idx, 1);
+            this.list.forEach(row=>{
+                if(check){//picked current page items
+                    if(!this.inPicked(row) && (!this.maxSelectLimit || (this.maxSelectLimit && this.picked.length < this.maxSelectLimit))){
+                        this.picked.push(row);
+                    }
+                }else{//unpicked current page items
+                    if(this.inPicked(row)){
+                        const idx = this.inPickedIndex(row);
+                        if(idx !== -1) {
+                            removed.push(this.picked[idx]);
+                            this.picked.splice(idx, 1);
+                        }
                     }
                 }
-            }
+            });
 
             if(!check) this.$emit('removed', removed);
 			this.inputFocus();
         },
-        adjustList(){
+        adjust(){
             this.$refs.drop.adjust();
         },
         getResults(){
@@ -106,7 +114,7 @@ export default {
         },
         previous(){
             if(this.highlight > 0 && this.list.length){
-                const previous = this.list.filter((val, idx)=>idx < this.highlight && !this.picked.includes(val));
+                const previous = this.list.filter((val, idx)=>idx < this.highlight && !this.inPicked(val));
                 if(previous.length){
                     const preIndex = this.list.findIndex(val => Object.is(val, previous[previous.length-1]));
                     if(preIndex !== -1) this.highlight = preIndex;
@@ -115,12 +123,12 @@ export default {
         },
         next(){
             if(this.highlight < (this.list.length - 1)){
-                const nextIndex = this.list.findIndex((val, idx) => (idx > this.highlight) && !this.picked.includes(val));
+                const nextIndex = this.list.findIndex((val, idx) => (idx > this.highlight) && !this.inPicked(val));
                 if(nextIndex !== -1) this.highlight = nextIndex;
             }
         },
         selectItem(row){
-            if(this.picked.includes(row)) return;
+            if(this.inPicked(row)) return;
             // multiple selection by tag form
             if(this.multiple){
                 if((this.maxSelectLimit && (this.picked.length < this.maxSelectLimit)) || !this.maxSelectLimit){
@@ -252,6 +260,13 @@ export default {
                     this.pageNumber = Math.ceil((index + 1) / this.pageSize);
                 }
             }
+        },
+        inPickedIndex(row){
+            if(!row || !Object.keys(row).length || !this.picked.length) return -1;
+            return this.picked.findIndex(val=>val[this.keyField] === row[this.keyField]);
+        },
+        inPicked(row){
+            return this.inPickedIndex(row) !== -1;
         },
         isChrome(){
             return navigator.vendor !== undefined && navigator.vendor.indexOf("Google") !== -1;
