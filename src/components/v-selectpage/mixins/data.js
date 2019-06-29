@@ -145,8 +145,8 @@ export default {
                     this.adjust();
                     this.inputFocus();
                 }else{
-				    if(this.multiple && !val.length){
-				        this.$refs.drop.visible();
+                    if(this.multiple && !val.length){
+                        this.$refs.drop.visible();
                     }
                 }
 			});

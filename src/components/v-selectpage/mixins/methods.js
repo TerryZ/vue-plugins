@@ -141,8 +141,8 @@ export default {
 				}
 				this.inputFocus();
             }else{
-                this.picked = [row];
                 this.close();
+                this.picked = [row];
             }
             this.highlight = -1;
         },
