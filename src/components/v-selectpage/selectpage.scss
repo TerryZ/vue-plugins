@@ -271,7 +271,7 @@ div.sp-pagination {
     text-align: center;
     font-size: 14px;
 
-    div.sp-page-info { height: 28px;line-height: 29px;font-weight: 400; }
+    div.sp-page-info { height: 28px;line-height: 28px;font-weight: 400; }
 
     ul {
         position: absolute;
@@ -293,9 +293,8 @@ div.sp-pagination {
                 text-decoration: none;
                 cursor: pointer;
                 height: 28px;
-                line-height: 100%;
+                line-height: 1;
                 background: transparent;
-
                 &:hover { color: black;font-weight: bold; }
             }
             &.sp-right { float: right; }

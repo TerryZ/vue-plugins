@@ -161,8 +161,9 @@ export default {
                 if(this.search && this.search !== this.lastSearch) this.pageNumber = 1;
                 if(Array.isArray(this.data)){
                     let list = this.sortedList?this.sortedList.concat():this.data.concat();
-                    if(this.search)
+                    if(this.search){
                         list = list.filter(val => val[this.searchColumn].toLowerCase().includes(this.search.toLowerCase()));
+                    }
                     this.totalRows = list.length;
 
                     if(this.pagination){
@@ -170,6 +171,7 @@ export default {
                         this.list = list.filter((val,index)=>index >= start&&index <= end);
                     }else this.list = list;
                 }else if(typeof this.data === 'string') this.remote(false);
+
                 if(this.search) this.lastSearch = this.search;
                 this.highlight = -1;
             }
@@ -244,8 +246,8 @@ export default {
         },
         findSelectionPage(){
             if(!this.multiple && this.pagination){
-                const list = this.sortedList?this.sortedList.concat():this.data.concat(),
-                    index = list.findIndex(val => String(val[this.keyField]) === this.value);
+                const list = this.sortedList?this.sortedList.concat():this.data.concat();
+                const index = list.findIndex(val => String(val[this.keyField]) === this.value);
                 if(index >= 0){
                     this.pageNumber = Math.ceil((index + 1) / this.pageSize);
                 }

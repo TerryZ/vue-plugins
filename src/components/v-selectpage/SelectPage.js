@@ -8,8 +8,8 @@ import render from './mixins/render';
 import tag from './components/Tag';
 import select from './components/Select';
 import page from './components/Pagination';
-import listView from './components/List';
-import tableView from './components/Table';
+import list from './components/List';
+import table from './components/Table';
 
 export default {
 	name: "v-selectpage",
@@ -19,8 +19,8 @@ export default {
 		'sp-tag': tag,
 		'sp-select': select,
 		'sp-page': page,
-		'sp-list': listView,
-		'sp-table': tableView
+		'sp-list': list,
+		'sp-table': table
 	},
 	provide(){
 		return {
