@@ -11,6 +11,7 @@
                 <p>
                     <v-selectpage :data="sample"
                                   sort="id desc"
+                                  title="v-selectpage title"
                                   v-model="value1">
                     </v-selectpage>
                 </p>

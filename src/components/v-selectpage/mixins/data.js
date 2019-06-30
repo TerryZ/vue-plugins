@@ -154,10 +154,10 @@ export default {
             this.$emit('values', this.picked.concat());
         },
         value(val) {
-            console.log('value:',val)
-            console.log('keys:',this.keys)
-            if(val && this.keys && val.toLowerCase() !== this.keys.toLowerCase()){
-                console.log('value watch!')
+            // console.log('value:',val)
+            // console.log('keys:',this.keys)
+            if(val !== this.keys){
+                // console.log('value watch!')
                 this.initSelection();
             }
         },

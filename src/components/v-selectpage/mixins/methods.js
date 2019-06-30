@@ -107,7 +107,7 @@ export default {
                         if(this.highlight !== -1) this.selectItem(this.list[this.highlight]);
                         break;
                     case ESCAPE:
-                        if(this.show) this.close();
+                        this.close();
                         break;
                 }
             }

@@ -3,6 +3,33 @@ import list from '@test/sample/nba-teams';
 import sp from '@/components/v-selectpage/SelectPage';
 
 describe('v-selectpage', function() {
+    describe('close pagination bar', ()=>{
+        const wrapper = mount(sp, {
+            propsData: {
+                data: list,
+                pagination: false
+            }
+        });
+        it('pagination bar should be not exist', ()=>{
+            expect(wrapper.find('div.sp-pagination').exists()).to.equal(false);
+        });
+    });
+    describe('disabled and placeholder', ()=>{
+        const wrapper = mount(sp, {
+            propsData: {
+                data: list,
+                disabled: true,
+                placeholder: 'This is test placeholder text'
+            }
+        });
+        it('when the "disabled" option is set to true, the dropdown is not allowed to be opened ', ()=>{
+            wrapper.find('div.sp-input-container').trigger('click');
+            expect(wrapper.find('div.v-dropdown-container').isVisible()).to.equal(false);
+        });
+        it('the placeholder text should be "This is test placeholder text"', ()=>{
+            expect(wrapper.find('span.sp-placeholder').text()).to.equal('This is test placeholder text');
+        });
+    });
     describe('list view, single select mode', ()=>{
         const wrapper = mount(sp, {
             propsData: {
@@ -20,17 +47,10 @@ describe('v-selectpage', function() {
 			wrapper.find('div.sp-clear').trigger('click');
 			expect(wrapper.vm.picked.length).to.equal(0);
 		});
-    });
-    describe('close pagination bar', ()=>{
-        const wrapper = mount(sp, {
-            propsData: {
-                data: list,
-                pagination: false
-            }
-        });
-        it('pagination bar should be not exist', ()=>{
-            expect(wrapper.find('div.sp-pagination').exists()).to.equal(false);
-        });
+        it('v-model/value content modify to "22", the selected item name should be "Los Angeles Clippers"', ()=>{
+            wrapper.setProps({ value: '22' });
+            expect(wrapper.vm.picked[0].name).to.equal('Los Angeles Clippers');
+        })
     });
 	describe('list view, multiple select mode', ()=>{
 		const wrapper = mount(sp, {
@@ -50,6 +70,30 @@ describe('v-selectpage', function() {
 		it('click "clear current page" icon, the selected item length should be 10', ()=>{
 			wrapper.find('button.sp-remove-all-btn').trigger('click');
 			expect(wrapper.vm.picked.length).to.equal(10);
-		})
+		});
+        it('v-model/value content modify to "3,5,7", the selected item name should be "Detroit Pistons,Milwaukee Bucks,Boston Celtics"', ()=>{
+            wrapper.setProps({ value: '3,5,7' });
+            expect(wrapper.vm.picked.map(val=>val.name).join(',')).to.equal('Detroit Pistons,Milwaukee Bucks,Boston Celtics');
+        });
+
+
+        const limit = mount(sp, {
+            propsData:{
+                data: list,
+                multiple: true,
+                maxSelectLimit: 3
+            }
+        })
+
+        it('"maxSelectLimit" options set to 3, click "select current page" icon and the picked items should be 3', ()=>{
+            limit.find('div.sp-input-container').trigger('click');
+            limit.find('button.sp-select-all-btn').trigger('click');
+            expect(limit.vm.picked.length).to.equal(3);
+        });
+		it('click "Clear all selected" icon, all picked items should be clear', ()=>{
+            limit.find('div.sp-input-container').trigger('click');
+            limit.find('button.sp-clear-all-btn').trigger('click');
+            expect(limit.vm.picked.length).to.equal(0);
+        });
 	});
 });
