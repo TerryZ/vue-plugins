@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint --no-fix --ext .js,.vue src/components",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit --require tests/unit/setup.js tests/unit/**/*.spec.js"
+    "test:unit": "vue-cli-service test:unit --require tests/unit/setup.js tests/unit/**/*.spec.js",
+    "test:unit-plugin": "vue-cli-service test:unit --require tests/unit/setup.js tests/unit/v-selectpage.spec.js"
   },
   "dependencies": {
     "axios": "^0.18.0",

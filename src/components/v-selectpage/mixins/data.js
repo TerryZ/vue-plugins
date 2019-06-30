@@ -108,7 +108,7 @@ export default {
             search: '',
             lastSearch: null,
             searchColumn: null,
-            i18n: lang[this.language],
+            i18n: lang[this.language] || lang['cn'],
             message: '',
             highlight: -1,
 
