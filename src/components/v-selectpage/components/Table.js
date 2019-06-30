@@ -32,11 +32,20 @@ export default {
                     return h('td',{
                         key: idx,
                         domProps:{
-                            innerHTML: val[col.data]
+                            innerHTML: this.renderColumn(val, col)
                         }
                     });
                 }));
             }))
         ]);
+    },
+    methods:{
+        renderColumn(row, col){
+            if(!row || !Object.keys(row).length || !col || !col.data) return '';
+            switch (typeof col.data) {
+                case 'string': return row[col.data];
+                case 'function': return col.data(row);
+            }
+        }
     }
 }
