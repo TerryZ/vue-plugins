@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import list from '@test/sample/nba-teams';
+import table from '@test/sample/countries';
 import sp from '@/components/v-selectpage/SelectPage';
 
 describe('v-selectpage', function() {
@@ -76,7 +77,6 @@ describe('v-selectpage', function() {
             expect(wrapper.vm.picked.map(val=>val.name).join(',')).to.equal('Detroit Pistons,Milwaukee Bucks,Boston Celtics');
         });
 
-
         const limit = mount(sp, {
             propsData:{
                 data: list,
@@ -96,4 +96,22 @@ describe('v-selectpage', function() {
             expect(limit.vm.picked.length).to.equal(0);
         });
 	});
+    describe('table view, single select mode', ()=>{
+        const wrapper = mount(sp, {
+            propsData: {
+                data: table,
+                tbColumns: [
+                    {title: 'id',data: 'id'},
+                    {title: 'name',data: 'name'},
+                    {title: 'desc',data: 'desc'}
+                ]
+            }
+        });
+        it('have table view container', ()=>{
+            expect(wrapper.find('table.sp-table').exists()).to.equal(true);
+        });
+        it('have 3 table column', ()=>{
+            expect(wrapper.find('table.sp-table > thead > tr').findAll('th').length).to.equal(3);
+        });
+    });
 });
