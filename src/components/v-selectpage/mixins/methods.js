@@ -186,7 +186,7 @@ export default {
 					 * search content filter
 					 */
 					if(this.search){
-                        list = list.filter(val => val[this.searchColumn].toLowerCase().includes(this.search.toLowerCase()));
+                        list = list.filter(val => new RegExp(this.search.toLowerCase()).test(val[this.searchColumn].toLowerCase()));
                     }
                     this.totalRows = list.length;
 
