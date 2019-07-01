@@ -138,21 +138,6 @@ export default {
         }
     },
     watch: {
-        picked(val){
-            if(this.message && this.maxSelectLimit && val.length < this.maxSelectLimit) this.message = '';
-			this.$nextTick(()=>{
-				if(this.show){
-                    this.adjust();
-                    this.inputFocus();
-                }else{
-                    if(this.multiple && !val.length){
-                        this.$refs.drop.visible();
-                    }
-                }
-			});
-            this.$emit('input', this.keys);
-            this.$emit('values', this.picked.concat());
-        },
         value(val) {
             // console.log('value:',val)
             // console.log('keys:',this.keys)
@@ -167,6 +152,22 @@ export default {
             if(this.picked.length) this.picked = [];
             else this.initSelection();
         },
+		picked(val){
+        	// console.log('picked watch')
+			if(this.message && this.maxSelectLimit && val.length < this.maxSelectLimit) this.message = '';
+			this.$nextTick(()=>{
+				if(this.show){
+					this.adjust();
+					this.inputFocus();
+				}else{
+					if(this.multiple && !val.length){
+						this.$refs.drop.visible();
+					}
+				}
+			});
+			this.$emit('input', this.keys);
+			this.$emit('values', this.picked.concat());
+		},
         pageNumber(val, oldVal){
             if(val !== oldVal) this.populate();
         },

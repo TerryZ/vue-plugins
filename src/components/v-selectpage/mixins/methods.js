@@ -43,28 +43,41 @@ export default {
             this.$emit('removed', removed);
         },
         /**
-         * pick page items
+         * pick current page items
          * @param check
          * true: pick
          * false: remove
          */
-        pickPage(check){
-            const removed = [];
+        pickPage(check = true){
+            const removed = [], toDo = [];
+			let available = 0;
+
+			/**
+			 * the number of current page available items
+			 */
+			if(check && this.maxSelectLimit){
+				available = this.maxSelectLimit - this.picked.filter(val=>{
+					return this.list.findIndex(value => val[this.keyField] === value[this.keyField]) === -1;
+				}).length;
+			}
+
             this.list.forEach(row=>{
                 if(check){//picked current page items
-                    if(!this.inPicked(row) && (!this.maxSelectLimit || (this.maxSelectLimit && this.picked.length < this.maxSelectLimit))){
-                        this.picked.push(row);
+                    if(!this.inPicked(row) && (!this.maxSelectLimit || (this.maxSelectLimit && toDo.length < available))){
+						toDo.push(row);
                     }
                 }else{//unpicked current page items
                     if(this.inPicked(row)){
-                        const idx = this.inPickedIndex(row);
-                        if(idx !== -1) {
-                            removed.push(this.picked[idx]);
-                            this.picked.splice(idx, 1);
-                        }
+						toDo.push(this.inPickedIndex(row));
                     }
                 }
             });
+
+            if(check){
+            	this.picked.push(...toDo);
+			}else{
+				this.picked = this.picked.filter((val,index)=>!toDo.includes(index));
+			}
 
             if(!check) this.$emit('removed', removed);
 			this.inputFocus();
@@ -169,16 +182,19 @@ export default {
                 if(this.search && this.search !== this.lastSearch) this.pageNumber = 1;
                 if(Array.isArray(this.data)){
                     let list = this.sortedList?this.sortedList.concat():this.data.concat();
-                    if(this.search){
+					/**
+					 * search content filter
+					 */
+					if(this.search){
                         list = list.filter(val => val[this.searchColumn].toLowerCase().includes(this.search.toLowerCase()));
                     }
                     this.totalRows = list.length;
 
                     if(this.pagination){
                         const start = (this.pageNumber - 1) * this.pageSize, end = start + this.pageSize -1;
-                        this.list = list.filter((val,index)=>index >= start&&index <= end);
+                        this.list = list.filter((val,index) => index >= start && index <= end);
                     }else this.list = list;
-                }else if(typeof this.data === 'string') this.remote(false);
+                }else if(typeof this.data === 'string') this.remote();
 
                 if(this.search) this.lastSearch = this.search;
                 this.highlight = -1;
@@ -187,18 +203,18 @@ export default {
         },
         /**
          * load remote data
-         * @param init[boolean]
+         * @param initPicked[boolean]
          * true: load selected item info
          * false: load data list
          */
-        remote(init){
+        remote(initPicked = false){
             if(typeof this.data === 'string' && this.dataLoad && typeof this.dataLoad === 'function'){
                 const queryParams = this.params && Object.keys(this.params).length ?
                     JSON.parse(JSON.stringify(this.params)) : {};
                 queryParams.pageSize = this.pageSize;
                 queryParams.pageNumber = this.pageNumber;
                 if(this.sort) queryParams.orderBy = this.sort;
-                if(init && this.value){
+                if(initPicked && this.value){
                     queryParams.searchKey = this.keyField;
                     queryParams.searchValue = this.value;
                 }
@@ -220,7 +236,7 @@ export default {
                         }else{
                             const tmpObj = this.resultFormat(resp);
                             if(tmpObj && Object.keys(tmpObj).length){
-                                if(!init){//load new page data list
+                                if(!initPicked){//load new page data list
                                     this.list = tmpObj.list;
                                     this.totalRows = tmpObj.totalRow;
                                 }else this.picked = tmpObj.list;//the selected item info

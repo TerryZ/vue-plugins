@@ -83,7 +83,7 @@ describe('v-selectpage', function() {
                 multiple: true,
                 maxSelectLimit: 3
             }
-        })
+        });
 
         it('"maxSelectLimit" options set to 3, click "select current page" icon and the picked items should be 3', ()=>{
             limit.find('div.sp-input-container').trigger('click');
