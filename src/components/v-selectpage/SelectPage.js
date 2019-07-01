@@ -46,10 +46,5 @@ export default {
 		this.sortList();
 
 		this.initSelection();
-
-		this.$on('clear', this.remove);
-	},
-	destroyed(){
-		this.$off('clear', this.remove);
 	}
 }

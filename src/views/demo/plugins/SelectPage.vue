@@ -147,7 +147,7 @@
                 value4: null,
                 value5: null,
                 server: "1",
-                selected: '7',
+                selected: '6',
                 disabled: false,
                 renderRow(row){
                     let result = '';
