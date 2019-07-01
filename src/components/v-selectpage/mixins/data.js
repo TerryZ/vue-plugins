@@ -166,7 +166,7 @@ export default {
 				}
 			});
 			this.$emit('input', this.keys);
-			this.$emit('values', this.picked.concat());
+			this.$emit('values', this.picked.slice());
 		},
         pageNumber(val, oldVal){
             if(val !== oldVal) this.populate();

@@ -34,7 +34,7 @@ export default {
         remove(index){
             let removed = [];
             if(typeof index !== 'number'){
-                removed = this.picked.concat();
+                removed = this.picked.slice();
                 this.picked = [];
             }else{
                 removed = [this.picked[index]];
@@ -165,7 +165,7 @@ export default {
                 if(sortArr.length === 2){
                     sort.field = sortArr[0];
                     sort.order = sortArr[1];
-                    this.sortedList = this.data.concat().sort((a, b) => {
+                    this.sortedList = this.data.slice().sort((a, b) => {
                         const valA = a[sort.field],
                             valB = b[sort.field], order = sort.order ? sort.order.toLowerCase() : 'asc';
                         if(order === 'asc'){
@@ -181,7 +181,7 @@ export default {
             if(this.data){
                 if(this.search && this.search !== this.lastSearch) this.pageNumber = 1;
                 if(Array.isArray(this.data)){
-                    let list = this.sortedList?this.sortedList.concat():this.data.concat();
+                    let list = this.sortedList?this.sortedList.slice():this.data.slice();
 					/**
 					 * search content filter
 					 */
@@ -270,7 +270,7 @@ export default {
         },
         findSelectionPage(){
             if(!this.multiple && this.pagination){
-                const list = this.sortedList?this.sortedList.concat():this.data.concat();
+                const list = this.sortedList?this.sortedList.slice():this.data.slice();
                 const index = list.findIndex(val => String(val[this.keyField]) === this.value);
                 if(index >= 0){
                     this.pageNumber = Math.ceil((index + 1) / this.pageSize);
