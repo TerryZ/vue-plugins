@@ -69,7 +69,7 @@ describe('v-selectpage', function() {
 			wrapper.find('button.sp-remove-all-btn').trigger('click');
 			expect(wrapper.vm.picked.length).to.equal(10);
 		});
-        it('v-model/value content modify to "3,5,7", the selected item name should be "Detroit Pistons,Milwaukee Bucks,Boston Celtics"', ()=>{
+        it('v-model/value content modify to "3,5,7", the selected items name should be "Detroit Pistons,Milwaukee Bucks,Boston Celtics"', ()=>{
             wrapper.setProps({ value: '3,5,7' });
             expect(wrapper.vm.picked.map(val=>val.name).join(',')).to.equal('Detroit Pistons,Milwaukee Bucks,Boston Celtics');
         });
