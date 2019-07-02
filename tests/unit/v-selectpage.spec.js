@@ -4,33 +4,30 @@ import table from '@test/sample/countries';
 import sp from '@/components/v-selectpage/SelectPage';
 
 describe('v-selectpage', function() {
-    describe('close pagination bar', ()=>{
-        const wrapper = mount(sp, {
-            propsData: {
-                data: list,
-                pagination: false
-            }
-        });
-        it('pagination bar should be not exist', ()=>{
-            expect(wrapper.find('div.sp-pagination').exists()).to.equal(false);
-        });
-    });
-    describe('disabled and placeholder', ()=>{
-        const wrapper = mount(sp, {
-            propsData: {
-                data: list,
-                disabled: true,
-                placeholder: 'This is test placeholder text'
-            }
-        });
-        it('when the "disabled" option is set to true, the dropdown is not allowed to be opened ', ()=>{
-            wrapper.find('div.sp-input-container').trigger('click');
-            expect(wrapper.find('div.v-dropdown-container').isVisible()).to.equal(false);
-        });
-        it('the placeholder text should be "This is test placeholder text"', ()=>{
-            expect(wrapper.find('span.sp-placeholder').text()).to.equal('This is test placeholder text');
-        });
-    });
+	describe('basic options', ()=>{
+		const wrapper = mount(sp, {
+			propsData: {
+				data: list,
+				disabled: true,
+				placeholder: 'This is test placeholder text',
+				title: 'v-selectpage test title'
+			}
+		});
+		it('"disabled" option set to true, the dropdown is not allowed to be opened ', ()=>{
+			wrapper.find('div.sp-input-container').trigger('click');
+			expect(wrapper.find('div.v-dropdown-container').isVisible()).to.equal(false);
+		});
+		it('the placeholder text should be "This is test placeholder text"', ()=>{
+			expect(wrapper.find('span.sp-placeholder').text()).to.equal('This is test placeholder text');
+		});
+		it('"pagination" set to false, pagination bar should be not exist', ()=>{
+			wrapper.setProps({ pagination: false });
+			expect(wrapper.find('div.sp-pagination').exists()).to.equal(false);
+		});
+		it('the title text in selectpage should be "v-selectpage test title"', ()=>{
+			expect(wrapper.find('div.sp-header > h3').text()).to.equal('v-selectpage test title');
+		});
+	});
     describe('list view, single select mode', ()=>{
         const wrapper = mount(sp, {
             propsData: {
