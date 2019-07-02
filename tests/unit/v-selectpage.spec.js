@@ -35,6 +35,10 @@ describe('v-selectpage', function() {
 					data: list
 				}
 			});
+			it('"Select current page" and "Clear current page" buttons should be not exist',()=>{
+                expect(wrapper.find('div.sp-header button.sp-select-all-btn').exists()).to.equal(false);
+                expect(wrapper.find('div.sp-header button.sp-remove-all-btn').exists()).to.equal(false);
+            });
 
 			it('select first item, that item name should be "Chicago Bulls"', ()=>{
 				wrapper.find('div.sp-input-container').trigger('click');
@@ -42,6 +46,9 @@ describe('v-selectpage', function() {
 				wrapper.find('li.sp-over').trigger('click');
 				expect(wrapper.vm.picked[0].name).to.equal('Chicago Bulls');
 			});
+            it('after item pick, the "x" icon(clear picked item) should be display', ()=>{
+                expect(wrapper.find('div.sp-clear').exists()).to.equal(true);
+            });
 			it('click "x" icon to clear selected items, value should be empty', ()=>{
 				wrapper.find('div.sp-clear').trigger('click');
 				expect(wrapper.vm.picked.length).to.equal(0);
@@ -49,7 +56,7 @@ describe('v-selectpage', function() {
 			it('v-model/value content modify to "22", the selected item name should be "Los Angeles Clippers"', ()=>{
 				wrapper.setProps({ value: '22' });
 				expect(wrapper.vm.picked[0].name).to.equal('Los Angeles Clippers');
-			})
+			});
 		});
 		describe('multiple select mode', ()=>{
 			const wrapper = mount(sp, {
@@ -59,6 +66,10 @@ describe('v-selectpage', function() {
 				}
 			});
 
+            it('"Select current page" and "Clear current page" buttons should be exist',()=>{
+                expect(wrapper.find('div.sp-header button.sp-select-all-btn').exists()).to.equal(true);
+                expect(wrapper.find('div.sp-header button.sp-remove-all-btn').exists()).to.equal(true);
+            });
 			it('click "select current page" icon, go next page and click icon again, the selected item length should be 20', ()=>{
 				wrapper.find('div.sp-input-container').trigger('click');
 				wrapper.find('button.sp-select-all-btn').trigger('click');
@@ -88,11 +99,21 @@ describe('v-selectpage', function() {
 				limit.find('button.sp-select-all-btn').trigger('click');
 				expect(limit.vm.picked.length).to.equal(3);
 			});
+            it('after picking, the title text should be "已选择 3 个项目"', ()=>{
+                expect(limit.find('div.sp-header > h3').text()).to.equal('已选择 3 个项目');
+            });
+            it('click the "x" icon in first tag, the first tag should be remove and there are only 2 tags left now', ()=>{
+                limit.findAll('span.sp-selected-tag').at(0).find('span:last-child').trigger('click');
+                expect(limit.vm.picked.length).to.equal(2);
+            });
 			it('click "Clear all selected" icon, all picked items should be clear', ()=>{
 				limit.find('div.sp-input-container').trigger('click');
 				limit.find('button.sp-clear-all-btn').trigger('click');
 				expect(limit.vm.picked.length).to.equal(0);
 			});
+			it('after clear, the title text should be "SelectPage"(default title text when no items are picked)', ()=>{
+                expect(limit.find('div.sp-header > h3').text()).to.equal('SelectPage');
+            });
 		});
 	});
 	describe('table view', ()=>{

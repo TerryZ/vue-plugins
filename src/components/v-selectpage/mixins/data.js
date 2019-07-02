@@ -26,7 +26,7 @@ export default {
         resultFormat: Function,
         title: {
             type: String,
-            default: ''
+            default: 'SelectPage'
         },
         placeholder: {
             type: String,
@@ -122,12 +122,12 @@ export default {
     },
     computed: {
         headerTitle(){
-        	if(this.title) return this.title;
-
             const headerStr = this.i18n.items_selected;
             const replace = val => headerStr.replace('selected_count', `<b>${val}</b>`);
             if(this.picked.length){
                 return this.multiple ? replace(this.picked.length) : this.getResults();
+            }else{
+                return this.title;
             }
         },
         placeholderString(){
