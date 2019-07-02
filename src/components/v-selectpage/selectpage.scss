@@ -196,7 +196,10 @@ div.sp-header {
 
     .sp-search-input {
         display: block;
-        border: 1px solid #e6e6e6;
+        //border: 1px solid #e6e6e6;
+        border: 0;
+        //background-color: #fafafa;
+        background-color: #ECEFF1;
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
@@ -212,9 +215,12 @@ div.sp-header {
         transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out, background-color .3s ease-in-out;
 
         &:focus {
-            border: 1px solid #ccc;
-            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
-            background-color: white;
+            //border: 1px solid #ccc;
+            //box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+            //background-color: white;
+            //background-color: #ECEFF1;
+            background-color: #fafafa;
+            caret-color: #999;
         }
     }
 }
