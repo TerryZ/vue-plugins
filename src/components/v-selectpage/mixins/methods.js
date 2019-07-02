@@ -2,9 +2,6 @@ const LEFT = 37, UP = 38, RIGHT = 39, DOWN = 40, TAB = 9, ENTER = 13, ESCAPE = 2
 
 export default {
     methods: {
-		close(){
-			if(this.show) this.$refs.drop.visible();
-		},
         showChange(val){
             this.show = val;
             if(val){
@@ -12,21 +9,6 @@ export default {
             }else{
                 this.highlight = -1;
             }
-        },
-        inputFocus(){
-			if(!this.show) return;
-            this.$nextTick(()=>{
-				/**
-				 * fix open drop down list and set input focus, the page will scroll to top
-				 * that.$refs.search.focus({preventScroll:true}); only work on Chrome and EDGE
-				 */
-                if(this.isChrome() || this.isEdge()) this.$refs.search.focus({preventScroll:true});
-                else{
-                    const x = window.pageXOffset, y = window.pageYOffset;
-                    this.$refs.search.focus();
-                    if(window.pageYOffset !== y) setTimeout(()=>{ window.scrollTo(x, y); }, 0);
-                }
-            });
         },
         /**
          * remove all selected item
@@ -43,7 +25,7 @@ export default {
             this.$emit('removed', removed);
         },
         /**
-         * pick current page items
+         * pick/remove current page items
          * @param check
          * true: pick
          * false: remove
@@ -82,20 +64,16 @@ export default {
             if(!check) this.$emit('removed', removed);
 			this.inputFocus();
         },
-        adjust(){
-            this.$refs.drop.adjust();
-        },
         getResults(){
             if(!this.picked.length || this.multiple) return;
             return this.renderCell(this.picked[0]);
         },
         renderCell(row){
-            if(row && Object.keys(row).length){
-                switch (typeof this.showField){
-                    case 'string': return row[this.showField];
-                    case 'function': return this.showField(row);
-                }
-            }
+            if(!row || !Object.keys(row).length) return '';
+			switch (typeof this.showField){
+				case 'string': return row[this.showField];
+				case 'function': return this.showField(row);
+			}
         },
         processKey(e){
             if (![LEFT, UP, RIGHT, DOWN, ESCAPE, ENTER, TAB].includes(e.keyCode)) this.populate();
@@ -196,7 +174,7 @@ export default {
                     }else this.list = list;
                 }else if(typeof this.data === 'string') this.remote();
 
-                if(this.search) this.lastSearch = this.search;
+                this.lastSearch = this.search;
                 this.highlight = -1;
             }
             this.inputFocus();
@@ -276,19 +254,6 @@ export default {
                     this.pageNumber = Math.ceil((index + 1) / this.pageSize);
                 }
             }
-        },
-        inPickedIndex(row){
-            if(!row || !Object.keys(row).length || !this.picked.length) return -1;
-            return this.picked.findIndex(val=>val[this.keyField] === row[this.keyField]);
-        },
-        inPicked(row){
-            return this.inPickedIndex(row) !== -1;
-        },
-        isChrome(){
-            return navigator.vendor !== undefined && navigator.vendor.indexOf("Google") !== -1;
-        },
-        isEdge(){
-            return navigator.userAgent.indexOf("Edge") >= 0;
         }
     }
 };

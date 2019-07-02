@@ -3,6 +3,7 @@ import dropdown from 'v-dropdown';
 
 import data from './mixins/data';
 import methods from './mixins/methods';
+import util from './mixins/util';
 import render from './mixins/render';
 
 import tag from './components/Tag';
@@ -13,7 +14,7 @@ import table from './components/Table';
 
 export default {
 	name: "v-selectpage",
-	mixins: [data, methods, render],
+	mixins: [data, methods, util, render],
 	components: {
 		'v-dropdown': dropdown,
 		'sp-tag': tag,
