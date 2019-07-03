@@ -247,9 +247,9 @@ div.sp-result-area {
     div.sp-result-message { font-family: $font;padding: 10px;text-align: center; }
     table.sp-table {
         width: 100%;
-        td, th { font-size: 14px;line-height: 1.43; border: 0 !important;color: #666; }
-        th { background-color: #F5F5F5;padding: 5px 8px; }
-        td { padding: 4px 8px; }
+        td, th { font-size: 14px;line-height: 1.43; border: 0 !important; }
+        th { padding: 0 8px 5px;font-weight: 600;font-size: 15px;color: #333; }
+        td { padding: 4px 8px;color: #666; }
         tbody tr {
             &.sp-over td { background-color: #F6F8FA/*2196F3*/ !important;color: black !important;cursor: pointer; }
             &.sp-selected td { color: #ccc;cursor: default; }
@@ -268,7 +268,7 @@ div.sp-pagination {
     text-align: center;
     font-size: 14px;
 
-    div.sp-page-info { height: 28px;line-height: 28px;font-weight: 400; }
+    div.sp-page-info { height: 28px;line-height: 28px;font-weight: 400;color: #333; }
 
     ul {
         position: absolute;
