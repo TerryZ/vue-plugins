@@ -13,6 +13,7 @@ export default {
                 'full-width': true,
                 'width': this.width,
                 'disabled': this.disabled,
+				'border': false,
                 'align': this.rtl ? 'right' : 'left'
             },
             class: 'v-selectpage',

@@ -8,7 +8,7 @@ div.v-selectpage {
         span.sp-placeholder { color: #aaa; }
 
         &.sp-open {
-            div.sp-input, div.sp-inputs { border: 1px solid #999;color: black;border-radius: 2px; }
+            div.sp-input, div.sp-inputs { border: 1px solid #aaa;color: black;border-radius: 2px; }
             div.sp-input { background-color: #F9F9F9; }
         }
 
@@ -26,7 +26,7 @@ div.v-selectpage {
             color: #555;
             background-color: #fff;
             background-image: none;
-            border: 1px solid #ccc;
+            border: 1px solid #CED4DA;
             border-radius: 4px;
             -webkit-box-shadow: none;
             box-shadow: none;
@@ -59,7 +59,7 @@ div.v-selectpage {
                 float: left;
                 position: relative;
                 box-sizing: content-box;
-                border: 1px solid #aaa;
+                border: 1px solid #ccc;
                 border-radius: 3px;
                 background-color: #E4EAEE; /*#EFEFEF;*/
                 cursor: pointer;
@@ -238,7 +238,7 @@ div.sp-result-area {
             color: #666;
             cursor: pointer;
 
-            &.sp-over { background-color: #eee /*#53A4EA #2196F3*/!important;color: black !important;cursor: pointer; }
+            &.sp-over { background-color: #F6F8FA /*#53A4EA #2196F3*/!important;color: black !important;cursor: pointer; }
             &.sp-selected { color: #ccc;cursor: default; }
             &.sp-rtl { direction: rtl;text-align: right; }
         }
@@ -251,7 +251,7 @@ div.sp-result-area {
         th { background-color: #F5F5F5;padding: 5px 8px; }
         td { padding: 4px 8px; }
         tbody tr {
-            &.sp-over td { background-color: #eee/*2196F3*/ !important;color: black !important;cursor: pointer; }
+            &.sp-over td { background-color: #F6F8FA/*2196F3*/ !important;color: black !important;cursor: pointer; }
             &.sp-selected td { color: #ccc;cursor: default; }
         }
         thead tr.sp-rtl th, tbody tr.sp-rtl td { direction: rtl;text-align: right; }
