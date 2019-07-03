@@ -165,7 +165,8 @@ export default {
 					 */
 					if(this.search){
 						let reg = '';
-						[...this.search.toLowerCase()].map(val=>reg+=`[${val}]`);
+						[...this.search.toLowerCase()].map(val=>reg+=`(?=.*${val})`);
+						reg += '^.*$';
 						console.log(reg)
                         list = list.filter(val => new RegExp(reg).test(val[this.searchColumn].toLowerCase()));
                     }
