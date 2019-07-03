@@ -31,37 +31,37 @@ export default {
          * false: remove
          */
         pickPage(check = true){
-            const removed = [], toDo = [];
-			let available = 0;
+            const toDo = [];
+            if(check){//picked current page items
+                if(this.maxSelectLimit && this.picked.length >= this.maxSelectLimit) return;
+                let available = 0;
 
-			/**
-			 * the number of current page available items
-			 */
-			if(check && this.maxSelectLimit){
-				available = this.maxSelectLimit - this.picked.filter(val=>{
-					return this.list.findIndex(value => val[this.keyField] === value[this.keyField]) === -1;
-				}).length;
-			}
-
-            this.list.forEach(row=>{
-                if(check){//picked current page items
-                    if(!this.inPicked(row) && (!this.maxSelectLimit || (this.maxSelectLimit && toDo.length < available))){
-						toDo.push(row);
-                    }
-                }else{//unpicked current page items
-                    if(this.inPicked(row)){
-						toDo.push(this.inPickedIndex(row));
-                    }
+                /**
+                 * the number of current page available items
+                 */
+                if(check && this.maxSelectLimit){
+                    const outOfPage = this.picked.filter(val=>{
+                        return this.list.findIndex(value => val[this.keyField] === value[this.keyField]) === -1;
+                    }).length;
+                    available = this.maxSelectLimit - outOfPage;
                 }
-            });
+                this.list.forEach(row=>{
+                    if(!this.inPicked(row) && (!this.maxSelectLimit || (this.maxSelectLimit && toDo.length < available))){
+                        toDo.push(row);
+                    }
+                });
+                this.picked.push(...toDo);
+            }else{//unpicked current page items
+                if(!this.picked.length) return;
+                this.list.forEach(row=>{
+                    if(this.inPicked(row)){
+                        toDo.push(this.inPickedIndex(row));
+                    }
+                });
+                this.$emit('removed', this.picked.filter((val,index)=>toDo.includes(index)));
+                this.picked = this.picked.filter((val,index)=>!toDo.includes(index));
+            }
 
-            if(check){
-            	this.picked.push(...toDo);
-			}else{
-				this.picked = this.picked.filter((val,index)=>!toDo.includes(index));
-			}
-
-            if(!check) this.$emit('removed', removed);
 			this.inputFocus();
         },
         getResults(){
