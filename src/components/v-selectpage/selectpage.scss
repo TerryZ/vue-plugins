@@ -194,12 +194,13 @@ div.sp-header {
 
     .sp-search-input {
         display: block;
-        border: 1px solid #eee;
+        //border: 1px solid #eee;
+        border: 0;
+        background-color: #f9f9f9;
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
         line-height: 1.43;
-        min-height: 20px;
         padding: 4px 6px;
         box-sizing: border-box;
         outline: none !important;
@@ -209,8 +210,8 @@ div.sp-header {
         transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out, background-color .3s ease-in-out;
 
         &:focus {
-            border: 1px solid #ddd;
-            //box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+            //border: 1px solid #ddd;
+            background-color: #f5f5f5;
         }
     }
 }

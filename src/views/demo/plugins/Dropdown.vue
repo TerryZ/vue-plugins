@@ -42,6 +42,29 @@
                 </dropdown>
             </p>
 
+            <h5 class="mt-5 mb-3">无边框样式</h5>
+            <p>
+                <dropdown :border="false">
+                    <template #caller>
+                        <button type="button" class="btn btn-secondary">dropdown</button>
+                    </template>
+                    <div class="p-5">
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                        <div>0123456789012345678901234567890123456789</div>
+                    </div>
+                </dropdown>
+            </p>
+
             <h5 class="mt-5 mb-3">禁用</h5>
             <div class="custom-control custom-switch mb-3">
                 <input type="checkbox" class="custom-control-input" id="customSwitch1" v-model="disabled">

@@ -164,19 +164,20 @@ export default {
 					 * search content filter
 					 */
 					if(this.search){
-						let reg = '';
-						[...this.search.toLowerCase()].map(val=>reg+=`(?=.*${val})`);
-						reg += '^.*$';
-						console.log(reg)
-                        list = list.filter(val => new RegExp(reg).test(val[this.searchColumn].toLowerCase()));
+                        list = list.filter(val => new RegExp(this.search.toLowerCase()).test(val[this.searchColumn].toLowerCase()));
                     }
                     this.totalRows = list.length;
 
                     if(this.pagination){
-                        const start = (this.pageNumber - 1) * this.pageSize, end = start + this.pageSize -1;
+                        const start = (this.pageNumber - 1) * this.pageSize;
+                        const end = start + this.pageSize -1;
                         this.list = list.filter((val,index) => index >= start && index <= end);
-                    }else this.list = list;
-                }else if(typeof this.data === 'string') this.remote();
+                    }else{
+						this.list = list;
+					}
+                }else if(typeof this.data === 'string'){
+					this.remote();
+				}
 
                 this.lastSearch = this.search;
                 this.highlight = -1;

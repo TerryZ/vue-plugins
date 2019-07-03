@@ -27,6 +27,15 @@ describe('v-selectpage', function() {
 		it('the title text in selectpage should be "v-selectpage test title"', ()=>{
 			expect(wrapper.find('div.sp-header > h3').text()).to.equal('v-selectpage test title');
 		});
+		it('enter query keyword "sa", the result list should only have 2 items',()=>{
+			wrapper.setProps({ disabled: false, pagination: true });
+			wrapper.find('.sp-search-input').setValue('sa');
+			/**
+			 * simulate keyboard enter, because in the real case "populate" method will trigger by keyup event
+			 */
+			wrapper.vm.populate();
+			expect(wrapper.findAll('ul.sp-results li').length).to.equal(2);
+		});
 	});
 	describe('list view', ()=>{
 		describe('single select mode', ()=>{
