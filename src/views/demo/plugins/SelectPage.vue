@@ -46,7 +46,7 @@
                 </p>
 
                 <h5>多选模式，限制最多选择 3 个
-                    <button type="button" class="btn btn-default btn-xs" @click="tmpData=sample1.concat()">修改数据源</button>
+                    <button type="button" class="btn btn-outline-dark btn-sm" @click="tmpData=sample1.concat()">修改数据源</button>
                 </h5>
                 <pre class="bg-light p-3" >{{JSON.stringify(value3, null, 4)}}</pre>
                 <pre class="bg-light p-3" >{{JSON.stringify(value31, null, 4)}}</pre>
