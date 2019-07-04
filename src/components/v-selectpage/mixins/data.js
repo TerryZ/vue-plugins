@@ -159,7 +159,6 @@ export default {
             else this.initSelection();
         },
 		picked(val){
-        	// console.log('picked watch')
 			if(this.message && this.maxSelectLimit && val.length < this.maxSelectLimit) this.message = '';
 			this.$nextTick(()=>{
 				if(this.show){
