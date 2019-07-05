@@ -86,7 +86,7 @@
     button {
         float: left;
         font-weight: 700;
-        line-height: 1;
+        line-height: 1.42;
         color: #000;
 
         -webkit-appearance: none;
@@ -150,7 +150,7 @@
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
-        line-height: 20px;
+        line-height: 1.42;
         min-height: 20px;
         padding: 4px 6px;
         vertical-align: middle;
@@ -231,7 +231,7 @@ div.sm-clear-btn {
                 color: #aaa;
                 text-decoration: none;
                 cursor: pointer;
-                line-height: 100%;
+                line-height: 1.42;
                 background: transparent;
                 border: 1px solid transparent;
                 border-radius: 3px 3px 0 0;
@@ -295,7 +295,7 @@ ul.sm-results {
 
     & > li {
         height: auto;
-        line-height: 1;
+        line-height: 1.42;
         margin: 0;
         overflow: hidden;
         padding: 3px 10px;
@@ -304,10 +304,10 @@ ul.sm-results {
         white-space: nowrap;
         min-width: 180px;
         font-size: 14px;
-        color: #333;
+        color: #666;
         cursor : pointer;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        & > a { color: #333;text-decoration: none;transition: none; }
+        & > a { color: #666;text-decoration: none;transition: none; }
         & > div.sm-selected-icon {
             position: absolute;top: 6px;
             & > i { font-size: 18px;visibility: hidden; }
@@ -327,9 +327,10 @@ ul.sm-results {
             overflow: hidden;
             border-bottom: 1px solid #E5E5E5;
         }
-        &.sm-over { background-color: #2196F3 !important;color: #fff !important;cursor: pointer; }
+        &.sm-over { background-color: #F6F8FA !important;color: black !important;cursor: pointer; }
         &.sm-selected {
             font-weight: 600;
+            color: black;
             & > div.sm-selected-icon > i { visibility: visible; }
         }
     }

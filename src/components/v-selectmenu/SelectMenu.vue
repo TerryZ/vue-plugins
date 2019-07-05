@@ -3,15 +3,12 @@
     <v-dropdown class="v-selectmenu" ref="drop" @show-change="showChange"
                 :align="align"
                 :embed="embed"
-                :x="x"
-                :y="y"
                 :right-click="rightClick" >
 
         <template #caller v-if="!embed">
             <div class="caller-container" ref="caller"
                  @mouseenter="moveIn"
                  @mouseleave="moveOut"
-                 @contextmenu="mouseRight"
                  @click="click">
                 <slot :show="show">
                     <button type="button" :class="['sm-default-btn', {'sm-opened': show}]">
@@ -56,9 +53,15 @@
         </div>
 
         <!-- results list -->
-        <advanced v-if="!regular" :list="results" :search="search" :message="message" :selected="selected"></advanced>
         <regular v-if="regular" :show="show" :data="results"
-                        :parent-instance="$parent" @close="close"></regular>
+                 :parent-instance="$parent" @close="close"></regular>
+        <advanced v-else :list="results"
+                  v-model="highlight"
+                  :search="search"
+                  :scroll="scroll"
+                  :message="message"
+                  :picked="picked"></advanced>
+
     </v-dropdown>
 </template>
 
@@ -68,10 +71,11 @@
 
     import props from './mixins/props';
     import methods from './mixins/methods';
+    import util from './mixins/util';
 
     import drop from 'v-dropdown';
-    import regular from './components/RegularMenu';
-    import advanced from './components/AdvancedMenu';
+    import regular from './components/regular/Menu';
+    import advanced from './components/advanced/List';
 
     export default {
         name: "v-selectmenu",
@@ -80,18 +84,21 @@
             'advanced': advanced,
             'v-dropdown': drop
         },
-        mixins: [props, methods],
+        mixins: [props, methods, util],
         provide(){
             return {
                 parentInst: this.$parent,
-                i18n: this.i18n
+                i18n: this.i18n,
+                keyField: this.keyField,
+                showField: this.showField,
+                inPicked: this.inPicked
             };
         },
         data(){
             return {
                 results: [],
                 subMenus: [],
-                selected: [],
+                picked: [],
                 search: '',
                 headerText: '',
                 i18n: lang[this.language],
@@ -99,8 +106,6 @@
                 show: false,
                 highlight: -1,
                 message: '',
-                x: null,
-                y: null,
                 menuClass:{
                     'sm-regular': false
                 },
@@ -115,7 +120,7 @@
         },
         computed: {
             btnText(){
-                return this.selected.length?this.selected.concat().map(val=>val[this.showField]).join(','):this.i18n.advance_default;
+                return this.picked.length?this.picked.slice().map(val=>val[this.showField]).join(','):this.i18n.advance_default;
             }
         },
         watch:{
@@ -126,7 +131,7 @@
             value(val){
                 this.init();
             },
-            selected(val){
+			picked(val){
                 if(this.message && this.maxSelected && val.length < this.maxSelected) this.message = '';
                 this.$emit('input', val.slice().map(value=>value[this.keyField]).join(','));
                 this.$emit('values', val.slice());
@@ -150,7 +155,7 @@
             else this.init();
 
 
-            console.log(this.results)
+            // console.log(this.results)
             this.$on('clear', this.clear);
         },
         destroyed(){

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-    import mItem from './MenuItem';
+    import mItem from './Item';
     export default {
         name: "v-regular-menu",
         components: {

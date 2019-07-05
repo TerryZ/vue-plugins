@@ -73,6 +73,15 @@
         </p>
         <br>
 
+        <h5>高级模式菜单自定义插槽（Slot）模式</h5>
+        <p>
+            <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
+                <template v-slot="row">
+                    {{row.name}} ( {{row.desc}} )
+                </template>
+            </v-selectmenu>
+        </p>
+
         <h5>高级多分组多选模式菜单</h5>
         <pre class="p-4 bg-light">{{JSON.stringify(value2, null, 4)}}</pre>
         <p>

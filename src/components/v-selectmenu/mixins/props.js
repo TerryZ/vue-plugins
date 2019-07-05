@@ -56,6 +56,10 @@ export default {
 		scroll: {
 			type: Boolean,
 			default: true
+		},
+		rtl: {
+			type: Boolean,
+			default: false
 		}
 	}
 };

@@ -19,8 +19,6 @@ export default {
 			});
 		},
 		reset(){
-			this.x = null;
-			this.y = null;
 			this.highlight = -1;
 		},
 		inputFocus(){
@@ -38,19 +36,19 @@ export default {
 		},
 		clear() {
 			if(!this.regular){
-				this.selected = [];
+				this.picked = [];
 				if(!this.multiple) this.close();
 			}
 		},
 		selectAll(){
 			if(this.results.length && !this.message) {
 				if(this.maxSelected){
-					const left = this.maxSelected - this.selected.length;
+					const left = this.maxSelected - this.picked.length;
 					const available = this.results.concat()
-						.filter(val=>!this.selected.includes(val))
+						.filter(val=>!this.picked.includes(val))
 						.filter((val,idx)=>idx<left);
-					this.selected = [...this.selected, ...available];
-				}else this.selected = this.results;
+					this.picked = [...this.picked, ...available];
+				}else this.picked = this.results;
 			}
 		},
 		processKey(){
@@ -79,15 +77,15 @@ export default {
 		},
 		selectItem(item){
 			if(this.multiple){
-				if(!this.selected.includes(item)) {
-					if(this.maxSelected && this.selected.length === this.maxSelected) this.buildMessage();
-					else this.selected.push(item);
+				if(!this.picked.includes(item)) {
+					if(this.maxSelected && this.picked.length === this.maxSelected) this.buildMessage();
+					else this.picked.push(item);
 				}else{
-					const idx = this.selected.findIndex(value => Object.is(item, value));
-					if(idx !== -1) this.selected.splice(idx, 1);
+					const idx = this.picked.findIndex(value => Object.is(item, value));
+					if(idx !== -1) this.picked.splice(idx, 1);
 				}
 			}else {
-				this.selected = [item];
+				this.picked = [item];
 				this.close();
 			}
 		},
@@ -151,26 +149,6 @@ export default {
 		click(){
 			if(!this.move && !this.rightClick) this.open();
 		},
-		mouseRight(e){
-			if(this.rightClick){
-				e.stopPropagation();
-				e.preventDefault();
-
-				const info = this.scrollInfo();
-				this.x = e.pageX || (e.clientX + info.x);
-				this.y = e.pageY || (e.clientY + info.y);
-
-				this.open();
-			}
-		},
-		scrollInfo(){
-			const supportPageOffset = window.pageXOffset !== undefined;
-			const isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-
-			const x = supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
-			const y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-			return { x: x, y: y };
-		},
 		buildMessage(){
 			this.message = this.i18n.max_selected.replace('max_selected_limit',`<b>${this.maxSelected}</b>`);
 		},
@@ -192,9 +170,9 @@ export default {
                             return vals.includes(String(val[this.keyField]));
                         })];
                     }
-                    this.selected = arr.concat();
+                    this.picked = arr.concat();
                 }else{
-                    this.selected = this.data.concat().filter(val=>vals.includes(String(val[this.keyField])));
+                    this.picked = this.data.concat().filter(val=>vals.includes(String(val[this.keyField])));
                 }
             }
 		}

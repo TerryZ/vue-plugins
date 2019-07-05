@@ -4,14 +4,19 @@
         <ul class="sm-results" :style="listStyle" ref="listUl">
             <!-- advance menu list -->
             <!-- eslint-disable-next-line -->
-            <li pkey="11" v-for="(item,index) in list" :key="index" v-if="!message"
-                @click="selectItem(item)"
-                @mouseenter="highlight(index)"
-                @mouseleave="highlight(-1)"
-                :class="{'sm-selected': selected.includes(item), 'sm-over': index===highlight }">
-                <div class="sm-selected-icon"><i class="sm-iconfont icon-selected"></i></div>
-                <div class="sm-item-text" v-html="getRowText(item)"></div>
-            </li>
+<!--            <li pkey="11" v-for="(item,index) in list" :key="index" v-if="!message"-->
+<!--                @click="selectItem(item)"-->
+<!--                @mouseenter="highlight(index)"-->
+<!--                @mouseleave="highlight(-1)"-->
+<!--                :class="{'sm-selected': selected.includes(item), 'sm-over': index===highlight }">-->
+<!--                <div class="sm-selected-icon"><i class="sm-iconfont icon-selected"></i></div>-->
+<!--                <div class="sm-item-text" v-html="getRowText(item)"></div>-->
+<!--            </li>-->
+            <menu-row v-for="(row, index) in list" :key="index"
+                      :row="row"
+                      @highlight="highlight(index, $event)"
+                      @select="select(row)">
+            </menu-row>
             <!-- no result message -->
             <li class="sm-message-box" v-if="!list.length">
                 <i class="sm-iconfont icon-warn"></i>
@@ -26,15 +31,19 @@
 </template>
 
 <script>
+    import row from './Row';
     export default {
         name: "AdvancedMenu",
+        components:{
+        	'menu-row': row
+        },
         props: {
             list: Array,
+            picked: Array,
             scroll: Boolean,
             group: Boolean,
             search: String,
             message: String,
-            selected: Array,
 			value: Number
         },
         inject: ['i18n'],
@@ -53,13 +62,12 @@
             }
         },
         methods: {
-            getRowText(row){
-                if(typeof this.showField === 'string') return row[this.showField];
-                else if(typeof this.showField === 'function') return this.showField(row);
-            },
-			highlight(index){
-				this.$emit('input', index);
-			}
+			highlight(index, enter){
+				this.$emit('input', enter ? index : -1);
+			},
+            select(row){
+				console.log(row)
+            }
         }
     }
 </script>
