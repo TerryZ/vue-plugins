@@ -1,14 +1,14 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div :class="classes" ref="list">
         <!-- max-height: 300px; -->
         <ul class="sm-results" :style="listStyle" ref="listUl">
             <!-- advance menu list -->
             <!-- eslint-disable-next-line -->
-            <menu-row v-for="(row, index) in list" :key="index"
-                      :row="row"
+            <menu-row v-for="(rowItem, index) in list" :key="index"
+                      :row="rowItem"
                       @highlight="highlight(index, $event)"
-                      @select="select(row)">
-                <template #row v-slot:default="row">
+                      @select="select(rowItem)">
+                <template #row="{ row }">
                     <slot name="row" :row="row"></slot>
                 </template>
             </menu-row>
@@ -64,6 +64,10 @@
 				if(!row || !Object.keys(row).length) return;
                 this.$emit('select', row);
             }
+        },
+        mounted() {
+            // console.log(this.$slots)
+            // console.log(this.$scopedSlots)
         }
     }
 </script>

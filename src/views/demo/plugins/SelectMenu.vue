@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div class="card p-5">
         <h3 class="mb-5">v-selectmenu
             <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
@@ -66,8 +66,9 @@
         <h5>高级模式菜单自定义插槽（Slot）模式</h5>
         <p>
             <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
-                <template #row v-slot:default="row">
-                    <div>{{row.name}} ( {{row.desc}} )</div>
+                <template #row="row">
+                    <!--<div>{{row.name}} ( {{row.desc}} )</div>-->
+                    <div v-html="JSON.stringify(row)"></div>
                 </template>
             </v-selectmenu>
         </p>

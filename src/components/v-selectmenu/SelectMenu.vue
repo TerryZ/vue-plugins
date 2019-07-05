@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <!-- drop down list -->
     <dropdown class="v-selectmenu" ref="drop" @show="showChange"
                 :border="false"
@@ -60,8 +60,8 @@
                   :message="message"
                   :picked="picked"
                   @select="selectItem">
-            <template #row v-slot:default="row">
-                <slot name="row" :row="row"></slot>
+            <template #row="{ row }">
+                <slot name="row" :row="row" ></slot>
             </template>
         </advanced>
 

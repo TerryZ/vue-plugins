@@ -15,20 +15,31 @@ export default {
 		}
 	},
 	render(h){
-		console.log(this.$slots)
+		// console.log(this.$slots)
+        console.log(this.$scopedSlots)
 		const child = [];
 		child.push(h('div',{class:'sm-selected-icon'},[h('i',{class:'sm-iconfont icon-selected'})]));
 		child.push(h('div',{
 			class:'sm-item-text',
-			domProps:{
-				innerHTML: this.getRowText()
-			}
-		}));
+			// domProps:{
+			// 	innerHTML: this.getRowText()
+			// }
+		},[
+            this.$scopedSlots.row({
+                row: this.row
+            })
+        ]));
 		return h('li',{
 			class:{
 				'sm-selected': this.inPicked(this.row),
 				'sm-over': this.hover
 			},
+            // scopedSlots:{
+			//     row: props => {
+			//         console.log(props)
+			//         return h('span', props.text);
+            //     }
+            // },
 			on:{
 				click:e=>{
 					e.stopPropagation();
@@ -41,10 +52,11 @@ export default {
 	},
 	methods:{
 		getRowText(){
-			switch (typeof this.showField) {
-				case 'string':   return this.row[this.showField];
-				case 'function': return this.showField(this.row);
-			}
+			// switch (typeof this.showField) {
+			// 	case 'string':   return this.row[this.showField];
+			// 	case 'function': return this.showField(this.row);
+			// }
+
 		}
 	}
 }
