@@ -1,15 +1,13 @@
 <template>
     <!-- drop down list -->
-    <v-dropdown class="v-selectmenu" ref="drop" @show-change="showChange"
+    <dropdown class="v-selectmenu" ref="drop" @show="showChange"
+                :border="false"
                 :align="align"
                 :embed="embed"
                 :right-click="rightClick" >
 
         <template #caller v-if="!embed">
-            <div class="caller-container" ref="caller"
-                 @mouseenter="moveIn"
-                 @mouseleave="moveOut"
-                 @click="click">
+            <div class="caller-container">
                 <slot :show="show">
                     <button type="button" :class="['sm-default-btn', {'sm-opened': show}]">
                         {{btnText}}
@@ -31,7 +29,7 @@
         </div>
 
         <!-- search bar -->
-        <div class="sm-input-area" v-if="!regular && query">
+        <div class="sm-search" v-if="!regular && query">
             <input type="text" autocomplete="off" ref="input"
                    v-model.trim="search"
                    @keyup="processKey"
@@ -60,15 +58,20 @@
                   :search="search"
                   :scroll="scroll"
                   :message="message"
-                  :picked="picked"></advanced>
+                  :picked="picked"
+                  @select="selectItem">
+            <template #row v-slot:default="row">
+                <slot name="row" :row="row"></slot>
+            </template>
+        </advanced>
 
-    </v-dropdown>
+    </dropdown>
 </template>
 
 <script>
     import './selectmenu.scss';
-    import lang from './language';
 
+	import data from './mixins/data';
     import props from './mixins/props';
     import methods from './mixins/methods';
     import util from './mixins/util';
@@ -82,61 +85,9 @@
         components: {
             'regular': regular,
             'advanced': advanced,
-            'v-dropdown': drop
+            'dropdown': drop
         },
-        mixins: [props, methods, util],
-        provide(){
-            return {
-                parentInst: this.$parent,
-                i18n: this.i18n,
-                keyField: this.keyField,
-                showField: this.showField,
-                inPicked: this.inPicked
-            };
-        },
-        data(){
-            return {
-                results: [],
-                subMenus: [],
-                picked: [],
-                search: '',
-                headerText: '',
-                i18n: lang[this.language],
-                tabIndex: -1,
-                show: false,
-                highlight: -1,
-                message: '',
-                menuClass:{
-                    'sm-regular': false
-                },
-                menuStyle: {
-                    top: '',
-                    left: ''
-                },
-                state: {
-                    group: false
-                }
-            };
-        },
-        computed: {
-            btnText(){
-                return this.picked.length?this.picked.slice().map(val=>val[this.showField]).join(','):this.i18n.advance_default;
-            }
-        },
-        watch:{
-            tabIndex(val){
-                this.tabIndex = val;
-                this.switchTab();
-            },
-            value(val){
-                this.init();
-            },
-			picked(val){
-                if(this.message && this.maxSelected && val.length < this.maxSelected) this.message = '';
-                this.$emit('input', val.slice().map(value=>value[this.keyField]).join(','));
-                this.$emit('values', val.slice());
-            }
-        },
+        mixins: [data, props, methods, util],
         mounted(){
             this.checkDataType();
 
@@ -156,6 +107,7 @@
 
 
             // console.log(this.results)
+            // console.log(this.$slots)
             this.$on('clear', this.clear);
         },
         destroyed(){

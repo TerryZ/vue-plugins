@@ -2,21 +2,15 @@ export default {
 	methods: {
         showChange(val){
             this.show = val;
-            if(!val) this.$emit('hide');
-            if(!this.regular && val) this.inputFocus();
+            if(val){
+				if(!this.regular) this.inputFocus();
+			}else{
+				this.reset();
+				this.$emit('hide');
+			}
         },
-		open(){
-			this.$refs.drop.$emit('show', this.$refs.caller);
-			this.$nextTick(()=>{
-				if(this.show) this.$emit('show');
-			});
-		},
 		close(){
-			this.$refs.drop.$emit('show');
-			this.reset();
-			this.$nextTick(()=>{
-				if(!this.show) this.$emit('hide');
-			});
+			if(this.show) this.$refs.drop.visible();
 		},
 		reset(){
 			this.highlight = -1;
@@ -44,7 +38,7 @@ export default {
 			if(this.results.length && !this.message) {
 				if(this.maxSelected){
 					const left = this.maxSelected - this.picked.length;
-					const available = this.results.concat()
+					const available = this.results.slice()
 						.filter(val=>!this.picked.includes(val))
 						.filter((val,idx)=>idx<left);
 					this.picked = [...this.picked, ...available];
@@ -92,6 +86,8 @@ export default {
 		nextLine(){
 			if(this.highlight < this.results.length-1) this.highlight++;
 
+			if(!this.scroll) return;
+
 			this.$nextTick(()=>{
 				const cur = this.$refs.list.querySelectorAll('.sm-over')[0],
 					curPos = cur.getBoundingClientRect(),
@@ -105,6 +101,9 @@ export default {
 		prevLine(){
 			if(this.highlight > 0) this.highlight--;
 			else if(this.highlight === -1 && this.results.length) this.highlight = this.results.length -1;
+
+			if(!this.scroll) return;
+
 			this.$nextTick(()=>{
 				const cur = this.$refs.list.querySelectorAll('.sm-over')[0],
 					curPos = cur.getBoundingClientRect(),
@@ -131,23 +130,6 @@ export default {
 				const sample = this.data[0];
 				if(sample.title && sample.list) this.state.group = true;
 			}
-		},
-		moveIn(){
-			if(this.move) this.open();
-		},
-		moveOut(e){
-			if(this.move) {
-				/*
-				let info = this.scrollInfo();
-				let theY = e.pageY || (e.clientY + info.y);
-				let callerPos = this.$refs.caller.getBoundingClientRect();
-				if(theY - (callerPos.top + callerPos.height + info.y) > 5) this.close();
-				*/
-				this.close();
-			}
-		},
-		click(){
-			if(!this.move && !this.rightClick) this.open();
 		},
 		buildMessage(){
 			this.message = this.i18n.max_selected.replace('max_selected_limit',`<b>${this.maxSelected}</b>`);

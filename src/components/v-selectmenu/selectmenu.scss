@@ -141,29 +141,31 @@
     }
 }
 
-.sm-input-area {
+.sm-search {
     padding: 3px 10px 10px 10px;
     background-color: #F5F5F5;
-    .sm-input {
-        display: block;
-        background-color: #fcfcfc;
+    input[type="text"] {
+        //display: block;
+        background-color: white;
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
         line-height: 1.42;
-        min-height: 20px;
+        //min-height: 20px;
         padding: 4px 6px;
-        vertical-align: middle;
+        //vertical-align: middle;
         box-sizing: border-box;
         outline: none !important;
-        height: 30px;
+        //height: 30px;
         border-radius: 2px;
-        border: 1px solid #ddd;
+        //border: 1px solid #ddd;
+        border: 0;
 
         will-change: border-color, box-shadow, background-color;
         transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
         &:focus {
-            border: 1px solid #aaa;box-shadow: 0 0 0 3px rgba(150,150,150, 0.2);background-color: white;
+            //box-shadow: 0 0 0 3px rgba(150,150,150, 0.2);
+            //background-color: white;
         }
     }
 }
@@ -214,7 +216,7 @@ div.sm-clear-btn {
 /* group type */
 .sm-result-tabs {
     padding: 0 10px;
-    border-bottom: 1px solid #E6E7E7;
+    //border-bottom: 1px solid #E6E7E7;
     background-color: #F5F5F5;
     ul {
         position: relative;
@@ -233,7 +235,7 @@ div.sm-clear-btn {
                 cursor: pointer;
                 line-height: 1.42;
                 background: transparent;
-                border: 1px solid transparent;
+                //border: 1px solid transparent;
                 border-radius: 3px 3px 0 0;
                 font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
                 &.active {
@@ -264,7 +266,7 @@ div.sm-clear-btn {
     clear: both;
     &:before,
     &:after{ display: table;content: " "; }
-    &.sm-list-mode{ border-top: 1px solid #E6E7E7;}
+    &.sm-list-mode{ /*border-top: 1px solid #E6E7E7;*/ }
     &.sm-advance { min-width: 260px; }
     &.sm-scroll-limit { max-height: 260px; }
 }
@@ -277,8 +279,8 @@ ul.sm-results {
         & > li {
             padding: 0;min-width: auto;
             &:hover{
-                background-color: #2196F3;color: white;
-                a { color: white; }
+                background-color: #F6F8FA;color: black;
+                a { color: black; }
             }
             & > a { width: 100%;display: block;padding: 7px 10px; }
             &.sm-disabled,

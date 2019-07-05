@@ -15,7 +15,7 @@ export default {
 		}
 	},
 	render(h){
-		// console.log(this.$slots)
+		console.log(this.$slots)
 		const child = [];
 		child.push(h('div',{class:'sm-selected-icon'},[h('i',{class:'sm-iconfont icon-selected'})]));
 		child.push(h('div',{

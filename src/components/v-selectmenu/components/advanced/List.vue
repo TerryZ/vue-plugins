@@ -4,18 +4,13 @@
         <ul class="sm-results" :style="listStyle" ref="listUl">
             <!-- advance menu list -->
             <!-- eslint-disable-next-line -->
-<!--            <li pkey="11" v-for="(item,index) in list" :key="index" v-if="!message"-->
-<!--                @click="selectItem(item)"-->
-<!--                @mouseenter="highlight(index)"-->
-<!--                @mouseleave="highlight(-1)"-->
-<!--                :class="{'sm-selected': selected.includes(item), 'sm-over': index===highlight }">-->
-<!--                <div class="sm-selected-icon"><i class="sm-iconfont icon-selected"></i></div>-->
-<!--                <div class="sm-item-text" v-html="getRowText(item)"></div>-->
-<!--            </li>-->
             <menu-row v-for="(row, index) in list" :key="index"
                       :row="row"
                       @highlight="highlight(index, $event)"
                       @select="select(row)">
+                <template #row v-slot:default="row">
+                    <slot name="row" :row="row"></slot>
+                </template>
             </menu-row>
             <!-- no result message -->
             <li class="sm-message-box" v-if="!list.length">
@@ -66,7 +61,8 @@
 				this.$emit('input', enter ? index : -1);
 			},
             select(row){
-				console.log(row)
+				if(!row || !Object.keys(row).length) return;
+                this.$emit('select', row);
             }
         }
     }

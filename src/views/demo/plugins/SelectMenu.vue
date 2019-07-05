@@ -47,6 +47,44 @@
         </div>
         <br>
 
+        <h5>嵌入式菜单</h5>
+        <p>
+            <v-selectmenu :data="menu" :regular="true" :embed="true" >
+                <button type="button" class="btn btn-default">SelectMenu</button>
+            </v-selectmenu>
+        </p>
+        <br>
+
+        <h5>高级模式菜单</h5>
+        <pre class="p-4 bg-light">{{JSON.stringify(value1, null, 4)}}</pre>
+        <p>
+            <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
+            </v-selectmenu>
+        </p>
+        <br>
+
+        <h5>高级模式菜单自定义插槽（Slot）模式</h5>
+        <p>
+            <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
+                <template #row v-slot:default="row">
+                    <div>{{row.name}} ( {{row.desc}} )</div>
+                </template>
+            </v-selectmenu>
+        </p>
+        <br>
+
+        <h5>高级多分组多选模式菜单</h5>
+        <pre class="p-4 bg-light">{{JSON.stringify(value2, null, 4)}}</pre>
+        <p>
+            <v-selectmenu :data="groupData"
+                          :max-selected="3"
+                          :multiple="true"
+                          key-field="id"
+                          v-model="value2" >
+            </v-selectmenu>
+        </p>
+        <br>
+
         <h5>鼠标右键呼出菜单</h5>
         <v-selectmenu :data="menu" :regular="true" :right-click="true" >
             <div class="jumbotron text-center" style="margin: 0;width: 1000px;">
@@ -64,43 +102,6 @@
         </v-selectmenu>
         <br><br>
         -->
-
-        <h5>高级模式菜单</h5>
-        <pre class="p-4 bg-light">{{JSON.stringify(value1, null, 4)}}</pre>
-        <p>
-            <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
-            </v-selectmenu>
-        </p>
-        <br>
-
-        <h5>高级模式菜单自定义插槽（Slot）模式</h5>
-        <p>
-            <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
-                <template v-slot="row">
-                    {{row.name}} ( {{row.desc}} )
-                </template>
-            </v-selectmenu>
-        </p>
-
-        <h5>高级多分组多选模式菜单</h5>
-        <pre class="p-4 bg-light">{{JSON.stringify(value2, null, 4)}}</pre>
-        <p>
-            <v-selectmenu :data="groupData"
-                          :max-selected="3"
-                          :multiple="true"
-                          key-field="id"
-                          v-model="value2" >
-            </v-selectmenu>
-        </p>
-        <br>
-
-        <h5>嵌入式菜单</h5>
-        <p>
-            <v-selectmenu :data="menu" :regular="true" :embed="true" >
-                <button type="button" class="btn btn-default">SelectMenu</button>
-            </v-selectmenu>
-        </p>
-        <br>
     </div>
 </template>
 
