@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
     <!-- drop down list -->
     <dropdown class="v-selectmenu" ref="drop" @show="showChange"
                 :border="false"
@@ -60,7 +60,7 @@
                   :message="message"
                   :picked="picked"
                   @select="selectItem">
-            <template #row="{ row }">
+            <template #row="{ row }" v-if="$scopedSlots.hasOwnProperty('row')">
                 <slot name="row" :row="row" ></slot>
             </template>
         </advanced>
@@ -109,6 +109,9 @@
             // console.log(this.results)
             // console.log(this.$slots)
             this.$on('clear', this.clear);
+
+            // console.log(this.$slots)
+            // console.log(typeof this.$scopedSlots.row)
         },
         destroyed(){
             this.$off('clear', this.clear);
