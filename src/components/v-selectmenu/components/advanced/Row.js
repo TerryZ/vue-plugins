@@ -45,12 +45,3 @@ export default {
 		},child);
 	}
 }
-
-{/*<li pkey="11" v-for="(item,index) in list" :key="index" v-if="!message"*/}
-{/*@click="selectItem(item)"*/}
-{/*@mouseenter="highlight(index)"*/}
-{/*@mouseleave="highlight(-1)"*/}
-{/*:class="{'sm-selected': selected.includes(item), 'sm-over': index===highlight }">*/}
-{/*<div class="sm-selected-icon"><i class="sm-iconfont icon-selected"></i></div>*/}
-{/*<div class="sm-item-text" v-html="getRowText(item)"></div>*/}
-{/*</li>*/}
