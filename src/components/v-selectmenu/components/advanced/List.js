@@ -39,7 +39,7 @@ export default {
             child.push(this.getMessage(h, this.i18n.not_found));
         }
         return h('div',{class:this.classes,ref:'list'},[
-            h('ul',{class:'sm-results',ref:'ul'},child)
+            h('ul',{class:'sm-results'},child)
         ]);
     },
     components:{
