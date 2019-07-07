@@ -14,10 +14,7 @@ export default {
                         hover: index === this.value
                     },
                     on:{
-                        select:e=>{
-                            e.stopPropagation();
-                            this.$emit('select', val);
-                        },
+                        select:()=>this.$emit('select', val),
                         highlight:enter=>this.highlight(index, enter)
                     }
                 };

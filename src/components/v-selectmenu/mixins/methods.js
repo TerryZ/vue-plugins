@@ -10,7 +10,7 @@ export default {
 			}
         },
 		close(){
-			if(this.show) this.$refs.drop.visible();
+			if(this.show && !this.embed) this.$refs.drop.visible();
 		},
 		reset(){
 			this.highlight = -1;

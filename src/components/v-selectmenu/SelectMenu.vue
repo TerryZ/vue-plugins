@@ -1,7 +1,6 @@
 <template>
     <!-- drop down list -->
-    <dropdown class="v-selectmenu" ref="drop" @show="showChange"
-                :border="false"
+    <dropdown ref="drop" @show="showChange"
                 :align="align"
                 :embed="embed"
                 :right-click="rightClick" >
@@ -17,53 +16,55 @@
             </div>
         </template>
 
-        <!-- header bar -->
-        <div class="sm-header" v-if="title || !regular || state.group">
-            <h3 v-text="headerText"></h3>
-            <button type="button" :title="i18n.select_all_btn" class="sm-selectall-button"
-                    @click="selectAll" v-if="!regular && multiple"><i class="sm-iconfont icon-selectall"></i></button>
-            <button type="button" :title="i18n.remove_all_btn" class="sm-removeall-button" @click="clear"
-                    v-if="!regular"><i class="sm-iconfont icon-removeall"></i></button>
-            <button type="button" @click="close" :title="i18n.close_btn" v-if="!embed"
-                    class="sm-close-button">×</button>
-        </div>
+        <div class="v-selectmenu">
+            <!-- header bar -->
+            <div class="sm-header" v-if="title || !regular || state.group">
+                <h3 v-text="headerText"></h3>
+                <button type="button" :title="i18n.select_all_btn" class="sm-selectall-button"
+                        @click="selectAll" v-if="!regular && multiple"><i class="sm-iconfont icon-selectall"></i></button>
+                <button type="button" :title="i18n.remove_all_btn" class="sm-removeall-button" @click="clear"
+                        v-if="!regular"><i class="sm-iconfont icon-removeall"></i></button>
+                <button type="button" @click="close" :title="i18n.close_btn" v-if="!embed"
+                        class="sm-close-button">×</button>
+            </div>
 
-        <!-- search bar -->
-        <div class="sm-search" v-if="!regular && query">
-            <input type="text" autocomplete="off" ref="input"
-                   v-model.trim="search"
-                   @keyup="processKey"
-                   @keydown.stop="processControl"
-                   class="sm-input">
-        </div>
+            <!-- search bar -->
+            <div class="sm-search" v-if="!regular && query">
+                <input type="text" autocomplete="off" ref="input"
+                       v-model.trim="search"
+                       @keyup="processKey"
+                       @keydown.stop="processControl"
+                       class="sm-input">
+            </div>
 
-        <!-- tabs bar -->
-        <div class="sm-result-tabs" v-if="state.group">
-            <ul>
-                <li v-for="(tab,index) in data" :key="index">
-                    <a href="javascript:void(0);"
-                       :tab-id="'selectmenu-tab-' + (index+1)"
-                       :data-index="index"
-                       @click="tabIndex = index"
-                       :class="{active:index === tabIndex}">{{tab.title}}</a>
-                </li>
-            </ul>
-        </div>
+            <!-- tabs bar -->
+            <div class="sm-result-tabs" v-if="state.group">
+                <ul>
+                    <li v-for="(tab,index) in data" :key="index">
+                        <a href="javascript:void(0);"
+                           :tab-id="'selectmenu-tab-' + (index+1)"
+                           :data-index="index"
+                           @click="tabIndex = index"
+                           :class="{active:index === tabIndex}">{{tab.title}}</a>
+                    </li>
+                </ul>
+            </div>
 
-        <!-- results list -->
-        <regular v-if="regular" :show="show" :data="results"
-                 :parent-instance="$parent" @close="close"></regular>
-        <advanced v-else :list="results"
-                  v-model="highlight"
-                  :search="search"
-                  :scroll="scroll"
-                  :message="message"
-                  :picked="picked"
-                  @select="selectItem" ref="list">
-            <template #row="{ row }" v-if="$scopedSlots.hasOwnProperty('row')">
-                <slot name="row" :row="row" ></slot>
-            </template>
-        </advanced>
+            <!-- results list -->
+            <regular v-if="regular" :show="show" :data="results"
+                     :parent-instance="$parent" @close="close"></regular>
+            <advanced v-else :list="results"
+                      v-model="highlight"
+                      :search="search"
+                      :scroll="scroll"
+                      :message="message"
+                      :picked="picked"
+                      @select="selectItem" ref="list">
+                <template #row="{ row }" v-if="$scopedSlots.hasOwnProperty('row')">
+                    <slot name="row" :row="row" ></slot>
+                </template>
+            </advanced>
+        </div>
 
     </dropdown>
 </template>

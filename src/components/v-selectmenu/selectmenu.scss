@@ -1,4 +1,7 @@
+$bg-color-dark: #eee;
+
 .v-selectmenu {
+    border-radius: 2px;
     .caller-container {
         display: inline-block;
     }
@@ -18,7 +21,7 @@
     position: relative;
     padding: 6px 12px;
     background-color: white;
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -111,7 +114,9 @@
 
 .sm-header {
     /*border-bottom: 1px solid #E6E7E7;*/
-    background-color: #F5F5F5;
+    background-color: $bg-color-dark;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
     & > h3 {
         padding: 6px 80px 8px 10px;
         margin: 0;
@@ -143,7 +148,7 @@
 
 .sm-search {
     padding: 3px 10px 10px 10px;
-    background-color: #F5F5F5;
+    background-color: $bg-color-dark;
     input[type="text"] {
         //display: block;
         background-color: white;
@@ -217,7 +222,7 @@ div.sm-clear-btn {
 .sm-result-tabs {
     padding: 0 10px;
     //border-bottom: 1px solid #E6E7E7;
-    background-color: #F5F5F5;
+    background-color: $bg-color-dark;
     ul {
         position: relative;
         bottom: -1px;
