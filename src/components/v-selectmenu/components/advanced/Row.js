@@ -1,19 +1,13 @@
 export default {
 	name:'AdvancedMenuRow',
 	props:{
-		row: Object
+		row: Object,
+        hover: {
+		    type: Boolean,
+            default: false
+        }
 	},
-	inject:['showField', 'inPicked'],
-	data(){
-		return {
-			hover: false
-		};
-	},
-	watch:{
-		hover(val){
-			this.$emit('highlight',val);
-		}
-	},
+	inject:['showField', 'inPicked', 'getRowText'],
 	render(h){
 		const child = [];
 		child.push(h('div',{class:'sm-selected-icon'},[h('i',{class:'sm-iconfont icon-selected'})]));
@@ -30,7 +24,7 @@ export default {
             child.push(h('div',{
                 class:'sm-item-text',
                 domProps:{
-                	innerHTML: this.getRowText()
+                	innerHTML: this.getRowText(this.row)
                 }
             }));
         }
@@ -45,18 +39,10 @@ export default {
 					e.stopPropagation();
 					this.$emit('select');
 				},
-				mouseenter:()=>this.hover = true,
-				mouseleave:()=>this.hover = false
+				mouseenter:()=>this.$emit('highlight',true),
+				mouseleave:()=>this.$emit('highlight',false)
 			}
 		},child);
-	},
-	methods:{
-		getRowText(){
-			switch (typeof this.showField) {
-				case 'string':   return this.row[this.showField];
-				case 'function': return this.showField(this.row);
-			}
-		}
 	}
 }
 

@@ -59,7 +59,7 @@
                   :scroll="scroll"
                   :message="message"
                   :picked="picked"
-                  @select="selectItem">
+                  @select="selectItem" ref="list">
             <template #row="{ row }" v-if="$scopedSlots.hasOwnProperty('row')">
                 <slot name="row" :row="row" ></slot>
             </template>

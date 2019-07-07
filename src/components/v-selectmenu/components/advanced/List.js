@@ -10,12 +10,13 @@ export default {
                 const options = {
                     key:index,
                     props:{
-                        row: val
+                        row: val,
+                        hover: index === this.value
                     },
                     on:{
                         select:e=>{
                             e.stopPropagation();
-                            this.select(val);
+                            this.$emit('select', val);
                         },
                         highlight:enter=>this.highlight(index, enter)
                     }
@@ -24,8 +25,10 @@ export default {
                  * scoped slot with named slot
                  */
                 if('row' in this.$scopedSlots){
+                    //same as <template #row="{ row }">
                     options.scopedSlots = {
                         row:props=>{
+                            //same as <slot name="row" :row="row">
                             return this.$scopedSlots.row({ row: props.row });
                         }
                     };
@@ -35,8 +38,8 @@ export default {
         }else{
             child.push(this.getMessage(h, this.i18n.not_found));
         }
-        return h('div',{class:this.classes},[
-            h('ul',{class:'sm-results'},child)
+        return h('div',{class:this.classes,ref:'list'},[
+            h('ul',{class:'sm-results',ref:'ul'},child)
         ]);
     },
     components:{
@@ -65,10 +68,6 @@ export default {
         highlight(index, enter){
             this.$emit('input', enter ? index : -1);
         },
-        select(row){
-            if(!row || !Object.keys(row).length) return;
-            this.$emit('select', row);
-        },
         getMessage(h, msg){
             return h('li',{class:'sm-message-box'},[
                 h('i',{class:'sm-iconfont icon-warn'}),
@@ -78,6 +77,46 @@ export default {
                     }
                 })
             ]);
-        }
+        },
+        /**
+         * keyboard navigate to next line
+         */
+        next(){
+            const before = this.value;
+            if(this.value < this.list.length-1) this.$emit('input', this.value + 1);
+
+            if(!this.scroll) return;
+
+            this.$nextTick(()=>{
+                if(this.value === before) return;
+                const list = this.$refs.list;
+                const cur = list.querySelectorAll('.sm-over')[0].getBoundingClientRect();
+                const listPos = list.getBoundingClientRect();
+                const dist = (list.scrollTop + cur.bottom) - listPos.bottom;
+                if(dist){
+                    this.$refs.list.scrollTop = dist;
+                }
+            });
+        },
+        /**
+         * keyboard navigate to previous line
+         */
+        prev(){
+            const before = this.value;
+            if(this.value > 0) this.$emit('input', this.value - 1);
+
+            if(!this.scroll) return;
+
+            this.$nextTick(()=>{
+                if(this.value === before) return;
+                const list = this.$refs.list;
+                const cur = list.querySelectorAll('.sm-over')[0].getBoundingClientRect();
+                const listPos = list.getBoundingClientRect();
+                const dist = cur.top - listPos.top;
+                if(dist < 0){
+                    this.$refs.list.scrollTop += dist;
+                }
+            });
+        },
     }
 }

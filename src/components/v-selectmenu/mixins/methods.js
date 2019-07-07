@@ -54,10 +54,10 @@ export default {
 					[13, 9].includes(e.keyCode) && this.highlight !== -1)) {
 				switch (e.keyCode) {
 					case 38:// up
-						this.prevLine();
+                        this.$refs.list.prev();
 						break;
 					case 40:// down
-						this.nextLine();
+						this.$refs.list.next();
 						break;
 					case 9: // tab
 					case 13:// return
@@ -83,39 +83,6 @@ export default {
 				this.close();
 			}
 		},
-		nextLine(){
-			if(this.highlight < this.results.length-1) this.highlight++;
-
-			if(!this.scroll) return;
-
-			this.$nextTick(()=>{
-				const cur = this.$refs.list.querySelectorAll('.sm-over')[0],
-					curPos = cur.getBoundingClientRect(),
-					listPos = this.$refs.listUl.getBoundingClientRect(),
-					relTop = curPos.top - listPos.top,
-					dist = parseInt(relTop + curPos.height - listPos.height);
-				if(parseInt(relTop + curPos.height) > listPos.height)
-                    this.$refs.list.scrollTop = dist;
-			});
-		},
-		prevLine(){
-			if(this.highlight > 0) this.highlight--;
-			else if(this.highlight === -1 && this.results.length) this.highlight = this.results.length -1;
-
-			if(!this.scroll) return;
-
-			this.$nextTick(()=>{
-				const cur = this.$refs.list.querySelectorAll('.sm-over')[0],
-					curPos = cur.getBoundingClientRect(),
-					listPos = this.$refs.listUl.getBoundingClientRect(),
-					relTop = curPos.top - listPos.top,
-					dist = parseInt(this.$refs.list.scrollTop - curPos.height);
-				if(parseInt(relTop) < parseInt(this.$refs.list.scrollTop))
-                    this.$refs.list.scrollTop = dist;
-				if(relTop > listPos.height && this.highlight === this.results.length -1)
-                    this.$refs.list.scrollTop = relTop - listPos.height + curPos.height;
-			});
-		},
 		filter(){
 			const list = this.state.group ? this.data[this.tabIndex].list.concat() : this.data.concat();
 			return list.filter(val=>this.getRowText(val).toLowerCase().includes(this.search.toLowerCase()));
@@ -131,6 +98,12 @@ export default {
 				if(sample.title && sample.list) this.state.group = true;
 			}
 		},
+        getRowText(row){
+            switch (typeof this.showField) {
+                case 'string':   return row[this.showField];
+                case 'function': return this.showField(row);
+            }
+        },
 		buildMessage(){
 			this.message = this.i18n.max_selected.replace('max_selected_limit',`<b>${this.maxSelected}</b>`);
 		},

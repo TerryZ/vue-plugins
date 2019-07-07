@@ -49,7 +49,8 @@ export default {
 			i18n: this.i18n,
 			keyField: this.keyField,
 			showField: this.showField,
-			inPicked: this.inPicked
+			inPicked: this.inPicked,
+            getRowText: this.getRowText
 		};
 	}
 }
