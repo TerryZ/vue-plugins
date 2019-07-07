@@ -90,11 +90,18 @@ export default {
             this.$nextTick(()=>{
                 if(this.value === before) return;
                 const list = this.$refs.list;
-                const cur = list.querySelectorAll('.sm-over')[0].getBoundingClientRect();
+                const cur = list.querySelector('.sm-over').getBoundingClientRect();
                 const listPos = list.getBoundingClientRect();
                 const dist = (list.scrollTop + cur.bottom) - listPos.bottom;
-                if(dist){
-                    this.$refs.list.scrollTop = dist;
+                if(dist > 0){
+                    /**
+                     * when current row is the last row, the scroll bar moves directly to the bottom
+                     */
+                    if(this.value === this.list.length -1){
+                        list.scrollTop = dist + Number.parseInt(getComputedStyle(list).paddingBottom);
+                    }else{
+                        list.scrollTop = dist;
+                    }
                 }
             });
         },
@@ -110,11 +117,11 @@ export default {
             this.$nextTick(()=>{
                 if(this.value === before) return;
                 const list = this.$refs.list;
-                const cur = list.querySelectorAll('.sm-over')[0].getBoundingClientRect();
+                const cur = list.querySelector('.sm-over').getBoundingClientRect();
                 const listPos = list.getBoundingClientRect();
                 const dist = cur.top - listPos.top;
                 if(dist < 0){
-                    this.$refs.list.scrollTop += dist;
+                    list.scrollTop = this.value === 0 ? 0 : list.scrollTop + dist;
                 }
             });
         },
