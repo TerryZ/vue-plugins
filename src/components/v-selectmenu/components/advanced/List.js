@@ -47,7 +47,6 @@ export default {
         picked: Array,
         scroll: Boolean,
         group: Boolean,
-        search: String,
         message: String,
         value: Number
     },

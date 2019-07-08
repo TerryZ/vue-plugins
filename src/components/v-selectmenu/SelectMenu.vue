@@ -52,10 +52,11 @@
 
             <!-- results list -->
             <regular v-if="regular" :show="show" :data="results"
-                     :parent-instance="$parent" @close="close"></regular>
+                     :parent-instance="$parent" @close="close">
+                <slot name="row"></slot>
+            </regular>
             <advanced v-else :list="results"
                       v-model="highlight"
-                      :search="search"
                       :scroll="scroll"
                       :message="message"
                       :picked="picked"
