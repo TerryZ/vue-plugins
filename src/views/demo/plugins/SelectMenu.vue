@@ -111,6 +111,7 @@
     export default {
         methods: {
             doSome(){
+            	// console.log(this.value1);
                 this.$dlg.alert('you can do anything in callback!');
             },
             showLog(){
@@ -168,7 +169,7 @@
                     {content:'163 NetEase',url : 'http://www.163.com'},
                     {content:'Sina',url : 'http://www.sina.com'},
                     {content:'sm_divider'},
-                    {content:'<i class="fa fa-fw fa-github"></i> GitHub',url : 'https://github.com'},
+                    {content:'<fa-icon icon="github"></fa-icon> GitHub',url : 'https://github.com'},
                     {content:'<i class="fa fa-fw fa-reddit"></i> Reddit',url : 'https://www.reddit.com'},
                     {content:'<i class="fa fa-fw fa-facebook"></i> Facebook',url : 'https://www.facebook.com',disabled : true},
                     {content:'<i class="fa fa-fw fa-twitter"></i> Twitter',url : 'https://twitter.com',disabled : true},
