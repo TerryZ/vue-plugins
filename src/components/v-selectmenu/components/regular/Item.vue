@@ -4,9 +4,7 @@
            :target="data.open?'_blank':'_self'" @click="click"
            v-if="data.content !== 'sm-divider' && data.content !== 'sm_divider'">
 <!--            <span v-html="data.content"></span>-->
-            <item-content inline-template>
-                <div v-html="data.content"></div>
-            </item-content>
+            <item-content :content="data.content"></item-content>
             <span class="sm-caret-right" v-if="data.menus"></span>
         </a>
     </li>
