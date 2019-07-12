@@ -12,6 +12,7 @@
             :key="'sub-menu-'+index"
             v-show="currentMenu === sub.mKey"
             v-for="(sub,index) in subMenus">
+            <!-- children menu header -->
             <li class="sm-sub-header">
                 <button type="button" class="sm-sub-back" @click="switchSub(sub, true)">
                     <i class="sm-iconfont icon-back"></i>
