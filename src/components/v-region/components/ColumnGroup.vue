@@ -1,34 +1,34 @@
 <template>
-    <div>
-        <!-- selector mode -->
-        <div class="rg-caller-container" @click.stop.prevent="open" ref="caller">
-            <slot>
-                <!-- default region selector caller button -->
-                <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
-                    {{selectedText?selectedText:lang.pleaseSelect}}
-                    <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
-                    <span class="rg-caret-down" v-else></span>
-                </button>
-            </slot>
-        </div>
-        <v-drop-down ref="drop" @show-change="showChange">
-            <div class="rg-column-container">
-                <v-column @click.native="operLevel=con.PROVINCE_LEVEL"
-                          :list="listProvince" :have-child="city" v-model="dProvince"></v-column>
-                <v-column @click.native="operLevel=con.CITY_LEVEL"
-                          :list="listCity" :have-child="area" v-model="dCity"></v-column>
-                <v-column @click.native="operLevel=con.AREA_LEVEL"
-                          :list="listArea" :have-child="town && haveTown" v-model="dArea"></v-column>
-                <v-column @click.native="operLevel=con.TOWN_LEVEL"
-                          :list="listTown" :have-child="false" v-model="dTown"></v-column>
+    <v-drop-down ref="drop" :border="false" @show-change="showChange">
+        <template #caller>
+            <div class="rg-caller-container">
+                <slot>
+                    <!-- default region selector caller button -->
+                    <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
+                        {{selectedText?selectedText:lang.pleaseSelect}}
+                        <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
+                        <span class="rg-caret-down" v-else></span>
+                    </button>
+                </slot>
             </div>
-        </v-drop-down>
-    </div>
+        </template>
+        <div class="rg-column-container">
+            <v-column @click.native="operLevel=con.PROVINCE_LEVEL" v-if="listProvince.length"
+                      :list="listProvince" :have-child="city" v-model="dProvince"></v-column>
+            <v-column @click.native="operLevel=con.CITY_LEVEL" v-if="listCity.length"
+                      :list="listCity" :have-child="area" v-model="dCity"></v-column>
+            <v-column @click.native="operLevel=con.AREA_LEVEL" v-if="listArea.length"
+                      :list="listArea" :have-child="town && haveTown" v-model="dArea"></v-column>
+            <v-column @click.native="operLevel=con.TOWN_LEVEL" v-if="listTown.length"
+                      :list="listTown" :have-child="false" v-model="dTown"></v-column>
+        </div>
+    </v-drop-down>
 </template>
 
 <script>
     import dropDown from 'v-dropdown';
-    import mixins from '../mixins';
+    import data from '../mixins/data';
+    import method from '../mixins/method';
     import selector from '../mixins/selector';
     import * as constants from '../constants';
     import column from './Column';
@@ -37,7 +37,7 @@
 
     export default {
         name: "ColumnGroup",
-        mixins: [mixins, selector],
+        mixins: [data, method, selector],
         inheritAttrs: false,
         components: {
             'v-drop-down': dropDown,
@@ -50,9 +50,6 @@
             }
         },
         methods: {
-            open(){
-                this.$refs.drop.$emit('show', this.$refs.caller);
-            },
             provinceChange(newVal, oldVal){
                 this.baseProvinceChange(newVal, oldVal);
                 this.checkLevel(PROVINCE_LEVEL);

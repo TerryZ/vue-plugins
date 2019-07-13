@@ -14,12 +14,15 @@ for(let item in d){
     }else if(!(item % 100)){
         city.push({key: item, value: d[item]});
     }else {
-        let num = Number(String(item).substr(2));
-        if(num > 9000) city.push({key: item, value: d[item]});
-        else area.push({key: item, value: d[item]});
+        const num = Number(String(item).substr(2));
+        if(num > 9000){
+            city.push({key: item, value: d[item]});
+        }else{
+            area.push({key: item, value: d[item]});
+        }
     }
 }
 
-export {province as srcProvince};
-export {city as srcCity};
-export {area as srcArea};
+export { province as srcProvince };
+export { city as srcCity };
+export { area as srcArea };

@@ -1,4 +1,4 @@
-import region from './Region.vue';
+import region from './Region';
 
 const Plugin = {
     install(Vue, options = {}){

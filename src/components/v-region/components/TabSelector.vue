@@ -1,69 +1,68 @@
 <template>
-    <div>
-        <!-- selector mode -->
-        <div class="rg-caller-container" @click.stop.prevent="open" ref="caller">
-            <slot>
-                <!-- default region selector caller button -->
-                <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
-                    {{selectedText?selectedText:lang.pleaseSelect}}
-                    <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
-                    <span class="rg-caret-down" v-else></span>
-                </button>
-            </slot>
-        </div>
-        <v-drop-down ref="drop" @show-change="showChange">
-            <!-- header bar -->
-            <div class="rg-header">
-                <h3>
-                    <span v-show="!selectedText" v-text="lang.defaultHead"></span>
-                    <span v-show="selectedText" class="rg-header-selected" v-text="selectedText"></span>
-                </h3>
+    <dropdown ref="drop" :border="false" @show="showChange">
+        <template #caller>
+            <div class="rg-caller-container">
+                <slot>
+                    <!-- default region selector caller button -->
+                    <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
+                        {{selectedText?selectedText:lang.pleaseSelect}}
+                        <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
+                        <span class="rg-caret-down" v-else></span>
+                    </button>
+                </slot>
+            </div>
+        </template>
+        <!-- header bar -->
+        <div class="rg-header">
+            <h3>
+                <span v-show="!selectedText" v-text="lang.defaultHead"></span>
+                <span v-show="selectedText" class="rg-header-selected" v-text="selectedText"></span>
+            </h3>
 
-                <button type="button" :title="lang.clear" @click="clear" class="rg-removeall-button" >
-                    <i class="rg-iconfont icon-remove"></i>
-                </button>
-                <button type="button" :title="lang.done" @click="close" class="rg-done-button" >
-                    <i class="rg-iconfont icon-done"></i>
-                </button>
-            </div>
-            <!-- search bar -->
-            <div class="rg-search" v-if="search">
-                <input type="text" autocomplete="off" ref="input" v-model.trim="query" class="rg-input" placeholder="">
-            </div>
-            <!-- region level tabs -->
-            <div class="rg-level-tabs" >
-                <ul>
-                    <!-- eslint-disable-next-line -->
-                    <li :key="index" v-for="(tab,index) in levels" v-if="levelAvailable">
-                        <a href="javascript:void(0);" @click="level = index"
-                           v-text="tab.title" :class="{active:index === level}"></a>
-                    </li>
-                </ul>
-            </div>
-            <!-- selector mode -->
-            <div class="rg-results-container">
-                <ul class="rg-results">
-                    <li :class="{'rg-item':true,active:matchItem(item)}" @mouseup="itemSelect(item)"
-                        v-text="item.value" :key="index" v-for="(item,index) in list"></li>
-                    <li class="rg-message-box" v-if="list.length === 0" v-text="lang.noMatch"></li>
-                </ul>
-            </div>
-        </v-drop-down>
-    </div>
+            <button type="button" :title="lang.clear" @click="clear" class="rg-removeall-button" >
+                <i class="rg-iconfont icon-remove"></i>
+            </button>
+            <button type="button" :title="lang.done" @click="close" class="rg-done-button" >
+                <i class="rg-iconfont icon-done"></i>
+            </button>
+        </div>
+        <!-- search bar -->
+        <div class="rg-search" v-if="search">
+            <input type="text" autocomplete="off" ref="search" v-model.trim="query" class="rg-input" placeholder="">
+        </div>
+        <!-- region level tabs -->
+        <div class="rg-level-tabs" >
+            <ul>
+                <!-- eslint-disable-next-line -->
+                <li :key="index" v-for="(tab,index) in levels" v-if="levelAvailable">
+                    <a href="javascript:void(0);" @click="level = index"
+                       v-text="tab.title" :class="{active:index === level}"></a>
+                </li>
+            </ul>
+        </div>
+        <!-- selector mode -->
+        <div class="rg-results-container">
+            <ul class="rg-results">
+                <li :class="{'rg-item':true,active:matchItem(item)}" @mouseup="itemSelect(item)"
+                    v-text="item.value" :key="index" v-for="(item,index) in list"></li>
+                <li class="rg-message-box" v-if="list.length === 0" v-text="lang.noMatch"></li>
+            </ul>
+        </div>
+    </dropdown>
 </template>
 
 <script>
-    import dropDown from 'v-dropdown';
-    import mixins from '../mixins';
+    import dropdown from 'v-dropdown';
+    import data from '../mixins/data';
+    import method from '../mixins/method';
+    import search from '../mixins/selectorWithSearch';
     import selector from '../mixins/selector';
     import {PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL} from '../constants';
     export default {
         name: "TabSelector",
-        mixins: [mixins, selector],
+        mixins: [data, method, search, selector],
         inheritAttrs: false,
-        components: {
-            'v-drop-down': dropDown
-        },
+        components: { dropdown },
         props: {
             search: {
                 type: Boolean,
@@ -118,47 +117,22 @@
 			},
         },
         methods: {
-            open(){
-                this.$refs.drop.$emit('show', this.$refs.caller);
-                this.inputFocus();
-            },
-            inputFocus(){
-                if(!this.search) return;
-                this.$nextTick(()=>{
-                    //fix open drop down list and set input focus, the page will scroll to top
-                    //that.$refs.search.focus({preventScroll:true}); only work on Chrome and EDGE
-                    if(this.isChrome() || this.isEdge()) this.$refs.input.focus({preventScroll:true});
-                    else{
-                        let x = window.pageXOffset, y = window.pageYOffset;
-                        this.$refs.input.focus();
-                        if(window.pageYOffset !== y) setTimeout(function() { window.scrollTo(x, y); }, 0);
-                    }
-                });
-            },
             //load list when switch to next level
             getList(val){
                 switch(val){
-                    case PROVINCE_LEVEL:
-                        return this.listProvince;
-                    case CITY_LEVEL:
-                        return this.listCity;
-                    case AREA_LEVEL:
-                        return this.listArea;
-                    case TOWN_LEVEL:
-                        return this.listTown;
+                    case PROVINCE_LEVEL: return this.listProvince;
+                    case CITY_LEVEL: return this.listCity;
+                    case AREA_LEVEL: return this.listArea;
+                    case TOWN_LEVEL: return this.listTown;
                 }
             },
             matchItem(item){
                 if(!item || !Object.keys(item).length) return false;
                 switch(this.level){
-                    case PROVINCE_LEVEL:
-                        return Object.is(item, this.dProvince);
-                    case CITY_LEVEL:
-                        return Object.is(item, this.dCity);
-                    case AREA_LEVEL:
-                        return Object.is(item, this.dArea);
-                    case TOWN_LEVEL:
-                        return Object.is(item, this.dTown);
+                    case PROVINCE_LEVEL: return Object.is(item, this.dProvince);
+                    case CITY_LEVEL: return Object.is(item, this.dCity);
+                    case AREA_LEVEL: return Object.is(item, this.dArea);
+                    case TOWN_LEVEL: return Object.is(item, this.dTown);
                 }
             },
             itemSelect(item){

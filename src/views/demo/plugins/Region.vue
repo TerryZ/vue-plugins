@@ -7,16 +7,17 @@
 
         <h4>下拉选择器模式</h4>
         <p>
-            <v-region :city="true" :area="true" :town="true" :ui="true" :selected="uiSelected" @values="uiValues">
+            <button type="button" class="btn btn-secondary mb-2" @click="changeUiSelected">reset region</button>
+            <br>
+            <v-region :city="true" :area="true" :town="true" type="group" :selected="uiSelected" @values="uiValues">
             </v-region>
-            <button type="button" class="btn btn-default" @click="changeUiSelected">reset region</button>
         </p>
 
         <br>
 
         <h4>下拉选择器模式（自定义呼出按钮）</h4>
         <p>
-            <v-region :ui="true" >
+            <v-region type="group" >
                 <button type="button" class="btn btn-primary">Select a option</button>
             </v-region>
         </p>
@@ -25,7 +26,7 @@
 
         <h4>下拉选择器多列竖排模式</h4>
         <p>
-            <v-region :city="true" :area="true" :town="true" :ui="true" :column="true" @values="uiValues" >
+            <v-region :city="true" :area="true" :town="true" type="column" @values="uiValues" >
             </v-region>
         </p>
 
@@ -33,7 +34,7 @@
 
         <h4>下拉选择器多列竖排模式（自定义呼出按钮）</h4>
         <p>
-            <v-region :ui="true" :column="true">
+            <v-region type="column">
                 <button type="button" class="btn btn-primary">Select a option</button>
             </v-region>
         </p>
@@ -42,7 +43,7 @@
 
         <h4>城市选择器</h4>
         <p>
-            <v-region :ui="true" :city-picker="true" :selected="selectedArray" @values="uiValues"></v-region>
+            <v-region type="city" :selected="selectedArray" @values="uiValues"></v-region>
         </p>
 
         <br>
@@ -50,7 +51,7 @@
         <h4>纯文本模式 <small>初始化选中的项目，以纯文本的内容显示</small></h4>
         <p class="alert alert-info">
             <strong>当前选中地区：</strong>
-            <v-region :town="true" :text="true" :selected="selected" ></v-region>
+            <v-region :town="true" type="text" :selected="selected" ></v-region>
         </p>
 
         <br>

@@ -13,7 +13,7 @@
         <v-drop-down ref="drop" @show-change="showChange">
             <!-- search bar -->
             <div class="rg-search-bar" >
-                <input type="text" autocomplete="off" ref="input" v-model.trim="query" class="rg-input" placeholder="">
+                <input type="text" autocomplete="off" ref="search" v-model.trim="query" class="rg-input" placeholder="">
             </div>
             <div class="rg-picker">
                 <div class="rg-picker__row" :key="index" v-for="(item,index) in list">
@@ -35,13 +35,14 @@
 </template>
 
 <script>
-    import {srcProvince, srcCity} from "../region.js";
+    import {srcProvince, srcCity} from "../formatted.js";
     import selector from '../mixins/selector';
+    import search from '../mixins/selectorWithSearch';
     import language from '../language';
     import dropDown from 'v-dropdown';
     export default {
         name: "CityPicker",
-        mixins: [selector],
+        mixins: [search, selector],
         inheritAttrs: false,
         components: {
             'v-drop-down': dropDown
@@ -142,18 +143,6 @@
             open(){
                 this.$refs.drop.$emit('show', this.$refs.caller);
                 this.inputFocus();
-            },
-            inputFocus(){
-                this.$nextTick(()=>{
-                    //fix open drop down list and set input focus, the page will scroll to top
-                    //that.$refs.search.focus({preventScroll:true}); only work on Chrome and EDGE
-                    if(this.isChrome() || this.isEdge()) this.$refs.input.focus({preventScroll:true});
-                    else{
-                        let x = window.pageXOffset, y = window.pageYOffset;
-                        this.$refs.input.focus();
-                        if(window.pageYOffset !== y) setTimeout(function() { window.scrollTo(x, y); }, 0);
-                    }
-                });
             },
             clear(){
                 this.picked = [];

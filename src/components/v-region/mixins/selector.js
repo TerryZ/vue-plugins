@@ -6,18 +6,15 @@ export default {
     },
     methods: {
         close(){
-            this.$nextTick(()=>{
-                this.$refs.drop.$emit('show');
-            });
+            if(this.show) this.$refs.drop.visible();
         },
         showChange(val){
             this.show = val;
-        },
-        isChrome(){
-            return navigator.vendor !== undefined && navigator.vendor.indexOf("Google") !== -1;
-        },
-        isEdge(){
-            return navigator.userAgent.indexOf("Edge") >= 0;
+            if(val){
+
+            }else{
+
+            }
         }
     }
 };
