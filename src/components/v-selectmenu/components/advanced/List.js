@@ -120,6 +120,6 @@ export default {
                     list.scrollTop = this.value === 0 ? 0 : list.scrollTop + dist;
                 }
             });
-        },
+        }
     }
 }
