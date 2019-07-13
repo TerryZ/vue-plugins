@@ -48,9 +48,11 @@ export default {
                     'blank-text': this.lang.pleaseSelect,
                     list: list
                 },
-                model:{
-                    value:model,
-                    callback: callback
+                attrs:{
+                    value:model
+                },
+                on:{
+                    input: callback
                 }
             });
         },
