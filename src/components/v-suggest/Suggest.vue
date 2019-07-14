@@ -1,36 +1,34 @@
 <template>
-    <div :name="name">
-        <input type="text" v-model.trim="text" :placeholder="placeholder" :disabled="disabled" ref="input"
-               @keyup="processKey"
-               @keydown="processControl"
-               @focus="open" >
-        <div class="sg-clear"
-             @click="clear"
-             v-show="text"
-             v-if="!disabled">
-            <span>×</span>
-        </div>
-
-        <v-drop-down ref="drop" :re-open="false" :animated="false" @show-change="showChange">
-            <ul class="sg-results" :style="{width: width+'px'}" ref="list" >
-                <li :key="index" v-for="(row,index) in list"
-                    :class="['sg-results__row',{'sg-over': highlight === index}]"
-                    @click="selectItem(row)"
-                    @mouseenter="highlight = index"
-                    @mouseleave="highlight = -1"
-                    v-html="getRow(row)" ></li>
-            </ul>
-        </v-drop-down>
-    </div>
+    <dropdown ref="drop" :re-open="false" :animated="false" @show-change="showChange">
+        <template #caller>
+            <input type="text" v-model.trim="text" :placeholder="placeholder" :disabled="disabled" ref="input"
+                   @keyup="processKey"
+                   @keydown="processControl"
+                   @focus="open" >
+            <div class="sg-clear"
+                 @click="clear"
+                 v-show="text"
+                 v-if="!disabled">
+                <span>×</span>
+            </div>
+        </template>
+        <ul class="sg-results" :style="{width: width+'px'}" ref="list" >
+            <li :key="index" v-for="(row,index) in list"
+                :class="['sg-results__row',{'sg-over': highlight === index}]"
+                @click="selectItem(row)"
+                @mouseenter="highlight = index"
+                @mouseleave="highlight = -1"
+                v-html="getRow(row)" ></li>
+        </ul>
+    </dropdown>
 </template>
 
 <script>
     import './suggest.scss';
-    import drop from 'v-dropdown';
-    // import drop from '../v-dropdown/Dropdown';
+    import dropdown from 'v-dropdown';
     export default {
         name: "v-suggest",
-        components: { 'v-drop-down': drop },
+        components: { dropdown },
         props: {
             data: Array,
             value: String,

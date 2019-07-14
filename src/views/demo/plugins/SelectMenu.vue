@@ -252,7 +252,6 @@
                             {content:'Twitter',url : 'https://twitter.com'}
                         ]
                     }
-
                 ]
             };
         }
