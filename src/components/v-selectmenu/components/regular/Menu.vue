@@ -11,7 +11,7 @@
         <ul :class="[baseClass, 'sm-sub-menu', subMenuSlide]"
             :key="'sub-menu-'+index"
             v-show="currentMenu === sub.mKey"
-            v-for="(sub,index) in subMenus">
+            v-for="(sub,index) in child">
             <!-- children menu header -->
             <li class="sm-sub-header">
                 <button type="button" class="sm-sub-back" @click="switchSub(sub, true)">
@@ -23,7 +23,7 @@
             <v-menu-item :data="item" is="v-menu-item"
                          :key="'item'+index+idx"
                          @click.native="switchSub(item)"
-                         v-for="(item,idx) in sub.menus"></v-menu-item>
+                         v-for="(item,idx) in sub.children"></v-menu-item>
         </ul>
         <!--</transition-group>-->
     </div>
@@ -50,7 +50,7 @@
         inject: ['parentInst'],
         data(){
             return {
-                subMenus: [],
+                child: [],
                 currentMenu: 'root',
 
                 fadeInLeft: false,
@@ -77,7 +77,7 @@
         },
         methods: {
             pushMenu(menu, parent, index){
-                if(menu && menu.menus && menu.menus.length){
+                if(menu && menu.children && menu.children.length){
                     let prefix = 'menu-';
                     if(!parent) {
                         menu.mKey = prefix + index;
@@ -86,26 +86,23 @@
                         menu.mKey = parent.mKey + '-' + index;
                         menu.pKey = parent.mKey;
                     }
-                    this.subMenus.push(menu);
-                    for(let i=0;i < menu.menus.length; i++){
-                        if(menu.menus[i] && menu.menus[i].menus) this.pushMenu(menu.menus[i], menu, i);
+                    this.child.push(menu);
+                    for(let i=0;i < menu.children.length; i++){
+                        if(menu.children[i] && menu.children[i].children) this.pushMenu(menu.children[i], menu, i);
                     }
                 }
             },
             getSubs(){
                 if(this.data && this.data.length){
-                    this.subMenus = [];
-                    let list = this.data.concat();
-                    for(let i=0;i < list.length; i++){
-                        this.pushMenu(list[i], null, i);
-                    }
+                    this.child = [];
+                    this.data.forEach((val, index)=>this.pushMenu(val, null, index));
                 }
             },
             switchSub(row, parent){
                 if(row && Object.keys(row).length){
                     if(!parent){
                         if(row.mKey) this.currentMenu = row.mKey;
-                        if(row.menus){
+                        if(row.children){
                             this.subMenuSlide.fadeInLeft = false;
                             this.subMenuSlide.fadeInRight = true;
                         }
@@ -117,7 +114,7 @@
                             this.subMenuSlide.fadeInRight = false;
                         }
                     }
-                    if(!row.disabled && !row.menus) this.$emit('close');
+                    if(!row.disabled && !row.children) this.$emit('close');
                 }
 
             }

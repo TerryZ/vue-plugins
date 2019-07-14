@@ -193,27 +193,27 @@
                         }}
                 ],
                 multiLevel : [
-                    {content:'Sports',menus: [
+                    {content:'Sports',children: [
                         {content:'Fivb',url : 'http://www.fivb.com/'},
                         {content:'Fifa',url : 'http://www.fifa.com/'},
-                        {content:'NBA',menus: [
+                        {content:'NBA',children: [
                             {content:'NBA official site',url : 'http://www.nba.com'},
                             {content:'Chicago Bulls',url : 'http://www.nba.com/bulls/'},
                             {content:'Los Angeles Lakers',url : 'www.nba.com/lakers/'}
                         ]}
                     ]},
                     {content:'sm_divider'},
-                    {content:'News',menus: [
+                    {content:'News',children: [
                         {content:'BBC',url : 'http://www.bbc.com/news'},
                         {content:'CNN',url : 'http://www.cnn.com'},
                         {content:'Xinhua',url : 'http://www.xinhuanet.com'}
                     ]},
-                    {content:'Technology',menus: [
+                    {content:'Technology',children: [
                         {content:'Github',url : 'https://github.com'},
                         {content:'StackOverflow',url : 'https://stackoverflow.com/'},
                         {content:'Reddit',url : 'https://www.reddit.com'}
                     ]},
-                    {content:'Social',menus: [
+                    {content:'Social',children: [
                         {content:'Facebook',url : 'https://www.facebook.com'},
                         {content:'Twitter',url : 'https://twitter.com'}
                     ]}
