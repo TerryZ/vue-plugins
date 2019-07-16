@@ -15,19 +15,6 @@ export default {
 		reset(){
 			this.highlight = -1;
 		},
-		inputFocus(){
-			if(!this.query) return;
-			this.$nextTick(()=>{
-				//fix open drop down list and set input focus, the page will scroll to top
-				//that.$refs.search.focus({preventScroll:true}); only work on Chrome and EDGE
-				if(this.isChrome() || this.isEdge()) this.$refs.input.focus({preventScroll:true});
-				else{
-					const x = window.pageXOffset, y = window.pageYOffset;
-					this.$refs.input.focus();
-					if(window.pageYOffset !== y) setTimeout(function() { window.scrollTo(x, y); }, 0);
-				}
-			});
-		},
 		clear() {
 			if(!this.regular){
 				this.picked = [];

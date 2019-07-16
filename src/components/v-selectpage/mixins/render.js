@@ -87,7 +87,7 @@ export default {
                     attrs:{
                         type:'text',
                         autocomplete:'off',
-                        value:this.search
+                        value:this.search.trim()
                     },
                     class:{
                     	'sp-search-input': true,

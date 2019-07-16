@@ -1,10 +1,10 @@
 $bg-color-dark: #eee;
 
+.sm-caller-container {
+    display: inline-block;
+}
 .v-selectmenu {
     border-radius: 2px;
-    .caller-container {
-        display: inline-block;
-    }
 }
 /**
  * Target item style, when menu opened
@@ -343,7 +343,6 @@ ul.sm-results {
     }
 }
 
-.sm-input-off { background: #eee;color: #333; }
 .sm-hide { display: none; }
 
 /* 移除微软浏览器，在输入框输入文本后，会出现X的问题，but it's look like not working */
