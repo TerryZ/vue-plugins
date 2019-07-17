@@ -1,6 +1,9 @@
 import row from './Row';
 export default {
     name: "AdvancedMenu",
+	components:{
+		'menu-row': row
+	},
     render(h){
         const child = [];
         if(this.message){
@@ -38,9 +41,6 @@ export default {
         return h('div',{class:this.classes,ref:'list'},[
             h('ul',{class:'sm-results'},child)
         ]);
-    },
-    components:{
-        'menu-row': row
     },
     props: {
         list: Array,

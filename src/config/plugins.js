@@ -18,6 +18,20 @@ import http from '@/utils/http/index';
 
 import * as hooks from './hooks';
 
+// font-awesome 5.x
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(fas);
+library.add(fab);
+library.add(far);
+
+FontAwesomeIcon.props.fixedWidth.default = true;
+
+Vue.component('fa-icon', FontAwesomeIcon);
 
 Vue.use(vDialog);
 Vue.use(vTableGrid, hooks.gridConfig);

@@ -5,7 +5,11 @@
             <!-- regular menu items -->
             <v-menu-item :data="menu" is="v-menu-item" :key="'root-'+index"
                          @click.native="switchSub(menu)"
-                         v-for="(menu,index) in data"></v-menu-item>
+                         v-for="(menu,index) in data">
+                <template #row="{ row }" v-if="$scopedSlots.hasOwnProperty('row')">
+                    <slot name="row" :row="row"></slot>
+                </template>
+            </v-menu-item>
         </ul>
         <!--<transition-group tag="span" name="vivify" enter-class="fadeInLeft" leave-class="fadeInRight">-->
         <ul :class="[baseClass, 'sm-sub-menu', subMenuSlide]"

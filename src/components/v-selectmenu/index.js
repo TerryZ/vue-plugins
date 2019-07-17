@@ -1,4 +1,4 @@
-import vSelectMenu from './SelectMenu.vue';
+import vSelectMenu from './SelectMenu';
 
 const Plugin = {
     install(Vue, options = {}){

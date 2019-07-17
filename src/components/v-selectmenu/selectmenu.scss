@@ -51,12 +51,13 @@ $bg-color-dark: #eee;
     display: inline-block;
     width: 0;
     height: 0;
-    margin-left: 5px;
+    margin-left: 8px;
     border-top: 4px solid;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     vertical-align: middle;
     content: "";
+    margin-bottom: 2px;
 }
 
 .sm-caret-right {

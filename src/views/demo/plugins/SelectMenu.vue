@@ -9,7 +9,8 @@
             <v-selectmenu :data="menu"
                           :regular="true"
                           @show="showLog"
-                          @hide="hideLog" ></v-selectmenu>
+                          @hide="hideLog" >
+            </v-selectmenu>
         </p>
         <br>
 
@@ -51,6 +52,12 @@
         <p>
             <v-selectmenu :data="menu" :regular="true" :embed="true" >
                 <button type="button" class="btn btn-default">SelectMenu</button>
+                <template #row="{ row }">
+                    <span>
+                        <fa-icon class="fa-lg mr-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
+                        <span v-html="row.content"></span>
+                    </span>
+                </template>
             </v-selectmenu>
         </p>
         <br>
@@ -66,9 +73,9 @@
         <h5>高级模式菜单自定义插槽（Slot）模式</h5>
         <p>
             <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
-                <template #row="row">
+                <template #row="{ row }">
                     <!--<div>{{row.name}} ( {{row.desc}} )</div>-->
-                    <div v-html="JSON.stringify(row)"></div>
+                    <div v-html="`${row.name} (${row.desc})`"></div>
                 </template>
             </v-selectmenu>
         </p>
@@ -169,10 +176,10 @@
                     {content:'163 NetEase',url : 'http://www.163.com'},
                     {content:'Sina',url : 'http://www.sina.com'},
                     {content:'sm_divider'},
-                    {content:'<fa-icon icon="github"></fa-icon> GitHub',url : 'https://github.com'},
-                    {content:'<i class="fa fa-fw fa-reddit"></i> Reddit',url : 'https://www.reddit.com'},
-                    {content:'<i class="fa fa-fw fa-facebook"></i> Facebook',url : 'https://www.facebook.com',disabled : true},
-                    {content:'<i class="fa fa-fw fa-twitter"></i> Twitter',url : 'https://twitter.com',disabled : true},
+                    {content:'GitHub', icon: 'fab,github', url : 'https://github.com'},
+                    {content:'Reddit', icon: 'fab,reddit',url : 'https://www.reddit.com'},
+                    {content:'Facebook', icon: 'fab,facebook',url : 'https://www.facebook.com',disabled : true},
+                    {content:'Twitter', icon: 'fab,twitter',url : 'https://twitter.com',disabled : true},
                     {content:'sm_divider'},
                     {content:'Click this menu item to trigger your callback',callback : this.doSome}
                 ],

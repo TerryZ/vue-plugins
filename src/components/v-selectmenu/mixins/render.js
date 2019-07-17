@@ -7,7 +7,7 @@ export default {
 				'border': false,
 				'embed': this.embed,
 				'right-click': this.rightClick,
-				'align': this.rtl ? 'right' : 'left'
+				'align': this.align
 			},
 			on: {
 				show: this.showChange
@@ -132,13 +132,24 @@ export default {
 				]);
 			}
 		},
+		buildNamedSlot(option){
+			/**
+			 * scoped slot with named slot
+			 */
+			if('row' in this.$scopedSlots){
+				//same as <template #row="{ row }">
+				option.scopedSlots = {
+					row:props=>{
+						//same as <slot name="row" :row="row">
+						return this.$scopedSlots.row({ row: props.row });
+					}
+				};
+			}
+		},
 		buildContent(h){
+			let options = null;
 			if(this.regular){
-				let slot = undefined;
-				if('row' in this.$scopedSlots){
-					slot = this.$scopedSlots.row();
-				}
-				return h('regular',{
+				options = {
 					props:{
 						data: this.results,
 						show: this.show
@@ -146,16 +157,14 @@ export default {
 					on:{
 						close:()=>this.close()
 					}
-				},slot);
+				};
 			}else{
-				const options = {
+				options = {
 					props:{
 						list:this.results,
 						scroll:this.scroll,
 						message:this.message,
-						picked:this.picked
-					},
-					domProps:{
+						picked:this.picked,
 						value:this.highlight
 					},
 					on:{
@@ -164,20 +173,9 @@ export default {
 					},
 					ref:'list'
 				};
-				/**
-				 * scoped slot with named slot
-				 */
-				if('row' in this.$scopedSlots){
-					//same as <template #row="{ row }">
-					options.scopedSlots = {
-						row:props=>{
-							//same as <slot name="row" :row="row">
-							return this.$scopedSlots.row({ row: props.row });
-						}
-					};
-				}
-				return h('advanced', options);
 			}
+			this.buildNamedSlot(options);
+			return h(this.regular ? 'regular' : 'advanced', options);
 		}
 	}
 }
