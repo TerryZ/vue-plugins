@@ -39,7 +39,6 @@ export default {
 					}
 				}
 
-
                 child.push(h('a',linkOption,item));
             }
             return h('li',{ class:this.classes },child);
