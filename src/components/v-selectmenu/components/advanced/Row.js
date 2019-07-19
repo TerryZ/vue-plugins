@@ -10,7 +10,7 @@ export default {
 	inject:['showField', 'inPicked', 'getRowText'],
 	render(h){
 		const child = [];
-		child.push(h('div',{class:'sm-selected-icon'},[h('i',{class:'sm-iconfont icon-selected'})]));
+		child.push(h('div',{class:'sm-selected-icon'},[h('i',{class:'sm-iconfont sm-icon-selected'})]));
 		if('row' in this.$scopedSlots){
             /**
              * build scoped slot with named slot

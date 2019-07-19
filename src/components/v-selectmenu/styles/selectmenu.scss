@@ -1,0 +1,352 @@
+@import "./icon.scss";
+
+$bg-color-dark: #eee;
+
+.sm-caller-container {
+    display: inline-block;
+}
+.v-selectmenu {
+    border-radius: 2px;
+}
+/**
+ * Target item style, when menu opened
+ */
+.sm-target-clicked {
+    background-color: #e9ecef;
+    background-image: none;
+    border-color: rgba(27,31,35,0.35);
+    box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,0.15);
+}
+
+.sm-default-btn {
+    display: inline-block;
+    position: relative;
+    padding: 6px 12px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    outline: 0 !important;
+    color: #666;
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+    span.sm-caret-down { transition:transform .2s ease; }
+    &.sm-opened {
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+        border: 1px solid #aaa;
+        color: black;
+        background-color: #e0e0e0;
+        span.sm-caret-down { transform: rotate(180deg); }
+        &:hover { background-color: #e0e0e0;border: 1px solid #aaa; }
+    }
+    &:hover{
+        border: 1px solid #aaa;
+        background-color: #e0e0e0;
+        color: black;
+    }
+}
+
+.sm-caret-down {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 8px;
+    border-top: 4px solid;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    vertical-align: middle;
+    content: "";
+    margin-bottom: 2px;
+}
+
+.sm-caret-right {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 10px;
+    border-left: 4px solid;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    margin-top: 3px;
+    content: "";
+    position: absolute;
+    top: 7px;
+    right: 10px;
+}
+
+/* Sub menus */
+.sm-sub-menu { /*display: none;*/ }
+.sm-sub-header {
+    margin-top: 2px !important;
+    &:hover {
+        background-color: transparent !important;
+        color: black !important;
+        cursor: default !important;
+    }
+    p {
+        padding: 0;margin: 0;font-weight: 600;line-height: 26px;font-size: 16px;
+    }
+    button {
+        float: left;
+        font-weight: 700;
+        line-height: 1.42;
+        color: #000;
+
+        -webkit-appearance: none;
+        padding: 0;
+        cursor: pointer;
+        background: 0 0;
+        border: 0;
+
+        -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
+        transition: all .5s cubic-bezier(.175,.885,.32,1);
+        height: 26px;
+        width: 30px;
+        text-shadow: none;
+        outline: none !important;
+        margin: 0;
+        opacity: 0.5;
+        font-size: 14px !important;
+        &:hover { opacity: 1; }
+        i { font-size: 16px; }
+    }
+}
+
+.sm-header {
+    /*border-bottom: 1px solid #E6E7E7;*/
+    background-color: $bg-color-dark;
+    border-radius: 2px 2px 0 0;
+    & > h3 {
+        padding: 6px 80px 8px 10px;
+        margin: 0;
+        height: 31px;
+        text-align: left;
+        color: #24292e;
+        font-size: 16px;
+        white-space: nowrap;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+    button{
+        position: absolute;
+        -webkit-appearance: none;
+        padding: 0;
+        cursor: pointer;
+        background: 0 0;
+        border: 0;
+        outline: none;
+        line-height: 100%;
+        color: #999;
+        top: 3px;
+        font-size: 20px;
+        &.sm-close-button { right: 10px; }
+        &.sm-removeall-button { right: 32px; }
+        &.sm-selectall-button { right: 54px; }
+        &:hover { color: black; }
+    }
+}
+
+.sm-search {
+    padding: 3px 10px 10px 10px;
+    background-color: $bg-color-dark;
+    input[type="text"] {
+        //display: block;
+        background-color: white;
+        margin: 0 !important;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.42;
+        //min-height: 20px;
+        padding: 4px 6px;
+        //vertical-align: middle;
+        box-sizing: border-box;
+        outline: none !important;
+        //height: 30px;
+        border-radius: 2px;
+        //border: 1px solid #ddd;
+        border: 0;
+
+        will-change: border-color, box-shadow, background-color;
+        transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+        &:focus {
+            //box-shadow: 0 0 0 3px rgba(150,150,150, 0.2);
+            //background-color: white;
+        }
+    }
+}
+
+/**
+ * "Get all" button
+ */
+div.sm-button {
+    display: inline-block;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+
+    border: 0;
+    width: 24px;
+    height: 100%;
+    padding: 0;
+    vertical-align: middle;
+    line-height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    span.caret {
+        position: absolute;top: 50%;right: 12px;margin-top: -1px;vertical-align: middle;
+    }
+}
+
+div.sm-clear-btn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    display: block;
+    width: auto;
+    height: 100%;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    margin: 0;
+    padding: 4px 0 0 0;
+    box-sizing: border-box;
+    line-height: 1;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+    &:hover { color: black;font-weight: bold; }
+}
+
+/* group type */
+.sm-result-tabs {
+    padding: 0 10px;
+    //border-bottom: 1px solid #E6E7E7;
+    background-color: $bg-color-dark;
+    ul {
+        position: relative;
+        //bottom: -1px;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        li {
+            display: inline-block;
+            a {
+                display: inline-block;
+                padding: 5px 12px 3px;
+                font-size: 14px;
+                color: #aaa;
+                text-decoration: none;
+                cursor: pointer;
+                line-height: 1.42;
+                background: transparent;
+                //border: 1px solid transparent;
+                border-radius: 2px 2px 0 0;
+                font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+                &.active {
+                    color: #24292e;
+                    background-color: #fff;
+                    border-color: #dfe2e5;
+                    border-bottom-color: #fff;
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Results
+ */
+.sm-result-area {
+    /* background-color: transparent; */
+    background-color: white;
+    /*border: 1px solid #D6D7D7;*/
+    list-style: none;
+    margin: 0;
+    padding: 5px 0;
+    position: relative;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    clear: both;
+    &:before,
+    &:after{ display: table;content: " "; }
+    &.sm-list-mode{ /*border-top: 1px solid #E6E7E7;*/ }
+    &.sm-advance { min-width: 260px; }
+    &.sm-scroll-limit { max-height: 260px; }
+}
+
+/* regular menu item style */
+ul.sm-results {
+    background-color: white;list-style: none;margin: 0;padding: 0;
+    &.sm-regular {
+        width: auto;min-width: 150px;padding: 5px 0;
+        & > li {
+            padding: 0;min-width: auto;
+            &:hover{
+                background-color: #F6F8FA;color: black;
+                a { color: black; }
+            }
+            & > a { width: 100%;display: block;padding: 7px 10px; }
+            &.sm-disabled,
+            &.sm-disabled:hover,
+            &.sm-disabled a{ background-color: white;color: #ccc;cursor: default; }
+            &.sm-header,
+            &.sm-header:hover,
+            &.sm-header a {
+                background-color: white;color: black;font-size: 16px;font-weight: 600;cursor: default;
+            }
+            &.sm-divider { background-color: white; }
+        }
+    }
+
+    & > li {
+        height: auto;
+        line-height: 1.42;
+        margin: 0;
+        overflow: hidden;
+        padding: 3px 10px;
+        position: relative;
+        text-align: left;
+        white-space: nowrap;
+        min-width: 180px;
+        font-size: 14px;
+        color: #666;
+        cursor : pointer;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        & > a { color: #666;text-decoration: none;transition: none; }
+        & > div.sm-selected-icon {
+            position: absolute;top: 6px;
+            & > i { font-size: 18px;visibility: hidden; }
+        }
+        & > div.sm-item-text {
+            font-size: 14px;display: block;line-height: 1.7;position: relative;margin-left: 30px;
+        }
+        &.sm-message-box {
+            position: relative;cursor: default;padding-left: 12px;
+            i { font-size: 22px;position: absolute;top:6px; }
+            span { font-size: 16px;line-height: 1.7;margin-left: 28px; }
+        }
+        &.sm-divider {
+            margin: 8px 0;
+            padding: 0;
+            cursor: default;
+            overflow: hidden;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        &.sm-over { background-color: #F6F8FA !important;color: black !important;cursor: pointer; }
+        &.sm-selected {
+            font-weight: 600;
+            color: black;
+            & > div.sm-selected-icon > i { visibility: visible; }
+        }
+    }
+}
+
+.sm-hide { display: none; }
+
+/* 移除微软浏览器，在输入框输入文本后，会出现X的问题，but it's look like not working */
+input::-ms-clear{display:none;}/*隐藏文本框叉子*/
+input::-ms-reveal{display:none;}/*隐藏密码框小眼睛*/

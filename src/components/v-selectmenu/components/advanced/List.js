@@ -66,7 +66,7 @@ export default {
         },
         getMessage(h, msg){
             return h('li',{class:'sm-message-box'},[
-                h('i',{class:'sm-iconfont icon-warn'}),
+                h('i',{class:'sm-iconfont sm-icon-warn'}),
                 h('span',{
                     domProps:{
                         innerHTML:msg

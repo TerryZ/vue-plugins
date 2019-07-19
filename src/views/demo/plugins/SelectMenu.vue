@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
     <div class="card p-5">
         <h3 class="mb-5">v-selectmenu
             <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
@@ -8,6 +8,7 @@
         <p>
             <v-selectmenu :data="menu"
                           :regular="true"
+                          title="abc"
                           @show="showLog"
                           @hide="hideLog" >
             </v-selectmenu>
@@ -49,17 +50,27 @@
         <br>
 
         <h5>嵌入式菜单</h5>
-        <p>
-            <v-selectmenu :data="menu" :regular="true" :embed="true" >
-                <button type="button" class="btn btn-default">SelectMenu</button>
-                <template #row="{ row }">
+        <div class="row">
+            <div class="col-md-6">
+                <v-selectmenu :data="menu" :regular="true" :embed="true" >
+                    <button type="button" class="btn btn-default">SelectMenu</button>
+                    <template #row="{ row }">
                     <span>
                         <fa-icon class="fa-lg mr-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
                         <span v-html="row.content"></span>
                     </span>
-                </template>
-            </v-selectmenu>
-        </p>
+                    </template>
+                </v-selectmenu>
+            </div>
+            <div class="col-md-6">
+                <v-selectmenu :data="groupData"
+                              :embed="true"
+                              :multiple="true"
+                              key-field="id"
+                              v-model="value2" >
+                </v-selectmenu>
+            </div>
+        </div>
         <br>
 
         <h5>高级模式菜单</h5>

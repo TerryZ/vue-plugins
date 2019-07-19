@@ -1,4 +1,4 @@
-import '../../animated.scss';
+import '../../styles/animated.scss';
 import mItem from './Item';
 export default {
     name: "v-regular-menu",
@@ -24,7 +24,8 @@ export default {
                     nativeOn:{
                         click:()=>this.switchSub(val)
                     }
-                };/**
+                };
+                /**
                  * scoped slot with named slot
                  */
                 if('row' in this.$scopedSlots){
@@ -138,7 +139,7 @@ export default {
                                 click:()=>this.switchSub(val, true)
                             }
                         },[
-                            h('i',{class:'sm-iconfont icon-back'})
+                            h('i',{class:'sm-iconfont sm-icon-back'})
                         ]),
                         h('p',{ domProps:{ innerHTML: val.content } })
                     ]);

@@ -68,20 +68,13 @@ export default {
 
 				if(!this.regular){
 					if(this.multiple){
-						header.push(genBtn(this.i18n.select_all_btn, 'sm-selectall-button', 'icon-selectall', ()=>this.selectAll()));
+						header.push(genBtn(this.i18n.select_all_btn, 'sm-selectall-button', 'sm-icon-select-all', ()=>this.selectAll()));
 					}
-					header.push(genBtn(this.i18n.remove_all_btn, 'sm-removeall-button', 'icon-removeall', ()=>this.clear()));
+					header.push(genBtn(this.i18n.remove_all_btn, 'sm-removeall-button', 'sm-icon-remove-all', ()=>this.clear()));
 				}
 
 				if(!this.embed){
-					header.push(h('button',{
-						attrs:{
-							type: 'button',
-							title: this.i18n.close_btn
-						},
-						class: 'sm-close-button',
-						on:{click:()=>this.close()}
-					},'×'));
+					header.push(genBtn(this.i18n.close_btn, 'sm-close-button', 'sm-icon-close', ()=>this.close()));
 				}
 
 				return h('div',{ class:'sm-header' },header);

@@ -1,4 +1,4 @@
-import './selectmenu.scss';
+import './styles/selectmenu.scss';
 
 import render from './mixins/render';
 import data from './mixins/data';
