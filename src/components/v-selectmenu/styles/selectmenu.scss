@@ -116,35 +116,33 @@ $bg-color-dark: #eee;
 }
 
 .sm-header {
-    /*border-bottom: 1px solid #E6E7E7;*/
     background-color: $bg-color-dark;
     border-radius: 2px 2px 0 0;
+    position: relative;
     & > h3 {
-        padding: 6px 80px 8px 10px;
+        padding: 6px 80px 5px 10px;
         margin: 0;
-        height: 31px;
         text-align: left;
-        color: #24292e;
+        color: #555;
         font-size: 16px;
+        line-height: 1.42;
         white-space: nowrap;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     }
-    button{
+    .sm-control{
         position: absolute;
-        -webkit-appearance: none;
-        padding: 0;
-        cursor: pointer;
-        background: 0 0;
-        border: 0;
-        outline: none;
-        line-height: 100%;
-        color: #999;
-        top: 3px;
-        font-size: 20px;
-        &.sm-close-button { right: 10px; }
-        &.sm-removeall-button { right: 32px; }
-        &.sm-selectall-button { right: 54px; }
-        &:hover { color: black; }
+        text-align: right;
+        top: 0;
+        right: 0;
+        padding: 5px 10px;
+        span{
+            cursor: pointer;
+            line-height: 1;
+            color: #999;
+            font-size: 20px;
+            margin-left: 5px;
+            &:hover { color: black; }
+        }
     }
 }
 
@@ -152,20 +150,15 @@ $bg-color-dark: #eee;
     padding: 3px 10px 10px 10px;
     background-color: $bg-color-dark;
     input[type="text"] {
-        //display: block;
         background-color: white;
         margin: 0 !important;
         width: 100%;
         font-size: 14px;
         line-height: 1.42;
-        //min-height: 20px;
         padding: 4px 6px;
-        //vertical-align: middle;
         box-sizing: border-box;
         outline: none !important;
-        //height: 30px;
         border-radius: 2px;
-        //border: 1px solid #ddd;
         border: 0;
 
         will-change: border-color, box-shadow, background-color;
@@ -177,57 +170,11 @@ $bg-color-dark: #eee;
     }
 }
 
-/**
- * "Get all" button
- */
-div.sm-button {
-    display: inline-block;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    cursor: pointer;
-    text-align: center;
-    box-sizing: border-box;
-
-    border: 0;
-    width: 24px;
-    height: 100%;
-    padding: 0;
-    vertical-align: middle;
-    line-height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    span.caret {
-        position: absolute;top: 50%;right: 12px;margin-top: -1px;vertical-align: middle;
-    }
-}
-
-div.sm-clear-btn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    display: block;
-    width: auto;
-    height: 100%;
-    cursor: pointer;
-    font-size: 20px;
-    color: #666;
-    margin: 0;
-    padding: 4px 0 0 0;
-    box-sizing: border-box;
-    line-height: 1;
-    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
-    &:hover { color: black;font-weight: bold; }
-}
-
 /* group type */
 .sm-result-tabs {
     padding: 0 10px;
-    //border-bottom: 1px solid #E6E7E7;
     background-color: $bg-color-dark;
     ul {
-        position: relative;
-        //bottom: -1px;
         padding: 0;
         margin: 0;
         text-align: left;
@@ -235,7 +182,7 @@ div.sm-clear-btn {
             display: inline-block;
             a {
                 display: inline-block;
-                padding: 5px 12px 3px;
+                padding: 4px 12px 3px;
                 font-size: 14px;
                 color: #aaa;
                 text-decoration: none;
@@ -248,8 +195,6 @@ div.sm-clear-btn {
                 &.active {
                     color: #24292e;
                     background-color: #fff;
-                    border-color: #dfe2e5;
-                    border-bottom-color: #fff;
                 }
             }
         }
@@ -260,9 +205,7 @@ div.sm-clear-btn {
  * Results
  */
 .sm-result-area {
-    /* background-color: transparent; */
     background-color: white;
-    /*border: 1px solid #D6D7D7;*/
     list-style: none;
     margin: 0;
     padding: 5px 0;
@@ -270,11 +213,11 @@ div.sm-clear-btn {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    clear: both;
+    border-radius: 0 0 2px 2px;
     &:before,
     &:after{ display: table;content: " "; }
     &.sm-list-mode{ /*border-top: 1px solid #E6E7E7;*/ }
-    &.sm-advance { min-width: 260px; }
+    &.sm-advanced { min-width: 260px; }
     &.sm-scroll-limit { max-height: 260px; }
 }
 
@@ -303,11 +246,10 @@ ul.sm-results {
     }
 
     & > li {
-        height: auto;
         line-height: 1.42;
         margin: 0;
         overflow: hidden;
-        padding: 3px 10px;
+        padding: 5px 10px;
         position: relative;
         text-align: left;
         white-space: nowrap;
@@ -318,11 +260,11 @@ ul.sm-results {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         & > a { color: #666;text-decoration: none;transition: none; }
         & > div.sm-selected-icon {
-            position: absolute;top: 6px;
-            & > i { font-size: 18px;visibility: hidden; }
+            position: absolute;top: 4px;
+            & > i { visibility: hidden; }
         }
         & > div.sm-item-text {
-            font-size: 14px;display: block;line-height: 1.7;position: relative;margin-left: 30px;
+            font-size: 14px;display: block;position: relative;margin-left: 25px;
         }
         &.sm-message-box {
             position: relative;cursor: default;padding-left: 12px;
@@ -339,13 +281,11 @@ ul.sm-results {
         &.sm-over { background-color: #F6F8FA !important;color: black !important;cursor: pointer; }
         &.sm-selected {
             font-weight: 600;
-            color: black;
+            color: #666;
             & > div.sm-selected-icon > i { visibility: visible; }
         }
     }
 }
-
-.sm-hide { display: none; }
 
 /* 移除微软浏览器，在输入框输入文本后，会出现X的问题，but it's look like not working */
 input::-ms-clear{display:none;}/*隐藏文本框叉子*/

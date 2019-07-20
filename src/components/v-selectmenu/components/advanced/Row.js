@@ -3,7 +3,7 @@ export default {
 	props:{
 		row: Object,
         hover: {
-		    type: Boolean,
+			type: Boolean,
             default: false
         }
 	},
@@ -24,7 +24,7 @@ export default {
             child.push(h('div',{
                 class:'sm-item-text',
                 domProps:{
-                	innerHTML: this.getRowText(this.row)
+					innerHTML: this.getRowText(this.row)
                 }
             }));
         }

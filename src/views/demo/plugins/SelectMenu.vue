@@ -184,14 +184,17 @@
                 ],
                 listData: nbaTeams,
                 menu: [
+                    {content:'News',header:true},
                     {content:'163 NetEase',url : 'http://www.163.com'},
                     {content:'Sina',url : 'http://www.sina.com'},
                     {content:'sm_divider'},
+                    {content:'Social',header:true},
                     {content:'GitHub', icon: 'fab,github', url : 'https://github.com'},
                     {content:'Reddit', icon: 'fab,reddit',url : 'https://www.reddit.com'},
                     {content:'Facebook', icon: 'fab,facebook',url : 'https://www.facebook.com',disabled : true},
                     {content:'Twitter', icon: 'fab,twitter',url : 'https://twitter.com',disabled : true},
                     {content:'sm_divider'},
+                    {content:'Actions',header:true},
                     {content:'Click this menu item to trigger your callback',callback : this.doSome}
                 ],
                 headerMenu: [

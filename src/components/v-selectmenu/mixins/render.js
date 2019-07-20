@@ -52,11 +52,10 @@ export default {
 		buildHeader(h) {
 			if(this.title || !this.regular || this.state.group){
 				const header = [];
-				header.push(h('h3',this.headerText));
 				const genBtn = (title, btnClass, iconClass, event)=>{
-					return h('button',{
+					return h('span',{
 						attrs:{
-							type: 'button',
+							// type: 'button',
 							title: title
 						},
 						class: btnClass,
@@ -77,7 +76,10 @@ export default {
 					header.push(genBtn(this.i18n.close_btn, 'sm-close-button', 'sm-icon-close', ()=>this.close()));
 				}
 
-				return h('div',{ class:'sm-header' },header);
+				return h('div',{ class:'sm-header' },[
+					h('h3',this.headerText),
+					h('div',{ class:'sm-control' },header)
+				]);
 			}
 		},
 		buildSearch(h) {
