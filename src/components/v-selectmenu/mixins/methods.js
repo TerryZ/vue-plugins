@@ -1,3 +1,4 @@
+const UP = 38, DOWN = 40, ESC = 27, TAB = 9, ENTER = 13;
 export default {
 	methods: {
         showChange(val){
@@ -29,28 +30,28 @@ export default {
 						.filter(val=>!this.picked.includes(val))
 						.filter((val,idx)=>idx<left);
 					this.picked = [...this.picked, ...available];
-				}else this.picked = this.results;
+				}else{
+					this.picked = this.results;
+				}
 			}
 		},
 		processKey(){
 			this.results = this.filter();
 		},
 		processControl(e){
-			if (this.show &&
-				([38, 40, 27, 9].includes(e.keyCode) ||
-					[13, 9].includes(e.keyCode) && this.highlight !== -1)) {
+			if (this.show && ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode) && this.highlight !== -1)) {
 				switch (e.keyCode) {
-					case 38:// up
+					case UP:// up
                         this.$refs.list.prev();
 						break;
-					case 40:// down
+					case DOWN:// down
 						this.$refs.list.next();
 						break;
-					case 9: // tab
-					case 13:// return
+					case TAB: // tab
+					case ENTER:// return
 						if(this.highlight !== -1) this.selectItem(this.results[this.highlight]);
 						break;
-					case 27:// escape
+					case ESC:// escape
 						this.close();
 						break;
 				}
@@ -71,13 +72,15 @@ export default {
 			}
 		},
 		filter(){
-			const list = this.state.group ? this.data[this.tabIndex].list.concat() : this.data.concat();
+			const list = this.state.group ? this.data[this.tabIndex].list.slice() : this.data.slice();
 			return list.filter(val=>this.getRowText(val).toLowerCase().includes(this.search.toLowerCase()));
 		},
 		switchTab(){
-			this.results = this.regular?
-                this.data[this.tabIndex].list:
-                this.search ? this.filter() : this.data[this.tabIndex].list;
+			this.results = this.regular
+				? this.data[this.tabIndex].list
+				: this.search 
+					? this.filter() 
+					: this.data[this.tabIndex].list;
 		},
 		checkDataType(){
 			if(this.data && Array.isArray(this.data) && this.data.length){
@@ -94,12 +97,6 @@ export default {
 		buildMessage(){
 			this.message = this.i18n.max_selected.replace('max_selected_limit',`<b>${this.maxSelected}</b>`);
 		},
-		isChrome(){
-			return navigator.vendor !== undefined && navigator.vendor.indexOf("Google") !== -1;
-		},
-		isEdge(){
-			return navigator.userAgent.indexOf("Edge") >= 0;
-		},
 		init(){
             if(!this.value) return;
             let vals = this.value.split(',');
@@ -108,15 +105,41 @@ export default {
                 if(this.state.group){
                     let arr = [];
                     for(let d of this.data){
-                        arr = [...arr, ...d.list.concat().filter(val=>{
+                        arr = [...arr, ...d.list.slice().filter(val=>{
                             return vals.includes(String(val[this.keyField]));
                         })];
                     }
-                    this.picked = arr.concat();
+                    this.picked = arr.slice();
                 }else{
-                    this.picked = this.data.concat().filter(val=>vals.includes(String(val[this.keyField])));
+                    this.picked = this.data.slice().filter(val=>vals.includes(String(val[this.keyField])));
                 }
             }
+		},
+		populate(){
+			this.checkDataType();
+
+			if(this.title){
+				this.headerText = this.title;
+			}else{
+				if(this.regular){
+					if(this.state.group) this.headerText = this.i18n.regular_group;
+				}else{
+					this.headerText = this.i18n.advance_default;
+				}
+			}
+
+			if(this.data.length){
+				if(this.state.group){
+					this.tabIndex = 0;
+				}else{
+					this.results = this.data.slice();
+				}
+			}
+			if(this.regular){
+				this.menuClass['sm-regular'] = true;
+			}else{
+				this.init();
+			}
 		}
 	}
 };

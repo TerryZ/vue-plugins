@@ -19,31 +19,12 @@ export default {
     },
     mixins: [render, data, props, methods, util],
     mounted(){
-        this.checkDataType();
-
-        if(this.title){
-            this.headerText = this.title;
-        }else{
-            if(this.regular && this.state.group) this.headerText = this.i18n.regular_group;
-            if(!this.regular) this.headerText = this.i18n.advance_default;
-        }
-
-        if(this.data.length){
-            if(this.state.group) this.tabIndex = 0;
-            else this.results = this.data.slice();
-        }
-        if(this.regular) this.menuClass['sm-regular'] = true;
-        else this.init();
-
+        this.populate();
 
         // console.log(this.results)
-        // console.log(this.$slots)
-        this.$on('clear', this.clear);
-
-        // console.log(this.$slots)
-        // console.log(typeof this.$scopedSlots.row)
+        // this.$on('clear', this.clear);
     },
     destroyed(){
-        this.$off('clear', this.clear);
+        // this.$off('clear', this.clear);
     }
 }

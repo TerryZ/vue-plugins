@@ -130,10 +130,7 @@ export default {
                 return this.child.map((val,index)=>{
                     const child = [];
                     const header = h('li',{ class:'sm-sub-header' },[
-                        h('button',{
-                            attrs:{
-                                type: 'button'
-                            },
+                        h('span',{
                             class:'sm-sub-back',
                             on:{
                                 click:()=>this.switchSub(val, true)
@@ -141,7 +138,10 @@ export default {
                         },[
                             h('i',{class:'sm-iconfont sm-icon-back'})
                         ]),
-                        h('p',{ domProps:{ innerHTML: val.content } })
+                        h('span',{
+                            class:'sm-sub-caption',
+                            domProps:{ innerHTML: val.content }
+                        })
                     ]);
                     /**
                      * build children menu header bar

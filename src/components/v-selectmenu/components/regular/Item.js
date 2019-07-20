@@ -20,7 +20,7 @@ export default {
 				}
 
                 if(this.data.children){
-                    item.push(h('span',{ class:'sm-caret-right' }));
+                    item.push(h('span',{ class:'sm-caret sm-caret-right' }));
                 }
 
                 const linkOption = {
@@ -62,7 +62,6 @@ export default {
     methods: {
         click(){
             if(this.data && this.data.callback && typeof this.data.callback === 'function'){
-                //this.data.callback.call(this.parentInst);
                 this.data.callback();
             }
         }

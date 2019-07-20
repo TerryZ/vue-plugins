@@ -31,17 +31,17 @@
 
         <h5>菜单对齐方向</h5>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <v-selectmenu :data="menu" :regular="true" align="left" >
                     <button type="button" class="btn btn-secondary">Align left</button>
                 </v-selectmenu>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <v-selectmenu :data="menu" :regular="true" align="center" >
                     <button type="button" class="btn btn-secondary">Align center</button>
                 </v-selectmenu>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <v-selectmenu :data="menu" :regular="true" align="right" >
                     <button type="button" class="btn btn-secondary">Align right</button>
                 </v-selectmenu>
@@ -278,7 +278,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

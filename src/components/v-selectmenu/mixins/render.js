@@ -33,7 +33,7 @@ export default {
 						}
 					},[
 						h('span', this.btnText),
-						h('span', { class:'sm-caret-down' })
+						h('span', { class:'sm-caret sm-caret-down' })
 					])];
 				}
 				return h('template',{slot:'caller'},[

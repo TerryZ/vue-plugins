@@ -45,7 +45,6 @@ export default {
 	},
 	provide(){
 		return {
-			parentInst: this.$parent,
 			i18n: this.i18n,
 			keyField: this.keyField,
 			showField: this.showField,

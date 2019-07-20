@@ -19,6 +19,12 @@ export default {
 		},
 		inPicked(row){
 			return this.inPickedIndex(row) !== -1;
+		},
+		isChrome(){
+			return navigator.vendor !== undefined && navigator.vendor.indexOf("Google") !== -1;
+		},
+		isEdge(){
+			return navigator.userAgent.indexOf("Edge") >= 0;
 		}
 	}
 }

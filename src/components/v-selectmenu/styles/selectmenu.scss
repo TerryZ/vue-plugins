@@ -2,21 +2,8 @@
 
 $bg-color-dark: #eee;
 
-.sm-caller-container {
-    display: inline-block;
-}
-.v-selectmenu {
-    border-radius: 2px;
-}
-/**
- * Target item style, when menu opened
- */
-.sm-target-clicked {
-    background-color: #e9ecef;
-    background-image: none;
-    border-color: rgba(27,31,35,0.35);
-    box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,0.15);
-}
+.sm-caller-container { display: inline-block; }
+.v-selectmenu { border-radius: 2px; }
 
 .sm-default-btn {
     display: inline-block;
@@ -43,82 +30,37 @@ $bg-color-dark: #eee;
         &:hover { background-color: #e0e0e0;border: 1px solid #aaa; }
     }
     &:hover{
-        border: 1px solid #aaa;
-        background-color: #e0e0e0;
-        color: black;
+        border: 1px solid #aaa;background-color: #e0e0e0;color: black;
     }
 }
 
-.sm-caret-down {
+.sm-caret{
     display: inline-block;
     width: 0;
     height: 0;
+    content: "";
     margin-left: 8px;
+}
+
+.sm-caret-down {
     border-top: 4px solid;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    vertical-align: middle;
-    content: "";
     margin-bottom: 2px;
 }
 
 .sm-caret-right {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: 10px;
     border-left: 4px solid;
     border-top: 4px solid transparent;
     border-bottom: 4px solid transparent;
     margin-top: 3px;
-    content: "";
     position: absolute;
-    top: 7px;
+    top: 8px;
     right: 10px;
 }
 
-/* Sub menus */
-.sm-sub-menu { /*display: none;*/ }
-.sm-sub-header {
-    margin-top: 2px !important;
-    &:hover {
-        background-color: transparent !important;
-        color: black !important;
-        cursor: default !important;
-    }
-    p {
-        padding: 0;margin: 0;font-weight: 600;line-height: 26px;font-size: 16px;
-    }
-    button {
-        float: left;
-        font-weight: 700;
-        line-height: 1.42;
-        color: #000;
-
-        -webkit-appearance: none;
-        padding: 0;
-        cursor: pointer;
-        background: 0 0;
-        border: 0;
-
-        -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
-        transition: all .5s cubic-bezier(.175,.885,.32,1);
-        height: 26px;
-        width: 30px;
-        text-shadow: none;
-        outline: none !important;
-        margin: 0;
-        opacity: 0.5;
-        font-size: 14px !important;
-        &:hover { opacity: 1; }
-        i { font-size: 16px; }
-    }
-}
-
 .sm-header {
-    background-color: $bg-color-dark;
-    border-radius: 2px 2px 0 0;
-    position: relative;
+    position: relative;border-radius: 2px 2px 0 0;background-color: $bg-color-dark;
     & > h3 {
         padding: 6px 80px 5px 10px;
         margin: 0;
@@ -147,8 +89,7 @@ $bg-color-dark: #eee;
 }
 
 .sm-search {
-    padding: 3px 10px 10px 10px;
-    background-color: $bg-color-dark;
+    padding: 3px 10px 10px 10px;background-color: $bg-color-dark;
     input[type="text"] {
         background-color: white;
         margin: 0 !important;
@@ -160,9 +101,8 @@ $bg-color-dark: #eee;
         outline: none !important;
         border-radius: 2px;
         border: 0;
-
-        will-change: border-color, box-shadow, background-color;
-        transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+        // will-change: border-color, box-shadow, background-color;
+        // transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
         &:focus {
             //box-shadow: 0 0 0 3px rgba(150,150,150, 0.2);
             //background-color: white;
@@ -172,12 +112,9 @@ $bg-color-dark: #eee;
 
 /* group type */
 .sm-result-tabs {
-    padding: 0 10px;
-    background-color: $bg-color-dark;
+    padding: 0 10px;background-color: $bg-color-dark;
     ul {
-        padding: 0;
-        margin: 0;
-        text-align: left;
+        padding: 0;margin: 0;text-align: left;
         li {
             display: inline-block;
             a {
@@ -189,13 +126,9 @@ $bg-color-dark: #eee;
                 cursor: pointer;
                 line-height: 1.42;
                 background: transparent;
-                //border: 1px solid transparent;
                 border-radius: 2px 2px 0 0;
                 font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
-                &.active {
-                    color: #24292e;
-                    background-color: #fff;
-                }
+                &.active { color: #24292e;background-color: #fff; }
             }
         }
     }
@@ -214,8 +147,7 @@ $bg-color-dark: #eee;
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 0 0 2px 2px;
-    &:before,
-    &:after{ display: table;content: " "; }
+    &:before,&:after{ display: table;content: " "; }
     &.sm-list-mode{ /*border-top: 1px solid #E6E7E7;*/ }
     &.sm-advanced { min-width: 260px; }
     &.sm-scroll-limit { max-height: 260px; }
@@ -225,14 +157,14 @@ $bg-color-dark: #eee;
 ul.sm-results {
     background-color: white;list-style: none;margin: 0;padding: 0;
     &.sm-regular {
-        width: auto;min-width: 150px;padding: 5px 0;
+        width: auto;min-width: 150px;
         & > li {
             padding: 0;min-width: auto;
             &:hover{
                 background-color: #F6F8FA;color: black;
                 a { color: black; }
             }
-            & > a { width: 100%;display: block;padding: 7px 10px; }
+            & > a { width: 100%;display: block;padding: 5px 10px; }
             &.sm-disabled,
             &.sm-disabled:hover,
             &.sm-disabled a{ background-color: white;color: #ccc;cursor: default; }
@@ -283,6 +215,37 @@ ul.sm-results {
             font-weight: 600;
             color: #666;
             & > div.sm-selected-icon > i { visibility: visible; }
+        }
+    }
+}
+
+/* Sub menus */
+.sm-sub-menu {
+    .sm-sub-header {
+        padding-top: 2px !important;
+        &:hover {
+            background-color: transparent !important;
+            color: #666 !important;
+            cursor: default !important;
+        }
+        .sm-sub-caption {
+            font-weight: 600;line-height: 1.42;font-size: 16px;
+        }
+        .sm-sub-back {
+            display: inline-block;
+            font-weight: 700;
+            color: #000;
+            padding: 0 10px;
+            cursor: pointer;
+
+            -webkit-transition: opacity .5s cubic-bezier(.175,.885,.32,1);
+            transition: opacity .5s cubic-bezier(.175,.885,.32,1);
+            outline: none !important;
+            margin: 0;
+            opacity: 0.5;
+            font-size: 14px !important;
+            &:hover { opacity: 1; }
+            i { font-size: 14px; }
         }
     }
 }
