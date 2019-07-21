@@ -8,7 +8,7 @@ export default {
 			picked: [],
 			search: '',
 			headerText: '',
-			i18n: lang[this.language],
+			i18n: lang[this.language] || lang['cn'],
 			tabIndex: -1,
 			highlight: -1,
 			message: '',
@@ -26,7 +26,9 @@ export default {
 	},
 	computed: {
 		btnText(){
-			return this.picked.length?this.picked.slice().map(val=>val[this.showField]).join(','):this.i18n.advance_default;
+			return this.picked.length
+				? this.picked.slice().map(val=>val[this.showField]).join(',')
+				: this.i18n.advance_default;
 		}
 	},
 	watch:{
@@ -34,13 +36,16 @@ export default {
 			this.tabIndex = val;
 			this.switchTab();
 		},
-		value(val){
+		value(){
 			this.init();
 		},
 		picked(val){
 			if(this.message && this.maxSelected && val.length < this.maxSelected) this.message = '';
 			this.$emit('input', val.slice().map(value=>value[this.keyField]).join(','));
 			this.$emit('values', val.slice());
+		},
+		data(val){
+			if(Array.isArray(val) && val.length) this.populate();
 		}
 	},
 	provide(){

@@ -8,7 +8,17 @@
         <p>
             <v-selectmenu :data="menu"
                           :regular="true"
-                          title="abc"
+                          @show="showLog"
+                          @hide="hideLog" >
+            </v-selectmenu>
+        </p>
+        <br>
+
+        <h5>Regular menu with header bar</h5>
+        <p>
+            <v-selectmenu :data="menu"
+                          :regular="true"
+                          title="Menu with header"
                           @show="showLog"
                           @hide="hideLog" >
             </v-selectmenu>
@@ -52,7 +62,9 @@
         <h5>嵌入式菜单</h5>
         <div class="row">
             <div class="col-md-6">
-                <v-selectmenu :data="menu" :regular="true" :embed="true" >
+                <p>Regular menu with slot</p>
+                <p><button type="button" class="btn btn-secondary" @click="changeData">Change data source</button></p>
+                <v-selectmenu :data="dynamic" :regular="true" :embed="true" >
                     <button type="button" class="btn btn-default">SelectMenu</button>
                     <template #row="{ row }">
                     <span>
@@ -63,11 +75,15 @@
                 </v-selectmenu>
             </div>
             <div class="col-md-6">
+                <p>Advanced menu with slot</p>
                 <v-selectmenu :data="groupData"
                               :embed="true"
                               :multiple="true"
                               key-field="id"
                               v-model="value2" >
+                    <template #row="{ row }">
+                        <div v-html="`${row.name} (${row.desc})`"></div>
+                    </template>
                 </v-selectmenu>
             </div>
         </div>
@@ -84,10 +100,6 @@
         <h5>高级模式菜单自定义插槽（Slot）模式</h5>
         <p>
             <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
-                <template #row="{ row }">
-                    <!--<div>{{row.name}} ( {{row.desc}} )</div>-->
-                    <div v-html="`${row.name} (${row.desc})`"></div>
-                </template>
             </v-selectmenu>
         </p>
         <br>
@@ -137,12 +149,16 @@
             },
             hideLog(){
                 console.log('hide')
+            },
+            changeData(){
+                this.dynamic = this.headerMenu;
             }
         },
         data(){
             return {
                 value1: '7',
                 value2: '3,5,17',
+                dynamic: [],
                 groupData: [{
                     title : 'East',
                     list :[
@@ -184,34 +200,29 @@
                 ],
                 listData: nbaTeams,
                 menu: [
-                    {content:'News',header:true},
-                    {content:'163 NetEase',url : 'http://www.163.com'},
-                    {content:'Sina',url : 'http://www.sina.com'},
+                    {content:'163 NetEase',url: 'http://www.163.com'},
+                    {content:'Sina',url: 'http://www.sina.com'},
                     {content:'sm_divider'},
-                    {content:'Social',header:true},
-                    {content:'GitHub', icon: 'fab,github', url : 'https://github.com'},
-                    {content:'Reddit', icon: 'fab,reddit',url : 'https://www.reddit.com'},
-                    {content:'Facebook', icon: 'fab,facebook',url : 'https://www.facebook.com',disabled : true},
-                    {content:'Twitter', icon: 'fab,twitter',url : 'https://twitter.com',disabled : true},
+                    {content:'GitHub', icon: 'fab,github', url: 'https://github.com'},
+                    {content:'Reddit', icon: 'fab,reddit',url: 'https://www.reddit.com'},
+                    {content:'Facebook', icon: 'fab,facebook',url: 'https://www.facebook.com',disabled : true},
+                    {content:'Twitter', icon: 'fab,twitter',url: 'https://twitter.com',disabled : true},
                     {content:'sm_divider'},
-                    {content:'Actions',header:true},
-                    {content:'Click this menu item to trigger your callback',callback : this.doSome}
+                    {content:'Click this menu item to trigger your callback',callback: this.doSome}
                 ],
                 headerMenu: [
                     {content:'News Site',header: true},
-                    {content:'163 NetEase',url : 'http://www.163.com'},
-                    {content:'Sina',url : 'http://www.sina.com'},
+                    {content:'163 NetEase',url: 'http://www.163.com'},
+                    {content:'Sina',url: 'http://www.sina.com'},
                     {content:'sm_divider'},
                     {content:'Technology Site',header: true},
-                    {content:'<i class="fa fa-fw fa-github"></i> GitHub',url : 'https://github.com'},
-                    {content:'<i class="fa fa-fw fa-reddit"></i> Reddit',url : 'https://www.reddit.com'},
-                    {content:'<i class="fa fa-fw fa-facebook"></i> Facebook',url : 'https://www.facebook.com',disabled : true},
-                    {content:'<i class="fa fa-fw fa-twitter"></i> Twitter',url : 'https://twitter.com',disabled : true},
+                    {content:'GitHub', icon: 'fab,github', url: 'https://github.com'},
+                    {content:'Reddit', icon: 'fab,reddit',url: 'https://www.reddit.com'},
+                    {content:'Facebook', icon: 'fab,facebook',url: 'https://www.facebook.com',disabled : true},
+                    {content:'Twitter', icon: 'fab,twitter',url: 'https://twitter.com',disabled : true},
                     {content:'sm_divider'},
                     {content:'Actions',header: true},
-                    {content:'Click this menu item to trigger your callback',callback : function(){
-                            //bDialog.alert('you can do anything in callback!');
-                        }}
+                    {content:'Click this menu item to trigger your callback',callback: this.doSome}
                 ],
                 multiLevel : [
                     {content:'Sports',children: [
@@ -275,6 +286,9 @@
                     }
                 ]
             };
+        },
+        mounted(){
+            this.dynamic = this.menu;
         }
     }
 </script>

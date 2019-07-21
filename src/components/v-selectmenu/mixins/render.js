@@ -55,7 +55,6 @@ export default {
 				const genBtn = (title, btnClass, iconClass, event)=>{
 					return h('span',{
 						attrs:{
-							// type: 'button',
 							title: title
 						},
 						class: btnClass,
