@@ -26,7 +26,7 @@ export default {
 			if(this.results.length && !this.message) {
 				if(this.maxSelected){
 					const left = this.maxSelected - this.picked.length;
-					const available = this.results.slice()
+					const available = this.results
 						.filter(val=>!this.picked.includes(val))
 						.filter((val,idx)=>idx<left);
 					this.picked = [...this.picked, ...available];
@@ -135,11 +135,7 @@ export default {
 					this.results = this.data.slice();
 				}
 			}
-			if(this.regular){
-				this.menuClass['sm-regular'] = true;
-			}else{
-				this.init();
-			}
+			if(!this.regular) this.init();
 		}
 	}
 };

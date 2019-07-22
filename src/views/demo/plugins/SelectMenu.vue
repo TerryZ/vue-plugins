@@ -18,9 +18,7 @@
         <p>
             <v-selectmenu :data="menu"
                           :regular="true"
-                          title="Menu with header"
-                          @show="showLog"
-                          @hide="hideLog" >
+                          title="Menu with header">
             </v-selectmenu>
         </p>
         <br>
@@ -34,7 +32,9 @@
         <h5>常规模式多级菜单</h5>
         <p>
             <v-selectmenu :data="multiLevel" :regular="true" >
-                <button type="button" class="btn btn-primary">SelectMenu</button>
+                <template v-slot="{ show }">
+                    <button type="button" class="btn btn-primary">SelectMenu({{show}})</button>
+                </template>
             </v-selectmenu>
         </p>
         <br>
@@ -202,25 +202,25 @@
                 menu: [
                     {content:'163 NetEase',url: 'http://www.163.com'},
                     {content:'Sina',url: 'http://www.sina.com'},
-                    {content:'sm_divider'},
+                    {content:'sm-divider'},
                     {content:'GitHub', icon: 'fab,github', url: 'https://github.com'},
                     {content:'Reddit', icon: 'fab,reddit',url: 'https://www.reddit.com'},
                     {content:'Facebook', icon: 'fab,facebook',url: 'https://www.facebook.com',disabled : true},
                     {content:'Twitter', icon: 'fab,twitter',url: 'https://twitter.com',disabled : true},
-                    {content:'sm_divider'},
+                    {content:'sm-divider'},
                     {content:'Click this menu item to trigger your callback',callback: this.doSome}
                 ],
                 headerMenu: [
                     {content:'News Site',header: true},
                     {content:'163 NetEase',url: 'http://www.163.com'},
                     {content:'Sina',url: 'http://www.sina.com'},
-                    {content:'sm_divider'},
+                    {content:'sm-divider'},
                     {content:'Technology Site',header: true},
                     {content:'GitHub', icon: 'fab,github', url: 'https://github.com'},
                     {content:'Reddit', icon: 'fab,reddit',url: 'https://www.reddit.com'},
                     {content:'Facebook', icon: 'fab,facebook',url: 'https://www.facebook.com',disabled : true},
                     {content:'Twitter', icon: 'fab,twitter',url: 'https://twitter.com',disabled : true},
-                    {content:'sm_divider'},
+                    {content:'sm-divider'},
                     {content:'Actions',header: true},
                     {content:'Click this menu item to trigger your callback',callback: this.doSome}
                 ],
@@ -234,7 +234,7 @@
                             {content:'Los Angeles Lakers',url : 'www.nba.com/lakers/'}
                         ]}
                     ]},
-                    {content:'sm_divider'},
+                    {content:'sm-divider'},
                     {content:'News',children: [
                         {content:'BBC',url : 'http://www.bbc.com/news'},
                         {content:'CNN',url : 'http://www.cnn.com'},
@@ -256,7 +256,7 @@
                         list: [
                             {content:'Fivb',url : 'http://www.fivb.com/'},
                             {content:'Fifa',url : 'http://www.fifa.com/'},
-                            {content:'sm_divider'},
+                            {content:'sm-divider'},
                             {content:'NBA official site',url : 'http://www.nba.com'},
                             {content:'Chicago Bulls',url : 'http://www.nba.com/bulls/'},
                             {content:'Los Angeles Lakers',url : 'www.nba.com/lakers/'}
@@ -266,7 +266,7 @@
                         list: [
                             {content:'BBC',url : 'http://www.bbc.com/news'},
                             {content:'CNN',url : 'http://www.cnn.com'},
-                            {content:'sm_divider'},
+                            {content:'sm-divider'},
                             {content:'Xinhua',url : 'http://www.xinhuanet.com'}
                         ]
                     }, {
@@ -274,7 +274,7 @@
                         list: [
                             {content:'Github',url : 'https://github.com'},
                             {content:'StackOverflow',url : 'https://stackoverflow.com/'},
-                            {content:'sm_divider'},
+                            {content:'sm-divider'},
                             {content:'Reddit',url : 'https://www.reddit.com'}
                         ]
                     }, {

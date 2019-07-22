@@ -3,7 +3,7 @@ export default {
     render(h){
         if(this.data && Object.keys(this.data).length){
             const child = [];
-            if(this.data.content !== 'sm_divider'){
+            if(this.data.content !== 'sm-divider'){
                 const item = [];
 
                 if('row' in this.$scopedSlots){
@@ -53,7 +53,7 @@ export default {
     computed: {
         classes(){
             return {
-                'sm-divider': this.data.content === 'sm-divider' || this.data.content === 'sm_divider',
+                'sm-divider': this.data.content === 'sm-divider',
                 'sm-header': this.data.header,
                 'sm-disabled': this.data.disabled
             };

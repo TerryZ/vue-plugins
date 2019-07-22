@@ -12,13 +12,6 @@ export default {
 			tabIndex: -1,
 			highlight: -1,
 			message: '',
-			menuClass:{
-				'sm-regular': false
-			},
-			menuStyle: {
-				top: '',
-				left: ''
-			},
 			state: {
 				group: false
 			}
@@ -27,7 +20,7 @@ export default {
 	computed: {
 		btnText(){
 			return this.picked.length
-				? this.picked.slice().map(val=>val[this.showField]).join(',')
+				? this.picked.map(val=>val[this.showField]).join(',')
 				: this.i18n.advance_default;
 		}
 	},

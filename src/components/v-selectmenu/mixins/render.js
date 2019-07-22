@@ -23,7 +23,9 @@ export default {
 			if(!this.embed){
 				let child = null;
 				if('default' in this.$scopedSlots){
-					child = this.$scopedSlots.default();
+					child = this.$scopedSlots.default({
+						show: this.show
+					});
 				}else{
 					child = [h('button',{
 						attrs:{ type: 'button' },
