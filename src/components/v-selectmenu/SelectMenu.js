@@ -20,11 +20,5 @@ export default {
     mixins: [render, data, props, methods, util],
     mounted(){
         this.populate();
-
-        // console.log(this.results)
-        // this.$on('clear', this.clear);
-    },
-    destroyed(){
-        // this.$off('clear', this.clear);
     }
 }
