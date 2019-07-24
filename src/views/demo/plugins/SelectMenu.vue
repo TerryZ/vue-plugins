@@ -92,14 +92,17 @@
         <h5>高级模式菜单</h5>
         <pre class="p-4 bg-light">{{JSON.stringify(value1, null, 4)}}</pre>
         <p>
-            <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
+            <v-selectmenu :data="listData" v-model="value1">
             </v-selectmenu>
         </p>
         <br>
 
         <h5>高级模式菜单自定义插槽（Slot）模式</h5>
         <p>
-            <v-selectmenu :data="listData" key-field="id" :title="false" v-model="value1">
+            <v-selectmenu :data="listData"
+                          :max-selected="3"
+                          :multiple="true"
+                          v-model="value1">
             </v-selectmenu>
         </p>
         <br>

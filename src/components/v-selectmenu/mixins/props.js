@@ -33,10 +33,6 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		move: {
-			type: Boolean,
-			default: false
-		},
 		query: {
 			type: Boolean,
 			default: true

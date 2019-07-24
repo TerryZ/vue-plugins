@@ -105,6 +105,18 @@ export default {
 				]);
 			}
 		},
+		buildMessage(h){
+			if(this.message){
+				return h('li',{class:'sm-message-box'},[
+					h('i',{class:'sm-iconfont sm-icon-warn'}),
+					h('span',{
+						domProps:{
+							innerHTML: this.message
+						}
+					})
+				]);
+			}
+		},
 		buildTab(h){
 			if(this.state.group && this.data.length){
 				return h('div',{ class:'sm-result-tabs' },[
