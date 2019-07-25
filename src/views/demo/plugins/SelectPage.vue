@@ -92,7 +92,6 @@
                     <v-selectpage data="/user/list"
                                   key-field="id"
                                   show-field="name"
-                                  v-model="server"
                                   :result-format="resultFormat">
                     </v-selectpage>
                 </p>

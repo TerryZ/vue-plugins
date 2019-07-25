@@ -39,6 +39,9 @@ export default {
 		},
 		data(val){
 			if(Array.isArray(val) && val.length) this.populate();
+		},
+		message(val, oldVal){
+			if(val !== oldVal) this.adjust();
 		}
 	},
 	provide(){

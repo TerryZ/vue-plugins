@@ -47,6 +47,7 @@ export default {
 			return h('div',{ class:'v-selectmenu' },[
 				this.buildHeader(h),
 				this.buildSearch(h),
+				this.buildMessage(h),
 				this.buildTab(h),
 				this.buildContent(h)
 			]);
@@ -107,7 +108,7 @@ export default {
 		},
 		buildMessage(h){
 			if(this.message){
-				return h('li',{class:'sm-message-box'},[
+				return h('div',{class:'sm-message'},[
 					h('i',{class:'sm-iconfont sm-icon-warn'}),
 					h('span',{
 						domProps:{

@@ -6,9 +6,7 @@ export default {
 	},
     render(h){
         const child = [];
-        if(this.message){
-            child.push(this.getMessage(h, this.message));
-        }else if(this.list.length){
+        if(this.list.length){
             child.push(...this.list.map((val,index)=>{
                 const options = {
                     key:index,

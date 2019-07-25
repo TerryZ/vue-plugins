@@ -60,10 +60,21 @@ export default {
 		selectItem(item){
 			if(this.multiple){
 				if(!this.picked.includes(item)) {
-					if(this.maxSelected && this.picked.length === this.maxSelected) this.buildMessage();
-					else this.picked.push(item);
+					if(this.maxSelected && this.picked.length === this.maxSelected) {
+						if(!this.message) {
+							this.buildNotice();
+							/**
+							 * auto clear message in 3 seconds
+							 */
+							setTimeout(()=>{
+								this.message = '';
+							}, 3000);
+						}
+					} else {
+						this.picked.push(item);
+					}
 				}else{
-					const idx = this.picked.findIndex(value => Object.is(item, value));
+					const idx = this.inPickedIndex(item);
 					if(idx !== -1) this.picked.splice(idx, 1);
 				}
 			}else {
@@ -94,7 +105,7 @@ export default {
                 case 'function': return this.showField(row);
             }
         },
-		buildMessage(){
+		buildNotice(){
 			this.message = this.i18n.max_selected.replace('max_selected_limit',`<b>${this.maxSelected}</b>`);
 		},
 		init(){
