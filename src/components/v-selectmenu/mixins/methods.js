@@ -84,7 +84,8 @@ export default {
 		},
 		filter(){
 			const list = this.state.group ? this.data[this.tabIndex].list.slice() : this.data.slice();
-			return list.filter(val=>this.getRowText(val).toLowerCase().includes(this.search.toLowerCase()));
+			return list.filter(val => new RegExp(this.search.toLowerCase()).test(this.getRowText(val).toLowerCase()));
+
 		},
 		switchTab(){
 			this.results = this.regular
@@ -116,13 +117,13 @@ export default {
                 if(this.state.group){
                     let arr = [];
                     for(let d of this.data){
-                        arr = [...arr, ...d.list.slice().filter(val=>{
+                        arr = [...arr, ...d.list.filter(val=>{
                             return vals.includes(String(val[this.keyField]));
                         })];
                     }
                     this.picked = arr.slice();
                 }else{
-                    this.picked = this.data.slice().filter(val=>vals.includes(String(val[this.keyField])));
+                    this.picked = this.data.filter(val=>vals.includes(String(val[this.keyField])));
                 }
             }
 		},
