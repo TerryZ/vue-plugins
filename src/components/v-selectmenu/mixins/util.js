@@ -13,6 +13,9 @@ export default {
 				}
 			});
 		},
+		close(){
+			if(this.show && !this.embed) this.$refs.drop.visible();
+		},
 		adjust(){
 			this.$nextTick(()=>{
 				this.$refs.drop.adjust();

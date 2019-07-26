@@ -10,9 +10,6 @@ export default {
 				this.$emit('hide');
 			}
         },
-		close(){
-			if(this.show && !this.embed) this.$refs.drop.visible();
-		},
 		reset(){
 			this.highlight = -1;
 		},
