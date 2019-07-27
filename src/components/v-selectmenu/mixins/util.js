@@ -13,6 +13,15 @@ export default {
 				}
 			});
 		},
+		reset(){
+			this.highlight = -1;
+		},
+		clear() {
+			if(!this.regular){
+				this.picked = [];
+				if(!this.multiple) this.close();
+			}
+		},
 		close(){
 			if(this.show && !this.embed) this.$refs.drop.visible();
 		},

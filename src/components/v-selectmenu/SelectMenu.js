@@ -7,14 +7,12 @@ import methods from './mixins/methods';
 import util from './mixins/util';
 
 import drop from 'v-dropdown';
-import regular from './components/regular/Menu';
-import advanced from './components/advanced/List';
 
 export default {
     name: "v-selectmenu",
     components: {
-        'regular': regular,
-        'advanced': advanced,
+        'regular': () => import('./components/regular/Menu'),
+        'advanced': () => import('./components/advanced/List'),
         'dropdown': drop
     },
     mixins: [render, data, props, methods, util],

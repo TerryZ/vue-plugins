@@ -10,15 +10,6 @@ export default {
 				this.$emit('hide');
 			}
         },
-		reset(){
-			this.highlight = -1;
-		},
-		clear() {
-			if(!this.regular){
-				this.picked = [];
-				if(!this.multiple) this.close();
-			}
-		},
 		selectAll(){
 			if(this.results.length && !this.message) {
 				if(this.maxSelected){

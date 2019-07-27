@@ -6,22 +6,16 @@ import methods from './mixins/methods';
 import util from './mixins/util';
 import render from './mixins/render';
 
-import tag from './components/Tag';
-import select from './components/Select';
-import page from './components/Pagination';
-import list from './components/List';
-import table from './components/Table';
-
 export default {
 	name: "v-selectpage",
 	mixins: [data, methods, util, render],
 	components: {
 		'v-dropdown': dropdown,
-		'sp-tag': tag,
-		'sp-select': select,
-		'sp-page': page,
-		'sp-list': list,
-		'sp-table': table
+		'sp-tag': () => import('./components/Tag'),
+		'sp-select': () => import('./components/Select'),
+		'sp-page': () => import('./components/Pagination'),
+		'sp-list': () => import('./components/List'),
+		'sp-table': () => import('./components/Table')
 	},
 	provide(){
 		return {
