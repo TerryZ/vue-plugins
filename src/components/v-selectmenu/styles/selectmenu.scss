@@ -103,10 +103,10 @@ $bg-color-dark: #eee;
         border: 0;
         // will-change: border-color, box-shadow, background-color;
         // transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
-        &:focus {
+        // &:focus {
             //box-shadow: 0 0 0 3px rgba(150,150,150, 0.2);
             //background-color: white;
-        }
+        // }
     }
 }
 
@@ -153,7 +153,7 @@ $bg-color-dark: #eee;
     overflow-x: hidden;
     border-radius: 0 0 2px 2px;
     &:before,&:after{ display: table;content: " "; }
-    &.sm-list-mode{ /*border-top: 1px solid #E6E7E7;*/ }
+    // &.sm-list-mode{ /*border-top: 1px solid #E6E7E7;*/ }
     &.sm-advanced { min-width: 260px; }
     &.sm-scroll-limit { max-height: 260px; }
 }
