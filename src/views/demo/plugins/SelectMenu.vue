@@ -101,8 +101,7 @@
         <p>
             <v-selectmenu :data="listData"
                           :max-selected="3"
-                          :multiple="true"
-                          v-model="value1">
+                          :multiple="true">
             </v-selectmenu>
         </p>
         <br>
@@ -118,6 +117,12 @@
             </v-selectmenu>
         </p>
         <br>
+
+        <h5>高级模式菜单自定义菜单宽度</h5>
+        <p>
+            <v-selectmenu :data="groupData" :width="400" >
+            </v-selectmenu>
+        </p>
 
         <h5>鼠标右键呼出菜单</h5>
         <v-selectmenu :data="menu" :regular="true" :right-click="true" >

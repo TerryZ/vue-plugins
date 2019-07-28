@@ -106,23 +106,24 @@ export default {
             ]);
         },
         buildMessage(h){
+            const child = [];
             if(this.message){
-                return h('transition',{
-                    props:{
-                        name:'sp-message-slide',
-                        appear: true
-                    },
-                    on:{
-                        'enter':()=>this.adjust(),
-                        'after-leave':()=>this.adjust()
-                    }
-                },[
-                    h('div',{class:'sp-message'},[
-                        h('i',{class:'sp-iconfont sp-icon-warning'}),
-                        h('span',{domProps: {innerHTML: this.message}})
-                    ])
-                ]);
+                child.push(h('div',{class:'sp-message'},[
+                    h('i',{class:'sp-iconfont sp-icon-warning'}),
+                    h('span',{domProps: {innerHTML: this.message}})
+                ]));
             }
+
+            return h('transition',{
+                props:{
+                    name:'sp-message-slide',
+                    appear: true
+                },
+                on:{
+                    'enter':()=>this.adjust(),
+                    'after-leave':()=>this.adjust()
+                }
+            },child);
         },
         buildContent(h){
             const child = [];

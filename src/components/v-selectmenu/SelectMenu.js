@@ -6,14 +6,12 @@ import props from './mixins/props';
 import methods from './mixins/methods';
 import util from './mixins/util';
 
-import drop from 'v-dropdown';
-
 export default {
     name: "v-selectmenu",
     components: {
         'regular': () => import('./components/regular/Menu'),
         'advanced': () => import('./components/advanced/List'),
-        'dropdown': drop
+        'dropdown': () => import('v-dropdown')
     },
     mixins: [render, data, props, methods, util],
     mounted(){

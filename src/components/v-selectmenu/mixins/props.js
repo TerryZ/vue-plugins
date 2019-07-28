@@ -53,6 +53,10 @@ export default {
 			type: Boolean,
 			default: true
 		},
+		/**
+         * the width of drop down menu
+         */
+        width: Number,
 		rtl: {
 			type: Boolean,
 			default: false
