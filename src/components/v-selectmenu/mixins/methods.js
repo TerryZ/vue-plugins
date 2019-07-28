@@ -46,10 +46,11 @@ export default {
 			}
 		},
 		selectItem(item){
-			if(this.multiple){
-				if(!this.picked.includes(item)) {
-					if(this.maxSelected && this.picked.length === this.maxSelected) {
-						if(!this.message) {
+			if (this.multiple) {
+				const idx = this.inPickedIndex(item);
+				if (idx === -1) {
+					if (this.maxSelected && this.picked.length === this.maxSelected) {
+						if (!this.message) {
 							this.buildNotice();
 							/**
 							 * auto clear message in 3 seconds
@@ -61,19 +62,17 @@ export default {
 					} else {
 						this.picked.push(item);
 					}
-				}else{
-					const idx = this.inPickedIndex(item);
-					if(idx !== -1) this.picked.splice(idx, 1);
+				} else {
+					this.picked.splice(idx, 1);
 				}
-			}else {
-				this.picked = [item];
+			} else {
+				this.picked = this.inPicked(item) ? [] : [item];
 				this.close();
 			}
 		},
 		filter(){
 			const list = this.state.group ? this.data[this.tabIndex].list.slice() : this.data.slice();
 			return list.filter(val => new RegExp(this.search.toLowerCase()).test(this.getRowText(val).toLowerCase()));
-
 		},
 		switchTab(){
 			this.results = this.regular
