@@ -92,8 +92,8 @@ export default {
         //console.log(this.animate)
 		const children = [];
         //the dropdown layer caller
-		if(this.$slots.caller && Object.keys(this.$slots.caller).length && !this.embed){
-			children.push(this.$slots.caller);
+		if ('caller' in this.$scopedSlots && !this.embed) {
+			children.push(this.$scopedSlots.caller());
 		}
 		//the dropdown layer container
 		children.push(h('transition',{
