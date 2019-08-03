@@ -44,7 +44,12 @@ export default {
 			}
 		},
 		buildContainer(h){
-			return h('div',{ class:'v-selectmenu' },[
+			return h('div',{
+				class: {
+					'v-selectmenu': true,
+					'sm-advanced': !this.regular
+				}
+			},[
 				this.buildHeader(h),
 				this.buildSearch(h),
 				this.buildMessage(h),
@@ -120,7 +125,7 @@ export default {
 		},
 		buildTab(h){
 			if(this.state.group && this.data.length){
-				return h('div',{ class:'sm-result-tabs' },[
+				return h('div',{ class:'sm-tabs' },[
 					h('ul',this.data.map((val,index)=>{
 						return h('li',{ key:index },[
 							h('a',{
