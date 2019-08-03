@@ -1,4 +1,4 @@
-import '../../styles/animated.scss';
+import '../../styles/animated.styl';
 import mItem from './Item';
 export default {
     name: "v-regular-menu",
