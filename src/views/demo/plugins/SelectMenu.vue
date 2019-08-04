@@ -4,6 +4,8 @@
             <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
         </h3>
 
+        <hr>
+
         <h5>常规模式菜单</h5>
         <p>
             <v-selectmenu :data="menu"

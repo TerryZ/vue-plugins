@@ -1,42 +1,40 @@
 <template>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h3>v-dialogs
-                <button type="button"
-                        class="btn btn-inverse btn-xs"
-                        @click="$router.push({path: '/demo'});">Back to List</button>
-            </h3>
-            <br>
-            <h5>Modal</h5>
-            <p>
-                <button type="button" class="btn btn-default" @click="callModal" id="btn-modal">Modal</button>
-            </p>
-            <br>
+    <div class="card p-5">
+        <h3>v-dialogs
+            <button type="button"
+                    class="btn btn-outline-secondary btn-sm"
+                    @click="$router.push({path: '/demo'});">Back to List</button>
+        </h3>
+        <hr>
+        <h5 class="mt-3">Modal</h5>
+        <p>
+            <button type="button" class="btn btn-secondary" @click="callModal" id="btn-modal">Modal</button>
+        </p>
 
-            <h5>Alert</h5>
-            <p>
+        <h5 class="mt-3">Alert</h5>
+        <div>
+            <div class="btn-group" role="group">
                 <button type="button" class="btn btn-info" @click="callAlert('info')" id="btn-alert-info">Info</button>
                 <button type="button" class="btn btn-warning" @click="callAlert('warning')" id="btn-alert-warning">Warning</button>
                 <button type="button" class="btn btn-danger" @click="callAlert('error')" id="btn-alert-error">Error</button>
                 <button type="button" class="btn btn-success" @click="callAlert('success')" id="btn-alert-success">Success</button>
-                <button type="button" class="btn btn-inverse" @click="callAlert('confirm')" id="btn-alert-confirm">Confirm</button>
-            </p>
-            <br>
+                <button type="button" class="btn btn-secondary" @click="callAlert('confirm')" id="btn-alert-confirm">Confirm</button>
+            </div>
+        </div>
 
-            <h5>Mask</h5>
-            <p>
-                <button type="button" class="btn btn-default" @click="callMask" id="btn-mask">Mask</button>
-            </p>
-            <br>
+        <h5 class="mt-3">Mask</h5>
+        <p>
+            <button type="button" class="btn btn-secondary" @click="callMask" id="btn-mask">Mask</button>
+        </p>
 
-            <h5>Toast</h5>
-            <p>
+        <h5 class="mt-3">Toast</h5>
+        <div>
+            <div class="btn-group" role="group">
                 <button type="button" class="btn btn-info" @click="callToast('info')" id="btn-toast-info">Info</button>
                 <button type="button" class="btn btn-warning" @click="callToast('warning')" id="btn-toast-warning">Warning</button>
                 <button type="button" class="btn btn-danger" @click="callToast('error')" id="btn-toast-error">Error</button>
                 <button type="button" class="btn btn-success" @click="callToast('success')" id="btn-toast-success">Success</button>
-            </p>
-            <br>
+            </div>
         </div>
     </div>
 </template>
