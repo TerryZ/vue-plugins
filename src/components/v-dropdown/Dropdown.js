@@ -1,4 +1,4 @@
-import './dropdown.scss';
+import './dropdown.styl';
 
 export default {
     name: "v-dropdown",
