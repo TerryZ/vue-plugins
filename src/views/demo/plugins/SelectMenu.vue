@@ -1,6 +1,6 @@
 <template>
     <div class="card p-5">
-        <h3 class="mb-5">v-selectmenu
+        <h3>v-selectmenu
             <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
         </h3>
 
