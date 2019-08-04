@@ -1,38 +1,39 @@
 <template>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h3>v-gallery <button type="button" class="btn btn-inverse btn-xs" @click="$router.push({path: '/demo'});">Back to List</button></h3>
-            <h5>图片全屏查看模式</h5>
-            <v-gallery :images="list" class="image-box">
-                <a href="javascript:void(0);"
-                   :data-image="img.url"
-                   :title="img.title"
-                   v-for="(img, index) in list" :key="index" >
-                    <div class="bgbox">
-                        <img :src="img.url">
-                    </div>
-                    <div class="img-title" v-html="img.title"></div>
-                </a>
-            </v-gallery>
-            <br><br>
+    <div class="card p-5">
+        <h3>v-gallery <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button></h3>
 
-            <h5>内置画廊模式</h5>
-            <p>
-                <v-gallery :images="list" :caption="true" @showed="showed" ></v-gallery>
-            </p>
-            <br><br>
+        <hr>
 
-            <h5>内置画廊模式黑暗主题</h5>
-            <p>
-                <v-gallery :images="list" :dark="true" :caption="true" ></v-gallery>
-            </p>
-            <br><br>
+        <h5>图片全屏查看模式</h5>
+        <v-gallery :images="list" class="image-box">
+            <a href="javascript:void(0);"
+                :data-image="img.url"
+                :title="img.title"
+                v-for="(img, index) in list" :key="index" >
+                <div class="bgbox">
+                    <img :src="img.url">
+                </div>
+                <div class="img-title" v-html="img.title"></div>
+            </a>
+        </v-gallery>
+        <br><br>
 
-            <h5>跑马灯模式</h5>
-            <p>
-                <v-gallery type="carousel" :images="list" :control-pause="true" ></v-gallery>
-            </p>
-        </div>
+        <h5>内置画廊模式</h5>
+        <p>
+            <v-gallery :images="list" :caption="true" @showed="showed" ></v-gallery>
+        </p>
+        <br><br>
+
+        <h5>内置画廊模式黑暗主题</h5>
+        <p>
+            <v-gallery :images="list" :dark="true" :caption="true" ></v-gallery>
+        </p>
+        <br><br>
+
+        <h5>跑马灯模式</h5>
+        <p>
+            <v-gallery type="carousel" :images="list" :control-pause="true" ></v-gallery>
+        </p>
     </div>
 </template>
 

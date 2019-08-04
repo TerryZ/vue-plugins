@@ -1,61 +1,65 @@
 <template>
-    <div class="card">
-        <div class="panel-body p-5">
-            <h3 class="mb-5">v-page
-                <button type="button" class="btn btn-outline-dark btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
-            </h3>
-            <div class="photo-wall clearfix">
-                <div v-for="(num, index) in pageArr" :key="index" class="brick"> {{num}} </div>
+    <div class="card p-5">
+        <h3>v-page
+            <button type="button" class="btn btn-outline-dark btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
+        </h3>
+
+        <hr>
+
+        <h5>照片墙实例</h5>
+        <div class="photo-wall clearfix">
+            <div v-for="(num, index) in pageArr" :key="index" class="brick"> {{num}} </div>
+        </div>
+        <v-page align="center"
+                :total-row="arr.length"
+                @page-change="pagePhotoChange">
+        </v-page>
+
+        <h5 class="mt-5 mb-3">完整分页栏</h5>
+        <v-page align="left" :total-row="101" v-model="current" ref="page"></v-page>
+
+        <div class="row mt-2">
+            <div class="col-md-1">
+                <input type="text" class="form-control" v-model="target">
             </div>
-            <v-page align="center"
-                    :total-row="arr.length"
-                    @page-change="pagePhotoChange">
-            </v-page>
+            <button class="btn btn-primary mr-3" type="button" @click="go">跳转</button>
+            <button class="btn btn-primary" type="button" @click="current=current+1">page + 1</button>
+        </div>
 
-            <h5 class="mt-5 mb-3">完整分页栏</h5>
-            <v-page align="left" :total-row="101" v-model="current" ref="page"></v-page>
+        <h5 class="mt-5 mb-3">无页数选择列表</h5>
+        <v-page :total-row="100" :page-size-menu="false" align="left"></v-page>
 
-            <div class="row mt-2">
-                <div class="col-md-1">
-                    <input type="text" class="form-control" v-model="target">
-                </div>
-                <button class="btn btn-primary mr-3" type="button" @click="go">跳转</button>
-                <button class="btn btn-primary" type="button" @click="current=current+1">page + 1</button>
-            </div>
+        <h5 class="mt-5 mb-3">无分页信息栏</h5>
+        <v-page :page-size-menu="false" :info="false" align="left" :total-row="100"></v-page>
 
-            <h5 class="mt-5 mb-3">无页数选择列表</h5>
-            <v-page :total-row="100" :page-size-menu="false" align="left"></v-page>
+        <h5 class="mt-5 mb-3">无首页、尾页</h5>
+        <v-page :page-size-menu="false"
+                :info="false"
+                :total-row="100"
+                :first="false"
+                :last="false"
+                align="left"></v-page>
 
-            <h5 class="mt-5 mb-3">无分页信息栏</h5>
-            <v-page :page-size-menu="false" :info="false" align="left" :total-row="100"></v-page>
+        <h5 class="mt-5 mb-3">无分页码</h5>
+        <v-page :page-size-menu="false"
+                :info="false"
+                :total-row="100"
+                :first="false"
+                :last="false"
+                :page-number="false"
+                align="left"></v-page>
 
-            <h5 class="mt-5 mb-3">无首页、尾页</h5>
-            <v-page :page-size-menu="false"
-                    :info="false"
-                    :total-row="100"
-                    :first="false"
-                    :last="false"
-                    align="left"></v-page>
-
-            <h5 class="mt-5 mb-3">无分页码</h5>
-            <v-page :page-size-menu="false"
-                    :info="false"
-                    :total-row="100"
-                    :first="false"
-                    :last="false"
-                    :page-number="false"
-                    align="left"></v-page>
-
-            <h5 class="mt-5 mb-3">禁用</h5>
-            <v-page :total-row="100"  align="left" :disabled="disabled" ></v-page>
+        <h5 class="mt-5 mb-3">禁用</h5>
+        <v-page :total-row="100"  align="left" :disabled="disabled" ></v-page>
+        <div>
             <div class="btn-group mt-2" role="group" aria-label="...">
                 <button type="button" class="btn btn-outline-dark" :disabled="!disabled" @click="disabled=false">Enabled</button>
                 <button type="button" class="btn btn-danger" :disabled="disabled" @click="disabled=true">Disabled</button>
             </div>
-
-            <h5 class="mt-5 mb-3">无边框</h5>
-            <v-page :total-row="100"  align="left" :border="false" ></v-page>
         </div>
+
+        <h5 class="mt-5 mb-3">无边框</h5>
+        <v-page :total-row="100"  align="left" :border="false" ></v-page>
     </div>
 </template>
 

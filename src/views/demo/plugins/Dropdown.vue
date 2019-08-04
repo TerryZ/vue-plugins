@@ -5,6 +5,8 @@
                 <button type="button" class="btn btn-outline-dark btn-sm" @click="$router.push({path: '/demo'})">Back to List</button>
             </h3>
 
+            <hr>
+
             <h5 class="mt-5 mb-3">默认</h5>
             <p>
                 <dropdown>
@@ -90,7 +92,7 @@
                         <input type="text" class="form-control" v-model="query" placeholder="try enter 3">
                     </template>
                     <div class="p-5">
-                        <div v-for="item in list" v-text="item"></div>
+                        <div v-for="item in list" :key="item" v-text="item"></div>
                     </div>
                 </dropdown>
             </p>
