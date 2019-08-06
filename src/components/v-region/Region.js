@@ -1,13 +1,9 @@
 import './region.scss';
-import select from './components/SelectGroup';
-import group from './components/TabSelector';
-import column from './components/ColumnGroup';
-import text from './components/Text';
-import city from './components/CityPicker';
+
 export default {
     name: "v-region",
     render(h){
-        if(this.type){
+        if (this.type) {
             switch (this.type.toLowerCase()) {
                 case 'text': return this.build(h, 'r-text');
                 case 'select': return this.build(h, 'r-select');
@@ -15,35 +11,35 @@ export default {
                 case 'city': return this.build(h, 'r-city');
                 case 'group': return this.build(h, 'r-group');
             }
-        }else{
+        } else {
             console.error('Please provide selector type.("type" option of v-region)')
         }
     },
     components: {
-        'r-select': select,
-        'r-text': text,
-        'r-group': group,
-        'r-column': column,
-        'r-city': city
+        'r-select': () => import('./components/SelectGroup'),
+        'r-text': () => import('./components/Text'),
+        'r-group': () => import('./components/TabSelector'),
+        'r-column': () => import('./components/ColumnGroup'),
+        'r-city': () => import('./components/CityPicker')
     },
-    props:{
+    props: {
         type: {
             type: String,
             default: 'select'
         }
     },
-    methods:{
-        build(h, name){
+    methods: {
+        build(h, name) {
             let slot = undefined;
             const type = this.type.toLowerCase();
-            if((type !== 'select' || type !== 'text') && 'default' in this.$scopedSlots){
+            if ((type !== 'select' || type !== 'text') && 'default' in this.$scopedSlots) {
                 slot = this.$scopedSlots.default();
             }
-            return h(name,{
+            return h(name, {
                 class:'v-region',
                 props: this.$attrs,
                 on: this.$listeners
-            },slot);
+            }, slot);
         }
     }
 }
