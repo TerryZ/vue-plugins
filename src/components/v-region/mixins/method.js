@@ -1,6 +1,7 @@
 import language from '../language';
 import { srcProvince, srcCity, srcArea } from "../formatted.js";
 import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants';
+import { resolve, reject } from '_any-promise@1.3.0@any-promise';
 
 export default {
     methods:{
@@ -14,12 +15,12 @@ export default {
                 });
             });
         },
-		reset(){
+        reset(){
             this.dProvince = null;
-			this.dCity = null;
-			this.dArea = null;
-			this.dTown = null;
-		},
+            this.dCity = null;
+            this.dArea = null;
+            this.dTown = null;
+        },
         initSelected(level){
             let ini = this.init, count = 0, init = !!this.init;
             if(ini && Object.keys(ini).length){
@@ -89,26 +90,50 @@ export default {
          */
         loadTown(area){
             let list = null;
-            if(area && Object.keys(area).length){
+            if (area && Object.keys(area).length) {
                 let towns = null;
-				/* eslint-disable */
-                try{ towns = require(`../town/${area.key}.json`); } catch (e) {console.warn(`The ${area.value} area have no town data.`);}
-				/* eslint-enable */
-                list = towns && Object.keys(towns).length ?
-                    Object.entries(towns).map(val=>({ key: val[0], value: val[1] })) : [];
-            }else list = [];
+                /* eslint-disable */
+                try {
+                    towns = require(`../town/${area.key}.json`);
+                    // towns = () => import(`../town/${area.key}.json`);
+                    // console.log(towns)
+                } catch (e) {
+                    console.warn(`The ${area.value} area have no town data.`);
+                }
+                /* eslint-enable */
+                list = towns && Object.keys(towns).length 
+                    ? Object.entries(towns).map(val=>({ key: val[0], value: val[1] })) 
+                    : [];
+            } else list = [];
             this.haveTown = !(this.dProvince && this.dCity && area && !list.length);
             return list;
+
+            // return new Promise((resolve, reject) => {
+            //     if (area && Object.keys(area).length) {
+            //         import(`../town/${area.key}.json`)
+            //             .then(resp => {
+            //                 resolve(resp && Object.keys(resp).length 
+            //                     ? Object.entries(resp).map(val=>({ key: val[0], value: val[1] })) 
+            //                     : []);
+            //             })
+            //             .catch(() => {
+            //                 console.warn(`The ${area.value} area have no town data.`);
+            //             })
+            //     } else {
+            //         resolve([]);
+            //     }
+            //     //this.haveTown = !(this.dProvince && this.dCity && area && !list.length);
+            // });
         },
         baseProvinceChange(newVal, oldVal){
-            if(this.city){
+            if (this.city) {
                 this.listCity = this.loadCity(newVal);
                 //clear city selected result
-                if(!this.initSelected(CITY_LEVEL)){
-                    if(!this.dCity) this.cityChange(null);
+                if (!this.initSelected(CITY_LEVEL)) {
+                    if (!this.dCity) this.cityChange(null);
                     else this.dCity = null;
                 }
-            }else this.changeValues();
+            } else this.changeValues();
         },
         baseCityChange(newVal, oldVal){
             if(this.area){
@@ -123,11 +148,25 @@ export default {
         baseAreaChange(newVal, oldVal){
             if(this.town){
                 this.listTown = this.loadTown(newVal);
+                console.log(this.listTown)
                 //clear city selected result
                 if(!this.initSelected(TOWN_LEVEL)){
                     if(!this.dTown) this.townChange(null);
                     else this.dTown = null;
                 }
+                // this.loadTown(newVal).then(resp => {
+                //     console.log(resp);
+                //     this.listTown = resp;
+                //     this.haveTown = !(this.dProvince && this.dCity && newVal && !resp.length);
+                //     //clear city selected result
+                //     if (!this.initSelected(TOWN_LEVEL)) {
+                //         if (this.dArea) {
+                //             this.dArea = null;
+                //         } else {
+                //             this.areaChange(null);
+                //         }
+                //     }
+                // });
             }else this.changeValues();
         },
         baseTownChange(newVal, oldVal){
