@@ -6,7 +6,7 @@
                     <!-- default region selector caller button -->
                     <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
                         {{selectedText?selectedText:lang.pleaseSelect}}
-                        <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
+                        <span class="rg-iconfont rg-icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
                         <span class="rg-caret-down" v-else></span>
                     </button>
                 </slot>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import '../styles/icons.styl';
     import dropDown from 'v-dropdown';
     import data from '../mixins/data';
     import method from '../mixins/method';

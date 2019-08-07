@@ -6,7 +6,7 @@
                     <!-- default region selector caller button -->
                     <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
                         {{selectedText?selectedText:lang.pleaseSelect}}
-                        <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
+                        <span class="rg-iconfont rg-icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop="clear"></span>
                         <span class="rg-caret-down" v-else></span>
                     </button>
                 </slot>
@@ -20,10 +20,10 @@
             </h3>
 
             <button type="button" :title="lang.clear" @click="clear" class="rg-removeall-button" >
-                <i class="rg-iconfont icon-remove"></i>
+                <i class="rg-iconfont rg-icon-remove"></i>
             </button>
             <button type="button" :title="lang.done" @click="close" class="rg-done-button" >
-                <i class="rg-iconfont icon-done"></i>
+                <i class="rg-iconfont rg-icon-done"></i>
             </button>
         </div>
         <!-- search bar -->
@@ -54,12 +54,13 @@
 </template>
 
 <script>
+    import '../styles/icons.styl';
     import dropdown from 'v-dropdown';
     import data from '../mixins/data';
     import method from '../mixins/method';
     import search from '../mixins/selectorWithSearch';
     import selector from '../mixins/selector';
-    import {PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL} from '../constants';
+    import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants';
     export default {
         name: "TabSelector",
         mixins: [data, method, search, selector],

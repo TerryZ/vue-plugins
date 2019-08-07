@@ -4,7 +4,7 @@ export default {
             const child = [];
             child.push(h('span',val.value));
             if(this.haveChild){
-                child.push(h('i',{class:'rg-iconfont icon-right rg-caret-right'}));
+                child.push(h('i',{class:'rg-iconfont rg-icon-right rg-caret-right'}));
             }
             return h('li',{
                 key: index,
