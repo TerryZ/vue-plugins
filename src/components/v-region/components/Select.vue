@@ -1,5 +1,5 @@
 <template>
-    <dropdown ref="drop" :border="false" @show="showChange" class="rg-select">
+    <dropdown ref="drop" :border="false" @show="showChange" class="rg-select" :disabled="disabled">
         <template #caller>
             <div :class="['rg-select__el', {'rg-select__el--active': show, 'rg-select_el--disabled': disabled}]">
                 <div class="rg-select__content" v-text="content"></div>

@@ -54,7 +54,7 @@ export default {
         classes(){
             return {
                 'sm-divider': this.data.content === 'sm-divider',
-                'sm-header': this.data.header,
+                'sm-caption': this.data.header,
                 'sm-disabled': this.data.disabled
             };
         }

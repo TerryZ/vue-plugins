@@ -1,6 +1,9 @@
 @import "./icon.styl"
 
 bg-dark = #eee
+font-size(size = 14px)
+    font-size size
+    line-height 1.42857143
 
 .sm-caller-container
     display inline-block
@@ -14,14 +17,10 @@ bg-dark = #eee
     background-color white
     border 1px solid #ccc
     border-radius 4px
-    font-size 14px
-    line-height 1.42857143
+    font-size()
     outline 0 !important
     color #666
-    transition color .15s ease-in-out,
-    background-color .15s ease-in-out,
-    border-color .15s ease-in-out,
-    box-shadow .15s ease-in-out
+    transition color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
     span.sm-caret-down
         transition transform .2s ease
     &.sm-opened
@@ -70,8 +69,7 @@ bg-dark = #eee
         margin 0
         text-align left
         color #555
-        font-size 16px
-        line-height 1.42
+        font-size(16px)
         white-space nowrap
         font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
     .sm-control
@@ -96,29 +94,21 @@ bg-dark = #eee
         background-color white
         margin 0 !important
         width 100%
-        font-size 14px
-        line-height 1.42
+        font-size()
         padding 4px 6px
         box-sizing border-box
         outline none !important
         border-radius 2px
         border 0
-        // will-change border-color, box-shadow, background-color
-        // transition border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out
-        // &focus
-            //box-shadow 0 0 0 3px rgba(150,150,150, 0.2)
-            //background-color white
-        // 
 
 .sm-message
     padding 0 10px 10px
     background-color bg-dark
     color black
     span
-        font-size 15px
-        line-height 1.42
+        font-size(15px)
         margin-left 5px
-        text-shadow 0 1px 0 #fff 
+        text-shadow 0 1px 0 #fff
 
 /* group type */
 .sm-tabs
@@ -127,29 +117,26 @@ bg-dark = #eee
     ul
         padding 0
         margin 0
-        text-align left
         li
             display inline-block
             a
                 display inline-block
                 padding 4px 12px 3px
-                font-size 14px
+                font-size()
                 color #aaa
                 text-decoration none
                 cursor pointer
-                line-height 1.42
                 background transparent
                 border-radius 2px 2px 0 0
                 font-family "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial
-                &.active 
+                &.active
                     color #24292e
-                    background-color #fff 
+                    background-color #fff
 
 /**
  * Results
  */
 .sm-result-area
-    background-color white
     list-style none
     margin 0
     padding 5px 0
@@ -158,7 +145,7 @@ bg-dark = #eee
     overflow-y auto
     overflow-x hidden
     border-radius 0 0 2px 2px
-    &:before,&:after
+    &:before, &:after
         display table
         content " "
     // &.sm-list-mode /*border-top 1px solid #E6E7E7*/
@@ -179,7 +166,7 @@ ul.sm-results
         & > li
             padding 0
             min-width auto
-            &:hover
+            &:not(.sm-disabled):not(.sm-divider):not(.sm-caption):hover
                 background-color #F6F8FA
                 color black
                 a
@@ -187,36 +174,33 @@ ul.sm-results
             & > a
                 width 100%
                 display block
-                padding 5px 10px 
-            &.sm-disabled,
-            &.sm-disabled:hover,
+                padding 7px 15px
+            &.sm-disabled
             &.sm-disabled a
-                background-color white
                 color #ccc
-                cursor default 
-            &.sm-header,
-            &.sm-header:hover,
-            &.sm-header a
-                background-color white
+                cursor default
+            &.sm-caption
+            &.sm-caption a
                 color black
                 font-size 16px
                 font-weight 600
                 cursor default
             &.sm-divider
-                background-color white
+                margin 8px 0
+                cursor default
+                border-bottom 1px solid #E5E5E5
 
     & > li
-        line-height 1.42
         margin 0
         overflow hidden
-        padding 5px 10px
+        padding 7px 10px
         position relative
         text-align left
         white-space nowrap
         min-width 180px
-        font-size 14px
+        font-size()
         color #666
-        cursor  pointer
+        cursor pointer
         font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
         & > a
             color #666
@@ -232,23 +216,15 @@ ul.sm-results
             display block
             position relative
             margin-left 25px
-        &.sm-divider
-            margin 8px 0
-            padding 0
-            cursor default
-            overflow hidden
-            border-bottom 1px solid #E5E5E5
         &.sm-over
             background-color #F6F8FA !important
             color black !important
-            cursor pointer 
         &.sm-message-box
             cursor default
             padding-left 12px
             span
-                font-size 16px
-                line-height 1.42
-                margin-left 10px 
+                font-size(16px)
+                margin-left 10px
         &.sm-selected
             font-weight 600
             color #666
@@ -265,8 +241,7 @@ ul.sm-results
             cursor default !important
         .sm-sub-caption
             font-weight 600
-            line-height 1.42
-            font-size 16px
+            font-size(16px)
         .sm-sub-back
             display inline-block
             font-weight 700
@@ -274,7 +249,7 @@ ul.sm-results
             padding 0 10px
             cursor pointer
             -webkit-transition opacity .5s cubic-bezier(.175,.885,.32,1)
-                    transition opacity .5s cubic-bezier(.175,.885,.32,1)
+            transition opacity .5s cubic-bezier(.175,.885,.32,1)
             outline none !important
             margin 0
             opacity 0.5
