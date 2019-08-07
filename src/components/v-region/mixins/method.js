@@ -129,8 +129,11 @@ export default {
                 this.listCity = this.loadCity(newVal);
                 //clear city selected result
                 if (!this.initSelected(CITY_LEVEL)) {
-                    if (!this.dCity) this.cityChange(null);
-                    else this.dCity = null;
+                    if (this.dCity) {
+                        this.dCity = null;
+                    } else {
+                        this.cityChange(null);
+                    }
                 }
             } else this.changeValues();
         },
@@ -138,20 +141,25 @@ export default {
             if(this.area){
                 this.listArea = this.loadArea(newVal);
                 //clear city selected result
-                if(!this.initSelected(AREA_LEVEL)){
-                    if(!this.dArea) this.areaChange(null);
-                    else this.dArea = null;
+                if (!this.initSelected(AREA_LEVEL)) {
+                    if (this.dArea) {
+                        this.dArea = null;
+                    } else {
+                        this.areaChange(null);
+                    }
                 }
             }else this.changeValues();
         },
         baseAreaChange(newVal, oldVal){
             if(this.town){
                 this.listTown = this.loadTown(newVal);
-                console.log(this.listTown)
                 //clear city selected result
                 if(!this.initSelected(TOWN_LEVEL)){
-                    if(!this.dTown) this.townChange(null);
-                    else this.dTown = null;
+                    if(this.dTown) {
+                        this.dTown = null;
+                    } else {
+                        this.townChange(null);
+                    }
                 }
                 // this.loadTown(newVal).then(resp => {
                 //     console.log(resp);
@@ -177,13 +185,15 @@ export default {
     },
     beforeMount(){
         //sort by length and code
-        this.listProvince = this.ui ? srcProvince.concat().sort((a,b)=>{
-            const gap = a.value.length - b.value.length;
-            return gap === 0?Number(a.key)-Number(b.key):gap;
-        }) : srcProvince.concat();
+        this.listProvince = this.type === 'group'
+            ? srcProvince.slice().sort((a,b) => {
+                const gap = a.value.length - b.value.length;
+                return gap === 0 ? Number(a.key) - Number(b.key) : gap;
+            })
+            : srcProvince.slice();
     },
     mounted(){
         //console.log(this)
-        if(this.selected && Object.keys(this.selected).length) this.initSelected(PROVINCE_LEVEL);
+        if (this.selected && Object.keys(this.selected).length) this.initSelected(PROVINCE_LEVEL);
     }
 };
