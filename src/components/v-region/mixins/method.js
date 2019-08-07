@@ -1,7 +1,6 @@
 import language from '../language';
 import { srcProvince, srcCity, srcArea } from "../formatted.js";
 import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants';
-import { resolve, reject } from '_any-promise@1.3.0@any-promise';
 
 export default {
     methods:{
