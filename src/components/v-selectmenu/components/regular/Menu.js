@@ -7,38 +7,38 @@ export default {
         'menu-item': mItem
     },
     render(h){
-        if(Array.isArray(this.data) && this.data.length){
+        if (Array.isArray(this.data) && this.data.length){
             const child = [];
-            child.push(h('ul',{
-                class:{
+            child.push(h('ul', {
+                class: {
                     'sm-results sm-regular vivify': true,
                     'sm-menu-root': true,
                     'fadeInLeft': this.fadeInLeft
                 },
                 directives: [{ name: 'show', value: this.currentMenu === 'root' }]
-            },this.data.map((val,index)=>{
+            },this.data.map((val,index) => {
                 const options = {
-                    props:{
-                        data:val,
-                        key:`root-${index}`
+                    props: {
+                        data: val,
+                        key: `root-${index}`
                     },
-                    nativeOn:{
-                        click:()=>this.switchSub(val)
+                    nativeOn: {
+                        click: () => this.switchSub(val)
                     }
                 };
                 /**
                  * scoped slot with named slot
                  */
-                if('row' in this.$scopedSlots){
+                if ('row' in this.$scopedSlots){
                     //same as <template #row="{ row }">
                     options.scopedSlots = {
-                        row:props=>{
+                        row: props => {
                             //same as <slot name="row" :row="row">
                             return this.$scopedSlots.row({ row: props.row });
                         }
                     };
                 }
-                return h('menu-item',options);
+                return h('menu-item', options);
             })));
             /**
              * build children menus
@@ -72,7 +72,7 @@ export default {
     watch:{
         show(val){
             this.$nextTick(()=>{
-                if(!val) {
+                if (!val) {
                     this.currentMenu = 'root';
                     this.fadeInLeft = false;
                 }
@@ -108,24 +108,24 @@ export default {
         switchSub(row, parent){
             if(row && Object.keys(row).length){
                 if (parent) {
-                    if(row.pKey) this.currentMenu = row.pKey;
-                    if(row.pKey === 'root') this.fadeInLeft = true;
+                    if (row.pKey) this.currentMenu = row.pKey;
+                    if (row.pKey === 'root') this.fadeInLeft = true;
                     else {
                         this.subMenuSlide.fadeInLeft = true;
                         this.subMenuSlide.fadeInRight = false;
                     }
                 } else {
-                    if(row.mKey) this.currentMenu = row.mKey;
-                    if(row.children){
+                    if (row.mKey) this.currentMenu = row.mKey;
+                    if (row.children){
                         this.subMenuSlide.fadeInLeft = false;
                         this.subMenuSlide.fadeInRight = true;
                     }
                 }
-                if(!row.disabled && !row.children) this.$emit('close');
+                if (!row.disabled && !row.children) this.$emit('close');
             }
         },
         buildChild(h){
-            if(this.child.length){
+            if (this.child.length){
                 return this.child.map((val,index) => {
                     const child = [];
                     const header = h('li', { class:'sm-sub-header' },[
@@ -150,7 +150,7 @@ export default {
                     /**
                      * build children menus
                      */
-                    if (val.children && val.children.length){
+                    if (val.children && val.children.length) {
                         child.push(val.children.map((value,idx) => {
                             const options = {
                                 props: {
@@ -164,10 +164,10 @@ export default {
                             /**
                              * scoped slot with named slot
                              */
-                            if('row' in this.$scopedSlots){
+                            if ('row' in this.$scopedSlots){
                                 //same as <template #row="{ row }">
                                 options.scopedSlots = {
-                                    row:props => {
+                                    row: props => {
                                         //same as <slot name="row" :row="row">
                                         return this.$scopedSlots.row({ row: props.row });
                                     }
