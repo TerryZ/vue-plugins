@@ -1,16 +1,19 @@
 <template>
     <div>
-        <div class="rg-caller-container" @click.stop.prevent="open" ref="caller">
-            <slot>
-                <!-- default region selector caller button -->
-                <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
-                    {{selectedText?selectedText:lang.pleaseSelect}}
-                    <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop.prevent="clear"></span>
-                    <span class="rg-caret-down" v-else></span>
-                </button>
-            </slot>
-        </div>
-        <v-drop-down ref="drop" @show-change="showChange">
+        <dropdown ref="drop" @show="showChange" :border="false">
+            <template #caller>
+                <div class="rg-caller-container">
+                    <slot>
+                        <!-- default region selector caller button -->
+                        <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
+                            {{ selectedText ? selectedText : lang.pleaseSelect }}
+                            <span class="rg-iconfont icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop.prevent="clear"></span>
+                            <span class="rg-caret-down" v-else></span>
+                        </button>
+                    </slot>
+                </div>
+            </template>
+
             <!-- search bar -->
             <div class="rg-search-bar" >
                 <input type="text" autocomplete="off" ref="search" v-model.trim="query" class="rg-input" placeholder="">
@@ -30,23 +33,21 @@
                     </dl>
                 </div>
             </div>
-        </v-drop-down>
+        </dropdown>
     </div>
 </template>
 
 <script>
-    import {srcProvince, srcCity} from "../formatted.js";
+    import { srcProvince, srcCity } from "../formatted.js";
     import selector from '../mixins/selector';
     import search from '../mixins/selectorWithSearch';
     import language from '../language';
-    import dropDown from 'v-dropdown';
+    import dropdown from 'v-dropdown';
     export default {
         name: "CityPicker",
         mixins: [search, selector],
         inheritAttrs: false,
-        components: {
-            'v-drop-down': dropDown
-        },
+        components: { dropdown },
         props: {
             selected: Array
         },
@@ -73,7 +74,7 @@
         beforeMount(){
             this.lang = language['cn'];
             this.prepared();
-            this.list = this.listBuild.concat();
+            this.list = this.listBuild.slice();
         },
         computed: {
             selectedText(){
@@ -139,10 +140,6 @@
                     });
                 });
                 this.listBuild = [...[municipalityObj], ...listTmp, ...[specialObj]];
-            },
-            open(){
-                this.$refs.drop.$emit('show', this.$refs.caller);
-                this.inputFocus();
             },
             clear(){
                 this.picked = [];

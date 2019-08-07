@@ -1,4 +1,4 @@
-import './region.scss';
+import './styles/region.styl';
 
 export default {
     name: "v-region",

@@ -34,10 +34,12 @@
         <div class="rg-level-tabs" >
             <ul>
                 <!-- eslint-disable-next-line -->
-                <li :key="index" v-for="(tab,index) in levels" v-if="levelAvailable">
+                <template v-if="levelAvailable">
+                <li :key="index" v-for="(tab,index) in levels">
                     <a href="javascript:void(0);" @click="level = index"
                        v-text="tab.title" :class="{active:index === level}"></a>
                 </li>
+                </template>
             </ul>
         </div>
         <!-- selector mode -->
