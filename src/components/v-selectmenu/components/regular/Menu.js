@@ -1,5 +1,6 @@
 import '../../styles/animated.styl';
 import mItem from './Item';
+
 export default {
     name: "v-regular-menu",
     components: {
@@ -14,7 +15,7 @@ export default {
                     'sm-menu-root': true,
                     'fadeInLeft': this.fadeInLeft
                 },
-                directives: [{name: 'show', value: this.currentMenu === 'root'}]
+                directives: [{ name: 'show', value: this.currentMenu === 'root' }]
             },this.data.map((val,index)=>{
                 const options = {
                     props:{
@@ -60,7 +61,6 @@ export default {
         return {
             child: [],
             currentMenu: 'root',
-
             fadeInLeft: false,
             fadeInRight: true,
             subMenuSlide: {
@@ -85,13 +85,13 @@ export default {
     methods: {
         pushMenu(menu, parent, index){
             if(menu && menu.children && menu.children.length){
-                let prefix = 'menu-';
-                if(!parent) {
-                    menu.mKey = prefix + index;
-                    menu.pKey = 'root';
-                }else{
+                const prefix = 'menu-';
+                if (parent) {
                     menu.mKey = parent.mKey + '-' + index;
                     menu.pKey = parent.mKey;
+                } else {
+                    menu.mKey = prefix + index;
+                    menu.pKey = 'root';
                 }
                 this.child.push(menu);
                 for(let i=0;i < menu.children.length; i++){
@@ -100,47 +100,46 @@ export default {
             }
         },
         getSubs(){
-            if(this.data && this.data.length){
+            if (this.data && this.data.length) {
                 this.child = [];
-                this.data.forEach((val, index)=>this.pushMenu(val, null, index));
+                this.data.forEach((val, index) => this.pushMenu(val, null, index));
             }
         },
         switchSub(row, parent){
             if(row && Object.keys(row).length){
-                if(!parent){
-                    if(row.mKey) this.currentMenu = row.mKey;
-                    if(row.children){
-                        this.subMenuSlide.fadeInLeft = false;
-                        this.subMenuSlide.fadeInRight = true;
-                    }
-                }else{
+                if (parent) {
                     if(row.pKey) this.currentMenu = row.pKey;
                     if(row.pKey === 'root') this.fadeInLeft = true;
                     else {
                         this.subMenuSlide.fadeInLeft = true;
                         this.subMenuSlide.fadeInRight = false;
                     }
+                } else {
+                    if(row.mKey) this.currentMenu = row.mKey;
+                    if(row.children){
+                        this.subMenuSlide.fadeInLeft = false;
+                        this.subMenuSlide.fadeInRight = true;
+                    }
                 }
                 if(!row.disabled && !row.children) this.$emit('close');
             }
-
         },
         buildChild(h){
             if(this.child.length){
-                return this.child.map((val,index)=>{
+                return this.child.map((val,index) => {
                     const child = [];
-                    const header = h('li',{ class:'sm-sub-header' },[
-                        h('span',{
+                    const header = h('li', { class:'sm-sub-header' },[
+                        h('span', {
                             class:'sm-sub-back',
-                            on:{
-                                click:()=>this.switchSub(val, true)
+                            on: {
+                                click: () => this.switchSub(val, true)
                             }
                         },[
                             h('i',{class:'sm-iconfont sm-icon-back'})
                         ]),
-                        h('span',{
-                            class:'sm-sub-caption',
-                            domProps:{ innerHTML: val.content }
+                        h('span', {
+                            class: 'sm-sub-caption',
+                            domProps: { innerHTML: val.content }
                         })
                     ]);
                     /**
@@ -151,15 +150,15 @@ export default {
                     /**
                      * build children menus
                      */
-                    if(val.children && val.children.length){
-                        child.push(val.children.map((value,idx)=>{
+                    if (val.children && val.children.length){
+                        child.push(val.children.map((value,idx) => {
                             const options = {
-                                props:{
-                                    data:value,
-                                    key:`item-${idx}`
+                                props: {
+                                    data: value,
+                                    key: `item-${idx}`
                                 },
-                                nativeOn:{
-                                    click:()=>this.switchSub(value)
+                                nativeOn: {
+                                    click: () => this.switchSub(value)
                                 }
                             };
                             /**
@@ -168,22 +167,22 @@ export default {
                             if('row' in this.$scopedSlots){
                                 //same as <template #row="{ row }">
                                 options.scopedSlots = {
-                                    row:props=>{
+                                    row:props => {
                                         //same as <slot name="row" :row="row">
                                         return this.$scopedSlots.row({ row: props.row });
                                     }
                                 };
                             }
-                            return h('menu-item',options);
+                            return h('menu-item', options);
                         }));
                     }
-                    return h('ul',{
-                        class:{
+                    return h('ul', {
+                        class: {
                             ...this.subMenuSlide,
                             'sm-results sm-regular vivify': true,
                             'sm-sub-menu': true
                         },
-                        props:{
+                        props: {
                             key:`sub-menu-${index}`
                         },
                         directives: [{name: 'show', value: this.currentMenu === val.mKey}]
@@ -192,7 +191,7 @@ export default {
             }
         }
     },
-    mounted(){
+    beforeMount() {
         this.getSubs();
     }
 }
