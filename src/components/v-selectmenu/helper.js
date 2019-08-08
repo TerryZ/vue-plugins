@@ -1,4 +1,3 @@
 export function flat (data) {
-    if(!data || !Object.keys(data).length) return [];
-    
+  if (!data || !Object.keys(data).length) return []
 }
