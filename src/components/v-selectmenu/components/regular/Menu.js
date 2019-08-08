@@ -1,6 +1,6 @@
 import '../../styles/animated.styl'
 import mItem from './Item'
-import { flat } from '../../helper';
+// import { flat } from '../../helper'
 
 export default {
   name: 'v-regular-menu',
