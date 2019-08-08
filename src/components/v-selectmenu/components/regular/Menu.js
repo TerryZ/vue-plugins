@@ -1,5 +1,6 @@
 import '../../styles/animated.styl'
 import mItem from './Item'
+import { flat } from '../../helper';
 
 export default {
   name: 'v-regular-menu',
@@ -102,6 +103,7 @@ export default {
       }
     },
     getSubs () {
+      // console.log(flat(this.data))
       if (this.data && this.data.length) {
         this.child = []
         this.data.forEach((val, index) => this.pushMenu(val, null, index))

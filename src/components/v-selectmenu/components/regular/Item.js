@@ -19,6 +19,9 @@ export default {
           item.push(h('span', { domProps: { innerHTML: this.data.content } }))
         }
 
+        /**
+         * sub menu icon
+         */
         if (this.data.children) {
           item.push(h('span', { class: 'sm-caret sm-caret-right' }))
         }

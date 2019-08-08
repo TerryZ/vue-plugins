@@ -241,7 +241,11 @@
                         {content:'NBA',children: [
                             {content:'NBA official site',url : 'http://www.nba.com'},
                             {content:'Chicago Bulls',url : 'http://www.nba.com/bulls/'},
-                            {content:'Los Angeles Lakers',url : 'www.nba.com/lakers/'}
+                            {content:'Los Angeles Lakers',children: [
+                                {content:'NBA official site',url : 'http://www.nba.com'},
+                                {content:'Chicago Bulls',url : 'http://www.nba.com/bulls/'},
+                                {content:'Los Angeles Lakers',url : 'www.nba.com/lakers/'}
+                            ]}
                         ]}
                     ]},
                     {content:'sm-divider'},
