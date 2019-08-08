@@ -15,7 +15,7 @@ export default {
                     'sm-menu-root': true,
                     'fadeInLeft': this.fadeInLeft
                 },
-                directives: [{ name: 'show', value: this.currentMenu === 'root' }]
+                directives: [{ name: 'show', value: this.current === 'root' }]
             },this.data.map((val,index) => {
                 const options = {
                     props: {
@@ -60,7 +60,7 @@ export default {
     data(){
         return {
             child: [],
-            currentMenu: 'root',
+            current: 'root',
             fadeInLeft: false,
             fadeInRight: true,
             subMenuSlide: {
@@ -73,7 +73,7 @@ export default {
         show(val){
             this.$nextTick(()=>{
                 if (!val) {
-                    this.currentMenu = 'root';
+                    this.current = 'root';
                     this.fadeInLeft = false;
                 }
             })
@@ -84,7 +84,7 @@ export default {
     },
     methods: {
         pushMenu(menu, parent, index){
-            if(menu && menu.children && menu.children.length){
+            if (menu && menu.children && menu.children.length){
                 const prefix = 'menu-';
                 if (parent) {
                     menu.mKey = parent.mKey + '-' + index;
@@ -94,8 +94,10 @@ export default {
                     menu.pKey = 'root';
                 }
                 this.child.push(menu);
-                for(let i=0;i < menu.children.length; i++){
-                    if(menu.children[i] && menu.children[i].children) this.pushMenu(menu.children[i], menu, i);
+                for (let i=0;i < menu.children.length; i++){
+                    if (menu.children[i] && menu.children[i].children) {
+                        this.pushMenu(menu.children[i], menu, i);
+                    }
                 }
             }
         },
@@ -108,14 +110,14 @@ export default {
         switchSub(row, parent){
             if(row && Object.keys(row).length){
                 if (parent) {
-                    if (row.pKey) this.currentMenu = row.pKey;
+                    if (row.pKey) this.current = row.pKey;
                     if (row.pKey === 'root') this.fadeInLeft = true;
                     else {
                         this.subMenuSlide.fadeInLeft = true;
                         this.subMenuSlide.fadeInRight = false;
                     }
                 } else {
-                    if (row.mKey) this.currentMenu = row.mKey;
+                    if (row.mKey) this.current = row.mKey;
                     if (row.children){
                         this.subMenuSlide.fadeInLeft = false;
                         this.subMenuSlide.fadeInRight = true;
@@ -124,6 +126,10 @@ export default {
                 if (!row.disabled && !row.children) this.$emit('close');
             }
         },
+        /**
+         * build sub menus
+         * @param {*} h 
+         */
         buildChild(h){
             if (this.child.length){
                 return this.child.map((val,index) => {
@@ -185,7 +191,7 @@ export default {
                         props: {
                             key:`sub-menu-${index}`
                         },
-                        directives: [{name: 'show', value: this.currentMenu === val.mKey}]
+                        directives: [{name: 'show', value: this.current === val.mKey}]
                     }, child);
                 });
             }
