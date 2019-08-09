@@ -43,8 +43,13 @@
     "eslint-plugin-vue": "^5.2.2",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
+    "semistandard": "^13.0.1",
+    "standard": "^13.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.6.10"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   }
 }
