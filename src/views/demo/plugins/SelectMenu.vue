@@ -151,7 +151,7 @@
     export default {
         methods: {
             doSome(){
-            	// console.log(this.value1);
+                // console.log(this.value1);
                 this.$dlg.alert('you can do anything in callback!');
             },
             showLog(){

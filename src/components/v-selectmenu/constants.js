@@ -1,4 +1,4 @@
-const languages = {
+export const languages = {
   // 中文
   cn: {
     select_all_btn: '选择所有 (或当前页签) 项目',
@@ -50,4 +50,8 @@ const languages = {
     regular_group: '複数のグループメニュー'
   }
 }
-export default languages
+
+/**
+ * the root menu code for multiple level menu of regular menu
+ */
+export const MENU_ROOT = 'root'

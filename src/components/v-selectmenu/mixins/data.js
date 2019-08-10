@@ -1,4 +1,4 @@
-import lang from '../language'
+import { languages } from '../constants'
 
 export default {
   data () {
@@ -9,7 +9,7 @@ export default {
       picked: [],
       search: '',
       headerText: '',
-      i18n: lang[this.language] || lang['cn'],
+      i18n: languages[this.language] || languages['cn'],
       tabIndex: -1,
       highlight: -1,
       message: '',

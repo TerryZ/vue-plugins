@@ -1,3 +1,5 @@
+import { MENU_ROOT } from './constants'
+
 const transform = function (menu, key, parent) {
   return {
     key: key,
@@ -18,18 +20,17 @@ const transform = function (menu, key, parent) {
 export function flat (data) {
   if (!data || !Object.keys(data).length) return []
   const converted = []
-  const ROOT = 'root'
   const convert = function (data, key, parent) {
     converted.push(transform(data, key, parent))
     data.forEach((val, index) => {
       if ('children' in val) {
         const itemIndex = String(index + 1)
-        const childKey = key === ROOT ? itemIndex : `${key}-${itemIndex}`
+        const childKey = key === MENU_ROOT ? itemIndex : `${key}-${itemIndex}`
         convert(val.children, childKey, key)
       }
     })
   }
   // setup root menu
-  convert(data, ROOT, null)
+  convert(data, MENU_ROOT, null)
   return converted
 }

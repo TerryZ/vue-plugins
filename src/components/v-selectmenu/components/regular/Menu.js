@@ -10,6 +10,27 @@ export default {
   render (h) {
     if (Array.isArray(this.data) && this.data.length) {
       const child = []
+      if (this.data.length) {
+        const header = h('li', { class: 'sm-sub-header' }, [
+          h('span', {
+            class: 'sm-sub-back',
+            on: {
+              click: () => this.switchSub('', true)
+            }
+          }, [
+            h('i', { class: 'sm-iconfont sm-icon-back' })
+          ]),
+          h('span', {
+            class: 'sm-sub-caption',
+            domProps: { innerHTML: '' }
+          })
+        ])
+        /**
+         * build children menu header bar
+         */
+        child.push(header)
+        child.push(h('li', { class: 'sm-divider' }))
+      }
       child.push(h('ul', {
         class: {
           'sm-results sm-regular vivify': true,
@@ -80,7 +101,7 @@ export default {
       })
     },
     data () {
-      this.getSubs()
+      this.analysis()
     }
   },
   methods: {
@@ -102,7 +123,7 @@ export default {
         }
       }
     },
-    getSubs () {
+    analysis () {
       // console.log(flat(this.data))
       if (this.data && this.data.length) {
         this.child = []
@@ -200,6 +221,6 @@ export default {
     }
   },
   beforeMount () {
-    this.getSubs()
+    this.analysis()
   }
 }
