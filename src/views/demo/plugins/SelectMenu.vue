@@ -65,7 +65,10 @@
         <div class="row">
             <div class="col-md-6">
                 <p>Regular menu with slot</p>
-                <p><button type="button" class="btn btn-secondary" @click="changeData">Change data source</button></p>
+                <p>
+                    <button type="button" class="btn btn-secondary mr-3" @click="changeData">Menu with header</button>
+                    <button type="button" class="btn btn-secondary" @click="toMultipleLevel">Multiple level</button>
+                </p>
                 <v-selectmenu :data="dynamic" :regular="true" :embed="true" >
                     <button type="button" class="btn btn-default">SelectMenu</button>
                     <template #row="{ row }">
@@ -147,12 +150,12 @@
 </template>
 
 <script>
-	import nbaTeams from '@test/sample/nba-teams';
+	import nbaTeams from '@test/sample/nba-teams'
     export default {
         methods: {
             doSome(){
                 // console.log(this.value1);
-                this.$dlg.alert('you can do anything in callback!');
+                this.$dlg.alert('you can do anything in callback!')
             },
             showLog(){
                 console.log('show')
@@ -161,7 +164,10 @@
                 console.log('hide')
             },
             changeData(){
-                this.dynamic = this.headerMenu;
+                this.dynamic = this.headerMenu
+            },
+            toMultipleLevel(){
+                this.dynamic = this.multiLevel
             }
         },
         data(){

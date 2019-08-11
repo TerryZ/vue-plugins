@@ -1,3 +1,10 @@
+/**
+ * the root menu code for multiple level menu of regular menu
+ */
+export const MENU_ROOT = 'root'
+
+export const DIVIDER = 'sm-divider'
+
 export const languages = {
   // 中文
   cn: {
@@ -50,8 +57,3 @@ export const languages = {
     regular_group: '複数のグループメニュー'
   }
 }
-
-/**
- * the root menu code for multiple level menu of regular menu
- */
-export const MENU_ROOT = 'root'

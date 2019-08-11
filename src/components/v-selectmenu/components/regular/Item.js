@@ -1,9 +1,11 @@
+import { DIVIDER } from '../../constants'
+
 export default {
   name: 'v-menu-item',
   render (h) {
     if (this.data && Object.keys(this.data).length) {
       const child = []
-      if (this.data.content !== 'sm-divider') {
+      if (this.data.content !== DIVIDER) {
         const item = []
 
         if ('row' in this.$scopedSlots) {
@@ -37,7 +39,7 @@ export default {
             linkOption.attrs.href = this.data.url
           } else {
             linkOption.on = {
-              click: () => this.click()
+              click: e => this.click(e)
             }
           }
         }
@@ -56,15 +58,16 @@ export default {
   computed: {
     classes () {
       return {
-        'sm-divider': this.data.content === 'sm-divider',
+        'sm-divider': this.data.content === DIVIDER,
         'sm-caption': this.data.header,
         'sm-disabled': this.data.disabled
       }
     }
   },
   methods: {
-    click () {
+    click (e) {
       if (this.data && this.data.callback && typeof this.data.callback === 'function') {
+        e.stopPropagation()
         this.data.callback()
       }
     }

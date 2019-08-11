@@ -189,6 +189,32 @@ ul.sm-results
                 margin 8px 0
                 cursor default
                 border-bottom 1px solid #E5E5E5
+            /* Sub menus */
+            &.sm-sub-header
+                padding-top 2px !important
+                &:hover
+                    background-color transparent !important
+                    color #666 !important
+                    cursor default !important
+                .sm-sub-caption
+                    font-weight 600
+                    font-size(16px)
+                .sm-sub-back
+                    display inline-block
+                    font-weight 700
+                    color #000
+                    padding 0 10px
+                    cursor pointer
+                    -webkit-transition opacity .5s cubic-bezier(.175,.885,.32,1)
+                    transition opacity .5s cubic-bezier(.175,.885,.32,1)
+                    outline none !important
+                    margin 0
+                    opacity 0.5
+                    font-size 14px !important
+                    &:hover
+                        opacity 1
+                    i
+                        font-size 14px
 
     & > li
         margin 0
@@ -230,31 +256,3 @@ ul.sm-results
             color #666
             & > div.sm-selected-icon > i
                 visibility visible
-
-/* Sub menus */
-.sm-sub-menu
-    .sm-sub-header
-        padding-top 2px !important
-        &:hover
-            background-color transparent !important
-            color #666 !important
-            cursor default !important
-        .sm-sub-caption
-            font-weight 600
-            font-size(16px)
-        .sm-sub-back
-            display inline-block
-            font-weight 700
-            color #000
-            padding 0 10px
-            cursor pointer
-            -webkit-transition opacity .5s cubic-bezier(.175,.885,.32,1)
-            transition opacity .5s cubic-bezier(.175,.885,.32,1)
-            outline none !important
-            margin 0
-            opacity 0.5
-            font-size 14px !important
-            &:hover
-                opacity 1
-            i
-                font-size 14px

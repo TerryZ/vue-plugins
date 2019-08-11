@@ -1,73 +1,12 @@
 import '../../styles/animated.styl'
 import mItem from './Item'
-// import { flat } from '../../helper'
+import { DIVIDER, MENU_ROOT } from '../../constants'
+import { flat } from '../../helper'
 
 export default {
   name: 'v-regular-menu',
   components: {
     'menu-item': mItem
-  },
-  render (h) {
-    if (Array.isArray(this.data) && this.data.length) {
-      const child = []
-      if (this.data.length) {
-        const header = h('li', { class: 'sm-sub-header' }, [
-          h('span', {
-            class: 'sm-sub-back',
-            on: {
-              click: () => this.switchSub('', true)
-            }
-          }, [
-            h('i', { class: 'sm-iconfont sm-icon-back' })
-          ]),
-          h('span', {
-            class: 'sm-sub-caption',
-            domProps: { innerHTML: '' }
-          })
-        ])
-        /**
-         * build children menu header bar
-         */
-        child.push(header)
-        child.push(h('li', { class: 'sm-divider' }))
-      }
-      child.push(h('ul', {
-        class: {
-          'sm-results sm-regular vivify': true,
-          'sm-menu-root': true,
-          fadeInLeft: this.fadeInLeft
-        },
-        directives: [{ name: 'show', value: this.current === 'root' }]
-      }, this.data.map((val, index) => {
-        const options = {
-          props: {
-            data: val,
-            key: `root-${index}`
-          },
-          nativeOn: {
-            click: () => this.switchSub(val)
-          }
-        }
-        /**
-         * scoped slot with named slot
-         */
-        if ('row' in this.$scopedSlots) {
-          // same as <template #row="{ row }">
-          options.scopedSlots = {
-            row: props => {
-              // same as <slot name="row" :row="row">
-              return this.$scopedSlots.row({ row: props.row })
-            }
-          }
-        }
-        return h('menu-item', options)
-      })))
-      /**
-       * build children menus
-       */
-      child.push(this.buildChild(h))
-      return h('div', { class: 'sm-result-area' }, child)
-    }
   },
   props: {
     data: {
@@ -82,7 +21,8 @@ export default {
   data () {
     return {
       child: [],
-      current: 'root',
+      menus: [],
+      current: -1,
       fadeInLeft: false,
       fadeInRight: true,
       subMenuSlide: {
@@ -104,7 +44,86 @@ export default {
       this.analysis()
     }
   },
+  render (h) {
+    if (Array.isArray(this.data) && this.data.length) {
+      const child = []
+      if (this.menus[this.current].key !== MENU_ROOT) {
+        const header = h('li', { class: 'sm-sub-header' }, [
+          h('span', {
+            class: 'sm-sub-back',
+            on: {
+              click: () => this.switch('', false)
+            }
+          }, [
+            h('i', { class: 'sm-iconfont sm-icon-back' })
+          ]),
+          h('span', {
+            class: 'sm-sub-caption',
+            domProps: { innerHTML: this.menus[this.current].parent.content }
+          })
+        ])
+        /**
+         * build children menu header bar
+         */
+        child.push(header)
+        child.push(h('li', { class: DIVIDER }))
+      }
+      child.push(...this.menus[this.current].data.map((val, index) => {
+        if (val.children) console.log(val)
+        const options = {
+          props: {
+            data: val
+          }
+        }
+        if (val.children) {
+          options.nativeOn = {
+            click: e => {
+              this.switch(val.children)
+              e.stopPropagation()
+            }
+          }
+        }
+        /**
+         * scoped slot with named slot
+         */
+        if ('row' in this.$scopedSlots) {
+          // same as <template #row="{ row }">
+          options.scopedSlots = {
+            row: props => {
+              // same as <slot name="row" :row="row">
+              return this.$scopedSlots.row({ row: props.row })
+            }
+          }
+        }
+        return h('menu-item', options)
+      }))
+      /**
+       * build children menus
+       */
+      // child.push(this.buildChild(h))
+      return h('div', { class: 'sm-result-area' }, [
+        h('ul', {
+          class: {
+            'sm-results sm-regular vivify': true,
+            'sm-menu-root': true,
+            fadeInLeft: this.fadeInLeft
+          }// ,
+          // directives: [{ name: 'show', value: this.current === 'root' }]
+        }, child)
+      ])
+    }
+  },
   methods: {
+    analysis () {
+      // console.log(flat(this.data))
+      this.menus = flat(this.data)
+      this.current = this.find(MENU_ROOT)
+      if (this.menus.length > 1) console.log(JSON.stringify(this.menus, null, 4))
+      // if (this.data && this.data.length) {
+      //   this.child = []
+      //   this.data.forEach((val, index) => this.pushMenu(val, null, index))
+      // }
+    },
     pushMenu (menu, parent, index) {
       if (menu && menu.children && menu.children.length) {
         const prefix = 'menu-'
@@ -123,12 +142,18 @@ export default {
         }
       }
     },
-    analysis () {
-      // console.log(flat(this.data))
-      if (this.data && this.data.length) {
-        this.child = []
-        this.data.forEach((val, index) => this.pushMenu(val, null, index))
-      }
+    /**
+     * switch current menu in multiple level menu mode
+     *
+     * @param {string} key - target menu key
+     * @param {boolean} [forword=true]
+     */
+    switch (key, forword = true) {
+      this.current = this.find(key)
+      console.log(this.current)
+    },
+    find (key) {
+      return this.menus.findIndex(val => val.key === key)
     },
     switchSub (row, parent) {
       if (row && Object.keys(row).length) {
@@ -175,7 +200,7 @@ export default {
            * build children menu header bar
            */
           child.push(header)
-          child.push(h('li', { class: 'sm-divider' }))
+          child.push(h('li', { class: DIVIDER }))
           /**
            * build children menus
            */
