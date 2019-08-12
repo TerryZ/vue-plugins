@@ -35,7 +35,7 @@
         <p>
             <v-selectmenu :data="multiLevel" :regular="true" >
                 <template v-slot="{ show }">
-                    <button type="button" class="btn btn-primary">SelectMenu({{show}})</button>
+                    <button type="button" class="btn btn-primary">SelectMenu (<b v-text="show"></b>)</button>
                 </template>
             </v-selectmenu>
         </p>
@@ -70,7 +70,9 @@
                     <button type="button" class="btn btn-secondary" @click="toMultipleLevel">Multiple level</button>
                 </p>
                 <v-selectmenu :data="dynamic" :regular="true" :embed="true" >
+                    <!-- custom menu caller -->
                     <button type="button" class="btn btn-default">SelectMenu</button>
+                    <!-- use slot to custom rendering menu row -->
                     <template #row="{ row }">
                     <span>
                         <fa-icon class="fa-lg mr-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
