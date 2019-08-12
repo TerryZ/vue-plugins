@@ -23,16 +23,13 @@ export default {
       menus: [],
       current: -1,
       fadeInLeft: false,
-      fadeInRight: true
+      fadeInRight: false
     }
   },
   watch: {
     show (val) {
       this.$nextTick(() => {
-        if (!val) {
-          this.reset()
-          this.fadeInLeft = false
-        }
+        if (!val) this.reset()
       })
     },
     data () {
@@ -100,8 +97,8 @@ export default {
         h('ul', {
           class: {
             'sm-results sm-regular vivify': true,
-            'sm-menu-root': true,
-            fadeInLeft: this.fadeInLeft
+            fadeInLeft: this.fadeInLeft,
+            fadeInRight: this.fadeInRight
           }
         }, child)
       ])
@@ -114,6 +111,11 @@ export default {
     },
     reset () {
       this.current = this.find(MENU_ROOT)
+      this.resetAnimated()
+    },
+    resetAnimated () {
+      this.fadeInLeft = false
+      this.fadeInRight = false
     },
     /**
      * switch current menu in multiple level menu mode
@@ -123,7 +125,14 @@ export default {
      */
     switch (key, forword = true) {
       this.current = this.find(key)
-      console.log(this.current)
+      if (forword) {
+        this.fadeInRight = true
+      } else {
+        this.fadeInLeft = true
+      }
+      window.setTimeout(() => {
+        this.resetAnimated()
+      }, 100)
     },
     find (key) {
       return this.menus.findIndex(val => val.key === key)
