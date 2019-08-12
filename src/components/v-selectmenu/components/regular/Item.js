@@ -2,10 +2,17 @@ import { DIVIDER } from '../../constants'
 
 export default {
   name: 'v-menu-item',
+  props: {
+    data: {
+      type: Object,
+      required: true
+    }
+  },
   render (h) {
     if (this.data && Object.keys(this.data).length) {
-      const child = []
-      if (this.data.content !== DIVIDER) {
+      if (this.data.content === DIVIDER) {
+        return h('li', { class: this.classes })
+      } else {
         const item = []
 
         if ('row' in this.$scopedSlots) {
@@ -30,7 +37,7 @@ export default {
 
         const linkOption = {
           attrs: {
-            href: 'javascript:void(0)',
+            href: 'javascript:void(0);',
             target: this.data.open ? '_blank' : '_self'
           }
         }
@@ -44,15 +51,8 @@ export default {
           }
         }
 
-        child.push(h('a', linkOption, item))
+        return h('li', { class: this.classes }, [h('a', linkOption, item)])
       }
-      return h('li', { class: this.classes }, child)
-    }
-  },
-  props: {
-    data: {
-      type: Object,
-      required: true
     }
   },
   computed: {
@@ -65,9 +65,8 @@ export default {
     }
   },
   methods: {
-    click (e) {
+    click () {
       if (this.data && this.data.callback && typeof this.data.callback === 'function') {
-        e.stopPropagation()
         this.data.callback()
       }
     }
