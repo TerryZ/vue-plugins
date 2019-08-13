@@ -120,11 +120,11 @@ export default {
      * switch current menu in multiple level menu mode
      *
      * @param {string} key - target menu key
-     * @param {boolean} [forword=true]
+     * @param {boolean} [forward=true]
      */
-    switch (key, forword = true) {
+    switch (key, forward = true) {
       this.current = this.find(key)
-      this[forword ? 'fadeInRight' : 'fadeInLeft'] = true
+      this[forward ? 'fadeInRight' : 'fadeInLeft'] = true
       window.setTimeout(() => {
         this.resetAnimated()
       }, 100)
