@@ -1,3 +1,5 @@
+import { namedSlotWithScoped } from '../helper'
+
 export default {
   render (h) {
     return h('dropdown', {
@@ -150,20 +152,6 @@ export default {
         ])
       }
     },
-    buildNamedSlot (option) {
-      /**
-       * scoped slot with named slot
-       */
-      if ('row' in this.$scopedSlots) {
-        // same as <template #row="{ row }">
-        option.scopedSlots = {
-          row: props => {
-            // same as <slot name="row" :row="row">
-            return this.$scopedSlots.row({ row: props.row })
-          }
-        }
-      }
-    },
     buildContent (h) {
       let options = null
       if (this.regular) {
@@ -194,7 +182,8 @@ export default {
           ref: 'list'
         }
       }
-      this.buildNamedSlot(options)
+      // scoped slot with named slot
+      namedSlotWithScoped(this, options, 'row')
       return h(this.regular ? 'regular' : 'advanced', options)
     }
   }
