@@ -82,14 +82,15 @@
                 </v-selectmenu>
             </div>
             <div class="col-md-6">
-                <p>Advanced menu with slot</p>
+                <p>Advanced menu with slot and custom width</p>
                 <v-selectmenu :data="groupData"
                               :embed="true"
                               :multiple="true"
+                              :width="250"
                               key-field="id"
                               v-model="value2" >
                     <template #row="{ row }">
-                        <div v-html="`${row.name} (${row.desc})`"></div>
+                        {{row.name}} {{row.desc}}
                     </template>
                 </v-selectmenu>
             </div>

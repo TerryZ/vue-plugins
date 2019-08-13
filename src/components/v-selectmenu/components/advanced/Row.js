@@ -10,23 +10,22 @@ export default {
   inject: ['showField', 'inPicked', 'getRowText'],
   render (h) {
     const child = []
-    child.push(h('div', { class: 'sm-selected-icon' }, [h('i', { class: 'sm-iconfont sm-icon-selected' })]))
+    const selected = 'sm-iconfont sm-icon-selected'
+    child.push(h('div', { class: 'sm-selected-icon' }, [h('i', { class: selected })]))
+
     const options = { class: 'sm-item-text' }
+    const children = []
     if ('row' in this.$scopedSlots) {
-      /**
-       * build scoped slot with named slot
-       */
-      child.push(h('div', options, [
-        this.$scopedSlots.row({
-          row: this.row
-        })
-      ]))
+      // build scoped slot with named slot
+      children.push(this.$scopedSlots.row({
+        row: this.row
+      }))
     } else {
       options.domProps = {
         innerHTML: this.getRowText(this.row)
       }
-      child.push(h('div', options))
     }
+    child.push(h('div', options, children))
 
     return h('li', {
       class: {
