@@ -61,3 +61,23 @@ export function flat (data) {
   convert(data, MENU_ROOT, null)
   return converted
 }
+
+/**
+ * scoped slot with named slot
+ *
+ * @export
+ * @param {object} instance
+ * @param {object} options
+ * @param {string} name
+ */
+export function namedSlotWithScoped (instance, options, name) {
+  if (name in instance.$scopedSlots) {
+    // same as <template #row="{ row }">
+    options.scopedSlots = {
+      [name]: props => {
+        // same as <slot name="row" :row="row">
+        return instance.$scopedSlots[name]({ [name]: props[name] })
+      }
+    }
+  }
+}

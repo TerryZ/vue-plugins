@@ -1,9 +1,19 @@
 import row from './Row'
+import { namedSlotWithScoped } from '../../helper'
+
 export default {
   name: 'AdvancedMenu',
   components: {
     'menu-row': row
   },
+  props: {
+    list: Array,
+    picked: Array,
+    scroll: Boolean,
+    group: Boolean,
+    value: Number
+  },
+  inject: ['i18n'],
   render (h) {
     const child = []
     if (this.list.length) {
@@ -19,18 +29,8 @@ export default {
             highlight: enter => this.highlight(index, enter)
           }
         }
-        /**
-         * scoped slot with named slot
-         */
-        if ('row' in this.$scopedSlots) {
-          // same as <template #row="{ row }">
-          options.scopedSlots = {
-            row: props => {
-              // same as <slot name="row" :row="row">
-              return this.$scopedSlots.row({ row: props.row })
-            }
-          }
-        }
+        // scoped slot with named slot
+        namedSlotWithScoped(this, options, 'row')
         return h('menu-row', options)
       }))
     } else {
@@ -40,15 +40,6 @@ export default {
       h('ul', { class: 'sm-results' }, child)
     ])
   },
-  props: {
-    list: Array,
-    picked: Array,
-    scroll: Boolean,
-    group: Boolean,
-    message: String,
-    value: Number
-  },
-  inject: ['i18n'],
   computed: {
     classes () {
       return {

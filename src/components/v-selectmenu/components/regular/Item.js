@@ -16,9 +16,7 @@ export default {
         const item = []
 
         if ('row' in this.$scopedSlots) {
-          /**
-           * build scoped slot with named slot
-           */
+          // build scoped slot with named slot
           item.push(h('span', [
             this.$scopedSlots.row({
               row: this.data
@@ -60,7 +58,8 @@ export default {
       return {
         'sm-divider': this.data.content === DIVIDER,
         'sm-caption': this.data.header,
-        'sm-disabled': this.data.disabled
+        'sm-disabled': this.data.disabled,
+        'sm-parent': this.data.children
       }
     }
   },

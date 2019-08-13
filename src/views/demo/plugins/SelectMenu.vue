@@ -109,6 +109,9 @@
             <v-selectmenu :data="listData"
                           :max-selected="3"
                           :multiple="true">
+                <template #row="{ row }">
+                    <div v-html="`${row.name} (${row.desc})`"></div>
+                </template>
             </v-selectmenu>
         </p>
         <br>
@@ -243,12 +246,12 @@
                     {content:'Click this menu item to trigger your callback',callback: this.doSome}
                 ],
                 multiLevel : [
-                    {content:'Sports',children: [
+                    {content:'Sports news website', icon: 'fab,github',children: [
                         {content:'Fivb',url : 'http://www.fivb.com/'},
                         {content:'Fifa',url : 'http://www.fifa.com/'},
                         {content:'NBA',children: [
                             {content:'NBA official site',url : 'http://www.nba.com'},
-                            {content:'Chicago Bulls',url : 'http://www.nba.com/bulls/'},
+                            {content:'Chicago Bulls', icon: 'fab,github',url : 'http://www.nba.com/bulls/'},
                             {content:'Los Angeles Lakers',children: [
                                 {content:'NBA official site',url : 'http://www.nba.com'},
                                 {content:'Chicago Bulls',url : 'http://www.nba.com/bulls/'},

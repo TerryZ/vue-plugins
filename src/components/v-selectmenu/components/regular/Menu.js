@@ -1,7 +1,7 @@
 import '../../styles/animated.styl'
 import mItem from './Item'
 import { DIVIDER, MENU_ROOT } from '../../constants'
-import { flat } from '../../helper'
+import { flat, namedSlotWithScoped } from '../../helper'
 
 export default {
   name: 'v-regular-menu',
@@ -40,7 +40,18 @@ export default {
     if (this.menus.length && this.current >= 0) {
       const menu = this.menus[this.current]
       const child = []
+      // menu header (display by multiple level menu and switch to children menu)
       if (menu.key !== MENU_ROOT) {
+        const captionChild = []
+        const captionOptions = { class: 'sm-sub-caption' }
+        // support named slot
+        if ('row' in this.$scopedSlots) {
+          captionChild.push(this.$scopedSlots.row({
+            row: menu.parent
+          }))
+        } else {
+          captionOptions.domProps = { innerHTML: menu.parent.content }
+        }
         const header = h('li', { class: 'sm-sub-header' }, [
           h('span', {
             class: 'sm-sub-back',
@@ -50,10 +61,7 @@ export default {
           }, [
             h('i', { class: 'sm-iconfont sm-icon-back' })
           ]),
-          h('span', {
-            class: 'sm-sub-caption',
-            domProps: { innerHTML: menu.parent.content }
-          })
+          h('span', captionOptions, captionChild)
         ])
         /**
          * build children menu header bar
@@ -61,6 +69,7 @@ export default {
         child.push(header)
         child.push(h('li', { class: DIVIDER }))
       }
+      // menu items
       child.push(...menu.data.map((val, index) => {
         const options = {
           props: {
@@ -76,18 +85,8 @@ export default {
             }
           }
         }
-        /**
-         * scoped slot with named slot
-         */
-        if ('row' in this.$scopedSlots) {
-          // same as <template #row="{ row }">
-          options.scopedSlots = {
-            row: props => {
-              // same as <slot name="row" :row="row">
-              return this.$scopedSlots.row({ row: props.row })
-            }
-          }
-        }
+        // scoped slot with named slot
+        namedSlotWithScoped(this, options, 'row')
         return h('menu-item', options)
       }))
       /**
@@ -125,11 +124,7 @@ export default {
      */
     switch (key, forword = true) {
       this.current = this.find(key)
-      if (forword) {
-        this.fadeInRight = true
-      } else {
-        this.fadeInLeft = true
-      }
+      this[forword ? 'fadeInRight' : 'fadeInLeft'] = true
       window.setTimeout(() => {
         this.resetAnimated()
       }, 100)
