@@ -28,9 +28,7 @@ export default {
   },
   watch: {
     show (val) {
-      this.$nextTick(() => {
-        if (!val) this.reset()
-      })
+      if (!val && this.menus.length > 1) this.reset()
     },
     data () {
       this.analysis()

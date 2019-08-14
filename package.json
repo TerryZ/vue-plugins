@@ -50,6 +50,9 @@
     "vue-template-compiler": "^2.6.10"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "workingDirectories": ["./src"],
+    "ignore": ["node_modules/**", "tests/**"],
+    "envs": ["mocha"]
   }
 }
