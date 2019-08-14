@@ -52,9 +52,7 @@ export default {
           if (this.maxSelected && this.picked.length === this.maxSelected) {
             if (!this.message) {
               this.buildNotice()
-              /**
-               * auto clear message in 3 seconds
-               */
+              // auto clear message in 3 seconds
               setTimeout(() => {
                 this.message = ''
               }, 3000)
