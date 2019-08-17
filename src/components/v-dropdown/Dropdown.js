@@ -171,7 +171,6 @@ export default {
          * do not toggle show/close when 'toggle' option is set to false
          */
         if (inCaller && !this.toggle && !this.rightClick) return
-
         /**
          * close the dropdown when clicking outside the dropdown container
          * reopen the dropdown when right-click in caller(rightClick = true)
@@ -280,7 +279,6 @@ export default {
   },
   mounted () {
     if (this.width) this.styleSheet.width = this.width + 'px'
-
     if (this.embed) this.visible()
     else {
       document.body.appendChild(this.$refs.dropdown)
