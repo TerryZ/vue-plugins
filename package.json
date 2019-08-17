@@ -16,7 +16,7 @@
     "bootstrap": "^4.3.1",
     "fine-uploader": "^5.16.2",
     "holderjs": "^2.9.6",
-    "v-dropdown": "^2.0.6",
+    "v-dropdown": "^2.1.0",
     "v-page": "^2.0.8",
     "video.js": "^7.6.0",
     "vue": "^2.6.10",
