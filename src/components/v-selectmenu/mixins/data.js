@@ -28,7 +28,7 @@ export default {
   watch: {
     tabIndex (val) {
       this.tabIndex = val
-      this.switchTab()
+      this.switchGroup()
     },
     value () {
       this.init()

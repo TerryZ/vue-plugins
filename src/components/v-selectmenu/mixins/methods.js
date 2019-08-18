@@ -10,6 +10,10 @@ export default {
     showChange (val) {
       this.show = val
       if (val) {
+        // swith to target group
+        if (this.activeGroup > -1 && this.state.group && this.data.length) {
+          this.tabIndex = this.activeGroup
+        }
         if (this.type === ADVANCED) this.inputFocus()
       } else {
         this.reset()
@@ -78,7 +82,7 @@ export default {
       const list = this.state.group ? this.data[this.tabIndex].list.slice() : this.data.slice()
       return list.filter(val => new RegExp(this.search.toLowerCase()).test(this.getRowText(val).toLowerCase()))
     },
-    switchTab () {
+    switchGroup () {
       this.results = this.type === REGULAR
         ? this.data[this.tabIndex].list
         : this.search

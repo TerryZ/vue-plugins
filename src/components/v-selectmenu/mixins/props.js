@@ -34,6 +34,11 @@ export default {
       type: Boolean,
       default: false
     },
+    // the group that needs to be activated before the menu is opened
+    activeGroup: {
+      type: Number,
+      default: -1
+    },
     /**
      * the menu type
      * 'regular'
