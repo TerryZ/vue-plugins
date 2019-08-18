@@ -1,3 +1,5 @@
+import { ADVANCED } from '../constants'
+
 export default {
   methods: {
     inputFocus () {
@@ -17,7 +19,7 @@ export default {
       this.highlight = -1
     },
     clear () {
-      if (!this.regular) {
+      if (this.type === ADVANCED) {
         this.picked = []
         if (!this.multiple) this.close()
       }

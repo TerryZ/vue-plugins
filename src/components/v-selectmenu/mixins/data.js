@@ -22,7 +22,7 @@ export default {
     btnText () {
       return this.picked.length
         ? this.picked.map(val => val[this.showField]).join(',')
-        : this.i18n.advance_default
+        : this.i18n.advanced_default
     }
   },
   watch: {

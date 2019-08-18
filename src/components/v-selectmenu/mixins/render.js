@@ -1,14 +1,16 @@
+import { REGULAR, ADVANCED } from '../constants'
 import { namedSlotWithScoped } from '../helper'
 
 export default {
   render (h) {
     return h('dropdown', {
       props: {
+        'right-click': this.rightClick,
+        'full-width': this.fullWidth,
         width: this.width,
         disabled: this.disabled,
         border: false,
         embed: this.embed,
-        'right-click': this.rightClick,
         align: this.align
       },
       on: {
@@ -41,7 +43,12 @@ export default {
           ])]
         }
         return h('template', { slot: 'caller' }, [
-          h('div', { class: 'sm-caller-container' }, child)
+          h('div', {
+            class: {
+              'sm-caller-container': true,
+              'sm-caller-container-full-width': this.fullWidth
+            }
+          }, child)
         ])
       }
     },
@@ -49,7 +56,7 @@ export default {
       return h('div', {
         class: {
           'v-selectmenu': true,
-          'sm-advanced': !this.regular
+          'sm-advanced': this.type === ADVANCED
         }
       }, [
         this.buildHeader(h),
@@ -60,7 +67,7 @@ export default {
       ])
     },
     buildHeader (h) {
-      if (this.title || !this.regular || this.state.group) {
+      if (this.title || this.type === ADVANCED || this.state.group) {
         const header = []
         const genBtn = (title, btnClass, iconClass, event) => {
           return h('span', {
@@ -74,7 +81,7 @@ export default {
           ])
         }
 
-        if (!this.regular) {
+        if (this.type === ADVANCED) {
           if (this.multiple) {
             header.push(genBtn(this.i18n.select_all_btn, 'sm-selectall-button', 'sm-icon-select-all', () => this.selectAll()))
           }
@@ -92,7 +99,7 @@ export default {
       }
     },
     buildSearch (h) {
-      if (!this.regular && this.query) {
+      if (this.type === ADVANCED && this.query) {
         return h('div', { class: 'sm-search' }, [
           h('input', {
             attrs: {
@@ -154,7 +161,7 @@ export default {
     },
     buildContent (h) {
       let options = null
-      if (this.regular) {
+      if (this.type === REGULAR) {
         options = {
           props: {
             data: this.results,
@@ -184,7 +191,7 @@ export default {
       }
       // scoped slot with named slot
       namedSlotWithScoped(this, options, 'row')
-      return h(this.regular ? 'regular' : 'advanced', options)
+      return h(this.type === REGULAR ? 'regular' : 'advanced', options)
     }
   }
 }

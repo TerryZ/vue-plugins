@@ -1,25 +1,17 @@
+import { ADVANCED } from '../constants'
+
 export default {
   props: {
-    value: String,
+    /**
+     * basic options
+     */
     data: {
       type: Array,
       required: true
     },
-    regular: {
-      type: Boolean,
-      default: false
-    },
-    title: {
-      type: [String, Boolean],
-      default: false
-    },
-    keyField: {
+    language: {
       type: String,
-      default: 'id'
-    },
-    showField: {
-      type: String,
-      default: 'name'
+      default: 'cn'
     },
     align: {
       type: String,
@@ -33,6 +25,42 @@ export default {
       type: Boolean,
       default: false
     },
+    /**
+     * menu caller container with
+     * false: inline-block
+     * true: block
+     */
+    fullWidth: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * the menu type
+     * 'regular'
+     * 'advanced'
+     */
+    type: {
+      type: String,
+      default: ADVANCED
+    },
+    title: {
+      type: [String, Boolean],
+      default: false
+    },
+    // the width of drop down menu
+    width: Number,
+    /**
+     * advanced mode options
+     */
+    value: String,
+    keyField: {
+      type: String,
+      default: 'id'
+    },
+    showField: {
+      type: String,
+      default: 'name'
+    },
     query: {
       type: Boolean,
       default: true
@@ -41,10 +69,7 @@ export default {
       type: Boolean,
       default: false
     },
-    language: {
-      type: String,
-      default: 'cn'
-    },
+    // maximum number of selected items in advanced mode
     maxSelected: {
       type: Number,
       default: 0
@@ -53,8 +78,6 @@ export default {
       type: Boolean,
       default: true
     },
-    // the width of drop down menu
-    width: Number,
     rtl: {
       type: Boolean,
       default: false

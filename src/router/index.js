@@ -1,19 +1,18 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import Vue from 'vue'
+import Router from 'vue-router'
 
-Vue.use(Router);
+import demo from './demo'
 
-import demo from './demo';
+Vue.use(Router)
 
 const root = [
-    {
-        path: '/',
-        component: resolve => require(['@/views/demo/Main'], resolve)
-    }
-];
+  {
+    path: '/',
+    component: () => import('@/views/demo/Main')
+  }
+]
 
-const routes = [...root, ...demo];
-const routerConfig = new Router({routes});
+const routes = [...root, ...demo]
+const routerConfig = new Router({ routes })
 
-
-export default routerConfig;
+export default routerConfig

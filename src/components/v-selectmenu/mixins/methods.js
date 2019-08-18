@@ -1,10 +1,16 @@
-const UP = 38; const DOWN = 40; const ESC = 27; const TAB = 9; const ENTER = 13
+import { REGULAR, ADVANCED } from '../constants'
+const UP = 38
+const DOWN = 40
+const ESC = 27
+const TAB = 9
+const ENTER = 13
+
 export default {
   methods: {
     showChange (val) {
       this.show = val
       if (val) {
-        if (!this.regular) this.inputFocus()
+        if (this.type === ADVANCED) this.inputFocus()
       } else {
         this.reset()
         this.$emit('hide')
@@ -51,10 +57,10 @@ export default {
         if (idx === -1) {
           if (this.maxSelected && this.picked.length === this.maxSelected) {
             if (!this.message) {
-              this.buildNotice()
+              this.notice()
               // auto clear message in 3 seconds
               setTimeout(() => {
-                this.message = ''
+                this.notice(true)
               }, 3000)
             }
           } else {
@@ -73,7 +79,7 @@ export default {
       return list.filter(val => new RegExp(this.search.toLowerCase()).test(this.getRowText(val).toLowerCase()))
     },
     switchTab () {
-      this.results = this.regular
+      this.results = this.type === REGULAR
         ? this.data[this.tabIndex].list
         : this.search
           ? this.filter()
@@ -91,22 +97,27 @@ export default {
         case 'function': return this.showField(row)
       }
     },
-    buildNotice () {
-      this.message = this.i18n.max_selected.replace('max_selected_limit', `<b>${this.maxSelected}</b>`)
+    notice (clear = false) {
+      if (clear) {
+        this.message = ''
+      } else {
+        const maximum = this.i18n.max_selected
+        this.message = maximum.replace('max_selected_limit', `<b>${this.maxSelected}</b>`)
+      }
     },
     init () {
       if (!this.value) return
       let vals = this.value.split(',')
       if (vals.length) {
-        if (!this.regular && !this.multiple) vals = [vals[0]]
+        if (this.type === ADVANCED && !this.multiple) vals = [vals[0]]
         if (this.state.group) {
-          let arr = []
+          const arr = []
           for (const d of this.data) {
-            arr = [...arr, ...d.list.filter(val => {
+            arr.push(...d.list.filter(val => {
               return vals.includes(String(val[this.keyField]))
-            })]
+            }))
           }
-          this.picked = arr.slice()
+          this.picked = arr
         } else {
           this.picked = this.data.filter(val => vals.includes(String(val[this.keyField])))
         }
@@ -118,10 +129,10 @@ export default {
       if (this.title) {
         this.headerText = this.title
       } else {
-        if (this.regular) {
+        if (this.type === REGULAR) {
           if (this.state.group) this.headerText = this.i18n.regular_group
         } else {
-          this.headerText = this.i18n.advance_default
+          this.headerText = this.i18n.advanced_default
         }
       }
 
@@ -132,7 +143,7 @@ export default {
           this.results = this.data.slice()
         }
       }
-      if (!this.regular) this.init()
+      if (this.type === ADVANCED) this.init()
     }
   }
 }
