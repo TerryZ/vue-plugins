@@ -67,7 +67,7 @@ export default {
       ])
     },
     buildHeader (h) {
-      if (this.title || this.type === ADVANCED || this.state.group) {
+      if (this.title || this.type === ADVANCED || this.group) {
         const header = []
         const genBtn = (title, btnClass, iconClass, event) => {
           return h('span', {
@@ -135,7 +135,7 @@ export default {
       }
     },
     buildTab (h) {
-      if (this.state.group && this.data.length) {
+      if (this.group && this.data.length) {
         return h('div', { class: 'sm-tabs' }, [
           h('ul', this.data.map((val, index) => {
             return h('li', { key: index }, [

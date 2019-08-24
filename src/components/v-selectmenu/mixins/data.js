@@ -4,18 +4,19 @@ export default {
   data () {
     return {
       show: false,
-      results: [],
-      subMenus: [],
-      picked: [],
-      search: '',
-      headerText: '',
       i18n: languages[this.language] || languages['cn'],
+      // menu data or current group menu data
+      results: [],
+      headerText: '',
       tabIndex: -1,
-      highlight: -1,
       message: '',
-      state: {
-        group: false
-      }
+      group: false,
+      /**
+       * advanced menu options
+       */
+      search: '',
+      picked: [],
+      highlight: -1
     }
   },
   computed: {

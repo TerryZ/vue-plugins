@@ -11,7 +11,7 @@ export default {
       this.show = val
       if (val) {
         // swith to target group
-        if (this.activeGroup > -1 && this.state.group && this.data.length) {
+        if (this.activeGroup > -1 && this.group && this.data.length) {
           this.tabIndex = this.activeGroup
         }
         if (this.type === ADVANCED) this.inputFocus()
@@ -79,7 +79,7 @@ export default {
       }
     },
     filter () {
-      const list = this.state.group ? this.data[this.tabIndex].list.slice() : this.data.slice()
+      const list = this.group ? this.data[this.tabIndex].list.slice() : this.data.slice()
       return list.filter(val => new RegExp(this.search.toLowerCase()).test(this.getRowText(val).toLowerCase()))
     },
     switchGroup () {
@@ -92,7 +92,7 @@ export default {
     checkDataType () {
       if (this.data && Array.isArray(this.data) && this.data.length) {
         const sample = this.data[0]
-        if (sample.title && sample.list) this.state.group = true
+        if (sample.title && sample.list) this.group = true
       }
     },
     getRowText (row) {
@@ -114,7 +114,7 @@ export default {
       let vals = this.value.split(',')
       if (vals.length) {
         if (this.type === ADVANCED && !this.multiple) vals = [vals[0]]
-        if (this.state.group) {
+        if (this.group) {
           const arr = []
           for (const d of this.data) {
             arr.push(...d.list.filter(val => {
@@ -134,14 +134,14 @@ export default {
         this.headerText = this.title
       } else {
         if (this.type === REGULAR) {
-          if (this.state.group) this.headerText = this.i18n.regular_group
+          if (this.group) this.headerText = this.i18n.regular_group
         } else {
           this.headerText = this.i18n.advanced_default
         }
       }
 
       if (this.data.length) {
-        if (this.state.group) {
+        if (this.group) {
           this.tabIndex = 0
         } else {
           this.results = this.data.slice()
