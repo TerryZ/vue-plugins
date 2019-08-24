@@ -1,6 +1,8 @@
 @import "./icons.styl"
 
-bg-dark = #eee
+bg = white
+line = #eee
+
 font-size-set(size = 14px)
   font-size size
   line-height 1.42857143
@@ -65,7 +67,7 @@ font-size-set(size = 14px)
 .sm-header
   position relative
   border-radius 2px 2px 0 0
-  background-color bg-dark
+  background-color bg
   & > h3
     padding 6px 80px 5px 10px
     margin 0
@@ -91,9 +93,9 @@ font-size-set(size = 14px)
 
 .sm-search
   padding 3px 10px 10px 10px
-  background-color bg-dark
+  background-color bg
   input[type="text"]
-    background-color white
+    background-color #f5f5f5
     margin 0 !important
     width 100%
     font-size-set()
@@ -105,7 +107,7 @@ font-size-set(size = 14px)
 
 .sm-message
   padding 0 10px 10px
-  background-color bg-dark
+  background-color bg
   color black
   span
     font-size-set(15px)
@@ -115,15 +117,30 @@ font-size-set(size = 14px)
 /* group type */
 .sm-tabs
   padding 0 10px
-  background-color bg-dark
+  background-color bg
+  border-bottom 1px solid line
   ul
     padding 0
     margin 0
+    overflow hidden
     li
       display inline-block
+      position relative
+      &.active
+        &:after
+          content ""
+          display block
+          position absolute
+          bottom 0
+          height 0.2rem
+          width 100%
+          background-color #ccc
+        a
+          color #24292e
+          background-color #fff
       a
         display inline-block
-        padding 4px 12px 3px
+        padding 0 12px 8px
         font-size-set()
         color #aaa
         text-decoration none
@@ -131,15 +148,11 @@ font-size-set(size = 14px)
         background transparent
         border-radius 2px 2px 0 0
         font-family "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial
-        &.active
-          color #24292e
-          background-color #fff
 
 /**
  * Results
  */
 .sm-result-area
-  list-style none
   margin 0
   padding 5px 0
   position relative
@@ -192,7 +205,7 @@ ul.sm-results
       &.sm-divider
         margin 8px 0
         cursor default
-        border-bottom 1px solid #E5E5E5
+        border-bottom 1px solid line
       /* Sub menus */
       &.sm-sub-header
         padding 7px 15px 5px 0

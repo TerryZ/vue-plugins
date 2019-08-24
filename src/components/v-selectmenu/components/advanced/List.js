@@ -10,7 +10,6 @@ export default {
     list: Array,
     picked: Array,
     scroll: Boolean,
-    group: Boolean,
     value: Number
   },
   inject: ['i18n'],
@@ -44,8 +43,7 @@ export default {
     classes () {
       return {
         'sm-result-area': true,
-        'sm-scroll-limit': this.scroll,
-        'sm-list-mode': !this.group
+        'sm-scroll-limit': this.scroll
       }
     }
   },

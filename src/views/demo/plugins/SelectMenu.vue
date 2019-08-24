@@ -124,7 +124,7 @@
 
     <h5 class="mt-5">高级模式菜单自定义菜单宽度</h5>
     <p>
-      <v-selectmenu :data="groupData" :width="400" >
+      <v-selectmenu :data="groupData" :width="300" >
       </v-selectmenu>
     </p>
 

@@ -138,15 +138,17 @@ export default {
       if (this.group && this.data.length) {
         return h('div', { class: 'sm-tabs' }, [
           h('ul', this.data.map((val, index) => {
-            return h('li', { key: index }, [
+            return h('li', {
+              key: index,
+              class: {
+                active: index === this.tabIndex
+              }
+            }, [
               h('a', {
                 attrs: {
                   href: 'javascript:void(0);',
                   'data-index': index,
                   'tab-id': `selectmenu-tab-${index + 1}`
-                },
-                class: {
-                  active: index === this.tabIndex
                 },
                 on: {
                   click: () => {
