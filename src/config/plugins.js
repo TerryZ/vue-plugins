@@ -37,7 +37,9 @@ Vue.use(vTableGrid, hooks.gridConfig)
 Vue.use(vPage)
 Vue.use(vUploader, hooks.uploaderConfig)
 Vue.use(vRegion)
-Vue.use(vSelectMenu)
+Vue.use(vSelectMenu, {
+  title: false
+})
 Vue.use(vSelectPage, {
   dataLoad: hooks.gridConfig.dataLoad,
   language: 'en'

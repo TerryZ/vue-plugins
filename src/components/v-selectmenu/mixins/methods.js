@@ -71,9 +71,10 @@ export default {
             this.picked.push(item)
           }
         } else {
+          // remove item when it has been selected
           this.picked.splice(idx, 1)
         }
-      } else {
+      } else { // single selection
         this.picked = this.inPicked(item) ? [] : [item]
         this.close()
       }
@@ -130,16 +131,6 @@ export default {
     populate () {
       this.checkDataType()
 
-      if (this.title) {
-        this.headerText = this.title
-      } else {
-        if (this.type === REGULAR) {
-          if (this.group) this.headerText = this.i18n.regular_group
-        } else {
-          this.headerText = this.i18n.advanced_default
-        }
-      }
-
       if (this.data.length) {
         if (this.group) {
           this.tabIndex = 0
@@ -147,6 +138,7 @@ export default {
           this.results = this.data.slice()
         }
       }
+
       if (this.type === ADVANCED) this.init()
     }
   }

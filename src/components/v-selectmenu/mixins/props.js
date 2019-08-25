@@ -48,9 +48,10 @@ export default {
       type: String,
       default: ADVANCED
     },
+    // Boolean type to close header bar
     title: {
       type: [String, Boolean],
-      default: false
+      default: 'SelectMenu'
     },
     // the width of drop down menu
     width: Number,

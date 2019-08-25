@@ -13,7 +13,7 @@ export default {
     advanced: () => import('./components/advanced/List'),
     dropdown: () => import('v-dropdown')
   },
-  mixins: [render, data, props, methods, util],
+  mixins: [props, data, render, methods, util],
   mounted () {
     this.populate()
   }

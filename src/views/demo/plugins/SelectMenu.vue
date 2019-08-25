@@ -27,7 +27,7 @@
 
     <h5 class="mt-5">Regular menu with group</h5>
     <p>
-      <v-selectmenu :data="groupMenu" type="regular" ></v-selectmenu>
+      <v-selectmenu :data="groupMenu" type="regular" :title="false" ></v-selectmenu>
     </p>
 
     <h5 class="mt-5">Regular menu with multiple level</h5>

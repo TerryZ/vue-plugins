@@ -46,7 +46,7 @@ export default {
           h('div', {
             class: {
               'sm-caller-container': true,
-              'sm-caller-container-full-width': this.fullWidth
+              'sm-caller-container--full-width': this.fullWidth
             }
           }, child)
         ])
@@ -67,40 +67,44 @@ export default {
       ])
     },
     buildHeader (h) {
-      if (this.title || this.type === ADVANCED || this.group) {
-        const header = []
-        const genBtn = (title, btnClass, iconClass, event) => {
-          return h('span', {
-            attrs: {
-              title: title
-            },
-            class: btnClass,
-            on: { click: () => { event() } }
-          }, [
-            h('i', { class: `sm-iconfont ${iconClass}` })
-          ])
-        }
-
-        if (this.type === ADVANCED) {
-          if (this.multiple) {
-            header.push(genBtn(this.i18n.select_all_btn, 'sm-selectall-button', 'sm-icon-select-all', () => this.selectAll()))
-          }
-          header.push(genBtn(this.i18n.remove_all_btn, 'sm-removeall-button', 'sm-icon-remove-all', () => this.clear()))
-        }
-
-        if (!this.embed) {
-          header.push(genBtn(this.i18n.close_btn, 'sm-close-button', 'sm-icon-close', () => this.close()))
-        }
-
-        return h('div', { class: 'sm-header' }, [
-          h('h3', this.headerText),
-          h('div', { class: 'sm-control' }, header)
+      if (!this.title) return
+      const header = []
+      const genBtn = (title, btnClass, iconClass, event) => {
+        return h('span', {
+          attrs: {
+            title: title
+          },
+          class: btnClass,
+          on: { click: () => { event() } }
+        }, [
+          h('i', { class: `sm-iconfont ${iconClass}` })
         ])
       }
+
+      if (this.type === ADVANCED) {
+        if (this.multiple) {
+          header.push(genBtn(this.i18n.select_all_btn, 'sm-selectall-button', 'sm-icon-select-all', () => this.selectAll()))
+        }
+        header.push(genBtn(this.i18n.remove_all_btn, 'sm-removeall-button', 'sm-icon-remove-all', () => this.clear()))
+      }
+
+      if (!this.embed) {
+        header.push(genBtn(this.i18n.close_btn, 'sm-close-button', 'sm-icon-close', () => this.close()))
+      }
+
+      return h('div', { class: 'sm-header' }, [
+        h('h3', this.caption),
+        h('div', { class: 'sm-control' }, header)
+      ])
     },
     buildSearch (h) {
       if (this.type === ADVANCED && this.query) {
-        return h('div', { class: 'sm-search' }, [
+        return h('div', {
+          class: {
+            'sm-search': true,
+            'sm-search--no-header': !this.title
+          }
+        }, [
           h('input', {
             attrs: {
               type: 'text',

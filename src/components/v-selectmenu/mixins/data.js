@@ -1,4 +1,4 @@
-import { languages } from '../constants'
+import { languages, REGULAR } from '../constants'
 
 export default {
   data () {
@@ -7,7 +7,6 @@ export default {
       i18n: languages[this.language] || languages['cn'],
       // menu data or current group menu data
       results: [],
-      headerText: '',
       tabIndex: -1,
       message: '',
       group: false,
@@ -24,6 +23,30 @@ export default {
       return this.picked.length
         ? this.picked.map(val => val[this.showField]).join(',')
         : this.i18n.advanced_default
+    },
+    /**
+     * caption display rule
+     *
+     * close header bar
+     *   set title option to false
+     *
+     * Regular menu
+     *   set some text for the title option
+     * Advanced menu
+     */
+    caption () {
+      if (this.type === REGULAR) {
+        if (typeof this.title === 'string' && this.title) return this.title
+      }
+      if (this.title) {
+        return this.title
+      } else {
+        if (this.type === REGULAR) {
+          if (this.group) return this.i18n.regular_group
+        } else {
+          return this.i18n.advanced_default
+        }
+      }
     }
   },
   watch: {
