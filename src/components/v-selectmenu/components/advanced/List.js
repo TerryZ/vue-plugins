@@ -62,6 +62,13 @@ export default {
       ])
     },
     /**
+     * reset list scroll top and highlight
+     */
+    reset () {
+      this.$refs.list.scrollTop = 0
+      this.$emit('input', -1)
+    },
+    /**
      * keyboard navigate to next line
      */
     next () {
@@ -76,9 +83,7 @@ export default {
         const listPos = list.getBoundingClientRect()
         const dist = (list.scrollTop + cur.bottom) - listPos.bottom
         if (dist > 0) {
-          /**
-           * when current row is the last row, the scroll bar moves directly to the bottom
-           */
+          // when current row is the last row, the scroll bar moves directly to the bottom
           if (this.value === this.list.length - 1) {
             list.scrollTop = dist + Number.parseInt(window.getComputedStyle(list).paddingBottom)
           } else {

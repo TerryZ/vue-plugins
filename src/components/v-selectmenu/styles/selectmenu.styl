@@ -12,7 +12,8 @@ font-size-set(size = 14px)
   &.sm-caller-container-full-width
     display block
 .v-selectmenu
-  border-radius 2px
+  &.sm-advanced
+    min-width 160px
 
 .sm-default-btn
   display inline-block
@@ -66,7 +67,6 @@ font-size-set(size = 14px)
 
 .sm-header
   position relative
-  border-radius 2px 2px 0 0
   background-color bg
   & > h3
     padding 6px 80px 5px 10px
@@ -134,19 +134,18 @@ font-size-set(size = 14px)
           bottom 0
           height 0.2rem
           width 100%
-          background-color #ddd
+          background-color #ccc
         a
           color #24292e
-          background-color #fff
+          // font-weight 600
       a
         display inline-block
         padding 0 12px 8px
         font-size-set()
-        color #aaa
+        color #bbb
         text-decoration none
         cursor pointer
         background transparent
-        border-radius 2px 2px 0 0
         font-family "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial
 
 /**
@@ -159,19 +158,14 @@ font-size-set(size = 14px)
   width 100%
   overflow-y auto
   overflow-x hidden
-  border-radius 0 0 2px 2px
   &:before, &:after
     display table
     content " "
-  // &.sm-list-mode /*border-top 1px solid #E6E7E7*/
-  &.sm-advanced
-    min-width 260px
   &.sm-scroll-limit
     max-height 260px
 
 /* regular menu item style */
 ul.sm-results
-  background-color white
   list-style none
   margin 0
   padding 0

@@ -37,7 +37,7 @@ export default {
       this.results = this.filter()
     },
     processControl (e) {
-      if (this.show && ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode) && this.highlight !== -1)) {
+      if (this.show && [UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) {
         switch (e.keyCode) {
           case UP:// up
             this.$refs.list.prev()

@@ -153,6 +153,7 @@ export default {
                 on: {
                   click: () => {
                     this.tabIndex = index
+                    this.$refs.list.reset()
                   }
                 }
               }, val.title)
