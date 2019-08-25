@@ -140,7 +140,12 @@ export default {
     },
     buildTab (h) {
       if (this.group && this.data.length) {
-        return h('div', { class: 'sm-tabs' }, [
+        return h('div', {
+          class: {
+            'sm-tabs': true,
+            'sm-tabs--regular': this.type === REGULAR
+          }
+        }, [
           h('ul', this.data.map((val, index) => {
             return h('li', {
               key: index,
@@ -150,14 +155,12 @@ export default {
             }, [
               h('a', {
                 attrs: {
-                  href: 'javascript:void(0);',
-                  'data-index': index,
-                  'tab-id': `selectmenu-tab-${index + 1}`
+                  href: 'javascript:void(0);'
                 },
                 on: {
                   click: () => {
                     this.tabIndex = index
-                    this.$refs.list.reset()
+                    if (this.type === ADVANCED) this.$refs.list.reset()
                   }
                 }
               }, val.title)

@@ -38,7 +38,7 @@ Vue.use(vPage)
 Vue.use(vUploader, hooks.uploaderConfig)
 Vue.use(vRegion)
 Vue.use(vSelectMenu, {
-  title: false
+  // title: false
 })
 Vue.use(vSelectPage, {
   dataLoad: hooks.gridConfig.dataLoad,

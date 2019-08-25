@@ -27,14 +27,14 @@
 
     <h5 class="mt-5">Regular menu with group</h5>
     <p>
-      <v-selectmenu :data="groupMenu" type="regular" :title="false" ></v-selectmenu>
+      <v-selectmenu :data="groupMenu" type="regular"  ></v-selectmenu>
     </p>
 
     <h5 class="mt-5">Regular menu with multiple level</h5>
     <p>
       <v-selectmenu :data="multiLevel" type="regular" >
         <template v-slot="{ show }">
-          <button type="button" class="btn btn-primary">SelectMenu (<b v-text="show"></b>)</button>
+          <button type="button" class="btn btn-primary">SelectMenu (Menu display: <b v-text="show"></b>)</button>
         </template>
       </v-selectmenu>
     </p>
