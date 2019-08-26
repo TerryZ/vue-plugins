@@ -1,4 +1,4 @@
-import { languages, REGULAR } from '../constants'
+import { languages, REGULAR, ADVANCED } from '../constants'
 
 export default {
   data () {
@@ -35,18 +35,31 @@ export default {
      * Advanced menu
      */
     caption () {
+      if (!this.title || typeof this.title !== 'string') return ''
       if (this.type === REGULAR) {
-        if (typeof this.title === 'string' && this.title) return this.title
-      }
-      if (this.title) {
         return this.title
-      } else {
-        if (this.type === REGULAR) {
-          if (this.group) return this.i18n.regular_group
+      }
+      if (this.type === ADVANCED) {
+        if (this.picked.length) {
+          if (this.picked.length > 1) { // more than one item selected
+            const template = this.i18n.items_selected
+            return template.replace('selected_count', `<b>${this.picked.length}</b>`)
+          } else {
+            return this.getRowText(this.picked[0])
+          }
         } else {
-          return this.i18n.advanced_default
+          return this.title
         }
       }
+      // if (this.title) {
+      //   return this.title
+      // } else {
+      //   if (this.type === REGULAR) {
+      //     if (this.group) return this.i18n.regular_group
+      //   } else {
+      //     return this.i18n.advanced_default
+      //   }
+      // }
     }
   },
   watch: {
