@@ -33,6 +33,9 @@ export default {
      * Regular menu
      *   set some text for the title option
      * Advanced menu
+     *   no item selected: the title option content
+     *   one item selected: that item content(the data field specified by showField option)
+     *   multiple items selected: display selected items length
      */
     caption () {
       if (!this.title || typeof this.title !== 'string') return ''
@@ -51,15 +54,6 @@ export default {
           return this.title
         }
       }
-      // if (this.title) {
-      //   return this.title
-      // } else {
-      //   if (this.type === REGULAR) {
-      //     if (this.group) return this.i18n.regular_group
-      //   } else {
-      //     return this.i18n.advanced_default
-      //   }
-      // }
     }
   },
   watch: {
