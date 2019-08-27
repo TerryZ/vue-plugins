@@ -90,6 +90,9 @@ export default {
           ? this.filter()
           : this.data[this.tabIndex].list
     },
+    /**
+     * check if it is a group type
+     */
     checkDataType () {
       if (this.data && Array.isArray(this.data) && this.data.length) {
         const sample = this.data[0]
@@ -111,21 +114,19 @@ export default {
       }
     },
     init () {
-      if (!this.value) return
+      if (!this.value || this.type !== ADVANCED) return
       let vals = this.value.split(',')
-      if (vals.length) {
-        if (this.type === ADVANCED && !this.multiple) vals = [vals[0]]
-        if (this.group) {
-          const arr = []
-          for (const d of this.data) {
-            arr.push(...d.list.filter(val => {
-              return vals.includes(String(val[this.keyField]))
-            }))
-          }
-          this.picked = arr
-        } else {
-          this.picked = this.data.filter(val => vals.includes(String(val[this.keyField])))
-        }
+      if (!this.multiple) vals = [vals[0]]
+      if (this.group) {
+        const arr = []
+        this.data.forEach(value => {
+          arr.push(...value.list.filter(val => {
+            return vals.includes(String(val[this.keyField]))
+          }))
+        })
+        this.picked = arr
+      } else {
+        this.picked = this.data.filter(val => vals.includes(String(val[this.keyField])))
       }
     },
     populate () {
@@ -139,7 +140,7 @@ export default {
         }
       }
 
-      if (this.type === ADVANCED) this.init()
+      this.init()
     }
   }
 }

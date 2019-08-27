@@ -26,6 +26,11 @@ export default {
         : this.i18n.advanced_default
     },
     /**
+     * The text in the header bar
+     *
+     * @returns {string}
+     *
+     * @description
      * caption display rule
      *
      * close header bar

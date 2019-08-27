@@ -16,7 +16,7 @@ export default {
       })
     },
     reset () {
-      this.highlight = -1
+      if (this.type === ADVANCED) this.highlight = -1
     },
     clear () {
       if (this.type === ADVANCED) {
