@@ -11,6 +11,7 @@ export default {
       required: true
     }
   },
+  inject: ['close'],
   render (h) {
     if (this.data && Object.keys(this.data).length) {
       if (this.data.content === DIVIDER) {
@@ -70,6 +71,7 @@ export default {
     click () {
       if (this.data && this.data.callback && typeof this.data.callback === 'function') {
         this.data.callback()
+        this.close()
       }
     }
   }

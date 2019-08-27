@@ -88,7 +88,8 @@ export default {
       keyField: this.keyField,
       showField: this.showField,
       inPicked: this.inPicked,
-      getRowText: this.getRowText
+      getRowText: this.getRowText,
+      close: this.close
     }
   }
 }

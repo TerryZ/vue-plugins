@@ -111,8 +111,10 @@
     <h5 class="mt-5">Regular menu with multiple level</h5>
     <p>
       <v-selectmenu :data="multiLevel" type="regular" >
-        <template v-slot="{ show }">
-          <button type="button" class="btn btn-primary">SelectMenu (Menu display: <b v-text="show"></b>)</button>
+        <template v-slot="{ show, disabled }">
+          <button type="button" class="btn btn-primary">
+            SelectMenu (show: <b v-text="show"></b>, disabled: <b v-text="disabled"></b>)
+          </button>
         </template>
       </v-selectmenu>
     </p>

@@ -29,6 +29,8 @@ export default {
       type: Boolean,
       default: false
     },
+    // the width of drop down menu
+    width: Number,
     /**
      * menu caller container with
      * false: inline-block
@@ -57,8 +59,6 @@ export default {
       type: [String, Boolean],
       default: 'SelectMenu'
     },
-    // the width of drop down menu
-    width: Number,
     /**
      * advanced mode options
      */
