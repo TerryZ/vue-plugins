@@ -28,13 +28,15 @@ export default {
         let child = null
         if ('default' in this.$scopedSlots) {
           child = this.$scopedSlots.default({
-            show: this.show
+            show: this.show,
+            disabled: this.disabled
           })
         } else {
           child = [h('button', {
             attrs: { type: 'button' },
             class: {
               'sm-default-btn': true,
+              'sm-default-btn--disabled': this.disabled,
               'sm-opened': this.show
             }
           }, [

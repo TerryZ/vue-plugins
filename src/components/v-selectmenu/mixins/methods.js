@@ -95,8 +95,7 @@ export default {
      */
     checkDataType () {
       if (this.data && Array.isArray(this.data) && this.data.length) {
-        const sample = this.data[0]
-        if (sample.title && sample.list) this.group = true
+        this.group = this.data.every(val => 'title' in val && 'list' in val)
       }
     },
     getRowText (row) {

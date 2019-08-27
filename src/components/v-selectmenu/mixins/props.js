@@ -25,6 +25,10 @@ export default {
       type: Boolean,
       default: false
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     /**
      * menu caller container with
      * false: inline-block
