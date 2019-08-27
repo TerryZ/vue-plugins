@@ -72,6 +72,19 @@
       </div>
     </div>
 
+    <h5 class="mt-5">Custom dropdown container width</h5>
+    <p>
+      <v-selectmenu :data="groupData" :width="300" >
+      </v-selectmenu>
+    </p>
+
+    <h5 class="mt-5">Mouse right click to call the menu</h5>
+    <v-selectmenu :data="menu" type="regular" :full-width="true" :right-click="true" >
+      <div class="jumbotron text-center" style="margin: 0;">
+        <h1><i class="fa fa-fw fa-mouse-pointer"></i> mouse right click to call</h1>
+      </div>
+    </v-selectmenu>
+
     <h2 class="mt-5">Regular</h2>
     <h5 class="mt-3">Regular menu</h5>
     <p>
@@ -134,18 +147,6 @@
       </v-selectmenu>
     </p>
 
-    <h5 class="mt-5">Custom dropdown container width</h5>
-    <p>
-      <v-selectmenu :data="groupData" :width="300" >
-      </v-selectmenu>
-    </p>
-
-    <h5 class="mt-5">Mouse right click to call the menu</h5>
-    <v-selectmenu :data="menu" type="regular" :full-width="true" :right-click="true" >
-      <div class="jumbotron text-center" style="margin: 0;">
-        <h1><i class="fa fa-fw fa-mouse-pointer"></i> mouse right click to call</h1>
-      </div>
-    </v-selectmenu>
     <br><br>
 
     <!--

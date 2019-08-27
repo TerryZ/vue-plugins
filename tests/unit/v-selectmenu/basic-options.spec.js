@@ -12,9 +12,26 @@ describe('v-selectmenu basic options', () => {
       title: 'v-selectmenu test title'
     }
   })
-  it('"disabled" option set to true, the dropdown is not allowed to be opened ', () => {
-    wrapper.find('div.sp-input-container').trigger('click')
+  it('"disabled" option set to true, the dropdown container is not allowed to be opened ', () => {
+    wrapper.find('div.sm-caller-container').trigger('click')
     expect(wrapper.find('div.v-dropdown-container').isVisible()).to.equal(false)
+  })
+  it('"align" option set to "left", the dropdown container should be aligned to the left', () => {
+    wrapper.setProps({ disabled: false, align: 'left' })
+    expect(wrapper.vm.align).to.equal('left')
+  })
+  it('"align" option set to "center", the dropdown container should be aligned to the center', () => {
+    wrapper.setProps({ disabled: false, align: 'center' })
+    expect(wrapper.vm.align).to.equal('center')
+  })
+  it('"align" option set to "right", the dropdown container should be aligned to the right', () => {
+    wrapper.setProps({ disabled: false, align: 'right' })
+    expect(wrapper.vm.align).to.equal('right')
+  })
+  describe('"embed" option set to true', () => {
+    wrapper.setProps({ embed: true })
+    it('The menu caller should be not exist', () => {})
+    it('The menu should be embedded to the page/component and displayed by default', () => {})
   })
   it('the placeholder text should be "This is test placeholder text"', () => {
     expect(wrapper.find('span.sp-placeholder').text()).to.equal('This is test placeholder text')
