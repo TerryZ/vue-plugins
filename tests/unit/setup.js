@@ -5,4 +5,10 @@
  */
 // window.Date = Date;
 
-global.expect = require('chai').expect;
+global.expect = require('chai').expect
+
+/**
+ * 'expect' is not defined.eslint(no-undef)
+ *
+ * https://eslint.org/docs/user-guide/configuring#specifying-environments
+ */

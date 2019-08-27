@@ -51,8 +51,9 @@
   },
   "standard": {
     "parser": "babel-eslint",
-    "workingDirectories": ["./src"],
-    "ignore": ["node_modules/**", "tests/**"],
-    "envs": ["mocha"]
+    "workingDirectories": ["./src", "./tests"],
+    "ignore": ["node_modules/**"],
+    "env": ["mocha"],
+    "globals": ["expect"]
   }
 }

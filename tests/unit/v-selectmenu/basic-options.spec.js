@@ -1,15 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 import list from '@test/sample/nba-teams'
-import sp from '@/components/v-selectpage/SelectPage'
+import sm from '@/components/v-selectmenu/SelectMenu'
 
-describe('v-selectpage basic options', () => {
-  const wrapper = mount(sp, {
+describe('v-selectmenu basic options', () => {
+  const wrapper = mount(sm, {
     propsData: {
       data: list,
       disabled: true,
       placeholder: 'This is test placeholder text',
-      title: 'v-selectpage test title'
+      title: 'v-selectmenu test title'
     }
   })
   it('"disabled" option set to true, the dropdown is not allowed to be opened ', () => {
@@ -23,8 +23,8 @@ describe('v-selectpage basic options', () => {
     wrapper.setProps({ pagination: false })
     expect(wrapper.find('div.sp-pagination').exists()).to.equal(false)
   })
-  it('the title text in selectpage should be "v-selectpage test title"', () => {
-    expect(wrapper.find('div.sp-header > h3').text()).to.equal('v-selectpage test title')
+  it('the title text in selectmenu should be "v-selectmenu test title"', () => {
+    expect(wrapper.find('div.sp-header > h3').text()).to.equal('v-selectmenu test title')
   })
   it('enter query keyword "sa", the result list should only have 2 items', () => {
     wrapper.setProps({ disabled: false, pagination: true })
