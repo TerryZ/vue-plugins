@@ -1,6 +1,9 @@
 import row from './Row'
 import { namedSlotWithScoped } from '../../helper'
 
+/**
+ * The menu list/current group menu list in Advanced menu
+ */
 export default {
   name: 'AdvancedMenu',
   components: {

@@ -1,5 +1,8 @@
 import { DIVIDER } from '../../constants'
 
+/**
+ * The menu item in Regular menu
+ */
 export default {
   name: 'v-menu-item',
   props: {

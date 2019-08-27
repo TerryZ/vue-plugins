@@ -1,3 +1,6 @@
+/**
+ * The data row in Advanced menu list
+ */
 export default {
   name: 'AdvancedMenuRow',
   props: {

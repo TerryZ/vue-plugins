@@ -1,14 +1,15 @@
 <template>
   <div class="card p-5">
-    <h3>v-selectmenu
+    <h1>v-selectmenu
       <button type="button" 
         class="btn btn-outline-secondary btn-sm"
         @click="$router.push({path: '/demo'});">Back to List</button>
-    </h3>
+    </h1>
 
     <hr>
 
-    <h5>Regular menu</h5>
+    <h2 class="mt-4">Regular</h2>
+    <h5 class="mt-3">Regular menu</h5>
     <p>
       <v-selectmenu :data="menu"
               type="regular"
@@ -58,7 +59,7 @@
       </div>
     </div>
 
-    <h5 class="mt-5">嵌入式菜单</h5>
+    <h5 class="mt-5">Embedded menu</h5>
     <div class="row">
       <div class="col-md-6">
         <p>Regular menu with slot</p>
@@ -93,14 +94,15 @@
       </div>
     </div>
 
-    <h5 class="mt-5">高级模式菜单</h5>
+    <h2 class="mt-5">Advanced</h2>
+    <h5 class="mt-3">Advanced menu</h5>
     <pre class="p-4 bg-light">{{JSON.stringify(value1, null, 4)}}</pre>
     <p>
       <v-selectmenu :data="listData" v-model="value1">
       </v-selectmenu>
     </p>
 
-    <h5 class="mt-5">高级模式菜单自定义插槽（Slot）模式</h5>
+    <h5 class="mt-5">Advanced menu with slot</h5>
     <p>
       <v-selectmenu :data="listData"
               :max-selected="3"
@@ -111,7 +113,7 @@
       </v-selectmenu>
     </p>
 
-    <h5 class="mt-5">高级多分组多选模式菜单</h5>
+    <h5 class="mt-5">Advanced menu with group type</h5>
     <pre class="p-4 bg-light">{{JSON.stringify(value2, null, 4)}}</pre>
     <p>
       <v-selectmenu :data="groupData"
@@ -122,13 +124,13 @@
       </v-selectmenu>
     </p>
 
-    <h5 class="mt-5">高级模式菜单自定义菜单宽度</h5>
+    <h5 class="mt-5">Custom dropdown container width</h5>
     <p>
       <v-selectmenu :data="groupData" :width="300" >
       </v-selectmenu>
     </p>
 
-    <h5 class="mt-5">鼠标右键呼出菜单</h5>
+    <h5 class="mt-5">Mouse right click to call the menu</h5>
     <v-selectmenu :data="menu" type="regular" :full-width="true" :right-click="true" >
       <div class="jumbotron text-center" style="margin: 0;">
         <h1><i class="fa fa-fw fa-mouse-pointer"></i> mouse right click to call</h1>
