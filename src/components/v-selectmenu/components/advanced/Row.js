@@ -7,7 +7,7 @@ export default {
       default: false
     }
   },
-  inject: ['showField', 'inPicked', 'getRowText'],
+  inject: ['inPicked', 'getRowText'],
   render (h) {
     const child = []
     const selected = 'sm-iconfont sm-icon-selected'

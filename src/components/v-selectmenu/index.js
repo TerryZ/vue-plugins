@@ -13,4 +13,5 @@ const Plugin = {
   }
 }
 
+export { selectMenu as SelectMenu }
 export default Plugin

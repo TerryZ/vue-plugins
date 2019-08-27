@@ -3,6 +3,7 @@ import { languages, REGULAR, ADVANCED } from '../constants'
 export default {
   data () {
     return {
+      // dropdown container display status
       show: false,
       i18n: languages[this.language] || languages['cn'],
       // menu data or current group menu data
