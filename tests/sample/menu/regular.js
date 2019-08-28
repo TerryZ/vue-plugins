@@ -1,5 +1,8 @@
 const doSome = function () {
-
+  const div = document.createElement('div')
+  div.className = 'v-selectmenu-callback'
+  div.innerText = 'This is the test DIV dom'
+  document.body.appendChild(div)
 }
 
 export const regularBase = [

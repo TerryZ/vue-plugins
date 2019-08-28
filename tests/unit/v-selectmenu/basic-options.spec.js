@@ -11,11 +11,14 @@ describe('v-selectmenu basic options', () => {
         embed: true
       }
     })
-    it('The menu caller should be not exist', () => {
+    it('The menu caller should not exist', () => {
       expect(wrapperEmbed.find('div.sm-caller-container').exists()).to.equal(false)
     })
     it('The menu should be embedded to the page/component and displayed by default', () => {
       expect(wrapperEmbed.find('div.v-dropdown-container.v-dropdown-embed').isVisible()).to.equal(true)
+    })
+    it('The close button should not exist', () => {
+      expect(wrapperEmbed.find('span.sm-close-button').exists()).to.equal(false)
     })
   })
   it('"disabled" option set to true, the dropdown container is not allowed to be opened ', () => {
@@ -56,7 +59,7 @@ describe('v-selectmenu basic options', () => {
   it('When the "type" option is not specified, its default value should be "advanced"', () => {
     expect(wrapper.vm.type).to.equal('advanced')
   })
-  it('"fullWidth" set to true, the menu caller container should have class "v-dropdown-caller--full-width"', () => {
+  it('"fullWidth" option set to true, the menu caller container should have class "v-dropdown-caller--full-width"', () => {
     expect(wrapper.find('div.v-dropdown-caller').classes('v-dropdown-caller--full-width')).to.equal(true)
   })
 })
