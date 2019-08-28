@@ -31,7 +31,8 @@ describe('v-selectmenu basic options', () => {
   const wrapper = mount(sm, {
     propsData: {
       data: list,
-      width: 300
+      width: 300,
+      fullWidth: true
     }
   })
   it('"align" option set to "left", the dropdown container should be aligned to the left', () => {
@@ -48,5 +49,14 @@ describe('v-selectmenu basic options', () => {
   })
   it('"width" set to 300, the dropdown container width should be 300px', () => {
     expect(wrapper.find('div.v-dropdown-container').attributes().style).to.have.string('width: 300px')
+  })
+  it('When the "language" option is not specified, its default value should be "cn"', () => {
+    expect(wrapper.vm.language).to.equal('cn')
+  })
+  it('When the "type" option is not specified, its default value should be "advanced"', () => {
+    expect(wrapper.vm.type).to.equal('advanced')
+  })
+  it('"fullWidth" set to true, the menu caller container should have class "v-dropdown-caller--full-width"', () => {
+    expect(wrapper.find('div.v-dropdown-caller').classes('v-dropdown-caller--full-width')).to.equal(true)
   })
 })
