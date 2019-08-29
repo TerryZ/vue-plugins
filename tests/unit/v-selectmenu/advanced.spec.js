@@ -42,20 +42,42 @@ describe('v-selectmenu advanced mode', () => {
     const w = mount(sm, {
       propsData: {
         data: nbaTeams,
-        multiple: true
+        multiple: true,
+        showField: function (row) {
+          return `${row.name}(${row.desc})`
+        }
       }
     })
-
-    // it('Click the first item(Chicago Bulls), its should be selected', () => {
-    //   w.find('div.sm-caller-container').trigger('click')
-    //   w.findAll('.sm-results li').at(0).trigger('click')
-    //   expect(w.find('.sm-results li.sm-selected').find('.sm-item-text').text()).to.equal('Chicago Bulls')
-    // })
-    // it('After "Clear all" icon button click, should no one item is selected', () => {
-    //   w.find('div.sm-caller-container').trigger('click')
-    //   w.find('span.sm-removeall-button').trigger('click')
-    //   expect(w.vm.picked.length).to.equal(0)
-    // })
+    it('"showField" option set to a function, then text of the first item text in the list should be "Chicago Bulls(芝加哥公牛)"', () => {
+      expect(w.find('.sm-results li').find('.sm-item-text').text()).to.equal('Chicago Bulls(芝加哥公牛)')
+    })
+    it('Click the first item, its should be selected', () => {
+      w.find('div.sm-caller-container').trigger('click')
+      w.findAll('.sm-results li').at(0).trigger('click')
+      expect(w.find('.sm-results li.sm-selected').find('.sm-item-text').text()).to.equal('Chicago Bulls(芝加哥公牛)')
+    })
+    it('After "Clear all" icon button click, should no item is selected', () => {
+      w.find('div.sm-caller-container').trigger('click')
+      w.find('span.sm-removeall-button').trigger('click')
+      expect(w.vm.picked.length).to.equal(0)
+    })
+    it('Click "Select all" icon button, all of items should be selected ', () => {
+      w.find('div.sm-caller-container').trigger('click')
+      w.find('span.sm-selectall-button').trigger('click')
+      expect(w.vm.picked.length).to.equal(30)
+    })
+    it('enter query keyword "sa", the result list should only have 2 items("Sacramento Kings(萨克拉门托国王)" and "San Antonio Spurs(圣安东尼奥马刺)")', () => {
+      w.setProps({ disabled: false, pagination: true })
+      w.find('.sm-search input').setValue('sa')
+      /**
+       * simulate keyboard enter, because in the real case "processKey" method will trigger by keyup event
+       */
+      w.vm.processKey()
+      const items = w.findAll('ul.sm-results li')
+      expect(items.length).to.equal(2)
+      expect(items.at(0).find('.sm-item-text').text()).to.equal('Sacramento Kings(萨克拉门托国王)')
+      expect(items.at(1).find('.sm-item-text').text()).to.equal('San Antonio Spurs(圣安东尼奥马刺)')
+    })
   })
   describe('advanced menu with group type', () => {
     const w = mount(sm, {

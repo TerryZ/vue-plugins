@@ -31,6 +31,9 @@ describe('v-selectmenu regular mode', () => {
       // console.log(w.findAll('ul.sm-regular li').at(8).text())
       expect(typeof document.querySelector('.v-selectmenu-callback') !== 'undefined').to.equal(true)
     })
+    it('After click, the menu should be invisable', () => {
+      expect(w.find('div.v-dropdown-container').isVisible()).to.equal(false)
+    })
     it('Change regular menu data source, the number of header menu item should be 3', () => {
       const wrapper = mount(sm, {
         propsData: {

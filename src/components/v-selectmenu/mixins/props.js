@@ -68,7 +68,7 @@ export default {
       default: 'id'
     },
     showField: {
-      type: String,
+      type: [String, Function],
       default: 'name'
     },
     query: {
