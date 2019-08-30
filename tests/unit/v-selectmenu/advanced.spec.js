@@ -67,7 +67,6 @@ describe('v-selectmenu advanced mode', () => {
       expect(w.vm.picked.length).to.equal(30)
     })
     it('enter query keyword "sa", the result list should only have 2 items("Sacramento Kings(萨克拉门托国王)" and "San Antonio Spurs(圣安东尼奥马刺)")', () => {
-      w.setProps({ disabled: false, pagination: true })
       w.find('.sm-search input').setValue('sa')
       /**
        * simulate keyboard enter, because in the real case "processKey" method will trigger by keyup event
@@ -84,7 +83,8 @@ describe('v-selectmenu advanced mode', () => {
       propsData: {
         data: advancedGroup,
         multiple: true,
-        maxSelected: 3
+        maxSelected: 5,
+        value: '3,5,17'
       }
     })
     it('The group tabs should be exist', () => {
@@ -93,13 +93,43 @@ describe('v-selectmenu advanced mode', () => {
     it('The number of group tabs should be 2', () => {
       expect(w.findAll('.sm-tabs ul li').length).to.equal(2)
     })
-    it('"maxSelected" option set to 3, Click "Select all" icon button, the number of selected item should be 3', () => {
-      w.find('div.sm-caller-container').trigger('click')
-      w.find('span.sm-selectall-button').trigger('click')
-      expect(w.vm.picked.length).to.equal(3)
+    it('"value/v-model" set to "3,5,17", the selected item should be "Detroit Pistons", "Milwaukee Bucks" and "Minnesota Timberwolves"', () => {
+      expect(w.vm.picked.some(val => val.name === 'Detroit Pistons')).to.equal(true)
+      expect(w.vm.picked.some(val => val.name === 'Milwaukee Bucks')).to.equal(true)
+      expect(w.vm.picked.some(val => val.name === 'Minnesota Timberwolves')).to.equal(true)
     })
-    it('The text of header bar should be "已选择 3 个项目"', () => {
-      expect(w.find('.sm-header h3').text()).to.equal('已选择 3 个项目')
+    it('"East" group should have 2 selected item', () => {
+      w.find('div.sm-caller-container').trigger('click')
+      expect(w.findAll('ul.sm-results li.sm-selected').length).to.equal(2)
+    })
+    it('"West" group should have 1 selected item', () => {
+      w.findAll('div.sm-tabs li').at(1).find('a').trigger('click')
+      expect(w.findAll('ul.sm-results li.sm-selected').length).to.equal(1)
+    })
+    it('Click "Clear all" icon button, should no items be selected', () => {
+      w.find('span.sm-removeall-button').trigger('click')
+      expect(w.vm.picked.length).to.equal(0)
+    })
+    it('"maxSelected" option set to 5, Click "Select all" icon button, the number of selected item should be 5', () => {
+      w.find('span.sm-selectall-button').trigger('click')
+      expect(w.vm.picked.length).to.equal(5)
+    })
+    it('The text of header bar should be "已选择 5 个项目"', () => {
+      expect(w.find('.sm-header h3').text()).to.equal('已选择 5 个项目')
+    })
+    it('enter query keyword "sa", "East" group should only display "无查询结果", "West" group should have 2 items("Sacramento Kings" and "San Antonio Spurs")', () => {
+      w.find('.sm-search input').setValue('sa')
+      /**
+       * simulate keyboard enter, because in the real case "processKey" method will trigger by keyup event
+       */
+      w.vm.processKey()
+      w.findAll('div.sm-tabs li').at(0).find('a').trigger('click')
+      expect(w.find('li.sm-message-box span').text()).to.equal('无查询结果')
+      w.findAll('div.sm-tabs li').at(1).find('a').trigger('click')
+      const items = w.findAll('ul.sm-results li')
+      expect(items.length).to.equal(2)
+      expect(items.at(0).find('.sm-item-text').text()).to.equal('Sacramento Kings')
+      expect(items.at(1).find('.sm-item-text').text()).to.equal('San Antonio Spurs')
     })
   })
 })
