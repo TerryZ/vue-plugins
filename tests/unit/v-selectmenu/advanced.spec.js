@@ -93,5 +93,13 @@ describe('v-selectmenu advanced mode', () => {
     it('The number of group tabs should be 2', () => {
       expect(w.findAll('.sm-tabs ul li').length).to.equal(2)
     })
+    it('"maxSelected" option set to 3, Click "Select all" icon button, the number of selected item should be 3', () => {
+      w.find('div.sm-caller-container').trigger('click')
+      w.find('span.sm-selectall-button').trigger('click')
+      expect(w.vm.picked.length).to.equal(3)
+    })
+    it('The text of header bar should be "已选择 3 个项目"', () => {
+      expect(w.find('.sm-header h3').text()).to.equal('已选择 3 个项目')
+    })
   })
 })
