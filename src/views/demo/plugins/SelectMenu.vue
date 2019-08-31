@@ -92,6 +92,13 @@
               type="regular"
               @show="showLog"
               @hide="hideLog" >
+        <!-- use slot to custom rendering menu row -->
+        <template #row="{ row }">
+        <span>
+          <fa-icon class="fa-lg mr-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
+          <span v-html="row.content"></span>
+        </span>
+        </template>
       </v-selectmenu>
     </p>
 
