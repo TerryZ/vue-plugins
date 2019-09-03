@@ -1,67 +1,10 @@
-<template>
-    <dropdown ref="drop" :re-open="false" :animated="false" @show-change="showChange">
-        <template #caller>
-            <input type="text" v-model.trim="text" :placeholder="placeholder" :disabled="disabled" ref="input"
-                   @keyup="processKey"
-                   @keydown="processControl"
-                   @focus="open" >
-            <div class="sg-clear"
-                 @click="clear"
-                 v-show="text"
-                 v-if="!disabled">
-                <span>×</span>
-            </div>
-        </template>
-        <ul class="sg-results" :style="{width: width+'px'}" ref="list" >
-            <li :key="index" v-for="(row,index) in list"
-                :class="['sg-results__row',{'sg-over': highlight === index}]"
-                @click="selectItem(row)"
-                @mouseenter="highlight = index"
-                @mouseleave="highlight = -1"
-                v-html="getRow(row)" ></li>
-        </ul>
-    </dropdown>
-</template>
+const UP = 38
+const DOWN = 40
+const ESC = 27
+const TAB = 9
+const ENTER = 13
 
-<script>
-import './suggest.scss'
-import dropdown from 'v-dropdown'
 export default {
-  name: 'v-suggest',
-  components: { dropdown },
-  props: {
-    data: Array,
-    value: String,
-    name: String,
-    keyField: {
-      type: String,
-      default: 'id'
-    },
-    showField: {
-      type: [String, Function],
-      default: 'name'
-    },
-    placeholder: String,
-    delay: {
-      type: Number,
-      default: 0.2
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data () {
-    return {
-      text: typeof (this.value) === 'undefined' ? '' : this.value,
-      list: [],
-      highlight: -1,
-      width: 0,
-      dropShow: false,
-      last: null,
-      lastInputTime: -1
-    }
-  },
   methods: {
     open () {
       if (this.disabled) return
@@ -90,7 +33,7 @@ export default {
       if (!val) this.highlight = -1
     },
     processKey (e) {
-      if ([38, 40, 27, 13, 9].includes(e.keyCode)) return
+      if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) return
       this.lastInputTime = e.timeStamp
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {
@@ -100,7 +43,7 @@ export default {
       }, this.delay * 1000)
     },
     processControl (e) {
-      if ([38, 40, 27, 13, 9].includes(e.keyCode)) {
+      if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) {
         switch (e.keyCode) {
           case 38:// up
             this.previous()
@@ -128,10 +71,10 @@ export default {
       if (this.highlight < (this.list.length - 1)) {
         this.highlight++
         this.$nextTick(() => {
-          let cur = this.$refs.list.querySelectorAll('.sg-over')[0]
-          let curPos = cur.getBoundingClientRect()
-          let listPos = this.$refs.list.getBoundingClientRect()
-          let dist = (this.$refs.list.scrollTop + curPos.bottom) - listPos.bottom
+          const cur = this.$refs.list.querySelectorAll('.sg-over')[0]
+          const curPos = cur.getBoundingClientRect()
+          const listPos = this.$refs.list.getBoundingClientRect()
+          const dist = (this.$refs.list.scrollTop + curPos.bottom) - listPos.bottom
           if (dist) this.$refs.list.scrollTop = dist
         })
       }
@@ -141,10 +84,10 @@ export default {
       if (!this.dropShow) this.open()
       this.highlight = this.highlight === -1 ? this.list.length - 1 : --this.highlight
       this.$nextTick(() => {
-        let cur = this.$refs.list.querySelectorAll('.sg-over')[0]
-        let curPos = cur.getBoundingClientRect()
-        let listPos = this.$refs.list.getBoundingClientRect()
-        let dist = curPos.top - listPos.top
+        const cur = this.$refs.list.querySelectorAll('.sg-over')[0]
+        const curPos = cur.getBoundingClientRect()
+        const listPos = this.$refs.list.getBoundingClientRect()
+        const dist = curPos.top - listPos.top
         if (dist < 0) this.$refs.list.scrollTop += dist
       })
     },
@@ -172,21 +115,5 @@ export default {
         this.last = this.text
       }
     }
-  },
-  watch: {
-    value (val) {
-      this.text = val
-    },
-    text (val) {
-      this.$emit('input', val)
-    }
-  },
-  mounted () {
-    let tmpClass = this.$el.className
-    this.$el.className = 'v-suggest'
-    this.$refs.input.className = tmpClass
-    // this.populate();
-    this.adjust()
   }
 }
-</script>
