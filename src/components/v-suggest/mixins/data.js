@@ -17,11 +17,15 @@ export default {
     placeholder: String,
     delay: {
       type: Number,
-      default: 0.2
+      default: 0.1
     },
     disabled: {
       type: Boolean,
       default: false
+    },
+    maxLength: {
+      type: Number,
+      default: 0
     }
   },
   data () {

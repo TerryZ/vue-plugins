@@ -43,7 +43,7 @@ export default {
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {
           this.populate()
-          this.checkOpen()
+          // this.checkOpen()
         }
       }, this.delay * 1000)
     },
@@ -96,8 +96,8 @@ export default {
         if (dist < 0) this.$refs.list.scrollTop += dist
       })
     },
-    checkOpen () {
-      this.list.length ? this.open(false) : this.close()
+    checkOpen (list) {
+      list && list.length ? this.open(false) : this.close()
     },
     adjust () {
       const inputWidth = this.$refs.input.getBoundingClientRect().width
@@ -112,14 +112,26 @@ export default {
     populate () {
       console.log('populate')
       if (Array.isArray(this.data) && this.data.length) {
-        if (this.text !== this.last) {
-          const text = this.text.trim().toLowerCase()
-          this.list = text ? this.data.concat().filter(value => {
-            const result = this.getRow(value).toLowerCase()
-            return new RegExp(text).test(String(result))
-          }) : []
+        const text = this.text.trim().toLowerCase()
+        if (text !== this.last) {
+          const list = text
+            ? this.data.concat().filter(value => {
+              const result = this.getRow(value).toLowerCase()
+              return new RegExp(text).test(String(result))
+            })
+            : []
+          if (list.length) {
+            this.list = this.maxLength
+              ? list.filter((val, index) => {
+                return index < this.maxLength
+              })
+              : list
+            this.open(false)
+          } else {
+            this.close()
+          }
         }
-        this.last = this.text
+        this.last = text
       }
     }
   }
