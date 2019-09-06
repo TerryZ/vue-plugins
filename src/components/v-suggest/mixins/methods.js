@@ -6,15 +6,15 @@ const ENTER = 13
 
 export default {
   methods: {
-    open () {
+    open (load = true) {
       if (this.disabled) return
-      this.populate()
-      if (!this.dropShow && this.list.length) this.$refs.drop.$emit('show', this.$refs.input)
+      if (this.text.trim() && load) this.populate()
+      if (!this.show && this.list.length) this.$refs.drop.visible()
       this.adjust()
     },
     close () {
-      if (this.dropShow) this.$refs.drop.$emit('show')
-      this.highlight = -1
+      if (this.show) this.$refs.drop.visible()
+      this.reset()
     },
     clear () {
       this.text = ''
@@ -24,12 +24,17 @@ export default {
     inputFocus () {
       this.$refs.input.focus()
     },
+    reset () {
+      this.highlight = -1
+    },
     getRow (row) {
-      if (typeof this.showField === 'string') return row[this.showField] ? row[this.showField] : ''
-      else if (typeof this.showField === 'function') return this.showField(row) ? this.showField(row) : ''
+      switch (typeof this.showField) {
+        case 'string': return row[this.showField] ? row[this.showField] : ''
+        case 'function': return this.showField(row) ? this.showField(row) : ''
+      }
     },
     showChange (val) {
-      this.dropShow = val
+      this.show = val
       if (!val) this.highlight = -1
     },
     processKey (e) {
@@ -67,7 +72,7 @@ export default {
       this.close()
     },
     next () {
-      if (!this.dropShow) this.open()
+      if (!this.show) this.open()
       if (this.highlight < (this.list.length - 1)) {
         this.highlight++
         this.$nextTick(() => {
@@ -81,7 +86,7 @@ export default {
     },
     previous () {
       if (this.highlight === 0) return
-      if (!this.dropShow) this.open()
+      if (!this.show) this.open()
       this.highlight = this.highlight === -1 ? this.list.length - 1 : --this.highlight
       this.$nextTick(() => {
         const cur = this.$refs.list.querySelectorAll('.sg-over')[0]
@@ -92,7 +97,7 @@ export default {
       })
     },
     checkOpen () {
-      this.list.length ? this.open() : this.close()
+      this.list.length ? this.open(false) : this.close()
     },
     adjust () {
       const inputWidth = this.$refs.input.getBoundingClientRect().width
@@ -105,11 +110,13 @@ export default {
       }
     },
     populate () {
+      console.log('populate')
       if (Array.isArray(this.data) && this.data.length) {
         if (this.text !== this.last) {
-          this.list = this.text ? this.data.concat().filter(value => {
+          const text = this.text.trim().toLowerCase()
+          this.list = text ? this.data.concat().filter(value => {
             const result = this.getRow(value).toLowerCase()
-            return String(result).includes(this.text.toLowerCase())
+            return new RegExp(text).test(String(result))
           }) : []
         }
         this.last = this.text

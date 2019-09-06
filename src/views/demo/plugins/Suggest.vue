@@ -1,53 +1,56 @@
 <template>
-    <div class="card p-5">
-        <h3>v-suggest <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button></h3>
+  <div class="card p-5">
+    <h1>
+      v-suggest
+      <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
+    </h1>
 
-        <hr>
+    <hr>
 
-        <h5>输入自动完成 ( {{input}} )</h5>
-        <p>
-            <v-suggest :data="sample" name="abc" v-model="input" @values="values"></v-suggest>
-        </p>
+    <h5 class="mt-5">输入自动完成 ( {{input}} )</h5>
+    <p>
+      <v-suggest :data="sample" name="abc" v-model="input" @values="values"></v-suggest>
+    </p>
 
-        <h5>自定义行内容展示</h5>
-        <p>
-            <v-suggest :data="sample"
-                        placeholder="Type something..."
-                        :show-field="showField" ></v-suggest>
-        </p>
+    <h5 class="mt-5">自定义行内容展示</h5>
+    <p>
+      <v-suggest :data="sample"
+        placeholder="Type something..."
+        :show-field="showField" ></v-suggest>
+    </p>
 
-        <h5>禁用</h5>
-        <p>
-            <v-suggest :data="sample"
-                        :disabled="true"
-                        v-model="disabled"
-                        :show-field="showField" ></v-suggest>
-        </p>
-    </div>
+    <h5 class="mt-5">禁用</h5>
+    <p>
+      <v-suggest :data="sample"
+        :disabled="true"
+        v-model="disabled"
+        :show-field="showField" ></v-suggest>
+    </p>
+  </div>
 </template>
 
 <script>
-    import nbaTeams from '@test/sample/nba-teams';
-    export default {
-        data(){
-            return {
-                input: '',
-                disabled: 'Chicago Bulls',
-                sample: nbaTeams
-            };
-        },
-        methods: {
-            showField(row){
-                return row.name + ' ' + row.desc;
-            },
-            values(row){
-                console.log(JSON.stringify(row))
-            }
-        },
-        mounted(){
-            setTimeout(()=>{
-                this.input = 'ch';
-            },1000);
-        }
+import nbaTeams from '@test/sample/nba-teams'
+export default {
+  data () {
+    return {
+      input: '',
+      disabled: 'Chicago Bulls',
+      sample: nbaTeams
     }
+  },
+  methods: {
+    showField (row) {
+      return row.name + ' ' + row.desc
+    },
+    values (row) {
+      console.log(JSON.stringify(row))
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.input = 'ch'
+    }, 1000)
+  }
+}
 </script>

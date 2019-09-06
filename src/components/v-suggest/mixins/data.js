@@ -1,4 +1,7 @@
+import dropdown from 'v-dropdown'
+
 export default {
+  components: { dropdown },
   props: {
     data: Array,
     value: String,
@@ -23,11 +26,11 @@ export default {
   },
   data () {
     return {
-      text: typeof (this.value) === 'undefined' ? '' : this.value,
+      text: typeof this.value === 'undefined' ? '' : this.value,
       list: [],
       highlight: -1,
       width: 0,
-      dropShow: false,
+      show: false,
       last: null,
       lastInputTime: -1
     }
@@ -37,7 +40,7 @@ export default {
       this.text = val
     },
     text (val) {
-      this.$emit('input', val)
+      // this.$emit('input', val)
     }
   }
 }
