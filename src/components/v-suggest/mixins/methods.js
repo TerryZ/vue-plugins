@@ -7,22 +7,25 @@ const ENTER = 13
 export default {
   methods: {
     open (load = true) {
-      if (this.disabled) return
-      if (this.text.trim() && load) this.populate()
-      if (!this.show && this.list.length) this.$refs.drop.visible()
+      const notEmpty = this.text.trim()
+      if (notEmpty && load) this.populate()
+      if (notEmpty && !this.show && this.list.length) this.$refs.drop.visible()
       this.adjust()
     },
     close () {
       if (this.show) this.$refs.drop.visible()
       this.reset()
     },
+    adjust () {
+      if (!this.$refs.input || this.width > 0) return
+
+      const width = this.$refs.input.getBoundingClientRect().width
+      const MIN_WIDTH = 200
+      this.width = width > MIN_WIDTH ? width : MIN_WIDTH
+    },
     clear () {
       this.text = ''
       this.populate()
-      this.inputFocus()
-    },
-    inputFocus () {
-      this.$refs.input.focus()
     },
     reset () {
       this.highlight = -1
@@ -35,7 +38,46 @@ export default {
     },
     showChange (val) {
       this.show = val
-      if (!val) this.highlight = -1
+      if (val) {
+        this.$nextTick(() => {
+          this.$refs.drop.adjust()
+        })
+      } else {
+        this.highlight = -1
+      }
+    },
+    selectItem (row) {
+      this.text = this.getRow(row)
+      this.$emit('values', row)
+      this.close()
+    },
+    checkOpen (list) {
+      list && list.length ? this.open(false) : this.close()
+    },
+    populate () {
+      // console.log('populate:' + new Date().getTime())
+      if (Array.isArray(this.data) && this.data.length) {
+        const text = this.text.trim().toLowerCase()
+        if (text !== this.last) {
+          const list = text
+            ? this.data.filter(value => {
+              const result = this.getRow(value).toLowerCase()
+              return new RegExp(text).test(String(result))
+            })
+            : []
+          if (list.length) {
+            this.list = this.maxLength
+              ? list.filter((val, index) => {
+                return index < this.maxLength
+              })
+              : list
+            this.open(false)
+          } else {
+            this.close()
+          }
+          this.last = text
+        }
+      }
     },
     processKey (e) {
       if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) return
@@ -66,11 +108,6 @@ export default {
         }
       }
     },
-    selectItem (row) {
-      this.text = this.getRow(row)
-      this.$emit('values', row)
-      this.close()
-    },
     next () {
       if (!this.show) this.open()
       if (this.highlight < (this.list.length - 1)) {
@@ -95,44 +132,6 @@ export default {
         const dist = curPos.top - listPos.top
         if (dist < 0) this.$refs.list.scrollTop += dist
       })
-    },
-    checkOpen (list) {
-      list && list.length ? this.open(false) : this.close()
-    },
-    adjust () {
-      const inputWidth = this.$refs.input.getBoundingClientRect().width
-
-      // minimize width 200px
-      if (this.width === 198) {
-        if (inputWidth > 198) this.width = inputWidth
-      } else {
-        if ((inputWidth - 2) !== this.width) this.width = (inputWidth > 200 ? inputWidth : 200) - 2
-      }
-    },
-    populate () {
-      console.log('populate')
-      if (Array.isArray(this.data) && this.data.length) {
-        const text = this.text.trim().toLowerCase()
-        if (text !== this.last) {
-          const list = text
-            ? this.data.concat().filter(value => {
-              const result = this.getRow(value).toLowerCase()
-              return new RegExp(text).test(String(result))
-            })
-            : []
-          if (list.length) {
-            this.list = this.maxLength
-              ? list.filter((val, index) => {
-                return index < this.maxLength
-              })
-              : list
-            this.open(false)
-          } else {
-            this.close()
-          }
-        }
-        this.last = text
-      }
     }
   }
 }

@@ -44,7 +44,7 @@ export default {
       this.text = val
     },
     text (val) {
-      // this.$emit('input', val)
+      this.$emit('input', val)
     }
   }
 }

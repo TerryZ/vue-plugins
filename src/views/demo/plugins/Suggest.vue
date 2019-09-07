@@ -7,6 +7,14 @@
 
     <hr>
 
+    <h5 class="mt-5">禁用</h5>
+    <p>
+      <v-suggest :data="sample"
+        :disabled="true"
+        v-model="disabled"
+        :show-field="showField" ></v-suggest>
+    </p>
+
     <h5 class="mt-5">输入自动完成 ( {{input}} )</h5>
     <p>
       <v-suggest :data="sample" name="abc" v-model="input" @values="values"></v-suggest>
@@ -19,12 +27,20 @@
         :show-field="showField" ></v-suggest>
     </p>
 
-    <h5 class="mt-5">禁用</h5>
+    <h5 class="mt-5">限制结果结果列表个数</h5>
     <p>
-      <v-suggest :data="sample"
-        :disabled="true"
-        v-model="disabled"
-        :show-field="showField" ></v-suggest>
+      <v-suggest :data="sample" :max-length="5" >
+      </v-suggest>
+    </p>
+
+    <h5 class="mt-5">使用 slot 进行自定义显示</h5>
+    <p>
+      <v-suggest :data="sample" >
+        <template #default="{ row }">
+          <span v-text="row.name"></span>
+          (<span v-text="row.desc"></span>)
+        </template>
+      </v-suggest>
     </p>
   </div>
 </template>

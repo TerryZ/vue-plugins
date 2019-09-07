@@ -3,7 +3,7 @@ div.v-suggest{
     input[type="text"] {
         display: block;
         width: 100%;
-        padding: 6px 12px;
+        padding: 0.4rem 1.8rem 0.4rem 0.7rem;
         font-size: 14px;
         line-height: 1.42857143;
         color: #333;
@@ -13,6 +13,7 @@ div.v-suggest{
         border-radius: 4px;
         -webkit-box-shadow: none;
         box-shadow: none;
+        text-overflow: ellipsis;
         will-change: border-color, box-shadow, background-color;
         -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s, background-color ease-in-out .15s;
         -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s, background-color ease-in-out .15s;
@@ -67,7 +68,9 @@ ul.sg-results {
         color: #333;
         cursor: default;
         &.sg-over {
-            background-color: #53A4EA !important;color: #fff !important;cursor: pointer;
+            background-color: #F6F8FA !important;
+            color: black !important;
+            cursor: pointer;
         }
     }
 }
