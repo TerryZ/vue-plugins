@@ -27,12 +27,6 @@
         :show-field="showField" ></v-suggest>
     </p>
 
-    <h5 class="mt-5">限制结果结果列表个数</h5>
-    <p>
-      <v-suggest :data="sample" :max-length="5" >
-      </v-suggest>
-    </p>
-
     <h5 class="mt-5">使用 slot 进行自定义显示</h5>
     <p>
       <v-suggest :data="sample" >
@@ -43,6 +37,12 @@
           </div>
           <div class="text-muted" v-text="row.desc"></div>
         </template>
+      </v-suggest>
+    </p>
+
+    <h5 class="mt-5">限制显示结果列表个数</h5>
+    <p>
+      <v-suggest :data="sample" :max-length="5" >
       </v-suggest>
     </p>
   </div>
