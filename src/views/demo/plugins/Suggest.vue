@@ -37,8 +37,11 @@
     <p>
       <v-suggest :data="sample" >
         <template #default="{ row }">
-          <span v-text="row.name"></span>
-          (<span v-text="row.desc"></span>)
+          <div>
+            <strong v-text="row.name"></strong>
+            <small class="ml-2" v-text="row.abbr"></small>
+          </div>
+          <div class="text-muted" v-text="row.desc"></div>
         </template>
       </v-suggest>
     </p>

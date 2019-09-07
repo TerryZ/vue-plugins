@@ -10,4 +10,6 @@ const Plugin = {
   }
 }
 
+export { Suggest }
+
 export default Plugin
