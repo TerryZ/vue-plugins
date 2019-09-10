@@ -51,9 +51,6 @@ export default {
       this.$emit('values', row)
       this.close()
     },
-    checkOpen (list) {
-      list && list.length ? this.open(false) : this.close()
-    },
     populate () {
       // console.log('populate:' + new Date().getTime())
       if (Array.isArray(this.data) && this.data.length) {
@@ -85,24 +82,23 @@ export default {
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {
           this.populate()
-          // this.checkOpen()
         }
       }, this.delay * 1000)
     },
     processControl (e) {
       if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) {
         switch (e.keyCode) {
-          case 38:// up
+          case UP:// up
             this.previous()
             break
-          case 40:// down
+          case DOWN:// down
             this.next()
             break
-          case 9: // tab
-          case 13:// enter
+          case TAB: // tab
+          case ENTER:// enter
             if (this.highlight !== -1) this.selectItem(this.list[this.highlight])
             break
-          case 27:// escape
+          case ESC:// escape
             this.close()
             break
         }
