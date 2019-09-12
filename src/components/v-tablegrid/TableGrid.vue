@@ -48,7 +48,7 @@
         mixins: [mixins],
         data(){
             return {
-				totalRow: 0,
+        totalRow: 0,
                 dataRows:[],
                 con: con,
                 checkAll: false,
@@ -67,12 +67,12 @@
         computed: {
             classes(){
                 const classes = {
-					'v-table-grid--bordered': this.border,
-					'v-table-grid--striped': this.stripe
-				};
+          'v-table-grid--bordered': this.border,
+          'v-table-grid--striped': this.stripe
+        };
                 if(this.theme === 'material') {
-					classes['v-table-grid--bordered'] = false;
-					classes['v-table-grid--striped'] = false;
+          classes['v-table-grid--bordered'] = false;
+          classes['v-table-grid--striped'] = false;
                 }
                 return classes;
             },
@@ -185,9 +185,9 @@
             rowClick(index){
                 if(!this.checkRow) return;
                 if(!this.selectedIndex.includes(index)) {
-					if(this.checkRow === con.checkSingle) this.selectedIndex = [];
+          if(this.checkRow === con.checkSingle) this.selectedIndex = [];
                     this.selectedIndex.push(index);
-				}else this.selectedIndex = this.selectedIndex.filter(val=>val!==index);
+        }else this.selectedIndex = this.selectedIndex.filter(val=>val!==index);
                 this.currentIndex = index;
                 this.$emit('selected', this.dataRows.filter( (val, idx) => this.selectedIndex.includes(idx) ));
 

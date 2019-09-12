@@ -1,6 +1,6 @@
 <template>
     <div class="card p-5">
-        <h3>v-region 
+        <h3>v-region
             <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
         </h3>
         <hr>
@@ -100,10 +100,10 @@
                     town: null
                 },
                 uiSelected: {
-					province: '350000',
-					city: '350100',
-					area: '350104',
-					town: '350104008'
+          province: '350000',
+          city: '350100',
+          area: '350104',
+          town: '350104008'
                 },
                 selectedArray: ['110000', '350100'],
                 regionSet: null,
@@ -145,10 +145,10 @@
             },
             changeUiSelected(){
                 this.uiSelected = {
-					province: '350000',
-					city: '350100',
-					area: '350104',
-					town: '350104008'
+          province: '350000',
+          city: '350100',
+          area: '350104',
+          town: '350104008'
                 };
             }
         },

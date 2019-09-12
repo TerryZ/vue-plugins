@@ -11,17 +11,17 @@ module.exports = {
         noInfo: true,
         overlay: true,
         /*
-		proxy: {
-			'/api': {
-				target: 'http://localhost',
-				pathRewrite: {
-					'^/api': ''
-				},
-				"secure": false,
-				"changeOrigin": true
-			}
-		}
-		*/
+    proxy: {
+      '/api': {
+        target: 'http://localhost',
+        pathRewrite: {
+          '^/api': ''
+        },
+        "secure": false,
+        "changeOrigin": true
+      }
+    }
+    */
     },
     chainWebpack: config => {
         config.resolve.alias

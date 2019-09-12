@@ -26,8 +26,8 @@
 <script>
     import './slide.scss';
     import mixins from './mixins';
-	export default {
-		name: "SlideBar",
+  export default {
+    name: "SlideBar",
         mixins: [mixins]
-	};
+  };
 </script>

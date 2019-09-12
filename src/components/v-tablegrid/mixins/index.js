@@ -2,10 +2,10 @@ import { con } from '../constants';
 
 export default {
     props: {
-		/**
-		 * default selected item
-		 */
-		value: Array,
+    /**
+     * default selected item
+     */
+    value: Array,
         /**
          * Table data source
          * @type array | string

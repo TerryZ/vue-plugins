@@ -12,10 +12,10 @@ const gridConfig = {
     dataLoad: (vue, data, params)=>{
         return new Promise((resolve, reject)=>{
             vue.$http(data, params).then(resp=>{
-				resolve(resp && resp.gridResult);
-			}, resp => {
-				reject(resp);
-			});
+        resolve(resp && resp.gridResult);
+      }, resp => {
+        reject(resp);
+      });
         });
     }
 };

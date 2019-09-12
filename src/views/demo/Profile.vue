@@ -34,7 +34,7 @@
     export default {
         name: "UserProfile",
         props: {
-			userName: String
+      userName: String
         },
         data(){
             return {

@@ -184,32 +184,32 @@
 
 <script>
     import dropdown from '@/components/v-dropdown/Dropdown';
-	export default {
-		name: "Demo-Dropdown",
+  export default {
+    name: "Demo-Dropdown",
         components: { dropdown },
         data(){
-			return {
-			    show: false,
+      return {
+          show: false,
                 query: '',
                 disabled: false,
                 list: [1,2,3,4,5,6,7,8,9,10]
             }
         },
         methods: {
-		    showChange(state){
+        showChange(state){
                 this.show = state;
             }
         },
         watch: {
-			query(val){
-				if(val === '3'){
-					this.$refs.dropdown.visible();
+      query(val){
+        if(val === '3'){
+          this.$refs.dropdown.visible();
                 }else{
                     if(this.show) this.$refs.dropdown.visible();
                 }
             }
         }
-	};
+  };
 </script>
 
 <style >

@@ -32,7 +32,7 @@
         },
         methods: {
             init(){
-            	if(!this.data || (Array.isArray(this.data) && !this.data.length)) return;
+              if(!this.data || (Array.isArray(this.data) && !this.data.length)) return;
                 let that = this;
                 let onCheck = (event, treeId, treeNode)=> that.$emit('selected', $.fn.zTree.getZTreeObj(treeId).getCheckedNodes());
                 let onClick = (event, treeId, treeNode)=> that.$emit('selected', [treeNode]);
@@ -128,9 +128,9 @@
             checkEvent(){
                 this.$emit('selected', $.fn.zTree.getZTreeObj(this.treeId).getCheckedNodes());
             },
-			siblings(pId){
-            	const tree = $.fn.zTree.getZTreeObj(this.treeId);
-				return tree.getNodesByParam("pId", pId, null);
+      siblings(pId){
+              const tree = $.fn.zTree.getZTreeObj(this.treeId);
+        return tree.getNodesByParam("pId", pId, null);
             },
             selectAll(){
                 $.fn.zTree.getZTreeObj(this.treeId).checkAllNodes(true);

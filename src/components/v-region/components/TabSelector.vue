@@ -108,16 +108,16 @@
             }
         },
         computed: {
-			//check level available
-			levelAvailable(){
-				switch(this.level){
-					case PROVINCE_LEVEL: return true;
-					case CITY_LEVEL: return this.city;
-					case AREA_LEVEL: return !!(this.city && this.area);
-					case TOWN_LEVEL: return !!(this.city && this.area && this.town && this.haveTown);
+      //check level available
+      levelAvailable(){
+        switch(this.level){
+          case PROVINCE_LEVEL: return true;
+          case CITY_LEVEL: return this.city;
+          case AREA_LEVEL: return !!(this.city && this.area);
+          case TOWN_LEVEL: return !!(this.city && this.area && this.town && this.haveTown);
                     default: return false;
-				}
-			},
+        }
+      },
         },
         methods: {
             //load list when switch to next level

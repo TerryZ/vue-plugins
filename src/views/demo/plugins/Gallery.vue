@@ -54,22 +54,22 @@
         mounted(){
             setTimeout(()=>{
                 this.images = [
-					{url: 'https://www.baidu.com/img/bd_logo1.png?where=super', title:'百度'},
-					{url: 'http://i1.sinaimg.cn/dy/deco/2013/0329/logo/LOGO_1x.png', title:'新浪'},
-					{url: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png', title:'腾讯'}
-				];
+          {url: 'https://www.baidu.com/img/bd_logo1.png?where=super', title:'百度'},
+          {url: 'http://i1.sinaimg.cn/dy/deco/2013/0329/logo/LOGO_1x.png', title:'新浪'},
+          {url: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png', title:'腾讯'}
+        ];
                 this.list = [
-					{url: require('../../../assets/gallery/1.jpg'), title:'image1'},
-					{url: require('../../../assets/gallery/2.jpg'), title:'image2'},
-					{url: require('../../../assets/gallery/3.jpg'), title:'image3'},
-					{url: require('../../../assets/gallery/4.jpg'), title:'image4'},
-					{url: require('../../../assets/gallery/5.jpg'), title:'image5'},
-					{url: require('../../../assets/gallery/6.jpg'), title:'image6'},
-					{url: require('../../../assets/gallery/7.jpg'), title:'image7'},
-					{url: require('../../../assets/gallery/8.jpg'), title:'image8'},
-					{url: require('../../../assets/gallery/9.jpg'), title:'image9'},
-					{url: require('../../../assets/gallery/10.jpg'), title:'image10'}
-				];
+          {url: require('../../../assets/gallery/1.jpg'), title:'image1'},
+          {url: require('../../../assets/gallery/2.jpg'), title:'image2'},
+          {url: require('../../../assets/gallery/3.jpg'), title:'image3'},
+          {url: require('../../../assets/gallery/4.jpg'), title:'image4'},
+          {url: require('../../../assets/gallery/5.jpg'), title:'image5'},
+          {url: require('../../../assets/gallery/6.jpg'), title:'image6'},
+          {url: require('../../../assets/gallery/7.jpg'), title:'image7'},
+          {url: require('../../../assets/gallery/8.jpg'), title:'image8'},
+          {url: require('../../../assets/gallery/9.jpg'), title:'image9'},
+          {url: require('../../../assets/gallery/10.jpg'), title:'image10'}
+        ];
             }, 1000);
         }
     }

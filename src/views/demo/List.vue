@@ -84,30 +84,30 @@
                 selected: [],
                 dTime: '2018-04-20',
                 sex: [{key:0,value:'男'},{key:1,value:'女'}],
-				columns: [
-					{ "data": "login_name", "title":"登录名"},
-					{ "data": "name", "title":"姓名", "align": "right"},
-					{ "data": "sexName", "title":"性别"},
-					{ "data": "birthday", "title":"出生年月"},
-					{ "data": "phone1", "title":"电话"},
-					{ "data": "email", "title":"电子邮箱"},
-					{ "data": "statusName", "title":"状态"},
-					{ "data": "update_time", "title":"更新时间","width":90}
-				],
-				columnsCustom: [
-					{ "data": "login_name", "title":"登录名"},
-					{ "data": "name", "title":"姓名"},
-					{ "data": "sexName", "title":"性别"},
-					{ "data": "birthday", "title":"出生年月"},
-					{ "data": "phone1", "title":"电话"},
-					{ "data": "email", "title":"电子邮箱"},
-					{ "data": "statusName", "title":"状态"},
-					{ "data": "update_time", "title":"更新时间"},
-					{ "data": "tg-solted", "title":"操作"}
-				],
-				params:{
-					userName: ''
-				}
+        columns: [
+          { "data": "login_name", "title":"登录名"},
+          { "data": "name", "title":"姓名", "align": "right"},
+          { "data": "sexName", "title":"性别"},
+          { "data": "birthday", "title":"出生年月"},
+          { "data": "phone1", "title":"电话"},
+          { "data": "email", "title":"电子邮箱"},
+          { "data": "statusName", "title":"状态"},
+          { "data": "update_time", "title":"更新时间","width":90}
+        ],
+        columnsCustom: [
+          { "data": "login_name", "title":"登录名"},
+          { "data": "name", "title":"姓名"},
+          { "data": "sexName", "title":"性别"},
+          { "data": "birthday", "title":"出生年月"},
+          { "data": "phone1", "title":"电话"},
+          { "data": "email", "title":"电子邮箱"},
+          { "data": "statusName", "title":"状态"},
+          { "data": "update_time", "title":"更新时间"},
+          { "data": "tg-solted", "title":"操作"}
+        ],
+        params:{
+          userName: ''
+        }
             }
         },
         methods:{

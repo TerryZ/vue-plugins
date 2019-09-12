@@ -59,7 +59,7 @@
             beforeUpload(id, name){
                 return new Promise((resolve, reject) => {
                     if(this.list.length >= 2){
-						this.$dlg.alert('只允许上传 2 张图片！',()=>{
+            this.$dlg.alert('只允许上传 2 张图片！',()=>{
                             reject(false);
                         });
                     }else resolve(true);

@@ -2,7 +2,7 @@ import vTableGrid from './TableGrid';
 const Plugin = {
     install(Vue, config) {
         if (config && Object.keys(config).length && config.dataLoad && typeof(config.dataLoad) === 'function'){
-			vTableGrid.extends = {
+      vTableGrid.extends = {
                 methods: {
                     dataLoad: config.dataLoad
                 }
@@ -14,7 +14,7 @@ const Plugin = {
     //dataLoad is your function
     let config = {dataLoad:function(){...}};
     Vue.use(vTableGrid, config);`;
-			// eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
             console.warn(msg);
         }
 
