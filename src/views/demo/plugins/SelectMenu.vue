@@ -11,10 +11,11 @@
     <h2>Basic</h2>
     <h5 class="mt-3">Disabled</h5>
     <p>
+      <button class="btn btn-danger mr-3" @click="available = !available">Toggle available(v-if)</button>
       <button class="btn btn-outline-secondary" @click="disabled = !disabled">Toggle disabled</button>
     </p>
     <p>
-      <v-selectmenu :data="listData" :disabled="disabled">
+      <v-selectmenu :data="listData" :disabled="disabled" @values="values" v-if="available">
       </v-selectmenu>
     </p>
 
@@ -187,6 +188,9 @@ export default {
     hideLog () {
       console.log('hide')
     },
+    values (data) {
+      console.log(data)
+    },
     changeData () {
       this.dynamic = this.headerMenu
     },
@@ -200,6 +204,7 @@ export default {
       value2: '3,5,17',
       dynamic: [],
       disabled: false,
+      available: true,
       groupData: advancedGroup,
       listData: nbaTeams,
       menu: regularBase,

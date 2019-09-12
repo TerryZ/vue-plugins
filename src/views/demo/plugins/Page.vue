@@ -64,31 +64,31 @@
 </template>
 
 <script>
-    export default {
-        name: "Page",
-        data(){
-            return {
-                arr: Array(108).fill(0).map((val, index) => index + 1),
-                pageArr: [],
-                disabled: false,
-                target: 1,
-                current: 3
-            };
-        },
-        methods: {
-            pagePhotoChange(pInfo){
-                //console.log(pInfo);
-                this.pageArr = [];
-                let start=0, end=0;
-                start = pInfo.pageSize * (pInfo.pageNumber-1);
-                end = start + pInfo.pageSize - 1;
-                this.pageArr = this.arr.filter((val,idx)=>idx>=start && idx<=end);
-            },
-            go(){
-                this.$refs.page.goPage(Number(this.target));
-            }
-        }
+export default {
+  name: 'Page',
+  data () {
+    return {
+      arr: Array(108).fill(0).map((val, index) => index + 1),
+      pageArr: [],
+      disabled: false,
+      target: 1,
+      current: 3
     }
+  },
+  methods: {
+    pagePhotoChange (pInfo) {
+      // console.log(pInfo);
+      this.pageArr = []
+      let start = 0; let end = 0
+      start = pInfo.pageSize * (pInfo.pageNumber - 1)
+      end = start + pInfo.pageSize - 1
+      this.pageArr = this.arr.filter((val, idx) => idx >= start && idx <= end)
+    },
+    go () {
+      this.$refs.page.goPage(Number(this.target))
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
