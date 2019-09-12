@@ -32,7 +32,7 @@ export default {
       attrs: this.$attrs,
       on: this.$listeners
     }
-    if (['model', 'alert', 'mask', 'toast'].includes(this.type.trim().toLowerCase())) {
+    if (['modal', 'alert', 'mask', 'toast'].includes(this.type.trim().toLowerCase())) {
       return h(`dlg-${this.type}`, options)
     }
   }

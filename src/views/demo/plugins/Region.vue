@@ -1,11 +1,17 @@
 <template>
     <div class="card p-5">
-        <h3>v-region
-            <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
-        </h3>
+        <h1>
+          v-region
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm"
+            @click="$router.push({path: '/demo'});">Back to List</button>
+        </h1>
+
         <hr>
+
         <div class="alert alert-warning">
-            北京、天津、上海、重庆等直辖市与省同级，若选择的省是直辖市，则下级行政级别为 <strong>区/县</strong>，不是 <strong>市</strong>，在数据处理上注意区分！
+        北京、天津、上海、重庆等直辖市与省同级，若选择的省是直辖市，则下级行政级别为 <strong>区/县</strong>，不是 <strong>市</strong>，在数据处理上注意区分！
         </div>
 
         <h4 class="mt-3">下拉选择器模式</h4>
@@ -42,7 +48,7 @@
         </p>
 
         <h4 class="mt-3">纯文本模式 <small>初始化选中的项目，以纯文本的内容显示</small></h4>
-        <p class="alert alert-info">
+        <p class="alert alert-secondary">
             <strong>当前选中地区：</strong>
             <v-region :town="true" type="text" :selected="selected" ></v-region>
         </p>
@@ -90,88 +96,88 @@
 </template>
 
 <script>
-    export default {
-        data(){
-            return {
-                selected: {
-                    province: null,
-                    city: null,
-                    area: null,
-                    town: null
-                },
-                uiSelected: {
-          province: '350000',
-          city: '350100',
-          area: '350104',
-          town: '350104008'
-                },
-                selectedArray: ['110000', '350100'],
-                regionSet: null,
-                model: {
-                    province: '',
-                    city: '',
-                    area: ''
-                },
-                btnText: '请选择'
-            }
-        },
-        methods:{
-            values(data){
-                //console.log(JSON.stringify(data));
-            },
-            validateValues(data){
-                console.log(data)
-                if(data){
-                    this.model.province = data.province;
-                    this.model.city = data.city;
-                    this.model.area = data.area;
-                }
-            },
-            check(){
-                if(this.model.province && this.model.area){
-                    this.$vDialog.alert('校验成功！',null,{ messageType: 'success'});
-                }else{
-                    this.regionSet = false;
-                    this.$vDialog.alert('校验不通过',null,{ messageType: 'error'});
-                }
-            },
-            uiValues(d){
-                //console.log(JSON.stringify(d));
-                this.btnText = (!d.province&&!d.city&&!d.area&&!d.town)?'请选择':
-                    `${this.getValue(d.province)}${this.getValue(d.city)}${this.getValue(d.area)}${this.getValue(d.town)}`.trim();
-            },
-            getValue(obj){
-                return obj?obj.value:'';
-            },
-            changeUiSelected(){
-                this.uiSelected = {
-          province: '350000',
-          city: '350100',
-          area: '350104',
-          town: '350104008'
-                };
-            }
-        },
-        watch: {
-            model:{
-                handler(val){
-                    this.regionSet = (!this.model.province && !this.model.area)?false:true;
-                },
-                deep: true
-            }
-        },
-        mounted(){
-            setTimeout(()=>{
-                this.selected = {
-                    province: '350000',
-                    city: '350100',
-                    area: '350103',
-                    town: '350103012'
-                };
-                //this.selectedArray = ['110000', '350100'];
-            }, 1000);
-        }
+export default {
+  data () {
+    return {
+      selected: {
+        province: null,
+        city: null,
+        area: null,
+        town: null
+      },
+      uiSelected: {
+        province: '350000',
+        city: '350100',
+        area: '350104',
+        town: '350104008'
+      },
+      selectedArray: ['110000', '350100'],
+      regionSet: null,
+      model: {
+        province: '',
+        city: '',
+        area: ''
+      },
+      btnText: '请选择'
     }
+  },
+  methods: {
+    values (data) {
+      // console.log(JSON.stringify(data));
+    },
+    validateValues (data) {
+      console.log(data)
+      if (data) {
+        this.model.province = data.province
+        this.model.city = data.city
+        this.model.area = data.area
+      }
+    },
+    check () {
+      if (this.model.province && this.model.area) {
+        this.$vDialog.alert('校验成功！', null, { messageType: 'success' })
+      } else {
+        this.regionSet = false
+        this.$vDialog.alert('校验不通过', null, { messageType: 'error' })
+      }
+    },
+    uiValues (d) {
+      // console.log(JSON.stringify(d));
+      this.btnText = (!d.province && !d.city && !d.area && !d.town) ? '请选择'
+        : `${this.getValue(d.province)}${this.getValue(d.city)}${this.getValue(d.area)}${this.getValue(d.town)}`.trim()
+    },
+    getValue (obj) {
+      return obj ? obj.value : ''
+    },
+    changeUiSelected () {
+      this.uiSelected = {
+        province: '350000',
+        city: '350100',
+        area: '350104',
+        town: '350104008'
+      }
+    }
+  },
+  watch: {
+    model: {
+      handler (val) {
+        this.regionSet = !((!this.model.province && !this.model.area))
+      },
+      deep: true
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.selected = {
+        province: '350000',
+        city: '350100',
+        area: '350103',
+        town: '350103012'
+      }
+      // this.selectedArray = ['110000', '350100'];
+    }, 1000)
+  }
+}
 </script>
 
 <style scoped>

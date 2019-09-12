@@ -30,52 +30,52 @@
 </template>
 
 <script>
-    import {messageTypes} from "../constants";
-    import mixins from '../mixins';
+import { messageTypes } from '../constants'
+import mixins from '../mixins'
 
-    export default {
-        name: "DialogToast",
-        mixins: [mixins],
-        props: {
-            /**
-             * Dialog message type (work on alert, toast mode)
-             * @type string
-             * @enum 'info' - default
-             * @enum 'warning'
-             * @enum 'error'
-             * @enum 'success'
-             * @enum 'confirm' ( not available for toast )
-             */
-            messageType: {
-                type: String,
-                default: messageTypes.info
-            },
-            iconClassName: String,
-            /**
-             * Dialog corner position type
-             * @type string
-             */
-            position : {
-                type: String,
-                default: 'bottomRight'
-            },
-            dialogCloseButton: {
-                type: Boolean,
-                default: true
-            }
-        },
-        data(){
-            return {
-                dialogSize: {},
-                toastPosition: this.position
-            };
-        },
-        mounted(){
-            this.dialogSize = {
-                width: this.width + 'px',
-                height: this.height + 'px'
-            };
-            this.bodyHeight = this.height;
-        }
+export default {
+  name: 'DialogToast',
+  mixins: [mixins],
+  props: {
+    /**
+     * Dialog message type (work on alert, toast mode)
+     * @type string
+     * @enum 'info' - default
+     * @enum 'warning'
+     * @enum 'error'
+     * @enum 'success'
+     * @enum 'confirm' ( not available for toast )
+     */
+    messageType: {
+      type: String,
+      default: messageTypes.info
+    },
+    iconClassName: String,
+    /**
+     * Dialog corner position type
+     * @type string
+     */
+    position: {
+      type: String,
+      default: 'bottomRight'
+    },
+    dialogCloseButton: {
+      type: Boolean,
+      default: true
     }
+  },
+  data () {
+    return {
+      dialogSize: {},
+      toastPosition: this.position
+    }
+  },
+  mounted () {
+    this.dialogSize = {
+      width: this.width + 'px',
+      height: this.height + 'px'
+    }
+    this.bodyHeight = this.height
+  }
+}
 </script>

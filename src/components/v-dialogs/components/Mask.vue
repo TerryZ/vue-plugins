@@ -28,13 +28,13 @@
 </template>
 
 <script>
-    import mixins from '../mixins';
-    export default {
-        name: "DialogMask",
-        mixins: [mixins],
-        mounted(){
-            this.bodyHeight = this.height;
-            this.adjust();
-        }
-    }
+import mixins from '../mixins'
+export default {
+  name: 'DialogMask',
+  mixins: [mixins],
+  mounted () {
+    this.bodyHeight = this.height
+    this.adjust()
+  }
+}
 </script>
