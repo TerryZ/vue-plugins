@@ -1,38 +1,59 @@
 <template>
-    <div>
-        <div dialog="v-dialog" tabindex="-1" :class="classes" :style="[{'z-index':dialogZIndex}]"
-             @click.self="outsideClick" >
+  <div>
+    <div
+      dialog="v-dialog"
+      tabindex="-1"
+      :class="classes"
+      :style="[{'z-index':dialogZIndex}]"
+      @click.self="outsideClick"
+    >
 
-            <div :class="['v-dialog-dialog', {'v-dialog-default-animated': animate}]"
-                 :style="{width:width+'px',height:height+'px',top:dialogTop+'px'}">
-                <transition name="v-dialog--smooth" :appear="true" >
-                    <div :class="['v-dialog-content']" v-show="show" >
+      <div :class="['v-dialog-dialog', {'v-dialog-default-animated': animate}]"
+            :style="{width:width+'px',height:height+'px',top:dialogTop+'px'}">
+        <transition name="v-dialog--smooth" :appear="true" >
+          <div :class="['v-dialog-content']" v-show="show" >
 
-                        <div class="v-dialog-header" ref="header" v-if="titleBar !== false">
-                            <button type="button" class="v-dialog-btn__close" v-if="dialogCloseButton"
-                                    @click="closeDialog(true)">
-                                <i class="dlg-icon-font dlg-icon-close"></i>
-                            </button>
-                            <button type="button" class="v-dialog-btn__maximize"
-                                    v-if="dialogMaxButton" @click="max" >
-                                <i :class="['dlg-icon-font', maximize?'dlg-icon-restore':'dlg-icon-max']"></i>
-                            </button>
-                            <h3 v-text="titleBar"></h3>
-                        </div>
-
-                        <div class="v-dialog-body" :style="{height:bodyHeight+'px'}" >
-                            <component :is="component" v-bind="params" @close="modalClose"></component>
-                        </div>
-
-                    </div>
-                </transition>
+            <div class="v-dialog-header" ref="header" v-if="titleBar !== false">
+              <button
+                type="button"
+                class="v-dialog-btn__close"
+                v-if="dialogCloseButton"
+                @click="closeDialog(true)"
+              >
+                <i class="dlg-icon-font dlg-icon-close"></i>
+              </button>
+              <button
+                type="button"
+                class="v-dialog-btn__maximize"
+                v-if="dialogMaxButton"
+                @click="max"
+              >
+                <i :class="['dlg-icon-font', maximize?'dlg-icon-restore':'dlg-icon-max']"></i>
+              </button>
+              <h3 v-text="titleBar"></h3>
             </div>
-        </div>
 
-        <transition name="v-dialog--fade" :appear="true" >
-            <div class="v-dialog-overlay" :style="{'z-index':backdropZIndex}" v-if="backdrop && show"></div>
+            <div class="v-dialog-body" :style="{ height:bodyHeight+'px' }" >
+              <component
+                :is="component"
+                v-bind="params"
+                @close="modalClose"
+              ></component>
+            </div>
+
+          </div>
         </transition>
+      </div>
     </div>
+
+    <transition name="v-dialog--fade" :appear="true" >
+      <div
+        class="v-dialog-overlay"
+        :style="{'z-index':backdropZIndex}"
+        v-if="backdrop && show"
+      ></div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -49,7 +70,6 @@ export default {
     params: Object,
     /**
      * Full screen dialog
-     * @type boolean
      */
     fullWidth: {
       type: Boolean,

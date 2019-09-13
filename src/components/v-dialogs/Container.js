@@ -1,40 +1,13 @@
-<template>
-    <div class="v-dialog-container" v-show="dialogs.length">
-        <v-dialog v-for="(dlg,index) in dialogs" :key="dlg.dialogKey" is="v-dialog"
-                  :dialogIndex="index"
-                  :dialogKey="dlg.dialogKey"
-                  :type="dlg.type"
-                  :component="dlg.component"
-                  :message="dlg.message"
-                  :messageType="dlg.messageType"
-                  :backdrop="dlg.backdrop"
-                  :titleBar="dlg.title"
-                  :contentClass="dlg.contentClass"
-                  :width="dlg.width"
-                  :height="dlg.height"
-                  :params="dlg.params"
-                  :dialogCloseButton="dlg.dialogCloseButton"
-                  :dialogMaxButton="dlg.dialogMaxButton"
-                  :fullWidth="dlg.fullWidth"
-                  :position="dlg.position"
-                  :singletonKey="dlg.singletonKey"
-                  :customClass="dlg.customClass"
-                  :iconClassName="dlg.iconClassName"
-                  :i18n="dlg.i18n"
-                  :closeTime="dlg.closeTime"
-                  :cancel="dlg.cancel"
-                  :cancelCallback="dlg.cancelCallback"
-                  @close="closeDialog"></v-dialog>
-    </div>
-</template>
-
-<script>
-import Dialog from './Dialog'
+import './dialog.scss'
 import { messageTypes, alertIconClass, toastConstants, languages } from './constants'
+
 export default {
   name: 'v-dialogs',
   components: {
-    'v-dialog': Dialog
+    'dlg-modal': () => import('./components/Modal'),
+    'dlg-alert': () => import('./components/Alert'),
+    'dlg-mask': () => import('./components/Mask'),
+    'dlg-toast': () => import('./components/Toast')
   },
   data () {
     return {
@@ -42,6 +15,73 @@ export default {
       keyPrefix: 'v-dialogs-',
       keyNum: 0
     }
+  },
+  /*
+  <template>
+      <div class="v-dialog-container" v-show="dialogs.length">
+          <v-dialog v-for="(dlg,index) in dialogs" :key="dlg.dialogKey" is="v-dialog"
+                    -:type="dlg.type"
+                    -:dialogIndex="index"
+                    -:dialogKey="dlg.dialogKey"
+                    -:singletonKey="dlg.singletonKey"
+                    :backdrop="dlg.backdrop"
+                    :titleBar="dlg.title"
+                    :component="dlg.component"
+                    :width="dlg.width"
+                    :height="dlg.height"
+                    :params="dlg.params"
+                    :fullWidth="dlg.fullWidth"
+                    :dialogCloseButton="dlg.dialogCloseButton"
+                    :dialogMaxButton="dlg.dialogMaxButton"
+                    :message="dlg.message"
+                    :messageType="dlg.messageType"
+                    :position="dlg.position"
+                    :customClass="dlg.customClass"
+                    :iconClassName="dlg.iconClassName"
+                    -:i18n="dlg.i18n"
+                    -:closeTime="dlg.closeTime"
+                    :cancel="dlg.cancel"
+                    :cancelCallback="dlg.cancelCallback"
+                    :contentClass="dlg.contentClass"
+                    -@close="closeDialog"></v-dialog>
+      </div>
+  </template>
+  */
+  render (h) {
+    return h('div', {
+      class: 'v-dialog-container',
+      directives: [{
+        name: 'show',
+        value: this.dialogs.length
+      }]
+    },
+    this.dialogs.map((val, index) => {
+      const options = {
+        key: val.dialogKey,
+        props: {
+          type: val.type,
+          dialogIndex: index,
+          dialogKey: val.dialogKey,
+          closeTime: val.closeTime
+        },
+        on: {
+          close: this.closeDialog
+        }
+      }
+      if (val.singletonKey) options.props.singletonKey = val.singletonKey
+      switch (val.type) {
+        case 'modal':
+          break
+        case 'alert':
+          options.props.i18n = val.i18n
+          break
+        case 'mask':
+          break
+        case 'toast':
+          break
+      }
+      return h(`dlg-${val.type}`, options)
+    }))
   },
   methods: {
     /**
@@ -103,6 +143,7 @@ export default {
      */
     addAlert (p) {
       const config = this.buildDialogConfig(p)
+      const MAX_CONTENT_LENGTH = 70
       config.type = 'alert'
       if (!config.messageType) config.messageType = messageTypes.info
 
@@ -125,8 +166,12 @@ export default {
       }
       config.iconClassName = alertIconClass[config.messageType]
       config.title = title
-      config.width = config.message.length > 70 ? 700 : 450
-      config.height = config.message.length > 70 ? 400 : typeof config.title === 'undefined' || typeof config.title === 'string' ? 210 : 180
+      config.width = config.message.length > MAX_CONTENT_LENGTH ? 700 : 450
+      config.height = config.message.length > MAX_CONTENT_LENGTH
+        ? 400
+        : typeof config.title === 'undefined' || typeof config.title === 'string'
+          ? 210
+          : 180
 
       return this.buildDialog(config)
     },
@@ -141,6 +186,7 @@ export default {
       config.message = this.stringSub(config.message, 65)
       config.width = 300
       config.height = 80
+      config.backdrop = true
 
       return this.buildDialog(config)
     },
@@ -220,16 +266,3 @@ export default {
     }
   }
 }
-</script>
-
-<style>
-    div.v-dialog-container{
-        /*width: 100%;
-        height: 100%;*/
-        width: 0;
-        height: 0;
-        position: fixed;
-        /*left: 0;top: 0;*/
-        z-index: 2000;
-    }
-</style>

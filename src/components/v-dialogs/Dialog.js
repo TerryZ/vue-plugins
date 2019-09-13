@@ -1,5 +1,3 @@
-import './dialog.scss'
-
 export default {
   components: {
     'dlg-modal': () => import('./components/Modal'),

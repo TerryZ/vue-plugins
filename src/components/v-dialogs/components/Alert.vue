@@ -4,7 +4,7 @@
           :style="[{'z-index':dialogZIndex}]" @click.self="outsideClick" >
 
       <div class="v-dialog-dialog" :style="{width:width+'px',height:height+'px',top:dialogTop+'px'}">
-        <transition name="v-dialog--candy" :appear="true"  >
+        <transition name="v-dialog--candy" :appear="true">
           <div :class="['v-dialog-content', alertShadow]" v-show="show">
 
             <div class="v-dialog-header" ref="header" v-if="titleBar !== false">
@@ -51,7 +51,7 @@ export default {
   props: {
     /**
      * Dialog message type (work on alert, toast mode)
-     * @type string
+     *
      * @enum 'info' - default
      * @enum 'warning'
      * @enum 'error'
@@ -65,7 +65,6 @@ export default {
     iconClassName: String,
     /**
      * Specified a key to make dialog singleton
-     * @type string
      */
     singletonKey: String
   },

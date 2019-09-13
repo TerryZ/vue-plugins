@@ -4,7 +4,6 @@ export default {
   props: {
     /**
      * Dialog background layer
-     * @type boolean
      */
     backdrop: {
       type: Boolean,
@@ -12,12 +11,10 @@ export default {
     },
     /**
      * The message show in dialog (work on alert, mask, toast mode)
-     * @type string
      */
     message: String,
     /**
      * Dialog title bar text or title bar show control
-     * @type string | boolean
      *
      * @example title: false// close title bar
      */
@@ -28,7 +25,6 @@ export default {
     contentClass: String,
     /**
      * Dialog width
-     * @type number
      */
     width: {
       type: Number,
@@ -36,7 +32,6 @@ export default {
     },
     /**
      * Dialog height
-     * @type number
      */
     height: {
       type: Number,
@@ -55,7 +50,6 @@ export default {
     customClass: '',
     /**
      * auto close dialog seconds
-     * @type number | boolean
      */
     closeTime: {
       type: [Boolean, Number],
@@ -122,7 +116,7 @@ export default {
     },
     autoClose () {
       // auto close dialog
-      if (this.type !== 'modal' && this.closeTime) {
+      if (this.closeTime) {
         setTimeout(() => {
           this.closeDialog(false)
         }, this.closeTime * 1000)
@@ -144,9 +138,13 @@ export default {
     this.calcLayerLevel()
     this.autoClose()
 
-    if (this.type !== 'toast') window.addEventListener('resize', this.resizeThrottler, false)
+    if (this.type !== 'toast') {
+      window.addEventListener('resize', this.resizeThrottler, false)
+    }
   },
   destroyed () {
-    if (this.type !== 'toast') window.removeEventListener('resize', this.resizeThrottler, false)
+    if (this.type !== 'toast') {
+      window.removeEventListener('resize', this.resizeThrottler, false)
+    }
   }
 }
