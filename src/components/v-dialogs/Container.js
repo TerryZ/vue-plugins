@@ -6,6 +6,10 @@ const ALERT = 'alert'
 const MASK = 'mask'
 const TOAST = 'toast'
 
+const KEY_PREFIX = 'v-dialogs-'
+
+let keyNum = 0
+
 export default {
   name: 'v-dialogs',
   components: {
@@ -16,18 +20,17 @@ export default {
   },
   data () {
     return {
-      dialogs: [],
-      keyPrefix: 'v-dialogs-',
-      keyNum: 0
+      dialogs: []
     }
   },
+  // The render functions is fired twice when the component(async) is first used
   render (h) {
     return h('div', {
-      class: 'v-dialog-container',
-      directives: [{
-        name: 'show',
-        value: this.dialogs.length
-      }]
+      class: 'v-dialog-container'
+      // directives: [{
+      //   name: 'show',
+      //   value: this.dialogs.length
+      // }]
     },
     this.dialogs.map((val, index) => {
       const options = {
@@ -36,6 +39,8 @@ export default {
           type: val.type,
           dialogIndex: index,
           dialogKey: val.dialogKey,
+          width: val.width,
+          height: val.height,
           closeTime: val.closeTime,
           backdrop: val.backdrop,
           titleBar: val.title
@@ -48,6 +53,7 @@ export default {
       if (val.singletonKey) options.props.singletonKey = val.singletonKey
       if (val.type !== MODAL) {
         options.props.message = val.message
+        options.props.icon = val.icon
       }
       if (val.type !== MASK) {
         options.props.cancelCallback = val.cancelCallback
@@ -57,8 +63,6 @@ export default {
           options.props = {
             ...options.props,
             component: val.component,
-            width: val.width,
-            height: val.height,
             params: val.params,
             fullWidth: val.fullWidth,
             closeButton: val.closeButton,
@@ -89,7 +93,7 @@ export default {
      * @param config - user options
      * @return merged options
      */
-    buildDialogConfig (config) {
+    buildConfig (config) {
       // let merged = Object.assign({}, dialogDefaults, config);
       // return merged;
       config.i18n = languages[config.language]
@@ -123,8 +127,8 @@ export default {
         return config.singletonKey && val.singletonKey === config.singletonKey
       })
       if (idx === -1) {
-        this.keyNum++
-        const key = this.keyPrefix + this.keyNum
+        keyNum++
+        const key = KEY_PREFIX + keyNum
         config.dialogKey = key
         this.dialogs.push(config)
         return key
@@ -135,7 +139,7 @@ export default {
      * @param p - options
      */
     addModal (p) {
-      const config = this.buildDialogConfig(p)
+      const config = this.buildConfig(p)
       config.type = MODAL
       return this.buildDialog(config)
     },
@@ -144,7 +148,7 @@ export default {
      * @param p - options
      */
     addAlert (p) {
-      const config = this.buildDialogConfig(p)
+      const config = this.buildConfig(p)
       const MAX_CONTENT_LENGTH = 70
       config.type = ALERT
       if (!config.messageType) config.messageType = messageTypes.info
@@ -182,7 +186,7 @@ export default {
      * @param p - options
      */
     addMask (p) {
-      const config = this.buildDialogConfig(p)
+      const config = this.buildConfig(p)
       config.type = MASK
       config.message = config.message || config.i18n.maskText
       config.message = this.stringSub(config.message, 65)
@@ -204,7 +208,7 @@ export default {
      * 'bottomRight'
      */
     addToast (p) {
-      const config = this.buildDialogConfig(p)
+      const config = this.buildConfig(p)
       config.type = TOAST
       config.message = this.stringSub(config.message, 56)
       config.title = config.i18n.titleInfo

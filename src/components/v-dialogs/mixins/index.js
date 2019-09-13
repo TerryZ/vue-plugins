@@ -2,6 +2,7 @@ import { commonConstants } from '../constants'
 
 export default {
   props: {
+    type: String,
     /**
      * Dialog background layer
      */
@@ -67,7 +68,6 @@ export default {
       required: true
     }
   },
-  inject: ['type'],
   data () {
     return {
       bodyHeight: 50,
