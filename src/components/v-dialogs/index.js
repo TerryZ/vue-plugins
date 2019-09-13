@@ -12,11 +12,11 @@ const Plugin = {
     const mergeParams = (p) => {
       const params = {}
       params.language = typeof options.language === 'string' ? options.language : 'cn'
-      if (typeof options.dialogCloseButton === 'boolean') {
-        params.dialogCloseButton = options.dialogCloseButton
+      if (typeof options.closeButton === 'boolean') {
+        params.closeButton = options.closeButton
       }
-      if (typeof options.dialogMaxButton === 'boolean') {
-        params.dialogMaxButton = options.dialogMaxButton
+      if (typeof options.maxButton === 'boolean') {
+        params.maxButton = options.maxButton
       }
       return Object.assign({}, params, p)
     }

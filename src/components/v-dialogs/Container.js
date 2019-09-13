@@ -1,6 +1,11 @@
 import './dialog.scss'
 import { messageTypes, alertIconClass, toastConstants, languages } from './constants'
 
+const MODAL = 'modal'
+const ALERT = 'alert'
+const MASK = 'mask'
+const TOAST = 'toast'
+
 export default {
   name: 'v-dialogs',
   components: {
@@ -16,37 +21,6 @@ export default {
       keyNum: 0
     }
   },
-  /*
-  <template>
-      <div class="v-dialog-container" v-show="dialogs.length">
-          <v-dialog v-for="(dlg,index) in dialogs" :key="dlg.dialogKey" is="v-dialog"
-                    -:type="dlg.type"
-                    -:dialogIndex="index"
-                    -:dialogKey="dlg.dialogKey"
-                    -:singletonKey="dlg.singletonKey"
-                    :backdrop="dlg.backdrop"
-                    :titleBar="dlg.title"
-                    :component="dlg.component"
-                    :width="dlg.width"
-                    :height="dlg.height"
-                    :params="dlg.params"
-                    :fullWidth="dlg.fullWidth"
-                    :dialogCloseButton="dlg.dialogCloseButton"
-                    :dialogMaxButton="dlg.dialogMaxButton"
-                    :message="dlg.message"
-                    :messageType="dlg.messageType"
-                    :position="dlg.position"
-                    :customClass="dlg.customClass"
-                    :iconClassName="dlg.iconClassName"
-                    -:i18n="dlg.i18n"
-                    -:closeTime="dlg.closeTime"
-                    :cancel="dlg.cancel"
-                    :cancelCallback="dlg.cancelCallback"
-                    :contentClass="dlg.contentClass"
-                    -@close="closeDialog"></v-dialog>
-      </div>
-  </template>
-  */
   render (h) {
     return h('div', {
       class: 'v-dialog-container',
@@ -62,22 +36,48 @@ export default {
           type: val.type,
           dialogIndex: index,
           dialogKey: val.dialogKey,
-          closeTime: val.closeTime
+          closeTime: val.closeTime,
+          backdrop: val.backdrop,
+          titleBar: val.title
         },
         on: {
           close: this.closeDialog
         }
       }
+      if (val.customClass) options.class = val.customClass
       if (val.singletonKey) options.props.singletonKey = val.singletonKey
+      if (val.type !== MODAL) {
+        options.props.message = val.message
+      }
+      if (val.type !== MASK) {
+        options.props.cancelCallback = val.cancelCallback
+      }
       switch (val.type) {
-        case 'modal':
+        case MODAL:
+          options.props = {
+            ...options.props,
+            component: val.component,
+            width: val.width,
+            height: val.height,
+            params: val.params,
+            fullWidth: val.fullWidth,
+            closeButton: val.closeButton,
+            maxButton: val.maxButton
+          }
           break
-        case 'alert':
+        case MASK:
+          options.props.backdrop = true
+          break
+        case ALERT:
           options.props.i18n = val.i18n
-          break
-        case 'mask':
-          break
-        case 'toast':
+        // eslint-disable-next-line no-fallthrough
+        case TOAST:
+          options.props.iconClassName = val.iconClassName
+          options.props.messageType = val.messageType
+          if (val.type === TOAST) {
+            options.props.position = val.position
+            options.props.contentClass = val.contentClass
+          }
           break
       }
       return h(`dlg-${val.type}`, options)
@@ -119,7 +119,9 @@ export default {
      * Init default options
      */
     buildDialog (config) {
-      const idx = this.dialogs.findIndex(val => config.singletonKey && val.singletonKey === config.singletonKey)
+      const idx = this.dialogs.findIndex(val => {
+        return config.singletonKey && val.singletonKey === config.singletonKey
+      })
       if (idx === -1) {
         this.keyNum++
         const key = this.keyPrefix + this.keyNum
@@ -134,7 +136,7 @@ export default {
      */
     addModal (p) {
       const config = this.buildDialogConfig(p)
-      config.type = 'modal'
+      config.type = MODAL
       return this.buildDialog(config)
     },
     /**
@@ -144,7 +146,7 @@ export default {
     addAlert (p) {
       const config = this.buildDialogConfig(p)
       const MAX_CONTENT_LENGTH = 70
-      config.type = 'alert'
+      config.type = ALERT
       if (!config.messageType) config.messageType = messageTypes.info
 
       let title = config.i18n.titleInfo
@@ -181,7 +183,7 @@ export default {
      */
     addMask (p) {
       const config = this.buildDialogConfig(p)
-      config.type = 'mask'
+      config.type = MASK
       config.message = config.message || config.i18n.maskText
       config.message = this.stringSub(config.message, 65)
       config.width = 300
@@ -203,7 +205,7 @@ export default {
      */
     addToast (p) {
       const config = this.buildDialogConfig(p)
-      config.type = 'toast'
+      config.type = TOAST
       config.message = this.stringSub(config.message, 56)
       config.title = config.i18n.titleInfo
       config.width = 300
@@ -239,6 +241,7 @@ export default {
     /**
      * Close dialog (remove dialogs array item) and call user callback function
      * @private
+     *
      * @param key[string] - dialog key
      * @param cancel[boolean] - trigger cancelCallback or not
      * @param data[object] - return data when close dialog(Modal)
@@ -250,7 +253,9 @@ export default {
         this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)
         this.$nextTick(() => {
           if (dlg.callback && typeof dlg.callback === 'function' && !cancel) dlg.callback(data)
-          if (cancel && dlg.cancelCallback && typeof dlg.cancelCallback === 'function') dlg.cancelCallback()
+          if (cancel && dlg.cancelCallback && typeof dlg.cancelCallback === 'function') {
+            dlg.cancelCallback()
+          }
         })
       }
     },

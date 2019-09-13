@@ -17,7 +17,7 @@
               <button
                 type="button"
                 class="v-dialog-btn__close"
-                v-if="dialogCloseButton"
+                v-if="closeButton"
                 @click="closeDialog(true)"
               >
                 <i class="dlg-icon-font dlg-icon-close"></i>
@@ -25,7 +25,7 @@
               <button
                 type="button"
                 class="v-dialog-btn__maximize"
-                v-if="dialogMaxButton"
+                v-if="maxButton"
                 @click="max"
               >
                 <i :class="['dlg-icon-font', maximize?'dlg-icon-restore':'dlg-icon-max']"></i>
@@ -75,11 +75,11 @@ export default {
       type: Boolean,
       default: false
     },
-    dialogMaxButton: {
+    maxButton: {
       type: Boolean,
       default: true
     },
-    dialogCloseButton: {
+    closeButton: {
       type: Boolean,
       default: true
     }

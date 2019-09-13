@@ -57,10 +57,9 @@ export default {
     },
     /**
      * Close dialog callback, trigger by some case:
+     *
      * click the close button in top right corner(Modal,Toast mode)
      * click 'cancel' button in Alert mode ('confirm' message type)
-     *
-     * @type function
      */
     cancelCallback: Function,
     dialogIndex: {
@@ -99,6 +98,7 @@ export default {
     },
     /**
      * Close current dialog
+     *
      * @param trigger [boolean] whether close dialog and trigger callback function
      * @param data [object] return data when dialog close(only for modal)
      */

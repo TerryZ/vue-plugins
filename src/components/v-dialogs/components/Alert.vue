@@ -1,7 +1,12 @@
 <template>
   <div>
-    <div dialog="v-dialog" tabindex="-1" :class="['v-dialog', {'v-dialog--buzz-out': shake}]"
-          :style="[{'z-index':dialogZIndex}]" @click.self="outsideClick" >
+    <div
+      dialog="v-dialog"
+      tabindex="-1"
+      :class="['v-dialog', {'v-dialog--buzz-out': shake}]"
+      :style="[{'z-index':dialogZIndex}]"
+      @click.self="outsideClick"
+    >
 
       <div class="v-dialog-dialog" :style="{width:width+'px',height:height+'px',top:dialogTop+'px'}">
         <transition name="v-dialog--candy" :appear="true">
@@ -36,7 +41,11 @@
     </div>
 
     <transition name="v-dialog--fade" :appear="true" >
-      <div class="v-dialog-overlay" :style="{'z-index':backdropZIndex}" v-if="backdrop && show"></div>
+      <div
+        class="v-dialog-overlay"
+        :style="{ 'z-index': backdropZIndex }"
+        v-if="backdrop && show"
+      ></div>
     </transition>
   </div>
 </template>
@@ -62,11 +71,7 @@ export default {
       type: String,
       default: messageTypes.info
     },
-    iconClassName: String,
-    /**
-     * Specified a key to make dialog singleton
-     */
-    singletonKey: String
+    iconClassName: String
   },
   computed: {
     alertShadow () {
