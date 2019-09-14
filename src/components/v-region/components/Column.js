@@ -1,13 +1,13 @@
 export default {
   render (h) {
-    return h('ul', { class: 'rg-column' }, this.list.map((val, index) => {
+    return h('ul', { class: 'rg-column' }, this.list.map(val => {
       const child = []
       child.push(h('span', val.value))
       if (this.haveChild) {
         child.push(h('i', { class: 'rg-iconfont rg-icon-right rg-caret-right' }))
       }
       return h('li', {
-        key: index,
+        key: val.key,
         class: {
           selected: this.value && val.key === this.value.key
         },

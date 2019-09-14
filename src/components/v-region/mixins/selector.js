@@ -15,6 +15,11 @@ export default {
       } else {
 
       }
+    },
+    buildCaller (h) {
+      return h('template', {
+
+      })
     }
   }
 }
