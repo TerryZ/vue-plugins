@@ -1,20 +1,8 @@
 import './styles/region.styl'
+import { SELECT, TEXT, GROUP, COLUMN, CITY } from './constants'
 
 export default {
   name: 'v-region',
-  render (h) {
-    if (this.type) {
-      switch (this.type.toLowerCase()) {
-        case 'text': return this.build(h, 'r-text')
-        case 'select': return this.build(h, 'r-select')
-        case 'column': return this.build(h, 'r-column')
-        case 'city': return this.build(h, 'r-city')
-        case 'group': return this.build(h, 'r-group')
-      }
-    } else {
-      console.error('Please provide selector type.("type" option of v-region)')
-    }
-  },
   components: {
     'r-select': () => import('./components/SelectGroup'),
     'r-text': () => import('./components/Text'),
@@ -25,14 +13,27 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'select'
+      default: SELECT
+    }
+  },
+  render (h) {
+    if (this.type) {
+      switch (this.type.toLowerCase()) {
+        case TEXT: return this.build(h, 'r-text')
+        case SELECT: return this.build(h, 'r-select')
+        case COLUMN: return this.build(h, 'r-column')
+        case CITY: return this.build(h, 'r-city')
+        case GROUP: return this.build(h, 'r-group')
+      }
+    } else {
+      console.error('Please provide selector type.("type" prop of v-region)')
     }
   },
   methods: {
     build (h, name) {
-      let slot
+      let slot = null
       const type = this.type.toLowerCase()
-      if ((type !== 'select' || type !== 'text') && 'default' in this.$scopedSlots) {
+      if ((type !== SELECT || type !== TEXT) && 'default' in this.$scopedSlots) {
         slot = this.$scopedSlots.default()
       }
       return h(name, {
