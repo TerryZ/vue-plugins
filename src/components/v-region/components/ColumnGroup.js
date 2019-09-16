@@ -25,58 +25,87 @@ export default {
 
     child.push(this.buildCaller(h))
 
-    const buildColumn = (level, condition, list, haveChild, model) => {
-      if (!condition) return null
-      return h('v-column', {
+    const column = []
+    // province
+    column.push(h('v-column', {
+      nativeOn: {
+        click: () => {
+          this.operLevel = PROVINCE_LEVEL
+        }
+      },
+      props: {
+        list: this.listProvince,
+        haveChild: this.city,
+        value: this.dProvince
+      },
+      on: {
+        input: value => {
+          this.dProvince = value
+        }
+      }
+    }))
+    // city
+    if (this.listCity.length) {
+      column.push(h('v-column', {
         nativeOn: {
           click: () => {
-            this.operLevel = level
+            this.operLevel = CITY_LEVEL
           }
         },
         props: {
-          list: list,
-          haveChild: haveChild,
-          value: model
+          list: this.listCity,
+          haveChild: this.area,
+          value: this.dCity
         },
         on: {
-          // TODO: Need to check function whether working
           input: value => {
-            model = value
+            this.dCity = value
           }
         }
-      })
+      }))
+    }
+    // area
+    if (this.listArea.length) {
+      column.push(h('v-column', {
+        nativeOn: {
+          click: () => {
+            this.operLevel = AREA_LEVEL
+          }
+        },
+        props: {
+          list: this.listArea,
+          haveChild: this.town && this.haveTown,
+          value: this.dArea
+        },
+        on: {
+          input: value => {
+            this.dArea = value
+          }
+        }
+      }))
+    }
+    // town
+    if (this.listTown.length) {
+      column.push(h('v-column', {
+        nativeOn: {
+          click: () => {
+            this.operLevel = TOWN_LEVEL
+          }
+        },
+        props: {
+          list: this.listTown,
+          haveChild: false,
+          value: this.dTown
+        },
+        on: {
+          input: value => {
+            this.dTown = value
+          }
+        }
+      }))
     }
 
-    child.push(h('div', { class: 'rg-column-container' }, [
-      buildColumn(
-        PROVINCE_LEVEL,
-        this.listProvince.length,
-        this.listProvince,
-        this.city,
-        this.dProvince
-      ),
-      buildColumn(
-        CITY_LEVEL,
-        this.listCity.length,
-        this.listCity,
-        this.area,
-        this.dCity
-      ),
-      buildColumn(
-        AREA_LEVEL,
-        this.listArea.length,
-        this.listArea,
-        this.town && this.haveTown,
-        this.dArea
-      ),
-      buildColumn(
-        TOWN_LEVEL,
-        this.listTown.length,
-        this.listTown,
-        false,
-        this.dTown
-      )
-    ]))
+    child.push(h('div', { class: 'rg-column-container' }, column))
 
     return h('dropdown', {
       ref: 'drop',
@@ -86,7 +115,7 @@ export default {
       on: {
         show: this.showChange
       }
-    })
+    }, child)
   },
   methods: {
     provinceChange (newVal, oldVal) {

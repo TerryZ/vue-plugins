@@ -9,7 +9,8 @@ export default {
          */
         if (this.isChrome() || this.isEdge()) this.$refs.search.focus({ preventScroll: true })
         else {
-          const x = window.pageXOffset; const y = window.pageYOffset
+          const x = window.pageXOffset
+          const y = window.pageYOffset
           this.$refs.search.focus()
           if (window.pageYOffset !== y) setTimeout(() => { window.scrollTo(x, y) }, 0)
         }

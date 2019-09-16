@@ -1,3 +1,5 @@
+import language from '../language'
+
 export default {
   data () {
     return {
@@ -18,19 +20,20 @@ export default {
     },
     buildCaller (h) {
       const caller = []
+      const lang = language[this.i18n]
 
       if ('default' in this.$scopedSlots) {
         caller.push(this.$scopedSlots.default())
       } else {
         // default region caller button
         const element = []
-        element.push(h('span', this.selectedText ? this.selectedText : this.lang.pleaseSelect))
+        element.push(h('span', this.selectedText ? this.selectedText : lang.pleaseSelect))
 
         if (this.selectedText) {
           element.push(h('span', {
             class: 'rg-iconfont rg-icon-clear rg-clear-btn',
             attrs: {
-              title: this.lang.clear
+              title: lang.clear
             },
             on: {
               click: e => {

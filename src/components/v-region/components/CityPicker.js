@@ -4,7 +4,6 @@ import '../styles/city.styl'
 import { srcProvince, srcCity } from '../formatted'
 import selector from '../mixins/selector'
 import search from '../mixins/selectorWithSearch'
-import language from '../language'
 import dropdown from 'v-dropdown'
 
 export default {
@@ -13,26 +12,67 @@ export default {
   inheritAttrs: false,
   components: { dropdown },
   props: {
-    selected: Array
+    selected: Array,
+    i18n: {
+      type: String,
+      default: 'cn'
+    }
   },
   data () {
     return {
       /**
+       * display data list
        * [{
-       *     province: { key: '', value: ''},
-       *     citys: [
-       *          {key: '', value: ''},
-       *          {key: '', value: ''},
-       *          ...
-       *     ]
+       *   province: { key: '', value: ''},
+       *   citys: [
+       *     {key: '', value: ''},
+       *     {key: '', value: ''},
+       *     ...
+       *   ]
        * }]
        */
       list: [],
-      listBuild: [],
-
+      // converted data list
+      listBuilt: [],
       query: '',
-      picked: [],
-      lang: {}
+      picked: []
+    }
+  },
+  computed: {
+    selectedText () {
+      return this.picked.map(val => val.value).join(',')
+    }
+  },
+  watch: {
+    /**
+     * region search
+     * search region description first, if no result, then search region key
+     * @param value
+     */
+    query (value) {
+      const val = value.trim()
+      if (!val) this.list = this.listBuilt.slice()
+      else {
+        const list = []
+        this.listBuilt.forEach(val => {
+          const citys = val.citys.filter(city => new RegExp(val).test(city.value))
+          if (citys.length) list.push({ province: val.province, citys: citys })
+        })
+        this.list = list
+      }
+    },
+    /**
+     * initialize region selected
+     */
+    selected: {
+      handler (value) {
+        if (value && Array.isArray(value) && value.length) {
+          const tmp = srcProvince.filter(val => value.includes(val.key))
+          this.picked = [...tmp, ...srcCity.filter(val => value.includes(val.key))]
+          if (this.picked.length) this.$emit('values', this.picked)
+        }
+      },
+      immediate: true
     }
   },
   render (h) {
@@ -43,6 +83,7 @@ export default {
     // search bar
     child.push(h('div', { class: 'rg-search-bar' }, [
       h('input', {
+        ref: 'search',
         class: 'rg-input',
         attrs: {
           type: 'text',
@@ -51,7 +92,6 @@ export default {
         domProps: {
           value: this.query.trim()
         },
-        ref: 'search',
         on: {
           input: e => {
             this.query = e.target.value.trim()
@@ -97,53 +137,14 @@ export default {
       }
     }, child)
   },
-  beforeMount () {
-    this.lang = language['cn']
-    this.prepared()
-    this.list = this.listBuild.slice()
-  },
-  computed: {
-    selectedText () {
-      return this.picked.map(val => val.value).join(',')
-    }
-  },
-  watch: {
-    /**
-     * region search
-     * search region description first, if no result, then search region key
-     * @param value
-     */
-    query (value) {
-      if (!value) this.list = this.listBuild.concat()
-      else {
-        const list = []
-        this.list = this.listBuild.filter(val => {
-          const citys = val.citys.filter(city => city.value.includes(value))
-          if (citys.length) list.push({ province: val.province, citys: citys })
-        })
-        this.list = list
-      }
-    },
-    /**
-     * initialize region selected
-     */
-    selected: {
-      handler (value) {
-        if (value && Array.isArray(value) && value.length) {
-          const tmp = srcProvince.filter(val => value.includes(val.key))
-          this.picked = [...tmp, ...srcCity.filter(val => value.includes(val.key))]
-          if (this.picked.length) this.$emit('values', this.picked)
-        }
-      },
-      immediate: true
-    }
-  },
   methods: {
     prepared () {
       // beijing, tianjin, shanghai, chongqing
-      const municipalitys = ['110000', '120000', '310000', '500000']; const municipality = '000000'
+      const municipalitys = ['110000', '120000', '310000', '500000']
+      const municipality = '000000'
       // hongkong, macao
-      const specials = ['810000', '820000']; const special = '000010'
+      const specials = ['810000', '820000']
+      const special = '000010'
       const listTmp = []
       const municipalityObj = {
         province: { key: municipality, value: '直辖市' },
@@ -165,7 +166,7 @@ export default {
           return (value.key - num) < 1e4 && (value.key % num) < 1e4
         })
       })
-      this.listBuild = [...[municipalityObj], ...listTmp, ...[specialObj]]
+      this.listBuilt = [...[municipalityObj], ...listTmp, ...[specialObj]]
     },
     clear () {
       this.picked = []
@@ -182,5 +183,9 @@ export default {
         return val.key === city.key
       })
     }
+  },
+  created () {
+    this.prepared()
+    this.list = this.listBuilt.slice()
   }
 }
