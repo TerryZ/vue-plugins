@@ -1,47 +1,12 @@
-<template>
-  <dropdown ref="drop" @show="showChange" :border="false">
-    <template #caller>
-      <div class="rg-caller-container">
-        <slot>
-          <!-- default region selector caller button -->
-          <button type="button" :class="['rg-default-btn', {'rg-opened': show}]">
-            {{ selectedText ? selectedText : lang.pleaseSelect }}
-            <span class="rg-iconfont rg-icon-clear rg-clear-btn" :title="lang.clear" v-if="selectedText" @click.stop.prevent="clear"></span>
-            <span class="rg-caret-down" v-else></span>
-          </button>
-        </slot>
-      </div>
-    </template>
-
-    <!-- search bar -->
-    <div class="rg-search-bar" >
-      <input type="text" autocomplete="off" ref="search" v-model.trim="query" class="rg-input" placeholder="">
-    </div>
-    <div class="rg-picker">
-      <div class="rg-picker__row" :key="index" v-for="(item,index) in list">
-        <dl>
-          <dt v-text="item.province.value"></dt>
-          <dd>
-            <ul>
-              <li v-for="(city,index) in item.citys" :key="index"
-                  @mouseup="pick(city)"
-                  :class="{selected: picked.includes(city)}"
-                  v-text="city.value"></li>
-            </ul>
-          </dd>
-        </dl>
-      </div>
-    </div>
-  </dropdown>
-</template>
-
-<script>
 import '../styles/icons.styl'
-import { srcProvince, srcCity } from '../formatted.js'
+import '../styles/city.styl'
+
+import { srcProvince, srcCity } from '../formatted'
 import selector from '../mixins/selector'
 import search from '../mixins/selectorWithSearch'
 import language from '../language'
 import dropdown from 'v-dropdown'
+
 export default {
   name: 'CityPicker',
   mixins: [search, selector],
@@ -70,6 +35,68 @@ export default {
       lang: {}
     }
   },
+  render (h) {
+    const child = []
+
+    child.push(this.buildCaller(h))
+
+    // search bar
+    child.push(h('div', { class: 'rg-search-bar' }, [
+      h('input', {
+        class: 'rg-input',
+        attrs: {
+          type: 'text',
+          autocomplete: 'off'
+        },
+        domProps: {
+          value: this.query.trim()
+        },
+        ref: 'search',
+        on: {
+          input: e => {
+            this.query = e.target.value.trim()
+          }
+        }
+      })
+    ]))
+
+    // province grouped city list
+    child.push(h('div', { class: 'rg-picker' }, this.list.map(val => {
+      return h('div', {
+        class: 'rg-picker__row',
+        key: val.province.key
+      }, [
+        h('dl', [
+          h('dt', val.province.value),
+          h('dd', [
+            h('ul', val.citys.map(city => {
+              return h('li', {
+                key: city.key,
+                class: {
+                  selected: this.inPicked(city)
+                },
+                on: {
+                  mouseup: () => {
+                    this.pick(city)
+                  }
+                }
+              }, city.value)
+            }))
+          ])
+        ])
+      ])
+    })))
+
+    return h('dropdown', {
+      ref: 'drop',
+      props: {
+        border: false
+      },
+      on: {
+        show: this.showChange
+      }
+    }, child)
+  },
   beforeMount () {
     this.lang = language['cn']
     this.prepared()
@@ -89,9 +116,9 @@ export default {
     query (value) {
       if (!value) this.list = this.listBuild.concat()
       else {
-        let list = []
+        const list = []
         this.list = this.listBuild.filter(val => {
-          let citys = val.citys.filter(city => city.value.includes(value))
+          const citys = val.citys.filter(city => city.value.includes(value))
           if (citys.length) list.push({ province: val.province, citys: citys })
         })
         this.list = list
@@ -103,7 +130,7 @@ export default {
     selected: {
       handler (value) {
         if (value && Array.isArray(value) && value.length) {
-          let tmp = srcProvince.filter(val => value.includes(val.key))
+          const tmp = srcProvince.filter(val => value.includes(val.key))
           this.picked = [...tmp, ...srcCity.filter(val => value.includes(val.key))]
           if (this.picked.length) this.$emit('values', this.picked)
         }
@@ -117,12 +144,12 @@ export default {
       const municipalitys = ['110000', '120000', '310000', '500000']; const municipality = '000000'
       // hongkong, macao
       const specials = ['810000', '820000']; const special = '000010'
-      let listTmp = []
-      let municipalityObj = {
+      const listTmp = []
+      const municipalityObj = {
         province: { key: municipality, value: '直辖市' },
         citys: []
       }
-      let specialObj = {
+      const specialObj = {
         province: { key: special, value: '特别行政区' },
         citys: []
       }
@@ -134,7 +161,7 @@ export default {
       })
       listTmp.forEach(val => {
         val.citys = srcCity.filter(value => {
-          let num = Number.parseInt(val.province.key)
+          const num = Number.parseInt(val.province.key)
           return (value.key - num) < 1e4 && (value.key % num) < 1e4
         })
       })
@@ -148,40 +175,12 @@ export default {
       if (!this.picked.includes(item)) this.picked.push(item)
       else this.picked.splice(this.picked.findIndex(val => val.key === item.key), 1)
       this.$emit('values', this.picked)
+    },
+    inPicked (city) {
+      if (!city || !this.picked.length) return false
+      return this.picked.some(val => {
+        return val.key === city.key
+      })
     }
   }
 }
-</script>
-
-<style lang="scss">
-    div.rg-search-bar{
-        padding: 10px;
-        input.rg-input {
-            background-color: #fafafa;
-            &:focus{ background-color: white; }
-        }
-    }
-    div.rg-picker{
-        width: 400px;max-height: 340px;overflow-y: auto;padding: 0 0 0 10px;
-        div.rg-picker__row{
-            margin-bottom: 15px;clear: both;
-            dl{
-                margin: 0;padding: 0;overflow: hidden;
-                dt {
-                    float: left;width: 60px;clear: left;text-align: right;
-                    font-weight: bold;font-size: 14px;color: #888;
-                }
-                dd {
-                    margin-left: 75px;font-size: 13px;color: #666;
-                    ul {
-                        margin: 0;padding: 0;list-style: none;
-                        li {
-                            margin-right: 10px;display: inline-block;cursor: pointer;
-                            &.selected { color: #2A94EE;font-weight: bold; }
-                        }
-                    }
-                }
-            }
-        }
-    }
-</style>

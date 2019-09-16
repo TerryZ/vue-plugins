@@ -24,7 +24,7 @@ export default {
       } else {
         // default region caller button
         const element = []
-        element.push(h('span', this.selectText ? this.selectText : this.lang.pleaseSelect))
+        element.push(h('span', this.selectedText ? this.selectedText : this.lang.pleaseSelect))
 
         if (this.selectedText) {
           element.push(h('span', {
@@ -55,7 +55,7 @@ export default {
       }
 
       return h('template', { slot: 'caller' }, [
-        h('div', { class: 'rg-caller-container' })
+        h('div', { class: 'rg-caller-container' }, caller)
       ])
     }
   }

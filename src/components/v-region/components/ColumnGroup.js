@@ -5,7 +5,7 @@ import method from '../mixins/method'
 import selector from '../mixins/selector'
 import column from './Column'
 
-const { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } = constants
+import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants.js'
 
 export default {
   name: 'ColumnGroup',
