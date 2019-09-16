@@ -79,12 +79,15 @@
 
 <script>
 import '../styles/icons.styl'
+import '../styles/group.styl'
+
 import dropdown from 'v-dropdown'
 import data from '../mixins/data'
 import method from '../mixins/method'
 import search from '../mixins/selectorWithSearch'
 import selector from '../mixins/selector'
 import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants'
+
 export default {
   name: 'TabSelector',
   mixins: [data, method, search, selector],

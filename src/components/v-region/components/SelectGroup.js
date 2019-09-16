@@ -1,3 +1,5 @@
+import '../styles/select.styl'
+
 import data from '../mixins/data'
 import method from '../mixins/method'
 import select from './Select'

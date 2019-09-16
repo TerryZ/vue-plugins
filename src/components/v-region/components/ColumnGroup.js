@@ -1,4 +1,6 @@
 import '../styles/icons.styl'
+import '../styles/column.styl'
+
 import dropDown from 'v-dropdown'
 import data from '../mixins/data'
 import method from '../mixins/method'
