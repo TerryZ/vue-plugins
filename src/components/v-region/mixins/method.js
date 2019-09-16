@@ -186,6 +186,10 @@ export default {
     },
     baseTownChange (newVal, oldVal) {
       this.changeValues()
+    },
+    // region change
+    change (val) {
+
     }
   },
   created () {

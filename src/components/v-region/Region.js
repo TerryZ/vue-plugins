@@ -6,7 +6,7 @@ export default {
   components: {
     'r-select': () => import('./components/SelectGroup'),
     'r-text': () => import('./components/Text'),
-    'r-group': () => import('./components/TabSelector'),
+    'r-group': () => import('./components/Group'),
     'r-column': () => import('./components/ColumnGroup'),
     'r-city': () => import('./components/CityPicker')
   },

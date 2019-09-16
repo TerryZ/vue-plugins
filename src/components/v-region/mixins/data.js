@@ -36,7 +36,14 @@ export default {
       dProvince: null,
       dCity: null,
       dArea: null,
-      dTown: null
+      dTown: null,
+
+      region: {
+        province: null,
+        city: null,
+        area: null,
+        town: null
+      }
     }
   },
   watch: {

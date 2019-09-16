@@ -89,7 +89,7 @@ import selector from '../mixins/selector'
 import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants'
 
 export default {
-  name: 'TabSelector',
+  name: 'RegionGroup',
   mixins: [data, method, search, selector],
   inheritAttrs: false,
   components: { dropdown },
