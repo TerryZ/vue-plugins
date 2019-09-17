@@ -18,7 +18,8 @@ export default {
       type: String,
       default: 'cn'
     },
-    selected: Object
+    selected: Object,
+    value: Object
   },
   data () {
     return {
@@ -73,6 +74,12 @@ export default {
           this.init = val
           this.initSelected(PROVINCE_LEVEL)
         }
+      },
+      deep: true
+    },
+    value: {
+      handler (val) {
+        this.clearRegion(PROVINCE_LEVEL)
       },
       deep: true
     }

@@ -59,7 +59,10 @@
         <v-region :city="false" :area="false" @values="values"></v-region>
 
         <h4 class="mt-3">省、市</h4>
-        <v-region :area="false" @values="values"></v-region>
+        <div class="bg-light p-3 mb-3">
+          <pre v-text="JSON.stringify(value1, null, 2)"></pre>
+        </div>
+        <v-region :area="false" v-model="value1" @values="values"></v-region>
 
         <h4 class="mt-3">省、市、区/县</h4>
         <v-region @values="values"></v-region>
@@ -99,6 +102,7 @@
 export default {
   data () {
     return {
+      value1: {},
       selected: {
         province: null,
         city: null,

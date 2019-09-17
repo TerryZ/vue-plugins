@@ -1,6 +1,8 @@
 import language from '../language'
-import { srcProvince, srcCity, srcArea } from '../formatted.js'
-import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants'
+import { srcProvince } from '../formatted.js'
+import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL, LEVEL_LIST } from '../constants'
+
+import { loadCity, loadArea, loadTown } from '../helper'
 
 export default {
   methods: {
@@ -54,87 +56,9 @@ export default {
       }
       return init
     },
-    /**
-     * load city list by province data
-     * @param province
-     * @returns {Array}
-     */
-    loadCity (province) {
-      let list = null
-      if (province && Object.keys(province).length) {
-        list = srcCity.filter(val => {
-          const num = Number.parseInt(province.key)
-          return (val.key - num) < 1e4 && (val.key % num) < 1e4
-        })
-        // Municipalities directly under the central government
-        if (!list.length) list.push(province)
-      } else list = []
-      return list
-    },
-    /**
-     * load area list by city data
-     * @param city
-     * @returns {Array}
-     */
-    loadArea (city) {
-      let list = null
-      if (city && Object.keys(city).length) {
-        const cityKey = Number.parseInt(city.key)
-        const isNotProvince = cityKey % 1e4
-        const calcNum = isNotProvince ? 100 : 1e4
-        list = srcArea.filter(val => {
-          return (val.key - cityKey) < calcNum && val.key % cityKey < calcNum
-        })
-        // Prefecture-level city
-        if (!list.length) list.push(city)
-      } else list = []
-      return list
-    },
-    /**
-     * load town list by area data
-     * @param area
-     * @returns {Array}
-     */
-    loadTown (area) {
-      let list = null
-      if (area && Object.keys(area).length) {
-        let towns = null
-        /* eslint-disable */
-        try {
-          towns = require(`../town/${area.key}.json`);
-          // towns = () => import(`../town/${area.key}.json`);
-          // console.log(towns)
-        } catch (e) {
-          console.warn(`The ${area.value} area have no town data.`);
-        }
-        /* eslint-enable */
-        list = towns && Object.keys(towns).length
-          ? Object.entries(towns).map(val => ({ key: val[0], value: val[1] }))
-          : []
-      } else list = []
-      this.haveTown = !(this.dProvince && this.dCity && area && !list.length)
-      return list
-
-      // return new Promise((resolve, reject) => {
-      //     if (area && Object.keys(area).length) {
-      //         import(`../town/${area.key}.json`)
-      //             .then(resp => {
-      //                 resolve(resp && Object.keys(resp).length
-      //                     ? Object.entries(resp).map(val=>({ key: val[0], value: val[1] }))
-      //                     : []);
-      //             })
-      //             .catch(() => {
-      //                 console.warn(`The ${area.value} area have no town data.`);
-      //             })
-      //     } else {
-      //         resolve([]);
-      //     }
-      //     //this.haveTown = !(this.dProvince && this.dCity && area && !list.length);
-      // });
-    },
     baseProvinceChange (newVal, oldVal) {
       if (this.city) {
-        this.listCity = this.loadCity(newVal)
+        this.listCity = loadCity(newVal)
         // clear city selected result
         if (!this.initSelected(CITY_LEVEL)) {
           if (this.dCity) {
@@ -147,7 +71,7 @@ export default {
     },
     baseCityChange (newVal, oldVal) {
       if (this.area) {
-        this.listArea = this.loadArea(newVal)
+        this.listArea = loadArea(newVal)
         // clear city selected result
         if (!this.initSelected(AREA_LEVEL)) {
           if (this.dArea) {
@@ -160,7 +84,7 @@ export default {
     },
     baseAreaChange (newVal, oldVal) {
       if (this.town) {
-        this.listTown = this.loadTown(newVal)
+        this.listTown = loadTown(newVal)
         // clear city selected result
         if (!this.initSelected(TOWN_LEVEL)) {
           if (this.dTown) {
@@ -188,8 +112,53 @@ export default {
       this.changeValues()
     },
     // region change
-    change (val) {
-
+    change (initialize = false) {
+      if (!this.checkProvince()) {
+        this.clearRegion(PROVINCE_LEVEL)
+      }
+      if (this.city) {
+        if (this.region.province) {
+          this.listCity = this.loadCity(this.region.province)
+        }
+        if (!this.region.province || !this.checkCity()) {
+          this.clearRegion(CITY_LEVEL)
+        }
+      }
+      if (this.area && this.region.city) {
+        this.listArea = this.loadArea(this.region.city)
+      }
+      if (this.town && this.region.area) {
+        this.loadTown = this.loadTown(this.region.area)
+      }
+      if (!initialize) {
+        this.$emit('input', {
+          province: this.region.province,
+          city: this.region.city,
+          area: this.region.area,
+          town: this.region.town
+        })
+      }
+    },
+    // clear region field
+    clearRegion (level) {
+      const fields = LEVEL_LIST.slice(level)
+      Object.keys(this.region).forEach(val => {
+        if (fields.includes(val)) this.region[val] = null
+      })
+    },
+    checkProvince () {
+      if (!this.listProvince.length) return false
+      if (!this.region.province) return true
+      return this.listProvince.some(val => {
+        return val.key === this.region.province.key
+      })
+    },
+    checkCity () {
+      if (!this.listCity.length) return false
+      if (!this.region.city) return true
+      return this.listCity.some(val => {
+        return val.key === this.region.city.key
+      })
     }
   },
   created () {

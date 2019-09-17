@@ -86,7 +86,7 @@ import data from '../mixins/data'
 import method from '../mixins/method'
 import search from '../mixins/selectorWithSearch'
 import selector from '../mixins/selector'
-import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL } from '../constants'
+import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL, LEVELS } from '../constants'
 
 export default {
   name: 'RegionGroup',
@@ -104,12 +104,7 @@ export default {
       ui: true,
       list: [],
       query: '',
-      levels: [
-        { index: PROVINCE_LEVEL, title: '省/直辖市' },
-        { index: CITY_LEVEL, title: '市' },
-        { index: AREA_LEVEL, title: '区/县' },
-        { index: TOWN_LEVEL, title: '乡/镇/街道' }
-      ],
+      levels: LEVELS,
       level: -1
     }
   },

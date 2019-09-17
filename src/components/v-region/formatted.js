@@ -6,6 +6,7 @@
  */
 import data from './data.json'
 
+const list = []
 const province = []
 const city = []
 const area = []
@@ -13,20 +14,23 @@ const area = []
 // prepare data
 Object.entries(data).forEach(val => {
   const key = Number.parseInt(val[0])
+  const model = { key: val[0], value: val[1] }
+  list.push(model)
   if (!(key % 1e4)) {
-    province.push({ key: val[0], value: val[1] })
+    province.push(model)
   } else if (!(key % 100)) {
-    city.push({ key: val[0], value: val[1] })
+    city.push(model)
   } else {
     const num = Number(val[0].substr(2))
     if (num > 9000) {
-      city.push({ key: val[0], value: val[1] })
+      city.push(model)
     } else {
-      area.push({ key: val[0], value: val[1] })
+      area.push(model)
     }
   }
 })
 
+export { list as srcList }
 export { province as srcProvince }
 export { city as srcCity }
 export { area as srcArea }

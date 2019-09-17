@@ -79,6 +79,7 @@ export default {
     child.push(h('ul', { class: 'rg-select__list' }, items))
 
     return h('dropdown', {
+      ref: 'drop',
       class: 'rg-select',
       props: {
         border: false,
