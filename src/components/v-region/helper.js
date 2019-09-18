@@ -1,46 +1,45 @@
-import { srcList, srcProvince, srcCity, srcArea } from '../formatted.js'
-import { LEVEL_LIST } from './constants'
+import { srcList, srcCity, srcArea } from '../formatted'
+import { LEVEL_LIST, PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY } from './constants'
 
 /**
  * load city list by province data
+ *
  * @param province
  * @returns {Array}
  */
 export function loadCity (province) {
-  let list = null
   if (province && Object.keys(province).length) {
-    list = srcCity.filter(val => {
+    const list = srcCity.filter(val => {
       const num = Number.parseInt(province.key)
       return (val.key - num) < 1e4 && (val.key % num) < 1e4
     })
     // Municipalities directly under the central government
-    if (!list.length) list.push(province)
-  } else list = []
-  return list
+    return list.length ? list : [province]
+  } else return []
 }
 
 /**
  * load area list by city data
+ *
  * @param city
  * @returns {Array}
  */
 export function loadArea (city) {
-  let list = null
   if (city && Object.keys(city).length) {
     const cityKey = Number.parseInt(city.key)
     const isNotProvince = cityKey % 1e4
     const calcNum = isNotProvince ? 100 : 1e4
-    list = srcArea.filter(val => {
+    const list = srcArea.filter(val => {
       return (val.key - cityKey) < calcNum && val.key % cityKey < calcNum
     })
     // Prefecture-level city
-    if (!list.length) list.push(city)
-  } else list = []
-  return list
+    return list.length ? list : [city]
+  } else return []
 }
 
 /**
  * load town list by area data
+ *
  * @param area
  * @returns {Array}
  */
@@ -50,7 +49,7 @@ export function loadTown (area) {
     let towns = null
     /* eslint-disable */
     try {
-      towns = require(`../town/${area.key}.json`);
+      towns = require(`./town/${area.key}.json`);
       // towns = () => import(`../town/${area.key}.json`);
       // console.log(towns)
     } catch (e) {
@@ -82,14 +81,97 @@ export function loadTown (area) {
   // });
 }
 
-export function getRegionByModel (model) {
-  if (Object.keys(model).length && LEVEL_LIST.every(val => {
+/**
+ * Get available region levels
+ *
+ * @export
+ * @param {boolean} city
+ * @param {boolean} area
+ * @param {boolean} town
+ */
+export function availableLevels (city, area, town) {
+  const result = [PROVINCE_KEY]
+  if (city) result.push(CITY_KEY)
+  if (area) result.push(AREA_KEY)
+  if (town) result.push(TOWN_KEY)
+  return result
+}
+
+/**
+ * Check model format valid
+ *
+ * @export
+ * @param {*} model
+ * @returns {boolean}
+ */
+export function validModel (model) {
+  return Object.keys(model).length && LEVEL_LIST.every(val => {
     return val in model
-  })) {
-    if (model.province) {
-      this.region.province = srcList.find(val => {
-        return val.key === model.province
-      })
-    }
+  })
+}
+
+const getDetail = key => {
+  return srcList.find(val => {
+    return val.key === key
+  })
+}
+
+/**
+ * Get region raw data from model
+ *
+ * model format:
+ * {
+ *   province: 'xxx',
+ *   city: 'xxx',
+ *   area: 'xxx',
+ *   town: 'xxx'
+ * }
+ *
+ * region raw data format:
+ * {
+ *   province: { key: 'xxx', value: 'yyy' },
+ *   city: { key: 'xxx', value: 'yyy' },
+ *   area: { key: 'xxx', value: 'yyy' },
+ *   town: { key: 'xxx', value: 'yyy' }
+ * }
+ *
+ * @export
+ *
+ * @param {object} model
+ * @param {array} levels
+ *
+ * @returns {object} region raw data
+ */
+export function getRegionByModel (model, levels) {
+  const region = {
+    province: null,
+    city: null,
+    area: null,
+    town: null
   }
+  const inLevel = key => {
+    return levels.some(val => val === key)
+  }
+  if (!model.province) return region
+
+  region.province = getDetail(model.province)
+
+  if (!model.city || !inLevel(CITY_KEY) || !region.province) return region
+
+  region.city = getDetail(model.city)
+
+  if (!model.area || !inLevel(AREA_KEY) || !region.city) return region
+
+  region.area = getDetail(model.area)
+
+  if (!model.town || !inLevel(TOWN_KEY) || !region.area) return region
+
+  const towns = loadTown(region.area)
+  if (towns.length) {
+    region.town = towns.find(val => {
+      return val.key === model.town
+    })
+  }
+
+  return region
 }

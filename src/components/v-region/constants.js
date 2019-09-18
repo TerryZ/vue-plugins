@@ -16,4 +16,9 @@ export const LEVELS = [
   { index: TOWN_LEVEL, title: '乡/镇/街道' }
 ]
 
-export const LEVEL_LIST = ['province', 'city', 'area', 'town']
+export const PROVINCE_KEY = 'province'
+export const CITY_KEY = 'city'
+export const AREA_KEY = 'area'
+export const TOWN_KEY = 'town'
+
+export const LEVEL_LIST = [PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY]

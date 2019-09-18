@@ -1,4 +1,5 @@
 import { PROVINCE_LEVEL } from '../constants'
+import { getRegionByModel, validModel, availableLevels } from '../helper'
 
 export default {
   props: {
@@ -79,7 +80,11 @@ export default {
     },
     value: {
       handler (val) {
-        this.clearRegion(PROVINCE_LEVEL)
+        if (validModel(val)) {
+          this.clearRegion(PROVINCE_LEVEL)
+          this.region = getRegionByModel(val, availableLevels(this.city, this.area, this.town))
+          this.change(true)
+        }
       },
       deep: true
     }
