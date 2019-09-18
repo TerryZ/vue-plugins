@@ -92,8 +92,11 @@ export function loadTown (area) {
 export function availableLevels (city, area, town) {
   const result = [PROVINCE_KEY]
   if (city) result.push(CITY_KEY)
+  else return result
   if (area) result.push(AREA_KEY)
+  else return result
   if (town) result.push(TOWN_KEY)
+  else return result
   return result
 }
 
