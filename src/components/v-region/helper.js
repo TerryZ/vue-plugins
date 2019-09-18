@@ -104,7 +104,7 @@ export function availableLevels (city, area, town) {
  * Check model format valid
  *
  * @export
- * @param {*} model
+ * @param {object} model
  * @returns {boolean}
  */
 export function validModel (model) {
