@@ -81,6 +81,7 @@ export default {
     value: {
       handler (val) {
         if (validModel(val) && this.differentModel(val)) {
+          console.log('in v-model')
           this.clearRegion(PROVINCE_LEVEL)
           this.region = getRegionByModel(val, availableLevels(this.city, this.area, this.town))
           this.change(true)
@@ -92,24 +93,12 @@ export default {
   computed: {
     selectedText () {
       const arr = []
-      if (this.dProvince) arr.push(this.dProvince.value)
-      if (this.dCity) arr.push(this.dCity.value)
-      if (this.dArea) arr.push(this.dArea.value)
-      if (this.dTown) arr.push(this.dTown.value)
+      const { province, city, area, town } = this.region
+      if (province) arr.push(province.value)
+      if (city) arr.push(city.value)
+      if (area) arr.push(area.value)
+      if (town) arr.push(town.value)
       return arr.join('')
-    },
-    lCity () {
-      if (this.city) {
-
-      } else {
-        return []
-      }
-    },
-    lArea () {
-
-    },
-    lTown () {
-
     }
   }
 }

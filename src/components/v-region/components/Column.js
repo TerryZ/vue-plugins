@@ -29,8 +29,8 @@ export default {
     value: Object
   },
   methods: {
-    click (col) {
-      this.$emit('input', col)
+    click (row) {
+      this.$emit('input', row)
     }
   }
 }

@@ -50,7 +50,7 @@
         <h4 class="mt-3">纯文本模式 <small>初始化选中的项目，以纯文本的内容显示</small></h4>
         <p class="alert alert-secondary">
             <strong>当前选中地区：</strong>
-            <v-region :town="true" type="text" :selected="selected" ></v-region>
+            <v-region :town="true" type="text" v-model="selected" ></v-region>
         </p>
 
         <br>
@@ -60,7 +60,7 @@
 
         <h4 class="mt-3">省、市</h4>
         <div class="bg-light p-3 mb-3">
-          <pre v-text="JSON.stringify(value1, null, 2)"></pre>
+          <pre class="m-0" v-text="JSON.stringify(value1, null, 2)"></pre>
         </div>
         <v-region :area="false" v-model="value1" @values="values"></v-region>
 
@@ -69,15 +69,15 @@
 
         <h4 class="mt-3">省、市、区/县、乡/镇/街道</h4>
         <div class="bg-light p-3 mb-3">
-          <pre v-text="JSON.stringify(value2, null, 2)"></pre>
+          <pre class="m-0" v-text="JSON.stringify(value2, null, 2)"></pre>
         </div>
         <v-region :town="true" v-model="value2" @values="values"></v-region>
 
         <h4 class="mt-3">初始化值</h4>
-        <v-region :town="true" :selected="selected" @values="values"></v-region>
+        <v-region :town="true" v-model="selected" @values="values"></v-region>
 
         <h4 class="mt-3">初始化值并禁用</h4>
-        <v-region :town="true" :selected="selected" :disabled="true"></v-region>
+        <v-region :town="true" v-model="selected" :disabled="true"></v-region>
         <br><br><br>
 
         <h5>由于组件特殊，不能使用常规的表单验证模式，需要使用表单验证样例中特殊处理的方式</h5>
@@ -187,7 +187,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

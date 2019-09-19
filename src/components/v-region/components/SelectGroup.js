@@ -86,18 +86,6 @@ export default {
           }
         }
       })
-    },
-    provinceChange (newVal, oldVal) {
-      this.baseProvinceChange(newVal, oldVal)
-    },
-    cityChange (newVal, oldVal) {
-      this.baseCityChange(newVal, oldVal)
-    },
-    areaChange (newVal, oldVal) {
-      this.baseAreaChange(newVal, oldVal)
-    },
-    townChange (newVal, oldVal) {
-      this.baseTownChange(newVal, oldVal)
     }
   }
 }
