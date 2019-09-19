@@ -80,7 +80,7 @@ export default {
     },
     value: {
       handler (val) {
-        if (validModel(val)) {
+        if (validModel(val) && this.differentModel(val)) {
           this.clearRegion(PROVINCE_LEVEL)
           this.region = getRegionByModel(val, availableLevels(this.city, this.area, this.town))
           this.change(true)

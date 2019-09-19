@@ -29,10 +29,11 @@ export default {
   },
   render (h) {
     const child = []
+    const { province, city, area, town } = this.region
 
     child.push(this.build(h, {
       list: this.listProvince,
-      model: this.region.province,
+      model: province,
       callback: val => {
         this.region.province = val
       }
@@ -41,7 +42,7 @@ export default {
     if (this.city) {
       child.push(this.build(h, {
         list: this.listCity,
-        model: this.region.city,
+        model: city,
         callback: val => {
           this.region.city = val
         }
@@ -50,7 +51,7 @@ export default {
     if (this.city && this.area) {
       child.push(this.build(h, {
         list: this.listArea,
-        model: this.region.area,
+        model: area,
         callback: val => {
           this.region.area = val
         }
@@ -59,7 +60,7 @@ export default {
     if (this.city && this.area && this.town && this.haveTown) {
       child.push(this.build(h, {
         list: this.listTown,
-        model: this.region.town,
+        model: town,
         callback: val => {
           this.region.town = val
         }

@@ -111,33 +111,63 @@ export default {
     baseTownChange (newVal, oldVal) {
       this.changeValues()
     },
+    /**
+     * Check if model and region data are equal
+     *
+     * @param {object} model
+     * @returns
+     */
+    differentModel (model) {
+      const levelResult = []
+      const { province, city, area, town } = this.region
+      levelResult.push(Boolean(model.province === province || (province && province.key) === model.province))
+      levelResult.push(Boolean(model.city === city || (city && city.key) === model.city))
+      levelResult.push(Boolean(model.area === area || (area && area.key) === model.area))
+      levelResult.push(Boolean(model.town === town || (town && town.key) === model.town))
+      // console.log(levelResult)
+      return levelResult.some(val => {
+        return val === false
+      })
+    },
     // region change
     change (initialize = false) {
-      if (!this.checkProvince()) {
+      const { province, city, area, town } = this.region
+      if (!this.checkLevel(this.listProvince, province)) {
         this.clearRegion(PROVINCE_LEVEL)
       }
       if (this.city) {
-        if (this.region.province) {
-          this.listCity = this.loadCity(this.region.province)
+        if (province) {
+          this.listCity = loadCity(province)
         }
-        if (!this.region.province || !this.checkCity()) {
+        if (!province || !this.checkLevel(this.listCity, city)) {
           this.clearRegion(CITY_LEVEL)
         }
       }
-      if (this.area && this.region.city) {
-        this.listArea = this.loadArea(this.region.city)
+      if (this.area && city) {
+        if (city) {
+          this.listArea = loadArea(city)
+        }
+        if (!city || !this.checkLevel(this.listArea, area)) {
+          this.clearRegion(AREA_LEVEL)
+        }
       }
-      if (this.town && this.region.area) {
-        this.loadTown = this.loadTown(this.region.area)
+      if (this.town && area) {
+        if (area) {
+          this.listTown = loadTown(area)
+        }
+        if (!area || !this.checkLevel(this.listTown, town)) {
+          this.clearRegion(TOWN_LEVEL)
+        }
       }
       if (!initialize) {
-        this.$emit('input', {
-          province: this.region.province,
-          city: this.region.city,
-          area: this.region.area,
-          town: this.region.town
-        })
+        this.$emit('input', Object.fromEntries(
+          Object.entries(this.region)
+            .map(([key, value]) => {
+              return [key, value ? value.key : null]
+            })
+        ))
       }
+      this.$emit('values', this.region)
     },
     // clear region field
     clearRegion (level) {
@@ -146,18 +176,11 @@ export default {
         if (fields.includes(val)) this.region[val] = null
       })
     },
-    checkProvince () {
-      if (!this.listProvince.length) return false
-      if (!this.region.province) return true
-      return this.listProvince.some(val => {
-        return val.key === this.region.province.key
-      })
-    },
-    checkCity () {
-      if (!this.listCity.length) return false
-      if (!this.region.city) return true
-      return this.listCity.some(val => {
-        return val.key === this.region.city.key
+    checkLevel (list, attr) {
+      if (!list.length) return false
+      if (!attr) return true
+      return list.some(val => {
+        return val.key === attr.key
       })
     }
   },

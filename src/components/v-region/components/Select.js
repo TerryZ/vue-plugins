@@ -52,6 +52,7 @@ export default {
     ]))
 
     const items = []
+    // "Please select" option
     if (this.blank) {
       items.push(h('li', {
         on: {

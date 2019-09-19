@@ -1,4 +1,4 @@
-import { srcList, srcCity, srcArea } from '../formatted'
+import { srcList, srcCity, srcArea } from './formatted'
 import { LEVEL_LIST, PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY } from './constants'
 
 /**
@@ -60,7 +60,7 @@ export function loadTown (area) {
       ? Object.entries(towns).map(val => ({ key: val[0], value: val[1] }))
       : []
   } else list = []
-  this.haveTown = !(this.dProvince && this.dCity && area && !list.length)
+  // this.haveTown = !(this.dProvince && this.dCity && area && !list.length)
   return list
 
   // return new Promise((resolve, reject) => {
@@ -113,6 +113,11 @@ export function validModel (model) {
   })
 }
 
+/**
+ * Get detail data by key
+ *
+ * @param {string} key
+ */
 const getDetail = key => {
   return srcList.find(val => {
     return val.key === key

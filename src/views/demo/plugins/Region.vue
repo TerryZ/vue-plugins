@@ -68,7 +68,10 @@
         <v-region @values="values"></v-region>
 
         <h4 class="mt-3">省、市、区/县、乡/镇/街道</h4>
-        <v-region :town="true" @values="values"></v-region>
+        <div class="bg-light p-3 mb-3">
+          <pre v-text="JSON.stringify(value2, null, 2)"></pre>
+        </div>
+        <v-region :town="true" v-model="value2" @values="values"></v-region>
 
         <h4 class="mt-3">初始化值</h4>
         <v-region :town="true" :selected="selected" @values="values"></v-region>
@@ -103,6 +106,7 @@ export default {
   data () {
     return {
       value1: {},
+      value2: {},
       selected: {
         province: null,
         city: null,
