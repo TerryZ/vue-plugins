@@ -16,7 +16,8 @@ export default {
     i18n: {
       type: String,
       default: 'cn'
-    }
+    },
+    value: Array
   },
   data () {
     return {
@@ -173,8 +174,11 @@ export default {
       this.close()
     },
     pick (item) {
-      if (!this.picked.includes(item)) this.picked.push(item)
-      else this.picked.splice(this.picked.findIndex(val => val.key === item.key), 1)
+      if (!this.picked.includes(item)) {
+        this.picked.push(item)
+      } else {
+        this.picked.splice(this.picked.findIndex(val => val.key === item.key), 1)
+      }
       this.$emit('values', this.picked)
     },
     inPicked (city) {
