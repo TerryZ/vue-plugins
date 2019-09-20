@@ -131,31 +131,30 @@ export default {
     },
     // region change
     change (initialize = false) {
-      const { province, city, area, town } = this.region
-      if (!this.checkLevel(this.listProvince, province)) {
+      if (!this.checkLevel(this.listProvince, this.region.province)) {
         this.clearRegion(PROVINCE_LEVEL)
       }
       if (this.city) {
-        if (province) {
-          this.listCity = loadCity(province)
+        if (this.region.province) {
+          this.listCity = loadCity(this.region.province)
         }
-        if (!province || !this.checkLevel(this.listCity, city)) {
+        if (!this.region.province || !this.checkLevel(this.listCity, this.region.city)) {
           this.clearRegion(CITY_LEVEL)
         }
       }
-      if (this.area && city) {
-        if (city) {
-          this.listArea = loadArea(city)
+      if (this.area && this.region.city) {
+        if (this.region.city) {
+          this.listArea = loadArea(this.region.city)
         }
-        if (!city || !this.checkLevel(this.listArea, area)) {
+        if (!this.region.city || !this.checkLevel(this.listArea, this.region.area)) {
           this.clearRegion(AREA_LEVEL)
         }
       }
-      if (this.town && area) {
-        if (area) {
-          this.listTown = loadTown(area)
+      if (this.town && this.region.area) {
+        if (this.region.area) {
+          this.listTown = loadTown(this.region.area)
         }
-        if (!area || !this.checkLevel(this.listTown, town)) {
+        if (!this.region.area || !this.checkLevel(this.listTown, this.region.town)) {
           this.clearRegion(TOWN_LEVEL)
         }
       }
@@ -175,6 +174,18 @@ export default {
       Object.keys(this.region).forEach(val => {
         if (fields.includes(val)) this.region[val] = null
       })
+      /* eslint-disable no-fallthrough */
+      switch (level) {
+        case PROVINCE_LEVEL:
+          console.log('1')
+          this.listCity = []
+        case CITY_LEVEL:
+          console.log('2')
+          this.listArea = []
+        case AREA_LEVEL:
+          console.log('3')
+          this.listTown = []
+      }
     },
     checkLevel (list, attr) {
       if (!list.length) return false

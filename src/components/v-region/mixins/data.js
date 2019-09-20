@@ -81,9 +81,8 @@ export default {
     value: {
       handler (val) {
         if (validModel(val) && this.differentModel(val)) {
-          console.log('in v-model')
           this.clearRegion(PROVINCE_LEVEL)
-          this.region = getRegionByModel(val, availableLevels(this.city, this.area, this.town))
+          this.region = getRegionByModel(val, this.availableLevels)
           this.change(true)
         }
       },
@@ -99,6 +98,14 @@ export default {
       if (area) arr.push(area.value)
       if (town) arr.push(town.value)
       return arr.join('')
+    },
+    availableLevels () {
+      return availableLevels(this.city, this.area, this.town)
+    },
+    currentLevels () {
+      return Object.entries(this.region).filter(([key, value]) => {
+        return value
+      }).map(([key, value]) => key)
     }
   }
 }
