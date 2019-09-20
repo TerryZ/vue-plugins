@@ -37,9 +37,11 @@
 
         <h4 class="mt-3">下拉选择器多列竖排模式（自定义呼出按钮）</h4>
         <p>
-            <v-region type="column">
-                <button type="button" class="btn btn-primary">Select a option</button>
-            </v-region>
+          <v-region type="column">
+            <template #default="{ region }">
+              <button type="button" class="btn btn-primary" v-text="resultText(region)"></button>
+            </template>
+          </v-region>
         </p>
 
         <h4 class="mt-3">城市选择器</h4>
@@ -130,6 +132,10 @@ export default {
     }
   },
   methods: {
+    resultText (region) {
+      if (!Object.values(region).some(val => val) || !region) return 'Select an option'
+      return Object.values(region).filter(val => val).map(val => val.value).join(',')
+    },
     values (data) {
       // console.log(JSON.stringify(data));
     },

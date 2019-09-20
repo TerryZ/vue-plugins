@@ -176,15 +176,9 @@ export default {
       })
       /* eslint-disable no-fallthrough */
       switch (level) {
-        case PROVINCE_LEVEL:
-          console.log('1')
-          this.listCity = []
-        case CITY_LEVEL:
-          console.log('2')
-          this.listArea = []
-        case AREA_LEVEL:
-          console.log('3')
-          this.listTown = []
+        case PROVINCE_LEVEL: this.listCity = []
+        case CITY_LEVEL: this.listArea = []
+        case AREA_LEVEL: this.listTown = []
       }
     },
     checkLevel (list, attr) {

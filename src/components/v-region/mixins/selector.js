@@ -23,7 +23,10 @@ export default {
       const lang = language[this.i18n]
 
       if ('default' in this.$scopedSlots) {
-        caller.push(this.$scopedSlots.default())
+        // scoped slot
+        caller.push(this.$scopedSlots.default({
+          region: this.region
+        }))
       } else {
         // default region caller button
         const element = []

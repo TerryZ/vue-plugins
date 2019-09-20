@@ -31,16 +31,31 @@ export default {
   },
   methods: {
     build (h, name) {
-      let slot = null
-      const type = this.type.toLowerCase()
-      if ((type !== SELECT || type !== TEXT) && 'default' in this.$scopedSlots) {
-        slot = this.$scopedSlots.default()
-      }
-      return h(name, {
+      const slot = []
+      const options = {
         class: 'v-region',
         props: this.$attrs,
         on: this.$listeners
-      }, slot)
+      }
+      if ('default' in this.$scopedSlots) {
+        switch (this.type.toLowerCase()) {
+          case COLUMN:
+          case GROUP:
+            options.scopedSlots = {
+              default: props => {
+                return this.$scopedSlots.default({
+                  region: props.region
+                })
+              }
+            }
+            break
+          case CITY:
+            slot.push(this.$scopedSlots.default())
+            break
+        }
+      }
+
+      return h(name, options, slot)
     }
   }
 }
