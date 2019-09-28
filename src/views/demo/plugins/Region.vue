@@ -46,7 +46,7 @@
 
         <h4 class="mt-3">城市选择器</h4>
         <p>
-            <v-region type="city" :selected="selectedArray" @values="uiValues"></v-region>
+            <v-region type="city" v-model="selectedArray" @values="uiValues"></v-region>
         </p>
 
         <h4 class="mt-3">纯文本模式 <small>初始化选中的项目，以纯文本的内容显示</small></h4>

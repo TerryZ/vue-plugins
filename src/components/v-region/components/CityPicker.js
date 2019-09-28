@@ -12,7 +12,6 @@ export default {
   inheritAttrs: false,
   components: { dropdown },
   props: {
-    selected: Array,
     i18n: {
       type: String,
       default: 'cn'
@@ -22,7 +21,7 @@ export default {
   data () {
     return {
       /**
-       * display data list
+       * data list to display
        * [{
        *   province: { key: '', value: ''},
        *   citys: [
@@ -42,6 +41,9 @@ export default {
   computed: {
     selectedText () {
       return this.picked.map(val => val.value).join(',')
+    },
+    keys () {
+      return this.picked.map(val => val.key)
     }
   },
   watch: {
@@ -51,26 +53,37 @@ export default {
      * @param value
      */
     query (value) {
-      const val = value.trim()
-      if (!val) this.list = this.listBuilt.slice()
-      else {
+      const keyword = value.trim()
+      if (keyword) {
         const list = []
         this.listBuilt.forEach(val => {
-          const citys = val.citys.filter(city => new RegExp(val).test(city.value))
+          const citys = val.citys.filter(city => new RegExp(keyword).test(city.value))
           if (citys.length) list.push({ province: val.province, citys: citys })
         })
         this.list = list
+      } else {
+        this.list = this.listBuilt.slice()
       }
     },
     /**
-     * initialize region selected
+     * initialize selected citys
      */
-    selected: {
+    value: {
       handler (value) {
-        if (value && Array.isArray(value) && value.length) {
-          const tmp = srcProvince.filter(val => value.includes(val.key))
-          this.picked = [...tmp, ...srcCity.filter(val => value.includes(val.key))]
-          if (this.picked.length) this.$emit('values', this.picked)
+        if (Array.isArray(value)) {
+          const equal = this.equal(value)
+          if (equal) return
+
+          if (value.length) {
+            const provincialCity = srcProvince.filter(val => value.includes(val.key))
+            // marge province and city
+            this.picked = [
+              ...provincialCity,
+              ...srcCity.filter(val => value.includes(val.key))
+            ]
+          } else this.picked = []
+
+          this.emit(false)
         }
       },
       immediate: true
@@ -169,17 +182,35 @@ export default {
       })
       this.listBuilt = [...[municipalityObj], ...listTmp, ...[specialObj]]
     },
+    emit (input = true) {
+      if (input) this.$emit('input', this.keys)
+      this.$emit('values', this.picked)
+    },
+    /**
+     * v-model/value(keys) whether equal to picked keys
+     *
+     * @param {array} keys
+     * @returns
+     */
+    equal (keys) {
+      if (keys.length === this.picked.length) {
+        if (!keys.length) return true
+        const pickedKeys = this.picked.map(val => val.key).sort().join(',')
+        return keys.sort().join(',') === pickedKeys
+      } else return false
+    },
     clear () {
       this.picked = []
       this.close()
+      this.emit()
     },
     pick (item) {
-      if (!this.picked.includes(item)) {
-        this.picked.push(item)
-      } else {
+      if (this.inPicked(item)) {
         this.picked.splice(this.picked.findIndex(val => val.key === item.key), 1)
+      } else {
+        this.picked.push(item)
       }
-      this.$emit('values', this.picked)
+      this.emit()
     },
     inPicked (city) {
       if (!city || !this.picked.length) return false
