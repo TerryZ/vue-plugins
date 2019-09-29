@@ -100,6 +100,7 @@ export default {
     },
     clear () {
       this.clearRegion(PROVINCE_LEVEL)
+      this.change()
       this.close()
     }
   }

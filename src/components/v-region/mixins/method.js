@@ -127,7 +127,11 @@ export default {
       // console.log(levelResult)
       return levelResult.some(val => val === false)
     },
-    // region change
+    /**
+     * Region content change
+     *
+     * @param {boolean} [initialize=false]
+     */
     change (initialize = false) {
       if (!this.checkLevel(this.listProvince, this.region.province)) {
         this.clearRegion(PROVINCE_LEVEL)

@@ -57,7 +57,7 @@ export default {
         }
       }))
     }
-    if (this.city && this.area && this.town && this.haveTown) {
+    if (this.city && this.area && this.town) {
       child.push(this.build(h, {
         list: this.listTown,
         model: town,
