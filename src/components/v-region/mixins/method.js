@@ -125,9 +125,7 @@ export default {
       levelResult.push(Boolean(model.area === area || (area && area.key) === model.area))
       levelResult.push(Boolean(model.town === town || (town && town.key) === model.town))
       // console.log(levelResult)
-      return levelResult.some(val => {
-        return val === false
-      })
+      return levelResult.some(val => val === false)
     },
     // region change
     change (initialize = false) {

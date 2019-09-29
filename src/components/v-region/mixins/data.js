@@ -103,9 +103,9 @@ export default {
       return availableLevels(this.city, this.area, this.town)
     },
     currentLevels () {
-      return Object.entries(this.region).filter(([key, value]) => {
-        return value
-      }).map(([key, value]) => key)
+      return Object.entries(this.region)
+        .filter(([key, value]) => value)
+        .map(([key, value]) => key)
     }
   }
 }
