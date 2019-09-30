@@ -108,9 +108,7 @@ export function availableLevels (city, area, town) {
  * @returns {boolean}
  */
 export function validModel (model) {
-  return Object.keys(model).length && LEVEL_LIST.every(val => {
-    return val in model
-  })
+  return Object.keys(model).length && LEVEL_LIST.every(val => val in model)
 }
 
 /**
@@ -119,9 +117,7 @@ export function validModel (model) {
  * @param {string} key
  */
 const getDetail = key => {
-  return srcList.find(val => {
-    return val.key === key
-  })
+  return srcList.find(val => val.key === key)
 }
 
 /**
@@ -176,9 +172,7 @@ export function getRegionByModel (model, levels) {
 
   const towns = loadTown(region.area)
   if (towns.length) {
-    region.town = towns.find(val => {
-      return val.key === model.town
-    })
+    region.town = towns.find(val => val.key === model.town)
   }
 
   return region
