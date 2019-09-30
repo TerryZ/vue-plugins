@@ -44,7 +44,8 @@ export default {
             options.scopedSlots = {
               default: props => {
                 return this.$scopedSlots.default({
-                  region: props.region
+                  region: props.region,
+                  show: props.show
                 })
               }
             }

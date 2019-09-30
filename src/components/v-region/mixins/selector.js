@@ -12,12 +12,13 @@ export default {
     },
     showChange (val) {
       this.show = val
-      if (val) {
-
-      } else {
-
-      }
     },
+    /**
+     * Build region default toggle button
+     *
+     * @param {createElement} h
+     * @returns
+     */
     buildCaller (h) {
       const caller = []
       const lang = language[this.i18n]
@@ -25,7 +26,8 @@ export default {
       if ('default' in this.$scopedSlots) {
         // scoped slot
         caller.push(this.$scopedSlots.default({
-          region: this.region
+          region: this.region,
+          show: this.show
         }))
       } else {
         // default region caller button

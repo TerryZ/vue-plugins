@@ -16,17 +16,28 @@
 
         <h4 class="mt-3">下拉选择器模式</h4>
         <p>
-            <button type="button" class="btn btn-secondary mb-2" @click="changeUiSelected">reset region</button>
-            <br>
-            <v-region :city="true" :area="true" :town="true" type="group" :selected="uiSelected" @values="uiValues">
-            </v-region>
+          <button type="button" class="btn btn-secondary mb-2" @click="changeUiSelected">reset region</button>
+          <br>
+          <v-region
+            :city="true"
+            :area="true"
+            :town="true"
+            type="group"
+            v-model="uiSelected"
+            @values="uiValues"
+          ></v-region>
         </p>
 
         <h4 class="mt-3">下拉选择器模式（自定义呼出按钮）</h4>
         <p>
-            <v-region type="group" >
-                <button type="button" class="btn btn-primary">Select a option</button>
-            </v-region>
+          <v-region type="group" >
+            <template #default="{ region, show }">
+              <button type="button" class="btn btn-primary">
+                region:{{resultText(region)}},
+                show: {{show}}
+              </button>
+            </template>
+          </v-region>
         </p>
 
         <h4 class="mt-3">下拉选择器多列竖排模式</h4>
@@ -38,8 +49,11 @@
         <h4 class="mt-3">下拉选择器多列竖排模式（自定义呼出按钮）</h4>
         <p>
           <v-region type="column">
-            <template #default="{ region }">
-              <button type="button" class="btn btn-primary" v-text="resultText(region)"></button>
+            <template #default="{ region, show }">
+              <button type="button" class="btn btn-primary">
+                region:{{resultText(region)}},
+                show: {{show}}
+              </button>
             </template>
           </v-region>
         </p>

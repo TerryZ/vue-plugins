@@ -19,7 +19,6 @@ export default {
       type: String,
       default: 'cn'
     },
-    selected: Object,
     value: Object
   },
   data () {
@@ -31,14 +30,6 @@ export default {
       listTown: [],
 
       lang: {},
-      init: this.selected,
-      haveTown: true,
-
-      // return data
-      dProvince: null,
-      dCity: null,
-      dArea: null,
-      dTown: null,
 
       region: {
         province: null,
@@ -49,35 +40,6 @@ export default {
     }
   },
   watch: {
-    dProvince: {
-      handler: 'provinceChange',
-      deep: true
-    },
-    dCity: {
-      handler: 'cityChange',
-      deep: true
-    },
-    dArea: {
-      handler: 'areaChange',
-      deep: true
-    },
-    dTown: {
-      handler: 'townChange',
-      deep: true
-    },
-    /**
-     * initialize region selected
-     */
-    selected: {
-      handler (val) {
-        if (val && Object.keys(val).length) {
-          this.reset()
-          this.init = val
-          this.initSelected(PROVINCE_LEVEL)
-        }
-      },
-      deep: true
-    },
     value: {
       handler (val) {
         if (validModel(val) && this.differentModel(val)) {
