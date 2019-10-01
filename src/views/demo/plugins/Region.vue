@@ -15,17 +15,25 @@
         </div>
 
         <h4 class="mt-3">下拉选择器模式</h4>
+        <div class="bg-light p-3 mb-3">
+          <pre class="m-0 mb-3" v-text="JSON.stringify(modelGroup, null, 2)"></pre>
+          <pre class="m-0" v-text="JSON.stringify(valuesGroup, null, 2)"></pre>
+        </div>
         <p>
-          <button type="button" class="btn btn-secondary mb-2" @click="changeUiSelected">reset region</button>
-          <br>
           <v-region
             :city="true"
             :area="true"
             :town="true"
             type="group"
-            v-model="uiSelected"
-            @values="uiValues"
+            v-model="modelGroup"
+            class="mr-3"
+            @values="cbGroup"
           ></v-region>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            @click="resetGroup"
+          >reset region</button>
         </p>
 
         <h4 class="mt-3">下拉选择器模式（自定义呼出按钮）</h4>
@@ -41,9 +49,20 @@
         </p>
 
         <h4 class="mt-3">下拉选择器多列竖排模式</h4>
+        <div class="bg-light p-3 mb-3">
+          <pre class="m-0 mb-3" v-text="JSON.stringify(modelColumn, null, 2)"></pre>
+          <pre class="m-0" v-text="JSON.stringify(valuesColumn, null, 2)"></pre>
+        </div>
         <p>
-            <v-region :city="true" :area="true" :town="true" type="column" @values="uiValues" >
-            </v-region>
+          <v-region
+            :city="true"
+            :area="true"
+            :town="true"
+            type="column"
+            v-model="modelColumn"
+            @values="cbColumn"
+          >
+          </v-region>
         </p>
 
         <h4 class="mt-3">下拉选择器多列竖排模式（自定义呼出按钮）</h4>
@@ -59,8 +78,16 @@
         </p>
 
         <h4 class="mt-3">城市选择器</h4>
+        <div class="bg-light p-3 mb-3">
+          <pre class="m-0 mb-3" v-text="JSON.stringify(modelCity, null, 2)"></pre>
+          <pre class="m-0" v-text="JSON.stringify(valuesCity, null, 2)"></pre>
+        </div>
         <p>
-            <v-region type="city" v-model="selectedArray" @values="uiValues"></v-region>
+          <v-region
+            type="city"
+            v-model="modelCity"
+            @values="cbCity"
+          ></v-region>
         </p>
 
         <h4 class="mt-3">纯文本模式 <small>初始化选中的项目，以纯文本的内容显示</small></h4>
@@ -72,25 +99,30 @@
         <br>
 
         <h4 class="mt-3">省</h4>
-        <v-region :city="false" :area="false" @values="values"></v-region>
+        <v-region :city="false" :area="false"></v-region>
 
         <h4 class="mt-3">省、市</h4>
         <div class="bg-light p-3 mb-3">
           <pre class="m-0" v-text="JSON.stringify(value1, null, 2)"></pre>
         </div>
-        <v-region :area="false" v-model="value1" @values="values"></v-region>
+        <v-region :area="false" v-model="value1"></v-region>
 
         <h4 class="mt-3">省、市、区/县</h4>
-        <v-region @values="values"></v-region>
+        <v-region></v-region>
 
         <h4 class="mt-3">省、市、区/县、乡/镇/街道</h4>
         <div class="bg-light p-3 mb-3">
-          <pre class="m-0" v-text="JSON.stringify(value2, null, 2)"></pre>
+          <pre class="m-0 mb-3" v-text="JSON.stringify(modelSelect, null, 2)"></pre>
+          <pre class="m-0" v-text="JSON.stringify(valuesSelect, null, 2)"></pre>
         </div>
-        <v-region :town="true" v-model="value2" @values="values"></v-region>
+        <v-region
+          :town="true"
+          v-model="modelSelect"
+          @values="cbSelect"
+        ></v-region>
 
         <h4 class="mt-3">初始化值</h4>
-        <v-region :town="true" v-model="selected" @values="values"></v-region>
+        <v-region :town="true" v-model="selected"></v-region>
 
         <h4 class="mt-3">初始化值并禁用</h4>
         <v-region :town="true" v-model="selected" :disabled="true"></v-region>
@@ -142,16 +174,36 @@ export default {
         city: '',
         area: ''
       },
-      btnText: '请选择'
+      btnText: '请选择',
+
+      modelGroup: null,
+      modelColumn: null,
+      modelSelect: null,
+      modelCity: ['110000', '350100'],
+
+      valuesGroup: null,
+      valuesColumn: null,
+      valuesSelect: null,
+      valuesCity: null
     }
   },
   methods: {
     resultText (region) {
-      if (!Object.values(region).some(val => val) || !region) return 'Select an option'
+      if (!Object.values(region).some(val => val) || !region) return 'null'
       return Object.values(region).filter(val => val).map(val => val.value).join(',')
     },
-    values (data) {
-      // console.log(JSON.stringify(data));
+    cbGroup (data) {
+      // console.log(data)
+      this.valuesGroup = data
+    },
+    cbColumn (data) {
+      this.valuesColumn = data
+    },
+    cbSelect (data) {
+      this.valuesSelect = data
+    },
+    cbCity (data) {
+      this.valuesCity = data
     },
     validateValues (data) {
       console.log(data)
@@ -177,8 +229,8 @@ export default {
     getValue (obj) {
       return obj ? obj.value : ''
     },
-    changeUiSelected () {
-      this.uiSelected = {
+    resetGroup () {
+      this.modelGroup = {
         province: '350000',
         city: '350100',
         area: '350104',

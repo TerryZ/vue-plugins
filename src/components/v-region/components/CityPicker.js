@@ -41,9 +41,6 @@ export default {
   computed: {
     selectedText () {
       return this.picked.map(val => val.value).join(',')
-    },
-    keys () {
-      return this.picked.map(val => val.key)
     }
   },
   watch: {
@@ -69,17 +66,16 @@ export default {
      * initialize selected citys
      */
     value: {
-      handler (value) {
-        if (Array.isArray(value)) {
-          const equal = this.equal(value)
-          if (equal) return
+      handler (val) {
+        if (Array.isArray(val)) {
+          if (this.equal(val)) return
 
-          if (value.length) {
-            const provincialCity = srcProvince.filter(val => value.includes(val.key))
+          if (val.length) {
+            const provincialCity = srcProvince.filter(item => val.includes(item.key))
             // marge province and city
             this.picked = [
               ...provincialCity,
-              ...srcCity.filter(val => value.includes(val.key))
+              ...srcCity.filter(item => val.includes(item.key))
             ]
           } else this.picked = []
 
@@ -130,7 +126,7 @@ export default {
                   selected: this.inPicked(city)
                 },
                 on: {
-                  mouseup: () => {
+                  click: () => {
                     this.pick(city)
                   }
                 }
@@ -183,8 +179,12 @@ export default {
       this.listBuilt = [...[municipalityObj], ...listTmp, ...[specialObj]]
     },
     emit (input = true) {
-      if (input) this.$emit('input', this.keys)
+      if (input) this.$emit('input', this.picked.map(val => val.key))
       this.$emit('values', this.picked)
+      // dropdown position adjust
+      this.$nextTick(() => {
+        this.$refs.drop.adjust()
+      })
     },
     /**
      * v-model/value(keys) whether equal to picked keys
@@ -195,8 +195,10 @@ export default {
     equal (keys) {
       if (keys.length === this.picked.length) {
         if (!keys.length) return true
-        const pickedKeys = this.picked.map(val => val.key).sort().join(',')
-        return keys.sort().join(',') === pickedKeys
+        this.picked.forEach(val => {
+          if (!keys.includes(val.key)) return false
+        })
+        return true
       } else return false
     },
     clear () {
@@ -214,9 +216,7 @@ export default {
     },
     inPicked (city) {
       if (!city || !this.picked.length) return false
-      return this.picked.some(val => {
-        return val.key === city.key
-      })
+      return this.picked.some(val => val.key === city.key)
     }
   },
   created () {

@@ -63,7 +63,7 @@ export default {
             })
         ))
       }
-      this.$emit('values', this.region)
+      this.$emit('values', JSON.parse(JSON.stringify(this.region)))
     },
     // clear region field
     clearRegion (level) {

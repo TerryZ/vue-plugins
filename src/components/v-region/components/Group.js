@@ -225,6 +225,7 @@ export default {
     clear () {
       this.clearRegion(PROVINCE_LEVEL)
       this.level = PROVINCE_LEVEL
+      this.change()
     }
   },
   beforeMount () {
