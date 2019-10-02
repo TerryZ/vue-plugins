@@ -1,11 +1,32 @@
 import language from '../language'
 import { srcProvince } from '../formatted.js'
-import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL, LEVEL_LIST } from '../constants'
+import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, LEVEL_LIST, LEVELS } from '../constants'
 
-import { loadCity, loadArea, loadTown } from '../helper'
+import { getLoader } from '../helper'
 
 export default {
   methods: {
+    /**
+     * Plugin data change events
+     * below plugin types are in use
+     *
+     * - Select
+     * - Group
+     * - Column
+     *
+     * @param {boolean} [input=false]
+     */
+    emit (input = false) {
+      if (!input) {
+        this.$emit('input', Object.fromEntries(
+          Object.entries(this.region)
+            .map(([key, value]) => {
+              return [key, value ? value.key : null]
+            })
+        ))
+      }
+      this.$emit('values', JSON.parse(JSON.stringify(this.region)))
+    },
     /**
      * Check if model and region data are equal
      *
@@ -28,42 +49,26 @@ export default {
      * @param {boolean} [initialize=false]
      */
     change (initialize = false) {
-      if (!this.checkLevel(this.listProvince, this.region.province)) {
-        this.clearRegion(PROVINCE_LEVEL)
+      // eslint-disable-next-line no-unused-vars
+      for (const val of LEVELS) {
+        if (!this.levelHandle(val.index, getLoader(val.index))) break
       }
-      if (this.city) {
-        if (this.region.province) {
-          this.listCity = loadCity(this.region.province)
+    },
+    levelHandle (level, load) {
+      const key = LEVEL_LIST[level]
+      const parentKey = level === PROVINCE_LEVEL ? null : LEVEL_LIST[level - 1]
+      const listName = 'list' + key.charAt().toUpperCase() + key.substring(1)
+      if (level === PROVINCE_LEVEL || this[key]) {
+        if (this.region[parentKey]) {
+          this[listName] = load(this.region[parentKey])
         }
-        if (!this.region.province || !this.checkLevel(this.listCity, this.region.city)) {
-          this.clearRegion(CITY_LEVEL)
-        }
-      }
-      if (this.area) {
-        if (this.region.city) {
-          this.listArea = loadArea(this.region.city)
-        }
-        if (!this.region.city || !this.checkLevel(this.listArea, this.region.area)) {
-          this.clearRegion(AREA_LEVEL)
-        }
-      }
-      if (this.town) {
-        if (this.region.area) {
-          this.listTown = loadTown(this.region.area)
-        }
-        if (!this.region.area || !this.checkLevel(this.listTown, this.region.town)) {
-          this.clearRegion(TOWN_LEVEL)
+        // if (!this.region[parentKey] || !this.levelCheck(this[listName], this.region[key])) {
+        if (!this.levelCheck(this[listName], this.region[key])) {
+          this.clearRegion(level)
+          return false
         }
       }
-      if (!initialize) {
-        this.$emit('input', Object.fromEntries(
-          Object.entries(this.region)
-            .map(([key, value]) => {
-              return [key, value ? value.key : null]
-            })
-        ))
-      }
-      this.$emit('values', JSON.parse(JSON.stringify(this.region)))
+      return true
     },
     // clear region field
     clearRegion (level) {
@@ -78,12 +83,9 @@ export default {
         case AREA_LEVEL: this.listTown = []
       }
     },
-    checkLevel (list, attr) {
-      if (!list.length) return false
-      if (!attr) return true
-      return list.some(val => {
-        return val.key === attr.key
-      })
+    levelCheck (list, attr) {
+      if (!list.length || !attr) return false
+      return list.some(val => val.key === attr.key)
     }
   },
   created () {

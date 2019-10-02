@@ -1,5 +1,9 @@
 import { srcList, srcCity, srcArea } from './formatted'
-import { LEVEL_LIST, PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY } from './constants'
+import {
+  LEVEL_LIST,
+  PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY,
+  CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL
+} from './constants'
 
 /**
  * load city list by province data
@@ -62,23 +66,21 @@ export function loadTown (area) {
   } else list = []
   // this.haveTown = !(this.dProvince && this.dCity && area && !list.length)
   return list
+}
 
-  // return new Promise((resolve, reject) => {
-  //     if (area && Object.keys(area).length) {
-  //         import(`../town/${area.key}.json`)
-  //             .then(resp => {
-  //                 resolve(resp && Object.keys(resp).length
-  //                     ? Object.entries(resp).map(val=>({ key: val[0], value: val[1] }))
-  //                     : []);
-  //             })
-  //             .catch(() => {
-  //                 console.warn(`The ${area.value} area have no town data.`);
-  //             })
-  //     } else {
-  //         resolve([]);
-  //     }
-  //     //this.haveTown = !(this.dProvince && this.dCity && area && !list.length);
-  // });
+/**
+ * Get level list loader
+ *
+ * @export
+ * @param {number} level
+ * @returns
+ */
+export function getLoader (level) {
+  switch (level) {
+    case CITY_LEVEL: return loadCity
+    case AREA_LEVEL: return loadArea
+    case TOWN_LEVEL: return loadTown
+  }
 }
 
 /**
