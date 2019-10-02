@@ -70,7 +70,15 @@ export default {
       }
       return true
     },
-    // clear region field
+    levelCheck (list, attr) {
+      if (!list.length || !attr) return false
+      return list.some(val => val.key === attr.key)
+    },
+    /**
+     * Clear region fields
+     *
+     * @param {number} level
+     */
     clearRegion (level) {
       const fields = LEVEL_LIST.slice(level)
       Object.keys(this.region).forEach(val => {
@@ -82,10 +90,6 @@ export default {
         case CITY_LEVEL: this.listArea = []
         case AREA_LEVEL: this.listTown = []
       }
-    },
-    levelCheck (list, attr) {
-      if (!list.length || !attr) return false
-      return list.some(val => val.key === attr.key)
     }
   },
   created () {
