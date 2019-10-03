@@ -91,14 +91,18 @@ export function getLoader (level) {
  * @param {boolean} area
  * @param {boolean} town
  */
-export function availableLevels (city, area, town) {
+export function availableLevels () {
   const result = [PROVINCE_KEY]
-  if (city) result.push(CITY_KEY)
-  else return result
-  if (area) result.push(AREA_KEY)
-  else return result
-  if (town) result.push(TOWN_KEY)
-  else return result
+  const switchs = Array.from(arguments)
+
+  for (let i = 0; i < switchs.length; i++) {
+    if (switchs[i]) {
+      result.push(LEVEL_LIST[i + 1])
+    } else {
+      return result
+    }
+  }
+
   return result
 }
 
@@ -118,9 +122,7 @@ export function validModel (model) {
  *
  * @param {string} key
  */
-const getDetail = key => {
-  return srcList.find(val => val.key === key)
-}
+const getDetail = key => srcList.find(val => val.key === key)
 
 /**
  * Get region raw data from model
@@ -155,9 +157,8 @@ export function getRegionByModel (model, levels) {
     area: null,
     town: null
   }
-  const inLevel = key => {
-    return levels.some(val => val === key)
-  }
+  const inLevel = key => levels.some(val => val === key)
+
   if (!model.province) return region
 
   region.province = getDetail(model.province)

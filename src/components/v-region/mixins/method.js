@@ -1,11 +1,24 @@
 import language from '../language'
 import { srcProvince } from '../formatted.js'
-import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, LEVEL_LIST, LEVELS } from '../constants'
+import {
+  GROUP,
+  PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL,
+  LEVEL_LIST, LEVELS
+} from '../constants'
 
 import { getLoader } from '../helper'
 
 export default {
   methods: {
+    /**
+     * Region contents change
+     *
+     * @param {boolean} [initialize=false]
+     */
+    change (initialize = false) {
+      this.regionHandle()
+      this.emit(initialize)
+    },
     /**
      * Plugin data change events
      * below plugin types are in use
@@ -43,15 +56,10 @@ export default {
       // console.log(levelResult)
       return levelResult.some(val => val === false)
     },
-    /**
-     * Region content change
-     *
-     * @param {boolean} [initialize=false]
-     */
-    change (initialize = false) {
+    regionHandle () {
       // eslint-disable-next-line no-unused-vars
-      for (const val of LEVELS) {
-        if (!this.levelHandle(val.index, getLoader(val.index))) break
+      for (const level of LEVELS.map(val => val.index)) {
+        if (!this.levelHandle(level, getLoader(level))) break
       }
     },
     levelHandle (level, load) {
@@ -62,7 +70,6 @@ export default {
         if (this.region[parentKey]) {
           this[listName] = load(this.region[parentKey])
         }
-        // if (!this.region[parentKey] || !this.levelCheck(this[listName], this.region[key])) {
         if (!this.levelCheck(this[listName], this.region[key])) {
           this.clearRegion(level)
           return false
@@ -97,7 +104,7 @@ export default {
   },
   beforeMount () {
     // sort by length and code
-    this.listProvince = this.type === 'group'
+    this.listProvince = this.type === GROUP
       ? srcProvince.slice().sort((a, b) => {
         const gap = a.value.length - b.value.length
         return gap === 0 ? Number(a.key) - Number(b.key) : gap

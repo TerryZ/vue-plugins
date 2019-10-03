@@ -83,7 +83,6 @@ export default {
           input: val => {
             callback(val)
             this.change()
-            this.emit()
           }
         }
       })
