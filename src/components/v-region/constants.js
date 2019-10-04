@@ -1,3 +1,6 @@
+/**
+ * Plugin types
+ */
 export const TEXT = 'text'
 export const SELECT = 'select'
 export const GROUP = 'group'
