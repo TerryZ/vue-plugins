@@ -14,7 +14,7 @@
         北京、天津、上海、重庆等直辖市与省同级，若选择的省是直辖市，则下级行政级别为 <strong>区/县</strong>，不是 <strong>市</strong>，在数据处理上注意区分！
         </div>
 
-        <h4 class="mt-3">下拉选择器模式</h4>
+        <h4 class="mt-3">下拉选择器模式 Group</h4>
         <div class="bg-light p-3 mb-3">
           <pre class="m-0 mb-3" v-text="JSON.stringify(modelGroup, null, 2)"></pre>
           <pre class="m-0" v-text="JSON.stringify(valuesGroup, null, 2)"></pre>
@@ -48,7 +48,7 @@
           </v-region>
         </p>
 
-        <h4 class="mt-3">下拉选择器多列竖排模式</h4>
+        <h4 class="mt-3">下拉选择器多列竖排模式 Column</h4>
         <div class="bg-light p-3 mb-3">
           <pre class="m-0 mb-3" v-text="JSON.stringify(modelColumn, null, 2)"></pre>
           <pre class="m-0" v-text="JSON.stringify(valuesColumn, null, 2)"></pre>
@@ -77,7 +77,7 @@
           </v-region>
         </p>
 
-        <h4 class="mt-3">城市选择器</h4>
+        <h4 class="mt-3">城市选择器 City</h4>
         <div class="bg-light p-3 mb-3">
           <pre class="m-0 mb-3" v-text="JSON.stringify(modelCity, null, 2)"></pre>
           <pre class="m-0" v-text="JSON.stringify(valuesCity, null, 2)"></pre>
@@ -90,13 +90,13 @@
           ></v-region>
         </p>
 
-        <h4 class="mt-3">纯文本模式 <small>初始化选中的项目，以纯文本的内容显示</small></h4>
+        <h4 class="mt-3">纯文本模式 Text <small>初始化选中的项目，以纯文本的内容显示</small></h4>
         <p class="alert alert-secondary">
             <strong>当前选中地区：</strong>
             <v-region :town="true" type="text" v-model="selected" ></v-region>
         </p>
 
-        <br>
+        <h4 class="mt-3">下拉列表模式 Select</h4>
 
         <h4 class="mt-3">省</h4>
         <v-region :city="false" :area="false"></v-region>

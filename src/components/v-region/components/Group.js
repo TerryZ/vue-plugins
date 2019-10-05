@@ -44,6 +44,7 @@ export default {
      */
     level (val) {
       this.list = this.getList(val)
+      this.adjust()
     }
   },
   render (h) {
@@ -130,11 +131,13 @@ export default {
       const child = []
       LEVELS.forEach(val => {
         if (this.levelAvailable(val.index)) {
-          child.push(h('li', { key: val.index }, [
+          child.push(h('li', {
+            key: val.index,
+            class: {
+              active: val.index === this.level
+            }
+          }, [
             h('a', {
-              class: {
-                active: val.index === this.level
-              },
               attrs: {
                 href: 'javascript:void(0);'
               },

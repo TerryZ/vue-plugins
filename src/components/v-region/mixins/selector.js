@@ -13,6 +13,11 @@ export default {
     showChange (val) {
       this.show = val
     },
+    adjust () {
+      this.$nextTick(() => {
+        this.$refs.drop.adjust()
+      })
+    },
     /**
      * Build region default toggle button
      *
