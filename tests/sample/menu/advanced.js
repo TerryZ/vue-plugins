@@ -35,5 +35,6 @@ export const advancedGroup = [{
     { id: 28, name: 'Memphis Grizzlies', desc: '孟菲斯灰熊', abbr: 'MEM' },
     { id: 29, name: 'New Orleans Pelicans', desc: '新奥尔良鹈鹕', abbr: 'NOP' },
     { id: 30, name: 'San Antonio Spurs', desc: '圣安东尼奥马刺', abbr: 'SAS' }
-  ] }
+  ]
+}
 ]

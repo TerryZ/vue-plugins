@@ -173,7 +173,12 @@
 
 <script>
 import nbaTeams from '@test/sample/nba-teams'
-import { regularBase, regularWithHeader, regularMultipleLevel, regularGroup } from '@test/sample/menu/regular'
+import {
+  regularBase,
+  regularWithHeader,
+  regularMultipleLevel,
+  regularGroup
+} from '@test/sample/menu/regular'
 import { advancedGroup } from '@test/sample/menu/advanced'
 
 export default {
