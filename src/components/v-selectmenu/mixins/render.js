@@ -96,9 +96,11 @@ export default {
       }
 
       return h('div', { class: 'sm-header' }, [
-        h('h3', { domProps: {
-          innerHTML: this.caption
-        } }),
+        h('h3', {
+          domProps: {
+            innerHTML: this.caption
+          }
+        }),
         h('div', { class: 'sm-control' }, header)
       ])
     },

@@ -31,12 +31,12 @@ export default {
      */
     emit (input = false) {
       if (!input) {
-        this.$emit('input', Object.fromEntries(
-          Object.entries(this.region)
-            .map(([key, value]) => {
-              return [key, value ? value.key : null]
-            })
-        ))
+        const model = {}
+        Object.entries(this.region)
+          .forEach(([key, value]) => {
+            model[key] = value ? value.key : null
+          })
+        this.$emit('input', model)
       }
       this.$emit('values', JSON.parse(JSON.stringify(this.region)))
     },
