@@ -178,13 +178,15 @@ export default {
       })
       this.listBuilt = [...[municipalityObj], ...listTmp, ...[specialObj]]
     },
-    emit (input = true) {
-      if (input) this.$emit('input', this.picked.map(val => val.key))
-      this.$emit('values', this.picked)
-      // dropdown position adjust
+    // dropdown position adjust
+    adjust () {
       this.$nextTick(() => {
         this.$refs.drop.adjust()
       })
+    },
+    emit (input = true) {
+      if (input) this.$emit('input', this.picked.map(val => val.key))
+      this.$emit('values', this.picked)
     },
     /**
      * v-model/value(keys) whether equal to picked keys
@@ -213,6 +215,7 @@ export default {
         this.picked.push(item)
       }
       this.emit()
+      this.adjust()
     },
     inPicked (city) {
       if (!city || !this.picked.length) return false

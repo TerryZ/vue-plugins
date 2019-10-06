@@ -90,6 +90,7 @@ export default {
           input: val => {
             callback(val)
             this.change()
+            this.adjust()
             if (this.isDone()) this.close()
           }
         }
