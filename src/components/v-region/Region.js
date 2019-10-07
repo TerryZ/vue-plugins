@@ -1,14 +1,20 @@
 import './styles/region.styl'
 import { SELECT, TEXT, GROUP, COLUMN, CITY } from './constants'
 
+import SelectGroup from './components/SelectGroup'
+import TextRegion from './components/Text'
+import GroupRegion from './components/Group'
+import ColumnGroup from './components/ColumnGroup'
+import CityPicker from './components/CityPicker'
+
 export default {
   name: 'v-region',
   components: {
-    'r-select': () => import('./components/SelectGroup'),
-    'r-text': () => import('./components/Text'),
-    'r-group': () => import('./components/Group'),
-    'r-column': () => import('./components/ColumnGroup'),
-    'r-city': () => import('./components/CityPicker')
+    'r-select': SelectGroup,
+    'r-text': TextRegion,
+    'r-group': GroupRegion,
+    'r-column': ColumnGroup,
+    'r-city': CityPicker
   },
   props: {
     type: {
