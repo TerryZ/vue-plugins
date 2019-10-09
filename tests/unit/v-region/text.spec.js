@@ -8,25 +8,25 @@ describe('v-region Text 纯文本模式', () => {
     propsData: {
       type: 'text',
       value: {
-        province: '350000',
-        city: '350100',
-        area: '350103',
-        town: '350103012'
+        province: '110000',
+        city: '110000',
+        area: '110101',
+        town: '110101001'
       }
     }
   })
-  it('使用数据初始化插件后，输出的文本内容应为："福建省福州市台江区"', () => {
+  it('使用数据初始化插件后，输出的文本内容应为："北京市北京市东城区"', () => {
     window.setTimeout(() => {
       // expect(w.find('.v-region').text()).to.equal('福建省福州市台江区')
-      expect(w.text()).to.equal('福建省福州市台江区')
+      expect(w.text()).to.equal('北京市北京市东城区')
     }, 1000)
   })
-  it('"town" prop 设置为 true，输出的纯文本内容应为："福建省福州市台江区宁化街道"', () => {
+  it('"town" prop 设置为 true，输出的纯文本内容应为："北京市北京市东城区东华门街道"', () => {
     w.setProps({
       town: true
     })
     window.setTimeout(() => {
-      expect(w.text()).to.equal('福建省福州市台江区宁化街道')
+      expect(w.text()).to.equal('北京市北京市东城区东华门街道')
     }, 1000)
   })
 })
