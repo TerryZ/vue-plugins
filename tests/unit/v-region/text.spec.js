@@ -29,4 +29,17 @@ describe('v-region Text 纯文本模式', () => {
       expect(w.text()).to.equal('北京市北京市东城区东华门街道')
     }, 1000)
   })
+  it('使用错误的数据进行初始化（福建省杭州市台江区宁化街道），最终显示的内容应只有 “福建省”', () => {
+    w.setProps({
+      value: {
+        province: '350000',
+        city: '330100',
+        area: '350103',
+        town: '350103012'
+      }
+    })
+    window.setTimeout(() => {
+      expect(w.text()).to.equal('福建省')
+    }, 1000)
+  })
 })
