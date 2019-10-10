@@ -8,11 +8,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
 .pre-loading__text {
   font-size: 16px;
-  margin-right: 10px;
+  margin-right: 3rem;
+  color: #333;
 }
 
 .pre-loading__loader{

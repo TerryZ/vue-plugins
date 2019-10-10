@@ -1,12 +1,12 @@
 <template>
-    <div id="app" class="container mt-5 mb-5">
-        <router-view></router-view>
-    </div>
+  <div id="app" class="container mt-5 mb-5 d-none">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-    import 'bootstrap/dist/css/bootstrap.min.css';
-    export default {}
+import 'bootstrap/dist/css/bootstrap.min.css'
+export default {}
 </script>
 
 <style lang="scss">
