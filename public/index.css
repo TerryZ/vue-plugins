@@ -1,0 +1,27 @@
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pre-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pre-loading__text {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.pre-loading__loader{
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: .25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border .75s linear infinite;
+}
