@@ -13,11 +13,16 @@
     <strong>We're sorry but vue-plugins doesn't work properly without JavaScript enabled. Please enable it to
     continue.</strong>
   </noscript>
-  <div class="pre-loading">
-    <div class="pre-loading__text">资源加载中……</div>
-    <div class="pre-loading__loader"></div>
-  </div>
-  <div id="app" style="display: none;">
+  <div id="app">
+    <div class="pre-loading">
+      <div class="pre-loading-wrapper">
+        <div class="pre-loading__box">
+          <div class="pre-loading__box-inner"></div>
+        </div>
+        <div class="pre-loading__text">资源加载中，请稍候……</div>
+      </div>
+      <!-- <div class="pre-loading__loader"></div> -->
+    </div>
   </div>
   <!-- built files will be auto injected -->
 </body>

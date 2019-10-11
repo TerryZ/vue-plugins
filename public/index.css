@@ -1,20 +1,40 @@
-@keyframes spinner-border {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .pre-loading {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
+  background-color: #0078D7;
+}
+
+/* Theme color -- gray */
+.pre-loading--gray {
+  background-color: #f0f0f0;
+}
+
+.pre-loading--gray .pre-loading__text {
+  color: #666;
+  text-shadow: 1px 1px 1px #fff;
+}
+
+.pre-loading--gray .pre-loading__box {
+  border-color: #333;
+}
+.pre-loading--gray .pre-loading__box-inner {
+  background-color: #333;
+}
+
+.pre-loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .pre-loading__text {
   font-size: 16px;
-  margin-right: 3rem;
-  color: #333;
+  margin-top: 3rem;
+  color: #eee;
+  text-shadow: 2px 2px 1px #333;
 }
 
 .pre-loading__loader{
@@ -26,4 +46,79 @@
   border-right-color: transparent;
   border-radius: 50%;
   animation: spinner-border .75s linear infinite;
+}
+
+.pre-loading__box {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  position: relative;
+  border: 6px solid white;
+  animation: loader-box 2s infinite ease;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+}
+
+.pre-loading__box-inner {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  animation: loader-box-inner 2s infinite ease-in;
+}
+
+@keyframes spinner-border {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-box {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  
+  25% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  
+  50% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  
+  75% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-box-inner {
+  0% {
+    height: 0%;
+  }
+  
+  25% {
+    height: 0%;
+  }
+  
+  50% {
+    height: 100%;
+  }
+  
+  75% {
+    height: 100%;
+  }
+  
+  100% {
+    height: 0%;
+  }
 }
