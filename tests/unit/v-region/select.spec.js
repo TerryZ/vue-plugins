@@ -1,13 +1,11 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
-import Region from '@/components/v-region/Region'
 import Select from '@/components/v-region/components/SelectGroup'
 
 describe('v-region Select 表单元素下拉列表模式', function () {
-  const w = mount(Region, {
+  const w = mount(Select, {
     propsData: {
-      type: 'select'
     }
   })
   it('不指定任何参数，默认可处理行政级别数量为 3 （省、市、区）', () => {
@@ -26,9 +24,8 @@ describe('v-region Select 表单元素下拉列表模式', function () {
   })
 
   it('"blank" prop 设置为 false，下拉列表中则没有 “请选择” 项目', () => {
-    const wb = mount(Region, {
+    const wb = mount(Select, {
       propsData: {
-        type: 'select',
         blank: false
       }
     })
@@ -36,9 +33,8 @@ describe('v-region Select 表单元素下拉列表模式', function () {
   })
 
   it('"disabled" prop 设置为 true，禁用插件，所有下拉项目必须为禁用状态', () => {
-    const wd = mount(Region, {
+    const wd = mount(Select, {
       propsData: {
-        type: 'select',
         town: true,
         disabled: true
       }

@@ -1,13 +1,12 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
-import Region from '@/components/v-region/Region'
+import Text from '@/components/v-region/components/Text'
 
 // 测试虚拟地级北京市（市级为虚拟级别，数据直接使用父级）
 describe('v-region Text 纯文本模式', () => {
-  const w = mount(Region, {
+  const w = mount(Text, {
     propsData: {
-      type: 'text',
       value: {
         province: '110000',
         city: '110000',

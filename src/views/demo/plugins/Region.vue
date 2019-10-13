@@ -156,10 +156,10 @@ export default {
       value1: {},
       value2: {},
       selected: {
-        province: null,
-        city: null,
-        area: null,
-        town: null
+        province: '350000',
+        city: '350100',
+        area: '350103',
+        town: '350103012'
       },
       uiSelected: {
         province: '350000',
@@ -247,15 +247,15 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.selected = {
-        province: '350000',
-        city: '350100',
-        area: '350103',
-        town: '350103012'
-      }
-      // this.selectedArray = ['110000', '350100'];
-    }, 1000)
+    // setTimeout(() => {
+    //   this.selected = {
+    //     province: '350000',
+    //     city: '350100',
+    //     area: '350103',
+    //     town: '350103012'
+    //   }
+    //   // this.selectedArray = ['110000', '350100'];
+    // }, 1000)
   }
 }
 </script>
