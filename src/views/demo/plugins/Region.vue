@@ -223,7 +223,8 @@ export default {
     },
     uiValues (d) {
       // console.log(JSON.stringify(d));
-      this.btnText = (!d.province && !d.city && !d.area && !d.town) ? '请选择'
+      this.btnText = (!d.province && !d.city && !d.area && !d.town)
+        ? '请选择'
         : `${this.getValue(d.province)}${this.getValue(d.city)}${this.getValue(d.area)}${this.getValue(d.town)}`.trim()
     },
     getValue (obj) {
