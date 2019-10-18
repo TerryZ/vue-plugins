@@ -1,5 +1,6 @@
 import './dialog.scss'
-import { messageTypes, alertIconClass, toastConstants, languages } from './constants'
+import { messageTypes, alertIconClass, toastConstants } from './constants'
+import language from './language'
 
 const MODAL = 'modal'
 const ALERT = 'alert'
@@ -96,7 +97,7 @@ export default {
     buildConfig (config) {
       // let merged = Object.assign({}, dialogDefaults, config);
       // return merged;
-      config.i18n = languages[config.language]
+      config.i18n = language[config.language]
       return config
     },
     /**

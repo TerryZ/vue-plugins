@@ -3,7 +3,7 @@
     <div
       dialog="v-dialog"
       tabindex="-1"
-      :class="['v-dialog', {'v-dialog--buzz-out': shake}]"
+      :class="classes"
       :style="[{'z-index':dialogZIndex}]"
       @click.self="outsideClick"
     >
@@ -80,6 +80,12 @@ export default {
         case messageTypes.error: return 'v-dialog__shadow--error'
         case messageTypes.success: return 'v-dialog__shadow--success'
         default: return ''
+      }
+    },
+    classes () {
+      return {
+        'v-dialog': true,
+        'v-dialog--buzz-out': this.shake
       }
     }
   },
