@@ -11,13 +11,21 @@ export default {
       default: true
     },
     /**
+     * Click backdrop to close dialog
+     */
+    backdropClose: {
+      type: Boolean,
+      default: false
+    },
+    /**
      * The message show in dialog (work on alert, mask, toast mode)
      */
     message: String,
     /**
      * Dialog title bar text or title bar show control
      *
-     * @example title: false// close title bar
+     * @example
+     * title: false// close title bar
      */
     titleBar: {
       type: [String, Boolean],
@@ -84,10 +92,15 @@ export default {
      * backdrop click animate
      */
     outsideClick () {
-      this.shake = true
-      setTimeout(() => {
-        this.shake = false
-      }, 750)
+      if (!this.backdrop) return
+      if (this.backdropClose) {
+        this.closeDialog(true)
+      } else {
+        this.shake = true
+        setTimeout(() => {
+          this.shake = false
+        }, 750)
+      }
     },
     /**
      * adjust position and size

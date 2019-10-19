@@ -96,11 +96,9 @@ export default {
         height: this.bodyHeight + 'px'
       }
     }, [
-      h('component', {
-        props: {
-          ...this.params,
-          is: this.component
-        },
+      // Dynamic component
+      h(this.component, {
+        props: this.params,
         on: {
           close: this.modalClose
         }

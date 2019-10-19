@@ -46,16 +46,16 @@ export default {
   name: 'Dialog',
   methods: {
     callModal () {
-      let that = this
       this.$dlg.modal(profile, {
         width: 500,
         height: 620,
         title: 'Modal of v-dialogs',
         backdrop: true,
+        backdropClose: true,
         params: { userName: 'TerryZ' },
-        callback: function (data) {
+        callback: data => {
           // console.log(data);
-          that.$dlg.alert(`Received user name: ${data.name}`)
+          this.$dlg.alert(`Received user name: ${data.name}`)
         }
       })
     },

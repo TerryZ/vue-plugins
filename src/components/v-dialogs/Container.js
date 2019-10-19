@@ -44,6 +44,7 @@ export default {
           height: val.height,
           closeTime: val.closeTime,
           backdrop: val.backdrop,
+          backdropClose: val.backdropClose,
           titleBar: val.title
         },
         on: {
