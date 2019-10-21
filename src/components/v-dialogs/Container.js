@@ -1,4 +1,5 @@
-import './dialog.scss'
+import './styles/dialog.sass'
+
 import { messageTypes, alertIconClass, toastConstants } from './constants'
 import language from './language'
 

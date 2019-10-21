@@ -81,7 +81,7 @@ export default {
         height: this.bodyHeight + 'px'
       }
     }, [
-      h('div', { class: ['v-dialog-toast__container', this.contentClass] }, child)
+      h('div', { class: ['v-dialog-toast__container', this.contentClass, this.icon ? '' : 'no-icon'] }, child)
     ])
 
     const dialog = h('div', {
