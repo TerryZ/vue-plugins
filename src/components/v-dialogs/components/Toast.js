@@ -18,6 +18,10 @@ export default {
       type: String,
       default: messageTypes.info
     },
+    icon: {
+      type: Boolean,
+      default: true
+    },
     iconClassName: String,
     /**
      * Dialog corner position type
@@ -51,11 +55,14 @@ export default {
       }, '×'))
     }
     // Type icon
-    child.push(h('div', {
-      class: 'v-dialog-toast__icon'
-    }, [
-      h('i', { class: ['dlg-icon-font', this.iconClassName] })
-    ]))
+    if (this.icon) {
+      child.push(h('div', {
+        class: 'v-dialog-toast__icon'
+      }, [
+        h('i', { class: ['dlg-icon-font', this.iconClassName] })
+      ]))
+    }
+
     // Title and content
     child.push(h('div', {
       class: 'v-dialog-toast__content'

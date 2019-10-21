@@ -19,6 +19,10 @@ export default {
       type: String,
       default: messageTypes.info
     },
+    icon: {
+      type: Boolean,
+      default: true
+    },
     iconClassName: String
   },
   computed: {
@@ -77,13 +81,16 @@ export default {
       }, this.i18n.btnCancel))
     }
     // dialog body
+    // TODO: 解决关闭图标后，留白区域的处理
+    const alertClass = ['v-dialog-alert']
+    if (this.icon) alertClass.push(this.iconClassName)
     child.push(h('div', {
       class: 'v-dialog-body',
       style: {
         height: this.bodyHeight + 'px'
       }
     }, [
-      h('div', { class: ['v-dialog-alert', this.iconClassName] }, [
+      h('div', { class: alertClass }, [
         h('div', {
           class: 'v-dialog-alert__content',
           domProps: {

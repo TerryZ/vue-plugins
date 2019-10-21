@@ -80,6 +80,7 @@ export default {
         case TOAST:
           options.props.iconClassName = val.iconClassName
           options.props.messageType = val.messageType
+          options.props.icon = val.icon
           if (val.type === TOAST) {
             options.props.position = val.position
             options.props.contentClass = val.contentClass
