@@ -8,9 +8,9 @@
     </h1>
     <hr>
     <h3 class="mt-2">Modal</h3>
-    <p>
+    <div>
       <button type="button" class="btn btn-secondary" @click="callModal()" id="btn-modal">Modal</button>
-    </p>
+    </div>
     <h5 class="mt-3">Header bar</h5>
     <div>
       <button type="button" class="btn btn-outline-dark mr-2" @click="callModal(false)" id="btn-alert-info">Close header bar</button>
