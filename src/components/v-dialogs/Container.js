@@ -157,25 +157,25 @@ export default {
       config.type = ALERT
       if (!config.messageType) config.messageType = messageTypes.info
 
-      let title = config.i18n.titleInfo
-      switch (config.messageType) {
-        case messageTypes.warning:
-          title = config.i18n.titleWarning
-          break
-        case messageTypes.error:
-          title = config.i18n.titleError
-          break
-        case messageTypes.success:
-          title = config.i18n.titleSuccess
-          break
-        case messageTypes.confirm:
-          title = config.i18n.titleConfirm
-          break
-        default:
-          title = config.i18n.titleInfo
+      if ('title' in config === false || config.title !== false) {
+        switch (config.messageType) {
+          case messageTypes.warning:
+            config.title = config.i18n.titleWarning
+            break
+          case messageTypes.error:
+            config.title = config.i18n.titleError
+            break
+          case messageTypes.success:
+            config.title = config.i18n.titleSuccess
+            break
+          case messageTypes.confirm:
+            config.title = config.i18n.titleConfirm
+            break
+          default:
+            config.title = config.i18n.titleInfo
+        }
       }
       config.iconClassName = alertIconClass[config.messageType]
-      config.title = title
       config.width = config.message.length > MAX_CONTENT_LENGTH ? 700 : 450
       config.height = config.message.length > MAX_CONTENT_LENGTH
         ? 400

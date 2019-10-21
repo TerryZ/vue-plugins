@@ -25,7 +25,7 @@ export default {
      * Dialog title bar text or title bar show control
      *
      * @example
-     * title: false// close title bar
+     * titleBar: false// close title bar
      */
     titleBar: {
       type: [String, Boolean],

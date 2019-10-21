@@ -81,7 +81,6 @@ export default {
       }, this.i18n.btnCancel))
     }
     // dialog body
-    // TODO: 解决关闭图标后，留白区域的处理
     child.push(h('div', {
       class: 'v-dialog-body',
       style: {
