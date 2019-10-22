@@ -8,6 +8,11 @@
     </h1>
     <hr>
     <h3 class="mt-2">Modal</h3>
+    <div class="my-2">
+      <strong>Vuex content:</strong>
+      <span v-text="$store.state.user"></span>
+    </div>
+    <!-- <component :is="page"></component> -->
     <div>
       <button type="button" class="btn btn-secondary" @click="callModal()" id="btn-modal">Modal</button>
     </div>
@@ -62,6 +67,11 @@
 import profile from '../Profile'
 export default {
   name: 'Dialog',
+  // data () {
+  //   return {
+  //     page: profile
+  //   }
+  // },
   methods: {
     callModal (title) {
       const options = {

@@ -93,6 +93,7 @@ export default {
      */
     outsideClick () {
       if (!this.backdrop) return
+      console.log(this.backdropClose)
       if (this.backdropClose) {
         this.closeDialog(true)
       } else {

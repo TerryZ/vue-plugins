@@ -99,6 +99,7 @@ export default {
       // let merged = Object.assign({}, dialogDefaults, config);
       // return merged;
       config.i18n = language[config.language]
+      if (!config.messageType) config.messageType = info
       return config
     },
     /**
@@ -121,8 +122,8 @@ export default {
      * @param p - options
      */
     addModal (p) {
+      p.type = MODAL
       const config = this.buildConfig(p)
-      config.type = MODAL
       return this.buildDialog(config)
     },
     /**
@@ -130,10 +131,9 @@ export default {
      * @param p - options
      */
     addAlert (p) {
+      p.type = ALERT
       const config = this.buildConfig(p)
       const MAX_CONTENT_LENGTH = 70
-      config.type = ALERT
-      if (!config.messageType) config.messageType = info
 
       if ('title' in config === false || config.title !== false) {
         config.title = getTitle(config.messageType, config.language)
@@ -153,9 +153,9 @@ export default {
      * @param p - options
      */
     addMask (p) {
+      p.type = MASK
       const config = this.buildConfig(p)
       const MAX_CONTENT_LENGTH = 65
-      config.type = MASK
       config.message = config.message || config.i18n.maskText
       if (config.message.length > MAX_CONTENT_LENGTH) config.message = stringSub(config.message, 65)
       config.width = 300
@@ -178,12 +178,11 @@ export default {
      * 'bottomRight'
      */
     addToast (p) {
+      p.type = TOAST
       const config = this.buildConfig(p)
-      config.type = TOAST
       config.message = stringSub(config.message, 56)
       config.width = 300
       config.height = 80
-      if (!config.messageType) config.messageType = info
       config.iconClassName = toastConstants.iconClass[config.messageType]
       config.title = getTitle(config.messageType, config.language)
       config.contentClass = toastTheme(config.messageType)
