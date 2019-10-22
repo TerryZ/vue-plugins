@@ -30,49 +30,49 @@
 </template>
 
 <script>
-    //import store from '../../store';
-    export default {
-        name: "UserProfile",
-        props: {
-      userName: String
-        },
-        data(){
-            return {
-                list: ['form input element1', 'form input element2', 'form input element3', 'form input element4'],
-                models: Array(4).fill('')
-            };
-        },
-        computed: {
-            user(){
-                return '';//store.state.user;
-            }
-        },
-        methods: {
-            save(){
-                this.$dlg.alert('保存成功！',()=>{
-                    this.$dlg.close({name: 'abc'});
-                },{
-                    messageType:'success'
-                });
-            },
-            close(){
-                this.$emit('close', { name: this.userName });
-            }
-        },
-        mounted(){
-            //console.log(store.state.user)
-            /*
-            let that = this;
-            $(this.$refs.upload).eUploadBaseInit({
-                callback : function(fileInfo){
-                    if(fileInfo){
-                        $(that.$refs.uploadImg).attr('src',fileInfo.url);
-                    }
-                }
-            });
-            */
-        }
+// import store from '../../store';
+export default {
+  name: 'UserProfile',
+  props: {
+    userName: String
+  },
+  data () {
+    return {
+      list: ['form input element1', 'form input element2', 'form input element3', 'form input element4'],
+      models: Array(4).fill('')
     }
+  },
+  computed: {
+    user () {
+      return ''// store.state.user;
+    }
+  },
+  methods: {
+    save () {
+      this.$dlg.alert('保存成功！', () => {
+        this.$dlg.close({ name: 'abc' })
+      }, {
+        messageType: 'success'
+      })
+    },
+    close () {
+      this.$emit('close', { name: this.userName })
+    }
+  },
+  mounted () {
+    // console.log(store.state.user)
+    /*
+    let that = this;
+    $(this.$refs.upload).eUploadBaseInit({
+        callback : function(fileInfo){
+            if(fileInfo){
+                $(that.$refs.uploadImg).attr('src',fileInfo.url);
+            }
+        }
+    });
+    */
+  }
+}
 </script>
 
 <style scoped>

@@ -1,10 +1,16 @@
+export const types = {
+  MODAL: 'modal',
+  ALERT: 'alert',
+  MASK: 'mask',
+  TOAST: 'toast'
+}
+
 export const messageTypes = {
   info: 'info',
   success: 'success',
   warning: 'warning',
   error: 'error',
-  confirm: 'confirm',
-  inputConfirm: 'inputConfirm'
+  confirm: 'confirm'
 }
 
 export const toastConstants = {

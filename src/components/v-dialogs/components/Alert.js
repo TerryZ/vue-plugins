@@ -2,6 +2,8 @@ import { messageTypes } from '../constants'
 import mixins from '../mixins'
 import render from '../mixins/render'
 
+const { info, warning, error, success, confirm } = messageTypes
+
 export default {
   name: 'DialogAlert',
   mixins: [mixins, render],
@@ -17,7 +19,7 @@ export default {
      */
     messageType: {
       type: String,
-      default: messageTypes.info
+      default: info
     },
     icon: {
       type: Boolean,
@@ -26,11 +28,11 @@ export default {
     iconClassName: String
   },
   computed: {
-    alertShadow () {
+    shadow () {
       switch (this.messageType) {
-        case messageTypes.warning: return 'v-dialog__shadow--warning'
-        case messageTypes.error: return 'v-dialog__shadow--error'
-        case messageTypes.success: return 'v-dialog__shadow--success'
+        case warning: return 'v-dialog__shadow--warning'
+        case error: return 'v-dialog__shadow--error'
+        case success: return 'v-dialog__shadow--success'
         default: return ''
       }
     },
@@ -67,7 +69,7 @@ export default {
       }
     }, this.i18n.btnOk))
     // Cancel button
-    if (this.messageType === messageTypes.confirm || this.messageType === messageTypes.inputConfirm) {
+    if (this.messageType === confirm) {
       buttons.push(h('button', {
         attrs: {
           type: 'button'
@@ -107,7 +109,7 @@ export default {
       }
     }, [
       this.buildDlgContent(h, {
-        className: ['v-dialog-content', this.alertShadow],
+        className: ['v-dialog-content', this.shadow],
         transitionName: 'v-dialog--candy',
         child: child
       })

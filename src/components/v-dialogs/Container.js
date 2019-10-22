@@ -1,12 +1,11 @@
 import './styles/dialog.sass'
 
-import { messageTypes, alertIconClass, toastConstants } from './constants'
 import language from './language'
+import { types, messageTypes, alertIconClass, toastConstants } from './constants'
+import { getTitle, toastTheme, stringSub } from './helper'
 
-const MODAL = 'modal'
-const ALERT = 'alert'
-const MASK = 'mask'
-const TOAST = 'toast'
+const { info } = messageTypes
+const { MODAL, ALERT, MASK, TOAST } = types
 
 const KEY_PREFIX = 'v-dialogs-'
 
@@ -25,7 +24,7 @@ export default {
       dialogs: []
     }
   },
-  // The render functions is fired twice when the component(async) is first used
+  // The render functions is fired twice when the component(async) is first time used
   render (h) {
     return h('div', {
       class: 'v-dialog-container'
@@ -81,7 +80,6 @@ export default {
         case TOAST:
           options.props.iconClassName = val.iconClassName
           options.props.messageType = val.messageType
-          options.props.icon = val.icon
           if (val.type === TOAST) {
             options.props.position = val.position
             options.props.contentClass = val.contentClass
@@ -104,27 +102,7 @@ export default {
       return config
     },
     /**
-     * String cut
-     * @param str [string] src string
-     * @param n   [number] save string length
-     * @returns string
-     */
-    stringSub (str, n) {
-      if (typeof (str) !== 'string') return
-      /* eslint-disable */
-      const r=/[^\x00-\xff]/g;
-        /* eslint-enable */
-      if (str.replace(r, 'mm').length <= n) { return str }
-      const m = Math.floor(n / 2)
-      for (let i = m; i < str.length; i++) {
-        if (str.substr(0, i).replace(r, 'mm').length >= n) {
-          return str.substr(0, i) + '...'
-        }
-      }
-      return str
-    },
-    /**
-     * Init default options
+     * Initialize default options
      */
     buildDialog (config) {
       const idx = this.dialogs.findIndex(val => {
@@ -155,31 +133,16 @@ export default {
       const config = this.buildConfig(p)
       const MAX_CONTENT_LENGTH = 70
       config.type = ALERT
-      if (!config.messageType) config.messageType = messageTypes.info
+      if (!config.messageType) config.messageType = info
 
       if ('title' in config === false || config.title !== false) {
-        switch (config.messageType) {
-          case messageTypes.warning:
-            config.title = config.i18n.titleWarning
-            break
-          case messageTypes.error:
-            config.title = config.i18n.titleError
-            break
-          case messageTypes.success:
-            config.title = config.i18n.titleSuccess
-            break
-          case messageTypes.confirm:
-            config.title = config.i18n.titleConfirm
-            break
-          default:
-            config.title = config.i18n.titleInfo
-        }
+        config.title = getTitle(config.messageType, config.language)
       }
       config.iconClassName = alertIconClass[config.messageType]
       config.width = config.message.length > MAX_CONTENT_LENGTH ? 700 : 450
       config.height = config.message.length > MAX_CONTENT_LENGTH
         ? 400
-        : typeof config.title === 'undefined' || typeof config.title === 'string'
+        : typeof config.title === 'string' || typeof config.title === 'undefined'
           ? 210
           : 180
 
@@ -191,9 +154,10 @@ export default {
      */
     addMask (p) {
       const config = this.buildConfig(p)
+      const MAX_CONTENT_LENGTH = 65
       config.type = MASK
       config.message = config.message || config.i18n.maskText
-      config.message = this.stringSub(config.message, 65)
+      if (config.message.length > MAX_CONTENT_LENGTH) config.message = stringSub(config.message, 65)
       config.width = 300
       config.height = 80
       config.backdrop = true
@@ -202,8 +166,10 @@ export default {
     },
     /**
      * Open a Toast dialog (corner dialog)
+     *
      * @param p - options
-     * @enum position
+     *
+     * @enum p.position
      * 'topLeft'
      * 'topCenter'
      * 'topRight'
@@ -214,32 +180,22 @@ export default {
     addToast (p) {
       const config = this.buildConfig(p)
       config.type = TOAST
-      config.message = this.stringSub(config.message, 56)
-      config.title = config.i18n.titleInfo
+      config.message = stringSub(config.message, 56)
       config.width = 300
       config.height = 80
-      if (!config.messageType) config.messageType = messageTypes.info
+      if (!config.messageType) config.messageType = info
       config.iconClassName = toastConstants.iconClass[config.messageType]
-      switch (config.messageType) {
-        case messageTypes.warning:
-          config.title = config.i18n.titleWarning
-          config.contentClass = toastConstants.contentClass.warning
-          break
-        case messageTypes.error:
-          config.title = config.i18n.titleError
-          config.contentClass = toastConstants.contentClass.error
-          break
-        case messageTypes.success:
-          config.title = config.i18n.titleSuccess
-          config.contentClass = toastConstants.contentClass.success
-          break
-      }
+      config.title = getTitle(config.messageType, config.language)
+      config.contentClass = toastTheme(config.messageType)
 
       return this.buildDialog(config)
     },
     /**
      * Close dialog, last one or specified key dialog (Modal, Alert, Mask, Toast)
-     * @param key - the dialog key, you can get it like this: let key = this.$vDialog.alert('your msg');
+     *
+     * @param {string} key - the dialog key, you can get it like below
+     *
+     * const key = this.$dlg.alert('your msg')
      */
     close (key) {
       if (!this.dialogs.length) return
@@ -269,7 +225,7 @@ export default {
     },
     /**
      * Close all dialog
-     * @param callback[function] the callback when all dialogs closed
+     * @param callback[function] the callback fired when all dialogs closed
      */
     closeAll (callback) {
       if (this.dialogs.length) this.dialogs = []
