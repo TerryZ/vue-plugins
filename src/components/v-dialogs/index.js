@@ -40,12 +40,10 @@ export default {
       return params
     }
 
-    const instanceName = options.instanceName ? options.instanceName : '$dlg'
-
     /**
      * Define v-dialogs api
      */
-    Object.defineProperty(Vue.prototype, instanceName, {
+    Object.defineProperty(Vue.prototype, options.instanceName || '$dlg', {
       value: {
         modal (component, params = {}) {
           if (!component) return
