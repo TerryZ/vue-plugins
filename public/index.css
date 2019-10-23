@@ -13,15 +13,16 @@
 }
 
 .pre-loading--gray .pre-loading__text {
-  color: #666;
+  color: #aaa;
   text-shadow: 1px 1px 1px #fff;
 }
 
 .pre-loading--gray .pre-loading__box {
-  border-color: #333;
+  border-color: #666;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
 }
 .pre-loading--gray .pre-loading__box-inner {
-  background-color: #333;
+  background-color: #666;
 }
 
 .pre-loading-wrapper {

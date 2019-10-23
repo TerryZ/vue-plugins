@@ -26,6 +26,8 @@ export default {
   },
   // The render functions is fired twice when the component(async) is first time used
   render (h) {
+    console.log('---')
+    console.log(this.$store)
     return h('div', {
       class: 'v-dialog-container'
       // directives: [{

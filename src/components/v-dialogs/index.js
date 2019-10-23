@@ -1,15 +1,12 @@
-/**
- * v-dialogs container
- */
-import container from './Container'
+import { getContainer } from './Dialog'
 
-const Plugin = {
+export default {
   install (Vue, options = {}) {
-    const Dialog = Vue.extend(container)
-    const dlg = new Dialog()
-    document.body.appendChild(dlg.$mount().$el)
-
-    const mergeParams = (p) => {
+    /**
+     * Merge options
+     * @param {object} p
+     */
+    const merge = p => {
       const params = {}
       params.language = typeof options.language === 'string' ? options.language : 'cn'
       if (typeof options.closeButton === 'boolean') {
@@ -20,6 +17,17 @@ const Plugin = {
       }
       return Object.assign({}, params, p)
     }
+    /**
+     * Handle the arguments
+     * @param {array} args
+     *
+     * use alert for example
+     *
+     * this.$dlg.alert('some text')
+     * this.$dlg.alert('some text', callback)
+     * this.$dlg.alert('some text', options)
+     * this.$dlg.alert('some text', callback, options)
+     */
     const paramSet = args => {
       let params = {}
 
@@ -27,19 +35,23 @@ const Plugin = {
       if (args.length === 2 && typeof args[1] === 'object') params = args[1]
       if (typeof args[1] === 'function') params.callback = args[1]
 
-      params = mergeParams(params)
+      params = merge(params)
       params.message = typeof args[0] === 'string' ? args[0] : ''
       return params
     }
+
     const instanceName = options.instanceName ? options.instanceName : '$dlg'
 
+    /**
+     * Define v-dialogs api
+     */
     Object.defineProperty(Vue.prototype, instanceName, {
       value: {
         modal (component, params = {}) {
           if (!component) return
-          params = mergeParams(params)
+          params = merge(params)
           params.component = component
-          return dlg.addModal(params)
+          return getContainer().addModal(params)
         },
         /**
          * Open a Alert dialog
@@ -63,24 +75,22 @@ const Plugin = {
          */
         alert () {
           if (!arguments.length || !arguments[0]) return
-          return dlg.addAlert(paramSet(arguments))
+          return getContainer().addAlert(paramSet(arguments))
         },
         mask () {
-          return dlg.addMask(paramSet(arguments))
+          return getContainer().addMask(paramSet(arguments))
         },
         toast () {
           if (!arguments.length || !arguments[0]) return
-          return dlg.addToast(paramSet(arguments))
+          return getContainer().addToast(paramSet(arguments))
         },
         close (key) {
-          dlg.close(key)
+          getContainer().close(key)
         },
         closeAll (callback) {
-          dlg.closeAll(callback)
+          getContainer().closeAll(callback)
         }
       }
     })
   }
 }
-
-export default Plugin
