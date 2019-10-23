@@ -78,6 +78,7 @@ export default {
         width: 500,
         height: 620,
         title: title,
+        customClass: 'aabbcc',
         backdrop: true,
         backdropClose: true,
         params: { userName: 'TerryZ' },

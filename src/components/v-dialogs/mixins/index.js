@@ -53,11 +53,6 @@ export default {
      */
     dialogKey: String,
     /**
-     * Use custom class in Dialog
-     * only work on Modal mode
-     */
-    customClass: '',
-    /**
      * auto close dialog seconds
      */
     closeTime: {
