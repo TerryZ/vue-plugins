@@ -57,6 +57,7 @@ export default {
          * @param message [string] (required)
          * @param callback [function] (optional)
          * @param params [object] (optional)
+         *
          * @returns dialog key [string]
          *
          * open a information type Alert dialog

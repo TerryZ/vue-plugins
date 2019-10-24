@@ -98,7 +98,8 @@ export default {
       return Array.apply(null, { length: end - start + 1 }).map((val, index) => start + index)
     },
     pageInfo () {
-      return this.i18n.pageInfo.replace('#pageNumber#', this.currentPage)
+      return this.i18n.pageInfo
+        .replace('#pageNumber#', this.currentPage)
         .replace('#totalPage#', this.totalPage)
         .replace('#totalRow#', this.totalRow)
     },

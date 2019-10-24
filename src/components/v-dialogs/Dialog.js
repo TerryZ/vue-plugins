@@ -3,6 +3,12 @@ import Container from './Container'
 
 let pool
 
+/**
+ * Singleton mode
+ *
+ * @export
+ * @returns
+ */
 export function getContainer () {
   if (pool) {
     return pool
