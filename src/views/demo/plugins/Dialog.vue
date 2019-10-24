@@ -126,7 +126,7 @@ export default {
       const options = {
         messageType: type,
         icon: icon,
-        position: 'bottomRight'
+        position: 'topCenter'
       }
       if (typeof title !== 'undefined') options.titleBar = title
       if (type === 'info') {
