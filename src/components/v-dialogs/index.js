@@ -8,13 +8,11 @@ export default {
      */
     const merge = p => {
       const params = {}
-      params.language = typeof options.language === 'string' ? options.language : 'cn'
-      if (typeof options.closeButton === 'boolean') {
-        params.closeButton = options.closeButton
-      }
-      if (typeof options.maxButton === 'boolean') {
-        params.maxButton = options.maxButton
-      }
+      const { language, closeButton, maxButton, icon } = options
+      params.language = typeof language === 'string' ? language : 'cn'
+      if (typeof closeButton === 'boolean') params.closeButton = closeButton
+      if (typeof maxButton === 'boolean') params.maxButton = maxButton
+      if (typeof icon === 'boolean') params.icon = icon
       return Object.assign({}, params, p)
     }
     /**

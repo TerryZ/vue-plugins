@@ -61,7 +61,7 @@ export default {
   },
   mounted () {
     // console.log(store.state.user)
-    console.log(this.$store)
+    // console.log(this.$store)
     /*
     let that = this;
     $(this.$refs.upload).eUploadBaseInit({
