@@ -69,6 +69,20 @@ export default {
     fullWidth: {
       type: Boolean,
       default: false
+    },
+    /**
+     * the dropdown layer completely cover toggle item
+     */
+    cover: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * the spacing between toggle and dropdown (unit: px)
+     */
+    spacing: {
+      type: Number,
+      default: 5
     }
   },
   data () {
@@ -164,7 +178,7 @@ export default {
     whole (e) {
       if (this.show) {
         /**
-         * is caller element click
+         * check if caller element click
          */
         const inCaller = this.eventPath(e).findIndex(val => val === this.$el) !== -1
         /**
@@ -212,12 +226,14 @@ export default {
      * @param menu
      */
     adjustTop (pos, menu) {
-      const gap = 5
+      const gap = this.cover ? 0 : this.spacing
       const scrollTop = window.pageYOffset
       const viewHeight = document.documentElement.clientHeight
       const srcTop = this.rightClick ? this.y : pos.top + scrollTop
       let t = this.rightClick ? this.y : pos.top + pos.height + gap + scrollTop
-      let overDown = false; let overUp = false; let up = false
+      let overDown = false
+      let overUp = false
+      let up = false
       // list over screen
       if ((t + menu.height) > (scrollTop + viewHeight)) overDown = true
       if ((srcTop - gap - menu.height) < scrollTop) overUp = true
