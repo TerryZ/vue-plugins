@@ -1,74 +1,64 @@
 <template>
-  <div class="p-4">
-    <h4>Vuex content</h4>
-    <p v-text="user && user.name"></p>
-
-    <h4>Props content</h4>
-    <p v-text="userName"></p>
-
-    <h4>Other content</h4>
+  <div class="p-3">
     <p>
-        互联网科技与金融的结合变革了传统金融的经营思路，促使了金融行业的转型。如何利用科技进一步推动社会与经济的发展，成为了科技和金融领域需要共同思考的问题。11 日下午金融科技主论坛，不仅有蚂蚁金服发布在金融云、AI、风控、生物识别、开放平台等领域的最新进展以及技术突破，更有世界级别大咖：联合国粮农署副总干事 Mr. Daniel J. Gustafson 分享“科技如何消除贫困，推动农业发展”等。
-        <!--<h3 class="box-title"><strong>asdfasf</strong> 的用户信息</h3>-->
+      Name (received by params):<input type="text" class="form-control" v-model="name">
     </p>
-
-    <p v-for="(item, index) in list" :key="index">
-      <input type="text" v-model="models[index]" class="form-control" :placeholder="item">
+    <p>
+      Age:<input type="text" class="form-control" v-model="age">
     </p>
-
-    <p >
-      <!-- <fa-icon icon="times"></fa-icon> -->
-      <button type="button" class="btn btn-primary" @click="close" id="btn-modal-close">
-        <fa-icon icon="check"></fa-icon> close
+    <div>
+      Company:
+      <div class="input-group">
+        <input type="text" class="form-control" disabled="disabled" v-model="company" placeholder="Please choose a company">
+        <span class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" @click="chooseCompany">Choose</button>
+        </span>
+      </div>
+    </div>
+    <p class="mt-3">
+      <fa-icon icon="check"></fa-icon>
+      <button type="button" class="btn btn-primary mr-3" @click="ok">
+        <fa-icon icon="check"></fa-icon> OK
       </button>
-      <button type="button" class="btn btn-default" @click="save"> 保存</button>
     </p>
   </div>
 </template>
 
 <script>
-// import store from '../../store';
+import cp from './Company'
 export default {
-  name: 'UserProfile',
   props: {
-    userName: String
+    name: String
   },
   data () {
     return {
-      list: ['form input element1', 'form input element2', 'form input element3', 'form input element4'],
-      models: Array(4).fill('')
-    }
-  },
-  computed: {
-    user () {
-      return ''// this.$store.state.user
+      company: '',
+      age: 20
     }
   },
   methods: {
-    save () {
-      this.$dlg.alert('保存成功！', () => {
-        this.$dlg.close({ name: 'abc' })
-      }, {
-        messageType: 'success'
-      })
+    ok () {
+      const key = this.$dlg.mask('Data saving...(sleep 3 sec)')
+      setTimeout(() => {
+        this.$dlg.close(key)
+        this.$emit('close', { companyName: this.company })
+      }, 3000)
     },
-    close () {
-      this.$emit('close', { name: this.userName })
+    chooseCompany () {
+      console.log(this)
+      this.$dlg.modal(cp, {
+        width: 500,
+        height: 500,
+        title: 'Company list',
+        callback: data => {
+          this.$dlg.toast(`Your selected <b>${data.name}</b> company.`, { closeTime: 2 })
+          this.company = data && data.name
+        }
+      })
     }
   },
   mounted () {
-    // console.log(store.state.user)
-    console.log(this)
-    /*
-    let that = this;
-    $(this.$refs.upload).eUploadBaseInit({
-        callback : function(fileInfo){
-            if(fileInfo){
-                $(that.$refs.uploadImg).attr('src',fileInfo.url);
-            }
-        }
-    });
-    */
+    console.dir(this)
   }
 }
 </script>

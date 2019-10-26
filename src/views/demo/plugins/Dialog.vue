@@ -81,7 +81,7 @@ export default {
         customClass: 'aabbcc',
         backdrop: true,
         backdropClose: true,
-        params: { userName: 'TerryZ' },
+        params: { name: 'Terry Zeng' },
         callback: data => {
           // console.log(data);
           this.$dlg.alert(`Received user name: ${data.name}`)
