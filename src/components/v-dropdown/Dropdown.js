@@ -221,25 +221,32 @@ export default {
       this.styleSheet.left = `${this.adjustLeft(pos, menu)}px`
     },
     /**
-     * calculation direction and top axis
-     * @param pos
+     * calculation direction and top coordinate
+     * @param pos - menu toggle object
      * @param menu
      */
     adjustTop (pos, menu) {
       const gap = this.cover ? 0 : this.spacing
       const scrollTop = window.pageYOffset
       const viewHeight = document.documentElement.clientHeight
+      // menu toggle top or mouse y coordinate
       const srcTop = this.rightClick ? this.y : pos.top + scrollTop
-      let t = this.rightClick ? this.y : pos.top + pos.height + gap + scrollTop
-      let overDown = false
-      let overUp = false
-      let up = false
-      // list over screen
+      // dropdown layer downward top coordinate
+      let t = this.rightClick
+        ? this.y
+        : this.cover
+          ? srcTop
+          : srcTop + gap + pos.height
+
+      let [overDown, overUp, up] = [false, false, false]
+      // inspection overflow
       if ((t + menu.height) > (scrollTop + viewHeight)) overDown = true
       if ((srcTop - gap - menu.height) < scrollTop) overUp = true
 
+      // make dropdown layer direction to upward
       if (!overUp && overDown) {
         t = srcTop - gap - menu.height
+        if (this.cover) t += pos.height
         up = true
       }
       this.dropUp = up
