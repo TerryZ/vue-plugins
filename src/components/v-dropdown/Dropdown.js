@@ -97,8 +97,9 @@ export default {
   },
   computed: {
     animate () {
+      if (!this.embed) return ''
       if (typeof this.animated === 'string') return this.animated
-      if (!this.embed && this.animated) return this.dropUp ? 'animate-up' : 'animate-down'
+      if (this.animated === true) return this.dropUp ? 'animate-up' : 'animate-down'
       return ''
     }
   },
