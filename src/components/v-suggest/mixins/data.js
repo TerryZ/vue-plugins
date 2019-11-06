@@ -39,7 +39,6 @@ export default {
       highlight: -1,
       width: 0,
       show: false,
-      last: null,
       lastInputTime: -1
     }
   },

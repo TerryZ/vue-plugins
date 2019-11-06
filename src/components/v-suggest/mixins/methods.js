@@ -4,18 +4,15 @@ export default {
   methods: {
     focus () {
       const notEmpty = this.text.trim()
-      // if (notEmpty && load) this.populate()
-      // if (notEmpty && !this.show && this.list.length) {
 
-      // }
+      let list
       if (notEmpty) {
-        this.populate()
+        list = this.populate()
       } else if (this.fullList) {
-        this.list = this.listed()
+        list = this.listed()
       }
 
-      console.log(this.list.length)
-      this.checkIfOpen()
+      this.checkIfOpen(list)
     },
     /**
      * Open dropdown layer
@@ -26,9 +23,15 @@ export default {
       if (!this.show) this.$refs.drop.visible()
       this.adjust()
     },
-    close () {
+    close (aftercare) {
       if (this.show) this.$refs.drop.visible()
       this.reset()
+
+      if (typeof aftercare === 'function') {
+        window.setTimeout(() => {
+          aftercare()
+        }, 150)
+      }
     },
     adjust () {
       if (!this.$refs.input || this.width > 0) return
@@ -38,9 +41,10 @@ export default {
       this.width = width > MIN_WIDTH ? width : MIN_WIDTH
     },
     clear () {
-      this.text = ''
-      this.populate()
-      this.focus()
+      this.close(() => {
+        this.text = ''
+        this.list = []
+      })
     },
     reset () {
       this.highlight = -1
@@ -68,25 +72,21 @@ export default {
     },
     populate () {
       // console.log('populate:' + new Date().getTime())
-      if (Array.isArray(this.data) && this.data.length) {
-        const text = this.text.trim().toLowerCase()
-        if (text !== this.last) {
-          const list = text
-            ? this.data.filter(value => {
-              const result = this.getRow(value).toLowerCase()
-              return new RegExp(text).test(String(result))
-            })
-            : []
-          this.list = this.listed(list)
-          // if (list.length) {
-          //   this.list = this.listed(list)
-          //   this.open(false)
-          // } else {
-          //   this.close()
-          // }
-          this.last = text
-        }
-      }
+      const text = this.text.trim().toLowerCase()
+      if (!this.data.length || !text) return []
+      console.log(text)
+      const list = this.data.filter(value => {
+        const result = this.getRow(value).toLowerCase()
+        return new RegExp(text).test(String(result))
+      })
+      // this.list = this.listed(list)
+      // if (list.length) {
+      //   this.list = this.listed(list)
+      //   this.open(false)
+      // } else {
+      //   this.close()
+      // }
+      return this.listed(list)
     },
     listed (list) {
       if (!list) list = this.data
@@ -96,44 +96,46 @@ export default {
         })
         : list
     },
-    checkIfOpen () {
-      if (this.list.length) {
+    checkIfOpen (list) {
+      if (list && list.length) {
+        this.list = list
         this.open()
       } else {
-        this.close()
+        this.close(() => {
+          if (this.list.length) this.list = []
+        })
       }
     },
-    processKey (e) {
-      if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) return
+    search (e) {
+      // if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) return
       this.lastInputTime = e.timeStamp
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {
-          this.populate()
-          this.checkIfOpen()
+          const list = this.populate()
+          console.log(list)
+          this.checkIfOpen(list)
         }
       }, this.delay * 1000)
     },
     processControl (e) {
-      if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) {
-        switch (e.keyCode) {
-          case UP:// up
-            this.previous()
-            break
-          case DOWN:// down
-            this.next()
-            break
-          case TAB: // tab
-          case ENTER:// enter
-            if (this.highlight !== -1) this.selectItem(this.list[this.highlight])
-            break
-          case ESC:// escape
-            this.close()
-            break
-        }
+      if (![UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode) || !this.list.length) return
+      switch (e.keyCode) {
+        case UP:// up
+          this.previous()
+          break
+        case DOWN:// down
+          this.next()
+          break
+        case TAB: // tab
+        case ENTER:// enter
+          if (this.highlight !== -1) this.selectItem(this.list[this.highlight])
+          break
+        case ESC:// escape
+          this.close()
+          break
       }
     },
     next () {
-      if (!this.list.length) return
       if (!this.show) this.open()
       if (this.highlight < (this.list.length - 1)) {
         this.highlight++
@@ -147,7 +149,6 @@ export default {
       }
     },
     previous () {
-      if (!this.list.length) return
       if (this.highlight === 0) return
       if (!this.show) this.open()
       this.highlight = this.highlight === -1 ? this.list.length - 1 : --this.highlight
