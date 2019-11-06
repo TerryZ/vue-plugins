@@ -1,15 +1,28 @@
-const UP = 38
-const DOWN = 40
-const ESC = 27
-const TAB = 9
-const ENTER = 13
+const [UP, DOWN, ESC, TAB, ENTER] = [38, 40, 27, 9, 13]
 
 export default {
   methods: {
-    open (load = true) {
+    focus () {
       const notEmpty = this.text.trim()
-      if (notEmpty && load) this.populate()
-      if (notEmpty && !this.show && this.list.length) this.$refs.drop.visible()
+      // if (notEmpty && load) this.populate()
+      // if (notEmpty && !this.show && this.list.length) {
+
+      // }
+      if (notEmpty) {
+        this.populate()
+      } else if (this.fullList) {
+        this.list = this.listed()
+      }
+
+      if (this.list.length) this.open()
+    },
+    /**
+     * Open dropdown layer
+     *
+     * @param {boolean} [load=true] - whether to load data
+     */
+    open (load = true) {
+      if (!this.show) this.$refs.drop.visible()
       this.adjust()
     },
     close () {
@@ -26,6 +39,7 @@ export default {
     clear () {
       this.text = ''
       this.populate()
+      this.focus()
     },
     reset () {
       this.highlight = -1
@@ -62,18 +76,30 @@ export default {
               return new RegExp(text).test(String(result))
             })
             : []
-          if (list.length) {
-            this.list = this.maxLength
-              ? list.filter((val, index) => {
-                return index < this.maxLength
-              })
-              : list
-            this.open(false)
-          } else {
-            this.close()
-          }
+          this.list = this.listed(list)
+          // if (list.length) {
+          //   this.list = this.listed(list)
+          //   this.open(false)
+          // } else {
+          //   this.close()
+          // }
           this.last = text
         }
+      }
+    },
+    listed (list) {
+      if (!list) list = this.data
+      return this.maxLength
+        ? list.filter((val, index) => {
+          return index < this.maxLength
+        })
+        : list
+    },
+    checkIfOpen () {
+      if (this.list.length) {
+        this.open()
+      } else {
+        this.close()
       }
     },
     processKey (e) {
@@ -82,6 +108,7 @@ export default {
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {
           this.populate()
+          this.checkIfOpen()
         }
       }, this.delay * 1000)
     },
@@ -105,6 +132,7 @@ export default {
       }
     },
     next () {
+      if (!this.list.length) return
       if (!this.show) this.open()
       if (this.highlight < (this.list.length - 1)) {
         this.highlight++
@@ -118,6 +146,7 @@ export default {
       }
     },
     previous () {
+      if (!this.list.length) return
       if (this.highlight === 0) return
       if (!this.show) this.open()
       this.highlight = this.highlight === -1 ? this.list.length - 1 : --this.highlight

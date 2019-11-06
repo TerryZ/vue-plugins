@@ -24,10 +24,10 @@
 </template>
 
 <script>
-    import './slide.scss';
-    import mixins from './mixins';
-  export default {
-    name: "SlideBar",
-        mixins: [mixins]
-  };
+import './slide.scss'
+import mixins from './mixins'
+export default {
+  name: 'SlideBar',
+  mixins: [mixins]
+}
 </script>

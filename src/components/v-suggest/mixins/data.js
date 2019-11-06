@@ -26,6 +26,10 @@ export default {
     maxLength: {
       type: Number,
       default: 0
+    },
+    fullList: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
