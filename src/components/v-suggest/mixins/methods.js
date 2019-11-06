@@ -14,7 +14,8 @@ export default {
         this.list = this.listed()
       }
 
-      if (this.list.length) this.open()
+      console.log(this.list.length)
+      this.checkIfOpen()
     },
     /**
      * Open dropdown layer
