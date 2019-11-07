@@ -5,7 +5,7 @@ export default {
     focus () {
       const notEmpty = this.text.trim()
 
-      let list
+      let list = []
       if (notEmpty) {
         list = this.populate()
       } else if (this.fullList) {
@@ -16,13 +16,16 @@ export default {
     },
     /**
      * Open dropdown layer
-     *
-     * @param {boolean} [load=true] - whether to load data
      */
-    open (load = true) {
+    open () {
       if (!this.show) this.$refs.drop.visible()
       this.adjust()
     },
+    /**
+     * Close dropdown layer
+     *
+     * @param {function} aftercare - do some stuff after dropdown closed
+     */
     close (aftercare) {
       if (this.show) this.$refs.drop.visible()
       this.reset()
@@ -71,29 +74,18 @@ export default {
       this.close()
     },
     populate () {
-      // console.log('populate:' + new Date().getTime())
       const text = this.text.trim().toLowerCase()
       if (!this.data.length || !text) return []
-      console.log(text)
       const list = this.data.filter(value => {
         const result = this.getRow(value).toLowerCase()
         return new RegExp(text).test(String(result))
       })
-      // this.list = this.listed(list)
-      // if (list.length) {
-      //   this.list = this.listed(list)
-      //   this.open(false)
-      // } else {
-      //   this.close()
-      // }
       return this.listed(list)
     },
     listed (list) {
       if (!list) list = this.data
       return this.maxLength
-        ? list.filter((val, index) => {
-          return index < this.maxLength
-        })
+        ? list.filter((val, index) => index < this.maxLength)
         : list
     },
     checkIfOpen (list) {
@@ -107,7 +99,6 @@ export default {
       }
     },
     search (e) {
-      // if ([UP, DOWN, ESC, ENTER, TAB].includes(e.keyCode)) return
       this.lastInputTime = e.timeStamp
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {

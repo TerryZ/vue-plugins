@@ -34,7 +34,6 @@ export default {
           value: this.text.trim()
         },
         on: {
-          // keyup: this.processKey,
           keydown: this.processControl,
           focus: this.focus,
           input: e => {
