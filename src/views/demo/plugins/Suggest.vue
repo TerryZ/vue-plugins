@@ -2,17 +2,23 @@
   <div class="card p-5">
     <h1>
       v-suggest
-      <button type="button" class="btn btn-outline-secondary btn-sm" @click="$router.push({path: '/demo'});">Back to List</button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm"
+        @click="$router.push({path: '/demo'});"
+      >Back to List</button>
     </h1>
 
     <hr>
 
     <h5 class="mt-5">禁用</h5>
     <p>
-      <v-suggest :data="sample"
-        :disabled="true"
+      <v-suggest
         v-model="disabled"
-        :show-field="showField" ></v-suggest>
+        :data="sample"
+        :disabled="true"
+        :show-field="showField"
+      ></v-suggest>
     </p>
 
     <h5 class="mt-5">输入自动完成 ( {{input}} )</h5>
