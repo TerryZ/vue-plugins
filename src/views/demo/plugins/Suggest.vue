@@ -27,6 +27,15 @@
         :show-field="showField" ></v-suggest>
     </p>
 
+    <h5 class="mt-5">无输入内容时，显示完整推荐列表</h5>
+    <p>
+      <v-suggest
+        :data="sample"
+        :show-field="showField"
+        :full-list="true"
+      ></v-suggest>
+    </p>
+
     <h5 class="mt-5">使用 slot 进行自定义显示</h5>
     <p>
       <v-suggest :data="sample" >

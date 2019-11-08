@@ -31,9 +31,7 @@ export default {
       this.reset()
 
       if (typeof aftercare === 'function') {
-        window.setTimeout(() => {
-          aftercare()
-        }, 150)
+        window.setTimeout(aftercare, 150)
       }
     },
     adjust () {
@@ -103,7 +101,6 @@ export default {
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {
           const list = this.populate()
-          console.log(list)
           this.checkIfOpen(list)
         }
       }, this.delay * 1000)
