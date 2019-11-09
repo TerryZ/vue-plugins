@@ -3,16 +3,11 @@ const [UP, DOWN, ESC, TAB, ENTER] = [38, 40, 27, 9, 13]
 export default {
   methods: {
     focus () {
-      const notEmpty = this.text.trim()
-
-      let list = []
-      if (notEmpty) {
-        list = this.populate()
-      } else if (this.fullList) {
-        list = this.listed()
+      if (this.text.trim()) {
+        this.checkIfOpen(this.populate())
+      } else {
+        this.checkIfOpen(this.fullList ? this.listed() : [])
       }
-
-      this.checkIfOpen(list)
     },
     /**
      * Open dropdown layer
