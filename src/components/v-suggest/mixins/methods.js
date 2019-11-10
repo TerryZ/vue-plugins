@@ -1,4 +1,7 @@
 const [UP, DOWN, ESC, TAB, ENTER] = [38, 40, 27, 9, 13]
+const rect = el => el && Object.keys(el).length
+  ? el.getBoundingClientRect()
+  : null
 
 export default {
   methods: {
@@ -32,7 +35,7 @@ export default {
     adjust () {
       if (!this.$refs.input || this.width > 0) return
 
-      const width = this.$refs.input.getBoundingClientRect().width
+      const width = rect(this.$refs.input).width
       const MIN_WIDTH = 200
       this.width = width > MIN_WIDTH ? width : MIN_WIDTH
     },
@@ -58,7 +61,7 @@ export default {
           this.$refs.drop.adjust()
         })
       } else {
-        this.highlight = -1
+        this.reset()
       }
     },
     selectItem (row) {
@@ -95,8 +98,7 @@ export default {
       this.lastInputTime = e.timeStamp
       setTimeout(() => {
         if ((e.timeStamp - this.lastInputTime) === 0) {
-          const list = this.populate()
-          this.checkIfOpen(list)
+          this.checkIfOpen(this.populate())
         }
       }, this.delay * 1000)
     },
@@ -123,11 +125,11 @@ export default {
       if (this.highlight < (this.list.length - 1)) {
         this.highlight++
         this.$nextTick(() => {
-          const cur = this.$refs.list.querySelectorAll('.sg-over')[0]
-          const curPos = cur.getBoundingClientRect()
-          const listPos = this.$refs.list.getBoundingClientRect()
-          const dist = (this.$refs.list.scrollTop + curPos.bottom) - listPos.bottom
-          if (dist) this.$refs.list.scrollTop = dist
+          const list = this.$refs.list
+          const curPos = rect(list.querySelectorAll('.sg-over')[0])
+          const listPos = rect(list)
+          const dist = (list.scrollTop + curPos.bottom) - listPos.bottom
+          if (dist) list.scrollTop = dist
         })
       }
     },
@@ -136,11 +138,11 @@ export default {
       if (!this.show) this.open()
       this.highlight = this.highlight === -1 ? this.list.length - 1 : --this.highlight
       this.$nextTick(() => {
-        const cur = this.$refs.list.querySelectorAll('.sg-over')[0]
-        const curPos = cur.getBoundingClientRect()
-        const listPos = this.$refs.list.getBoundingClientRect()
+        const list = this.$refs.list
+        const curPos = rect(list.querySelectorAll('.sg-over')[0])
+        const listPos = rect(list)
         const dist = curPos.top - listPos.top
-        if (dist < 0) this.$refs.list.scrollTop += dist
+        if (dist < 0) list.scrollTop += dist
       })
     }
   }
