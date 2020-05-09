@@ -107,16 +107,16 @@ export default {
      * Initialize default options
      */
     buildDialog (config) {
-      const idx = this.dialogs.findIndex(val => {
+      const exist = this.dialogs.some(val => {
         return config.singletonKey && val.singletonKey === config.singletonKey
       })
-      if (idx === -1) {
-        keyNum++
-        const key = KEY_PREFIX + keyNum
-        config.dialogKey = key
-        this.dialogs.push(config)
-        return key
-      } else return null
+      if (exist) return null
+
+      keyNum++
+      const key = KEY_PREFIX + keyNum
+      config.dialogKey = key
+      this.dialogs.push(config)
+      return key
     },
     /**
      * Open a Modal dialog
