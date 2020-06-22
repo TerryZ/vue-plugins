@@ -85,7 +85,7 @@ export default {
     },
     pageNumbers () {
       const { current, pageNumberSize, totalPage } = this
-      const half = Math.floor(this.pageNumberSize / 2)
+      const half = Math.floor(pageNumberSize / 2)
       const start = current - half
       return Array.apply(null, { length: pageNumberSize })
         .map((val, index) => start + index)
