@@ -149,29 +149,24 @@ export default {
       }
       this.highlight = -1
     },
+    sortCompare (a, b) {
+      if (typeof a === 'undefined' || typeof b === 'undefined') return 0
+      return typeof a === 'number' ? a - b : String(a).localeCompare(String(b))
+    },
     sortList () {
-      if (this.data && Array.isArray(this.data) && this.sort) {
-        const sortArr = this.sort.split(' ')
-        const sort = {}
-        if (sortArr.length === 2) {
-          sort.field = sortArr[0]
-          sort.order = sortArr[1]
-          this.sortedList = this.data.slice().sort((a, b) => {
-            const valA = a[sort.field]
-            const valB = b[sort.field]
-            const order = sort.order ? sort.order.toLowerCase() : 'asc'
-            if (order === 'asc') {
-              return typeof valA === 'number'
-                ? valA - valB
-                : String(valA).localeCompare(String(valB))
-            } else if (order === 'desc') {
-              return typeof valA === 'number'
-                ? valB - valA
-                : String(valB).localeCompare(String(valA))
-            }
-          })
-        }
-      }
+      if (!Array.isArray(this.data) || !this.sort) return
+      const sortSet = this.sort.split(' ')
+      if (sortSet.length !== 2) return
+
+      const [field, order] = sortSet
+      this.sortedList = this.data.sort((a, b) => {
+        const _a = a[field]
+        const _b = b[field]
+
+        if (order && order.toLowerCase() === 'desc') return this.sortCompare(_b, _a)
+        // asc sort by default
+        return this.sortCompare(_a, _b)
+      })
     },
     populate () {
       const { data, search } = this
