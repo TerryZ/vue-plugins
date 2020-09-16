@@ -1,4 +1,4 @@
-import './page.scss'
+import './page.sass'
 import languages from './language'
 
 const FIRST = 1
@@ -74,7 +74,7 @@ export default {
     return {
       pageSize: this.pageSizeMenu === false ? 10 : this.pageSizeMenu[0],
       lastPageSize: -1,
-      currentPage: 0,
+      current: 0,
       pageNumberSize: 5,
       i18n: languages[this.language] || languages.cn
     }
@@ -84,22 +84,16 @@ export default {
       return Math.ceil(this.totalRow / this.pageSize)
     },
     pageNumbers () {
-      let start = 1; let end; const half = Math.floor(this.pageNumberSize / 2)
-      if (this.totalPage < this.pageNumberSize) end = this.totalPage
-      else if (this.currentPage <= half) end = this.pageNumberSize
-      else if (this.currentPage >= (this.totalPage - half)) {
-        start = this.totalPage - this.pageNumberSize + 1
-        end = this.totalPage
-      } else {
-        start = this.currentPage - half
-        end = start + this.pageNumberSize - 1
-      }
-
-      return Array.apply(null, { length: end - start + 1 }).map((val, index) => start + index)
+      const { current, pageNumberSize, totalPage } = this
+      const half = Math.floor(pageNumberSize / 2)
+      const start = current - half
+      return Array.apply(null, { length: pageNumberSize })
+        .map((val, index) => start + index)
+        .filter(val => val > 0 && val <= totalPage)
     },
     pageInfo () {
       return this.i18n.pageInfo
-        .replace('#pageNumber#', this.currentPage)
+        .replace('#pageNumber#', this.current)
         .replace('#totalPage#', this.totalPage)
         .replace('#totalRow#', this.totalRow)
     },
@@ -112,10 +106,10 @@ export default {
       }
     },
     isFirst () {
-      return this.currentPage === FIRST
+      return this.current === FIRST
     },
     isLast () {
-      return this.currentPage === this.totalPage
+      return this.current === this.totalPage
     }
   },
   watch: {
@@ -158,28 +152,28 @@ export default {
     const genItem = (classes, num, text) => {
       return h('li', { class: classes }, [
         h('a', {
-          attrs: { href: 'javascript:void(0);' },
-          on: { click: () => this.switchPage(num) }
+          attrs: { href: 'javascript:void(0)' },
+          on: { click: () => this.goPage(num) }
         }, text)
       ])
     }
     // first
     if (this.first) {
-      items.push(genItem({ disabled: this.isFirst }, 'first', this.i18n.first))
+      items.push(genItem({ disabled: this.isFirst }, FIRST, this.i18n.first))
     }
     // previous
-    items.push(genItem({ disabled: this.isFirst }, 'previous', this.i18n.previous))
+    items.push(genItem({ disabled: this.isFirst }, this.current - 1, this.i18n.previous))
     // page numbers
     if (this.pageNumber) {
-      this.pageNumbers.forEach(val => {
-        items.push(genItem({ active: val === this.currentPage }, val, val))
-      })
+      items.push(...this.pageNumbers.map(val => genItem({
+        active: val === this.current
+      }, val, val)))
     }
     // next
-    items.push(genItem({ disabled: this.isLast }, 'next', this.i18n.next))
+    items.push(genItem({ disabled: this.isLast }, this.current + 1, this.i18n.next))
     // last
     if (this.last) {
-      items.push(genItem({ disabled: this.isLast }, 'last', this.i18n.last))
+      items.push(genItem({ disabled: this.isLast }, this.totalPage, this.i18n.last))
     }
     return h('div', {
       class: {
@@ -190,16 +184,17 @@ export default {
   },
   methods: {
     goPage (pNum = FIRST, respond = true) {
+      if (this.disabled) return
       if (typeof pNum !== 'number') return
       let num = pNum < FIRST ? FIRST : pNum
       if (pNum > this.totalPage && this.totalPage > 0) num = this.totalPage
 
       // exit when duplicate operation
-      if (num === this.currentPage && this.pageSize === this.lastPageSize) return
+      if (num === this.current && this.pageSize === this.lastPageSize) return
 
-      this.currentPage = num
+      this.current = num
       // update v-model value
-      if (respond) this.$emit('input', this.currentPage)
+      if (respond) this.$emit('input', this.current)
       this.lastPageSize = this.pageSize
       this.change()
     },
@@ -208,23 +203,9 @@ export default {
     },
     change () {
       this.$emit('page-change', {
-        pageNumber: this.currentPage,
+        pageNumber: this.current,
         pageSize: Number(this.pageSize)
       })
-    },
-    position (target) {
-      if (typeof target === 'string') {
-        switch (target) {
-          case 'first': return FIRST
-          case 'previous': return this.currentPage - 1
-          case 'next': return this.currentPage + 1
-          case 'last': return this.totalPage
-        }
-      } else if (typeof target === 'number') return target
-    },
-    switchPage (target) {
-      if (this.disabled) return
-      this.goPage(this.position(target))
     }
   },
   mounted () {

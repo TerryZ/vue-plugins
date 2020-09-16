@@ -1,4 +1,4 @@
-const languages = {
+export default {
   cn: {
     pageLength: '每页记录数 ',
     pageInfo: '当前显示第 #pageNumber# / #totalPage# 页（共#totalRow#条记录）',
@@ -15,6 +15,14 @@ const languages = {
     next: '»',
     last: 'Last'
   },
+  de: {
+    pageLength: 'Seitenlänge ',
+    pageInfo: 'Aktuell #pageNumber# / #totalPage# （gesamt #totalRow# Aufzeichnungen）',
+    first: 'Zuerst',
+    previous: '«',
+    next: '»',
+    last: 'Letzte'
+  },
   jp: {
     pageLength: 'ページごとの記録数',
     pageInfo: '現在の第 #pageNumber# / #totalPage# ページ（全部で #totalRow# 条の記録）',
@@ -24,5 +32,3 @@ const languages = {
     last: '尾のページ'
   }
 }
-
-export default languages

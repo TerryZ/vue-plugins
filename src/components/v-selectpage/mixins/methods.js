@@ -6,6 +6,8 @@ const TAB = 9
 const ENTER = 13
 const ESCAPE = 27
 
+const keys = [LEFT, UP, RIGHT, DOWN, ESCAPE, ENTER, TAB]
+
 export default {
   methods: {
     showChange (val) {
@@ -42,9 +44,7 @@ export default {
         if (this.maxSelectLimit && this.picked.length >= this.maxSelectLimit) return
         let available = 0
 
-        /**
-         * the number of current page available items
-         */
+        // the number of current page available items
         if (check && this.maxSelectLimit) {
           const outOfPage = this.picked.filter(val => {
             return this.list.findIndex(value => val[this.keyField] === value[this.keyField]) === -1
@@ -82,10 +82,10 @@ export default {
       }
     },
     processKey (e) {
-      if (![LEFT, UP, RIGHT, DOWN, ESCAPE, ENTER, TAB].includes(e.keyCode)) this.populate()
+      if (!keys.includes(e.keyCode)) this.populate()
     },
     processControl (e) {
-      if ([LEFT, UP, RIGHT, DOWN, ESCAPE, ENTER, TAB].includes(e.keyCode)) {
+      if (keys.includes(e.keyCode)) {
         switch (e.keyCode) {
           case LEFT:
             if (this.pagination) this.$refs.page.switchPage('previous')
@@ -111,16 +111,22 @@ export default {
     },
     previous () {
       if (this.highlight > 0 && this.list.length) {
-        const previous = this.list.filter((val, idx) => idx < this.highlight && !this.inPicked(val))
+        const previous = this.list.filter((val, idx) => {
+          return idx < this.highlight && !this.inPicked(val)
+        })
         if (previous.length) {
-          const preIndex = this.list.findIndex(val => Object.is(val, previous[previous.length - 1]))
+          const preIndex = this.list.findIndex(val => {
+            return Object.is(val, previous[previous.length - 1])
+          })
           if (preIndex !== -1) this.highlight = preIndex
         }
       }
     },
     next () {
       if (this.highlight < (this.list.length - 1)) {
-        const nextIndex = this.list.findIndex((val, idx) => (idx > this.highlight) && !this.inPicked(val))
+        const nextIndex = this.list.findIndex((val, idx) => {
+          return (idx > this.highlight) && !this.inPicked(val)
+        })
         if (nextIndex !== -1) this.highlight = nextIndex
       }
     },
@@ -143,34 +149,36 @@ export default {
       }
       this.highlight = -1
     },
+    sortCompare (a, b) {
+      if (typeof a === 'undefined' || typeof b === 'undefined') return 0
+      return typeof a === 'number' ? a - b : String(a).localeCompare(String(b))
+    },
     sortList () {
-      if (this.data && Array.isArray(this.data) && this.sort) {
-        const sortArr = this.sort.split(' '); const sort = {}
-        if (sortArr.length === 2) {
-          sort.field = sortArr[0]
-          sort.order = sortArr[1]
-          this.sortedList = this.data.slice().sort((a, b) => {
-            const valA = a[sort.field]
-            const valB = b[sort.field]; const order = sort.order ? sort.order.toLowerCase() : 'asc'
-            if (order === 'asc') {
-              return typeof valA === 'number' ? valA - valB : String(valA).localeCompare(String(valB))
-            } else if (order === 'desc') {
-              return typeof valA === 'number' ? valB - valA : String(valB).localeCompare(String(valA))
-            }
-          })
-        }
-      }
+      if (!Array.isArray(this.data) || !this.sort) return
+      const sortSet = this.sort.split(' ')
+      if (sortSet.length !== 2) return
+
+      const [field, order] = sortSet
+      this.sortedList = this.data.sort((a, b) => {
+        const _a = a[field]
+        const _b = b[field]
+
+        if (order && order.toLowerCase() === 'desc') return this.sortCompare(_b, _a)
+        // asc sort by default
+        return this.sortCompare(_a, _b)
+      })
     },
     populate () {
-      if (this.data) {
-        if (this.search && this.search !== this.lastSearch) this.pageNumber = 1
-        if (Array.isArray(this.data)) {
-          let list = this.sortedList ? this.sortedList.slice() : this.data.slice()
-          /**
-           * search content filter
-           */
-          if (this.search) {
-            list = list.filter(val => new RegExp(this.search.toLowerCase()).test(val[this.searchColumn].toLowerCase()))
+      const { data, search } = this
+      if (data) {
+        if (search && search !== this.lastSearch) this.pageNumber = 1
+        if (Array.isArray(data)) {
+          let list = this.sortedList ? this.sortedList.slice() : data.slice()
+          // search content filter
+          if (search) {
+            list = list.filter(val => {
+              return new RegExp(search.toLowerCase()).test(val[this.searchColumn].toLowerCase())
+            })
           }
           this.totalRows = list.length
 
@@ -181,11 +189,11 @@ export default {
           } else {
             this.list = list
           }
-        } else if (typeof this.data === 'string') {
+        } else if (typeof data === 'string') {
           this.remote()
         }
 
-        this.lastSearch = this.search
+        this.lastSearch = search
         this.highlight = -1
       }
       this.inputFocus()
@@ -199,7 +207,8 @@ export default {
     remote (initPicked = false) {
       if (typeof this.data === 'string' && this.dataLoad && typeof this.dataLoad === 'function') {
         const queryParams = this.params && Object.keys(this.params).length
-          ? JSON.parse(JSON.stringify(this.params)) : {}
+          ? JSON.parse(JSON.stringify(this.params))
+          : {}
         queryParams.pageSize = this.pageSize
         queryParams.pageNumber = this.pageNumber
         if (this.sort) queryParams.orderBy = this.sort
@@ -247,7 +256,9 @@ export default {
         if (Array.isArray(this.data)) {
           const arr = this.value.split(',')
           if (arr && arr.length) {
-            const matchRows = this.data.filter(val => arr.includes(String(val[this.keyField])))
+            const matchRows = this.data.filter(val => {
+              return arr.includes(String(val[this.keyField]))
+            })
             if (matchRows.length) this.picked = this.multiple ? matchRows : [matchRows[0]]
           }
           this.findSelectionPage()
@@ -258,13 +269,14 @@ export default {
       this.populate()
     },
     findSelectionPage () {
-      if (!this.multiple && this.pagination) {
-        const list = this.sortedList ? this.sortedList.slice() : this.data.slice()
-        const index = list.findIndex(val => String(val[this.keyField]) === this.value)
-        if (index >= 0) {
-          this.pageNumber = Math.ceil((index + 1) / this.pageSize)
-        }
-      }
+      if (this.multiple || !this.pagination) return
+
+      const list = this.sortedList ? this.sortedList.slice() : this.data.slice()
+      const index = list.findIndex(val => String(val[this.keyField]) === this.value)
+
+      if (index < 0 || index > this.totalRows) return
+
+      this.pageNumber = Math.ceil((index + 1) / this.pageSize)
     }
   }
 }

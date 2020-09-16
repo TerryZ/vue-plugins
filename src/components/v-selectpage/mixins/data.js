@@ -59,9 +59,9 @@ export default {
      * title: [string] - the title content text,
      * data: [string|function] - specify column name to load data,
      * [
-     *      {title: 'full name', data: function(row){ return row.lastName + ' ' + row.firstName; }},
-     *      {title: 'age', data: 'age'},
-     *      {title: 'birthday', data: function(row){ return someformat(row.birthday); }}
+     *   {title: 'full name', data: function(row){ return row.lastName + ' ' + row.firstName }},
+     *   {title: 'age', data: 'age'},
+     *   {title: 'birthday', data: function(row){ return someformat(row.birthday) }}
      * ]
      */
     tbColumns: Array,
@@ -90,7 +90,7 @@ export default {
       default: true
     },
     /**
-     * make row text and drop down container align to right
+     * content and drop down container align to right
      */
     rtl: {
       type: Boolean,
@@ -111,7 +111,7 @@ export default {
       search: '',
       lastSearch: null,
       searchColumn: null,
-      i18n: lang[this.language] || lang['cn'],
+      i18n: lang[this.language] || lang.cn,
       message: '',
       highlight: -1,
 
@@ -137,7 +137,11 @@ export default {
       return this.placeholder || this.i18n.placeholder
     },
     inputClasses () {
-      return { 'sp-input-container': true, 'sp-open': this.show, 'sp-disabled': this.disabled }
+      return {
+        'sp-input-container': true,
+        'sp-open': this.show,
+        'sp-disabled': this.disabled
+      }
     },
     keys () {
       return this.picked.map(value => value[this.keyField]).join(',')
