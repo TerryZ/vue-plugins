@@ -84,12 +84,12 @@ export default {
       return Math.ceil(this.totalRow / this.pageSize)
     },
     pageNumbers () {
-      const { current, pageNumberSize, totalPage } = this
-      const half = Math.floor(pageNumberSize / 2)
-      const start = current - half
+      const { pageNumberSize, totalPage } = this
+      const start = this.getPageNumberStart()
+
       return Array.apply(null, { length: pageNumberSize })
         .map((val, index) => start + index)
-        .filter(val => val > 0 && val <= totalPage)
+        .filter(val => val >= FIRST && val <= totalPage)
     },
     pageInfo () {
       return this.i18n.pageInfo
@@ -118,11 +118,12 @@ export default {
     }
   },
   render (h) {
+    const { pageNumberGenerator, current, i18n } = this
     const items = []
     // page length list
     if (Array.isArray(this.pageSizeMenu) && this.pageSizeMenu.length) {
       items.push(h('li', { class: 'v-pagination__list' }, [h('a', [
-        h('span', this.i18n.pageLength),
+        h('span', i18n.pageLength),
         h('select', {
           attrs: { disabled: this.disabled },
           on: {
@@ -142,38 +143,23 @@ export default {
     if (this.info) {
       items.push(h('li', { class: 'v-pagination__info' }, [h('a', this.pageInfo)]))
     }
-    /**
-     * page number generator
-     * @param classes
-     * @param num
-     * @param text
-     * @return VNode
-     */
-    const genItem = (classes, num, text) => {
-      return h('li', { class: classes }, [
-        h('a', {
-          attrs: { href: 'javascript:void(0)' },
-          on: { click: () => this.goPage(num) }
-        }, text)
-      ])
-    }
     // first
     if (this.first) {
-      items.push(genItem({ disabled: this.isFirst }, FIRST, this.i18n.first))
+      items.push(pageNumberGenerator({ disabled: this.isFirst }, FIRST, i18n.first))
     }
     // previous
-    items.push(genItem({ disabled: this.isFirst }, this.current - 1, this.i18n.previous))
+    items.push(pageNumberGenerator({ disabled: this.isFirst }, current - 1, i18n.previous))
     // page numbers
     if (this.pageNumber) {
-      items.push(...this.pageNumbers.map(val => genItem({
-        active: val === this.current
+      items.push(...this.pageNumbers.map(val => pageNumberGenerator({
+        active: val === current
       }, val, val)))
     }
     // next
-    items.push(genItem({ disabled: this.isLast }, this.current + 1, this.i18n.next))
+    items.push(pageNumberGenerator({ disabled: this.isLast }, current + 1, i18n.next))
     // last
     if (this.last) {
-      items.push(genItem({ disabled: this.isLast }, this.totalPage, this.i18n.last))
+      items.push(pageNumberGenerator({ disabled: this.isLast }, this.totalPage, i18n.last))
     }
     return h('div', {
       class: {
@@ -206,9 +192,32 @@ export default {
         pageNumber: this.current,
         pageSize: Number(this.pageSize)
       })
+    },
+    getPageNumberStart () {
+      const { current, totalPage, pageNumberSize } = this
+
+      if (totalPage <= pageNumberSize) return FIRST
+
+      const half = Math.floor(pageNumberSize / 2)
+      const lastRangeStart = totalPage - pageNumberSize + 1
+      const start = current - half
+
+      if (start < FIRST) return FIRST
+      if (start > lastRangeStart) return lastRangeStart
+
+      return start
+    },
+    pageNumberGenerator (classes, num, text) {
+      const option = {
+        attrs: { href: 'javascript:void(0)' },
+        on: { click: () => this.goPage(num) }
+      }
+      return this.$createElement('li', { class: classes }, [
+        this.$createElement('a', option, text)
+      ])
     }
   },
   mounted () {
-    this.goPage(this.value ? this.value : FIRST)
+    this.goPage(this.value || FIRST)
   }
 }
