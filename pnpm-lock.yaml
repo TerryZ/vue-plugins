@@ -12,12 +12,12 @@ specifiers:
   '@vue/cli-plugin-unit-mocha': ^4.5.6
   '@vue/cli-service': ^4.5.6
   '@vue/eslint-config-standard': ^5.1.2
-  '@vue/test-utils': ^1.1.0
-  axios: ^0.20.0
+  '@vue/test-utils': ^1.2.2
+  axios: ^0.24.0
   babel-eslint: ^10.1.0
   blueimp-gallery: ^3.3.0
   bootstrap: ^4.5.2
-  chai: ^4.2.0
+  chai: ^4.3.4
   core-js: ^3.6.5
   crypto-js: ^4.0.0
   eslint: ^7.10.0
@@ -45,7 +45,7 @@ dependencies:
   '@fortawesome/free-regular-svg-icons': registry.npmmirror.com/@fortawesome/free-regular-svg-icons/5.15.4
   '@fortawesome/free-solid-svg-icons': registry.nlark.com/@fortawesome/free-solid-svg-icons/5.15.4
   '@fortawesome/vue-fontawesome': registry.npmmirror.com/@fortawesome/vue-fontawesome/2.0.6_fe42df078f2a2053a7b804c982ace964
-  axios: registry.npmmirror.com/axios/0.20.0
+  axios: registry.npmmirror.com/axios/0.24.0
   blueimp-gallery: registry.npmmirror.com/blueimp-gallery/3.4.0
   bootstrap: registry.npmmirror.com/bootstrap/4.6.1
   core-js: registry.npmmirror.com/core-js/3.19.1
@@ -1740,7 +1740,7 @@ packages:
     dev: true
 
   registry.nlark.com/chai/4.3.4:
-    resolution: {integrity: sha1-tV5lWzHh6scJm+TAjCGWT84ubEk=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/chai/download/chai-4.3.4.tgz?cache=0&sync_timestamp=1631584684255&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fchai%2Fdownload%2Fchai-4.3.4.tgz}
+    resolution: {integrity: sha1-tV5lWzHh6scJm+TAjCGWT84ubEk=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/chai/download/chai-4.3.4.tgz?cache=0&sync_timestamp=1632216357395&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fchai%2Fdownload%2Fchai-4.3.4.tgz}
     name: chai
     version: 4.3.4
     engines: {node: '>=4'}
@@ -11084,7 +11084,7 @@ packages:
     name: async
     version: 2.6.1
     dependencies:
-      lodash: registry.nlark.com/lodash/4.17.15
+      lodash: registry.nlark.com/lodash/4.17.21
     dev: true
 
   registry.npmmirror.com/async/2.6.3:
@@ -11110,11 +11110,10 @@ packages:
       postcss-value-parser: registry.nlark.com/postcss-value-parser/4.1.0
     dev: true
 
-  registry.npmmirror.com/axios/0.20.0:
-    resolution: {integrity: sha1-BXujDwSIRpSZOozQf6OUz/EcUL0=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/axios/download/axios-0.20.0.tgz?cache=0&sync_timestamp=1635215166167&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Faxios%2Fdownload%2Faxios-0.20.0.tgz}
+  registry.npmmirror.com/axios/0.24.0:
+    resolution: {integrity: sha1-gE5voeS5xSiFAd2d/1anoJQNINY=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/axios/download/axios-0.24.0.tgz?cache=0&sync_timestamp=1635215166167&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Faxios%2Fdownload%2Faxios-0.24.0.tgz}
     name: axios
-    version: 0.20.0
-    deprecated: Critical security vulnerability fixed in v0.21.1. For more information, see https://github.com/axios/axios/pull/3410
+    version: 0.24.0
     dependencies:
       follow-redirects: registry.npmmirror.com/follow-redirects/1.14.5
     transitivePeerDependencies:

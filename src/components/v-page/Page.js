@@ -1,82 +1,46 @@
 import './page.sass'
 import languages from './language'
-
-const FIRST = 1
+import {
+  FIRST, defaultPageSize, defaultPageNumberSize,
+  defaultPageSizeMenu, getPageNumberStart
+} from './helper'
 
 export default {
   name: 'v-page',
   props: {
-    value: {
-      type: Number,
-      default: 0
-    },
-    totalRow: {
-      type: Number,
-      default: 0
-    },
+    value: { type: Number, default: 0 },
+    totalRow: { type: Number, default: 0 },
+    language: { type: String, default: 'cn' },
     /**
-     * page size list
+     * Page size list
      * false: close page size menu bar
      * array: custom page sizes menu
      */
     pageSizeMenu: {
       type: [Boolean, Array],
-      default: function () {
-        return [10, 20, 50, 100]
-      }
-    },
-    language: {
-      type: String,
-      default: 'cn'
+      default: () => defaultPageSizeMenu
     },
     /**
-     * pagination alignment direction
-     * 'left'
-     * 'center'
-     * 'right'(default)
+     * Pagination alignment direction
+     * `left`, `center` and `right`(default)
      */
-    align: {
-      type: String,
-      default: 'right'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    border: {
-      type: Boolean,
-      default: true
-    },
-    info: {
-      type: Boolean,
-      default: true
-    },
-    pageNumber: {
-      type: Boolean,
-      default: true
-    },
-    /**
-     * first page button
-     */
-    first: {
-      type: Boolean,
-      default: true
-    },
-    /**
-     * last page button
-     */
-    last: {
-      type: Boolean,
-      default: true
-    }
+    align: { type: String, default: 'right' },
+    disabled: { type: Boolean, default: false },
+    border: { type: Boolean, default: true },
+    info: { type: Boolean, default: true },
+    pageNumber: { type: Boolean, default: true },
+    /** first page button */
+    first: { type: Boolean, default: true },
+    /** last page button */
+    last: { type: Boolean, default: true }
   },
   data () {
     return {
-      pageSize: this.pageSizeMenu === false ? 10 : this.pageSizeMenu[0],
-      lastPageSize: -1,
       current: 0,
-      pageNumberSize: 5,
-      i18n: languages[this.language] || languages.cn
+      pageSize: this.pageSizeMenu === false ? defaultPageSize : this.pageSizeMenu[0],
+      pageNumberSize: defaultPageNumberSize,
+      i18n: languages[this.language] || languages.cn,
+      lastPageSize: -1
     }
   },
   computed: {
@@ -84,8 +48,8 @@ export default {
       return Math.ceil(this.totalRow / this.pageSize)
     },
     pageNumbers () {
-      const { pageNumberSize, totalPage } = this
-      const start = this.getPageNumberStart()
+      const { current, pageNumberSize, totalPage } = this
+      const start = getPageNumberStart(current, totalPage, pageNumberSize)
 
       return Array.apply(null, { length: pageNumberSize })
         .map((val, index) => start + index)
@@ -99,6 +63,7 @@ export default {
     },
     classes () {
       return {
+        'v-pagination': true,
         'v-pagination--no-border': !this.border,
         'v-pagination--right': this.align === 'right',
         'v-pagination--center': this.align === 'center',
@@ -118,7 +83,7 @@ export default {
     }
   },
   render (h) {
-    const { pageNumberGenerator, current, i18n } = this
+    const { pageNumberGenerator, current, i18n, isFirst, isLast } = this
     const items = []
     // page length list
     if (Array.isArray(this.pageSizeMenu) && this.pageSizeMenu.length) {
@@ -128,9 +93,7 @@ export default {
           attrs: { disabled: this.disabled },
           on: {
             change: e => {
-              if (e.srcElement && e.srcElement.value) {
-                this.pageSize = Number(e.srcElement.value)
-              }
+              this.pageSize = Number(e.srcElement.value)
               this.goPage()
             }
           }
@@ -145,28 +108,28 @@ export default {
     }
     // first
     if (this.first) {
-      items.push(pageNumberGenerator({ disabled: this.isFirst }, FIRST, i18n.first))
+      const firstClass = { 'v-pagination__first': true, disabled: isFirst }
+      items.push(pageNumberGenerator(firstClass, FIRST, i18n.first))
     }
     // previous
-    items.push(pageNumberGenerator({ disabled: this.isFirst }, current - 1, i18n.previous))
+    const prevClass = { 'v-pagination__previous': true, disabled: isFirst }
+    items.push(pageNumberGenerator(prevClass, current - 1, i18n.previous))
     // page numbers
     if (this.pageNumber) {
-      items.push(...this.pageNumbers.map(val => pageNumberGenerator({
-        active: val === current
-      }, val, val)))
+      items.push(...this.pageNumbers.map(val => {
+        const numberClass = { active: val === current }
+        return pageNumberGenerator(numberClass, val, val)
+      }))
     }
     // next
-    items.push(pageNumberGenerator({ disabled: this.isLast }, current + 1, i18n.next))
+    const nextClass = { 'v-pagination__next': true, disabled: isLast }
+    items.push(pageNumberGenerator(nextClass, current + 1, i18n.next))
     // last
     if (this.last) {
-      items.push(pageNumberGenerator({ disabled: this.isLast }, this.totalPage, i18n.last))
+      const lastClass = { 'v-pagination__last': true, disabled: isLast }
+      items.push(pageNumberGenerator(lastClass, this.totalPage, i18n.last))
     }
-    return h('div', {
-      class: {
-        'v-pagination': true,
-        ...this.classes
-      }
-    }, [h('ul', items)])
+    return h('div', { class: this.classes }, [h('ul', items)])
   },
   methods: {
     goPage (pNum = FIRST, respond = true) {
@@ -192,20 +155,6 @@ export default {
         pageNumber: this.current,
         pageSize: Number(this.pageSize)
       })
-    },
-    getPageNumberStart () {
-      const { current, totalPage, pageNumberSize } = this
-
-      if (totalPage <= pageNumberSize) return FIRST
-
-      const half = Math.floor(pageNumberSize / 2)
-      const lastRangeStart = totalPage - pageNumberSize + 1
-      const start = current - half
-
-      if (start < FIRST) return FIRST
-      if (start > lastRangeStart) return lastRangeStart
-
-      return start
     },
     pageNumberGenerator (classes, num, text) {
       const option = {
