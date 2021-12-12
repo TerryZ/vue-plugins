@@ -13,7 +13,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "axios": "^0.24.0",
-    "blueimp-gallery": "^3.3.0",
+    "blueimp-gallery": "^3.4.0",
     "bootstrap": "^4.5.2",
     "fine-uploader": "^5.16.2",
     "holderjs": "^2.9.7",
