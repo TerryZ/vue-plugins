@@ -1,8 +1,11 @@
 import './page.sass'
 import languages from './language'
 import {
-  FIRST, defaultPageSize, defaultPageNumberSize,
-  defaultPageSizeMenu, getPageNumberStart
+  FIRST,
+  defaultPageSize,
+  defaultPageNumberSize,
+  defaultPageSizeMenu,
+  getPageNumberStart
 } from './helper'
 
 export default {
@@ -13,8 +16,8 @@ export default {
     language: { type: String, default: 'cn' },
     /**
      * Page size list
-     * false: close page size menu bar
-     * array: custom page sizes menu
+     * false: close page size list
+     * array: custom page sizes list
      */
     pageSizeMenu: {
       type: [Boolean, Array],
@@ -105,6 +108,17 @@ export default {
     // page info
     if (this.info) {
       items.push(h('li', { class: 'v-pagination__info' }, [h('a', this.pageInfo)]))
+    }
+    if ('default' in this.$scopedSlots) {
+      const li = h('li', { class: 'v-pagination__item' }, [
+        h('a', this.$scopedSlots.default({
+          pageNumber: current,
+          totalPage: this.totalPage,
+          totalRow: this.totalRow
+        }))
+      ])
+      // build scoped slot with named slot
+      items.push(li)
     }
     // first
     if (this.first) {
