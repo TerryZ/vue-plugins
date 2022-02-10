@@ -29,7 +29,7 @@ export default {
      */
     align: { type: String, default: 'right' },
     disabled: { type: Boolean, default: false },
-    border: { type: Boolean, default: true },
+    border: { type: Boolean, default: false },
     info: { type: Boolean, default: true },
     pageNumber: { type: Boolean, default: true },
     /** first page button */
@@ -67,7 +67,7 @@ export default {
     classes () {
       return {
         'v-pagination': true,
-        'v-pagination--no-border': !this.border,
+        'v-pagination--border': this.border,
         'v-pagination--right': this.align === 'right',
         'v-pagination--center': this.align === 'center',
         'v-pagination--disabled': this.disabled
@@ -109,12 +109,16 @@ export default {
     if (this.info) {
       items.push(h('li', { class: 'v-pagination__info' }, [h('a', this.pageInfo)]))
     }
+    // scoped slot
     if ('default' in this.$scopedSlots) {
       const li = h('li', { class: 'v-pagination__item' }, [
         h('a', this.$scopedSlots.default({
           pageNumber: current,
+          pageSize: this.pageSize,
           totalPage: this.totalPage,
-          totalRow: this.totalRow
+          totalRow: this.totalRow,
+          isFirst: this.isFirst,
+          isLast: this.isLast
         }))
       ])
       // build scoped slot with named slot

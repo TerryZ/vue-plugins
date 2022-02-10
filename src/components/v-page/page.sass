@@ -1,22 +1,63 @@
-$borderRadius: 2px
+$border-radius: .25rem
 
 .v-pagination
   display: flex
   justify-content: flex-start
   box-sizing: border-box
-  &.v-pagination--right
+  &#{&}--right
     justify-content: flex-end
-  &.v-pagination--center
+  &#{&}--center
     justify-content: center
   ul
     margin: 0
     padding: 0
     display: flex
-    box-shadow: 0 1px 2px #00000020
     li
       list-style: none
       display: flex
       a
         padding: .3rem .6rem
+        text-decoration: none
+        color: #999
+        // font-weight: 600
+        line-height: 1.3
+        font-size: 14px
+        margin: 0
+        outline: 0
+        color: #333
+      &.active
+        a
+          // color: #333
+          background-color: #f6f6f6
+          color: #aaa
+      select
+        width: auto !important
+        font-size: 12px
+        padding: 0
+        outline: 0
+        margin: 0 0 0 5px
+        border: 1px solid #ccc
+        color: #333
+        border-radius: 2px
+        &:hover
+          &[disabled]
+            color: #999
+
   
-  &.v-pagination--border
+  &#{&}--border
+    ul
+      // box-shadow: 0 1px 2px #00000020
+      li
+        &:not(:first-child) a
+          margin-left: -1px
+        a
+          border: 1px solid #DEE2E6
+        &:first-child > a
+          border-bottom-left-radius: $border-radius
+          border-top-left-radius: $border-radius
+        &:last-child > a
+          border-top-right-radius: $border-radius
+          border-bottom-right-radius: $border-radius
+        &.active a
+          color: #999
+          background-color: #eee
