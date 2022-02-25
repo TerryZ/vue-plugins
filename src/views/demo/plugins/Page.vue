@@ -231,6 +231,18 @@
         </div>
       </v-page>
     </div>
+
+    <h5 class="mt-5 mb-3">
+      显示全部数据
+    </h5>
+    <div class="p-3 rounded-lg border">
+      <v-page
+        align="left"
+        :total-row="101"
+        :display-all="true"
+        @page-change="displayAllPageChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -258,6 +270,9 @@ export default {
     },
     go () {
       this.$refs.page.goPage(Number(this.target))
+    },
+    displayAllPageChange (data) {
+      console.log(data)
     }
   }
 }

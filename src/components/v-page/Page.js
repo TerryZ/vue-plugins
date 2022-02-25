@@ -5,7 +5,8 @@ import {
   defaultPageSize,
   defaultPageNumberSize,
   defaultPageSizeMenu,
-  getPageNumberStart
+  getPageNumberStart,
+  ALL_RECORD_PAGE_SIZE
 } from './helper'
 
 export default {
@@ -35,7 +36,9 @@ export default {
     /** first page button */
     first: { type: Boolean, default: true },
     /** last page button */
-    last: { type: Boolean, default: true }
+    last: { type: Boolean, default: true },
+    /** display all records */
+    displayAll: { type: Boolean, default: false }
   },
   data () {
     return {
@@ -48,7 +51,10 @@ export default {
   },
   computed: {
     totalPage () {
-      return Math.ceil(this.totalRow / this.pageSize)
+      const { totalRow, pageSize } = this
+      // when display all records, the totalPage allways be 1
+      if (pageSize === ALL_RECORD_PAGE_SIZE) return FIRST
+      return Math.ceil(totalRow / pageSize)
     },
     pageNumbers () {
       const { current, pageNumberSize, totalPage } = this
@@ -86,24 +92,34 @@ export default {
     }
   },
   render (h) {
-    const { pageNumberGenerator, current, i18n, isFirst, isLast } = this
+    const { pageNumberGenerator, current, i18n, isFirst, isLast, displayAll } = this
     const items = []
     // page length list
     if (Array.isArray(this.pageSizeMenu) && this.pageSizeMenu.length) {
-      items.push(h('li', { class: 'v-pagination__list' }, [h('a', [
-        h('span', i18n.pageLength),
-        h('select', {
-          attrs: { disabled: this.disabled },
-          on: {
-            change: e => {
-              this.pageSize = Number(e.srcElement.value)
-              this.goPage()
-            }
+      const selectOption = {
+        attrs: { disabled: this.disabled },
+        on: {
+          change: e => {
+            this.pageSize = Number(e.srcElement.value)
+            this.goPage()
           }
-        }, this.pageSizeMenu.map(val => {
-          return h('option', { attrs: { value: val } }, val)
-        }))
-      ])]))
+        }
+      }
+      const options = this.pageSizeMenu.map(val => {
+        return h('option', { attrs: { value: val } }, val)
+      })
+
+      if (displayAll) {
+        options.push(h('option', { attrs: { value: ALL_RECORD_PAGE_SIZE } }, i18n.all))
+      }
+
+      const select = h('select', selectOption, options)
+      const li = h(
+        'li',
+        { class: 'v-pagination__list' },
+        [h('a', [h('span', i18n.pageLength), select])]
+      )
+      items.push(li)
     }
     // page info
     if (this.info) {
@@ -111,7 +127,7 @@ export default {
     }
     // scoped slot
     if ('default' in this.$scopedSlots) {
-      const li = h('li', { class: 'v-pagination__item' }, [
+      const li = h('li', { class: 'v-pagination__slot' }, [
         h('a', this.$scopedSlots.default({
           pageNumber: current,
           pageSize: this.pageSize,
