@@ -6,23 +6,38 @@
  */
 import data from './data.json'
 
+/**
+ * json 数据转换为模型列表
+ * 模型格式：{ key: string, value: string }
+ */
 const list = []
+/**
+ * 省/直辖市模型列表
+ */
 const province = []
+/**
+ * 市模型列表
+ */
 const city = []
+/**
+ * 区/县模型列表
+ */
 const area = []
 
-// prepare data
 Object.entries(data).forEach(val => {
-  const key = Number.parseInt(val[0])
-  const model = { key: val[0], value: val[1] }
+  const [key, value] = val
+  const code = Number.parseInt(key)
+  const model = { key, value }
   list.push(model)
-  if (!(key % 1e4)) {
+  if (!(code % 1e4)) {
+    // xx0000 为省级编码格式
     province.push(model)
-  } else if (!(key % 100)) {
+  } else if (!(code % 100)) {
+    // xxxx00 为市级编码格式
     city.push(model)
   } else {
-    const num = Number(val[0].substr(2))
-    if (num > 9000) {
+    // 后四位数处理
+    if (Number(key.substring(2)) > 9000) {
       city.push(model)
     } else {
       area.push(model)
