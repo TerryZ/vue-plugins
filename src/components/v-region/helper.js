@@ -6,66 +6,68 @@ import {
 } from './constants'
 
 /**
- * load city list by province data
+ * 根据省读取城市列表
  *
- * @param province
- * @returns {Array}
+ * @param {object} province - 省
+ * @returns {object[]} - 城市列表
  */
 export function loadCity (province) {
-  if (province && Object.keys(province).length) {
-    const list = srcCity.filter(val => {
-      const num = Number.parseInt(province.key)
-      return (val.key - num) < 1e4 && (val.key % num) < 1e4
-    })
-    // Municipalities directly under the central government
-    return list.length ? list : [province]
-  } else return []
+  if (!province || !Object.keys(province).length) return []
+
+  const list = srcCity.filter(val => {
+    const num = Number.parseInt(province.key)
+    return (val.key - num) < 1e4 && (val.key % num) < 1e4
+  })
+  // Municipalities directly under the central government
+  return list.length ? list : [province]
 }
 
 /**
- * load area list by city data
+ * 根据城市读取区/县列表
  *
- * @param city
- * @returns {Array}
+ * @param {object} city - 城市
+ * @returns {object[]} 区/县列表
  */
 export function loadArea (city) {
-  if (city && Object.keys(city).length) {
-    const cityKey = Number.parseInt(city.key)
-    const isNotProvince = cityKey % 1e4
-    const calcNum = isNotProvince ? 100 : 1e4
-    const list = srcArea.filter(val => {
-      return (val.key - cityKey) < calcNum && val.key % cityKey < calcNum
-    })
-    // Prefecture-level city
-    return list.length ? list : [city]
-  } else return []
+  if (!city || !Object.keys(city).length) return []
+
+  const cityKey = Number.parseInt(city.key)
+  const isNotProvince = cityKey % 1e4
+  const calcNum = isNotProvince ? 100 : 1e4
+  const list = srcArea.filter(val => {
+    return (val.key - cityKey) < calcNum && val.key % cityKey < calcNum
+  })
+  // Prefecture-level city
+  return list.length ? list : [city]
 }
 
 /**
- * load town list by area data
+ * 根据区/县数据读取乡/镇列表
  *
- * @param area
- * @returns {Array}
+ * @param {object} area - 区/县
+ * @returns {object[]} 乡/镇列表
  */
 export function loadTown (area) {
-  let list = null
-  if (area && Object.keys(area).length) {
-    let towns = null
-    /* eslint-disable */
-    try {
-      towns = require(`./town/${area.key}.json`);
-      // towns = () => import(`../town/${area.key}.json`);
-      // console.log(towns)
-    } catch (e) {
-      console.warn(`The ${area.value} area have no town data.`);
-    }
-    /* eslint-enable */
-    list = towns && Object.keys(towns).length
-      ? Object.entries(towns).map(val => ({ key: val[0], value: val[1] }))
-      : []
-  } else list = []
+  if (!area || !Object.keys(area).length) return []
+
+  let towns = null
+  /* eslint-disable */
+  try {
+    towns = require(`./town/${area.key}.json`);
+    // towns = () => import(`../town/${area.key}.json`);
+    // console.log(towns)
+  } catch (e) {
+    console.warn(`The "${area.value}" area have no town data.`);
+    return []
+  }
+
+  if (towns && Object.keys(towns).length) {
+    return Object
+      .entries(towns)
+      .map(([key, value]) => ({ key, value }))
+  }
   // this.haveTown = !(this.dProvince && this.dCity && area && !list.length)
-  return list
+  return []
 }
 
 /**
@@ -86,7 +88,6 @@ export function getLoader (level) {
 /**
  * Get available region levels
  *
- * @export
  * @param {boolean} city
  * @param {boolean} area
  * @param {boolean} town
@@ -107,43 +108,41 @@ export function availableLevels () {
 }
 
 /**
- * Check model format valid
+ * 校验数据模型格式
  *
- * @export
- * @param {object} model
- * @returns {boolean}
+ * @param {object} model - 数据模型
+ * @returns {boolean} 检查结果
  */
 export function validModel (model) {
-  return Boolean(model && Object.keys(model).length && LEVEL_LIST.every(val => val in model))
+  return Boolean(
+    model &&
+    Object.keys(model).length &&
+    LEVEL_LIST.every(val => val in model)
+  )
 }
 
 /**
- * Get detail data by key
+ * 根据 key 获得模型数据
  *
  * @param {string} key
+ * @returns {object} 模型数据
  */
 const getDetail = key => {
-  const item = srcList.find(val => val.key === key)
-  if (item && Object.keys(item).length) {
-    return {
-      key: item.key,
-      value: item.value
-    }
-  } else return null
+  return srcList.find(val => val.key === key)
 }
 
 /**
  * Get region raw data from model
  *
- * model format:
+ * 入参数据模型格式:
  * {
- *   province: 'xxx',
- *   city: 'xxx',
- *   area: 'xxx',
- *   town: 'xxx'
+ *   province: 'province-key',
+ *   city: 'city-key',
+ *   area: 'area-key',
+ *   town: 'town-key'
  * }
  *
- * region raw data format:
+ * 原始数据模型格式:
  * {
  *   province: { key: 'xxx', value: 'yyy' },
  *   city: { key: 'xxx', value: 'yyy' },
@@ -151,12 +150,10 @@ const getDetail = key => {
  *   town: { key: 'xxx', value: 'yyy' }
  * }
  *
- * @export
- *
- * @param {object} model
+ * @param {object} model - 入参数据模型
  * @param {array} levels
  *
- * @returns {object} region raw data
+ * @returns {object} 区域原始数据模型
  */
 export function getRegionByModel (model, levels) {
   const region = {
