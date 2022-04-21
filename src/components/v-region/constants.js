@@ -1,11 +1,14 @@
 /**
  * Plugin types
  */
-export const TEXT = 'text'
-export const SELECT = 'select'
-export const GROUP = 'group'
-export const COLUMN = 'column'
-export const CITY = 'city'
+export const TYPE_LIST = ['text', 'select', 'group', 'column', 'city']
+export const [
+  TEXT,
+  SELECT,
+  GROUP,
+  COLUMN,
+  CITY
+] = TYPE_LIST
 
 export const PROVINCE_LEVEL = 0
 export const CITY_LEVEL = 1

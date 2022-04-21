@@ -1,28 +1,27 @@
-import region from './Region'
+import Region from './Region'
 
-const Plugin = {
-  install (Vue, options = {}) {
-    if (Object.keys(options).length) {
-      if (typeof options.i18n === 'string') region.props.i18n.default = options.i18n
-      if (typeof options.blank === 'boolean') region.props.blank.default = options.blank
-      if (typeof options.town === 'boolean') region.props.town.default = options.town
-      if (typeof options.search === 'boolean') region.props.search.default = options.search
-    }
+Region.install = (Vue, options = {}) => {
+  if (Object.keys(options).length) {
+    const { i18n, blank, town, search } = options
+    if (typeof i18n === 'string') Region.props.i18n.default = i18n
+    if (typeof blank === 'boolean') Region.props.blank.default = blank
+    if (typeof town === 'boolean') Region.props.town.default = town
+    if (typeof search === 'boolean') Region.props.search.default = search
+  }
 
-    /*
-    region.extends = {
-      props: {
-        abc: {
-          type: String,
-          default: 'abc'
-        }
+  /*
+  region.extends = {
+    props: {
+      abc: {
+        type: String,
+        default: 'abc'
       }
     }
-    console.log(region)
-    */
-
-    Vue.component(region.name, region)
   }
+  console.log(region)
+  */
+
+  Vue.component(Region.name, Region)
 }
 
-export default Plugin
+export default Region

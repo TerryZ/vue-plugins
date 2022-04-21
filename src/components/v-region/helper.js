@@ -5,6 +5,11 @@ import {
   CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL
 } from './constants'
 
+export function generateComponentName (typeName) {
+  if (!typeName) return
+  return `r-${typeName}`
+}
+
 /**
  * 根据省读取城市列表
  *

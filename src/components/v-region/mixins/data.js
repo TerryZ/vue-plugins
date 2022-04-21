@@ -1,23 +1,12 @@
 import { availableLevels } from '../helper'
+import { CN } from '../language'
 
 export default {
   props: {
-    city: {
-      type: Boolean,
-      default: true
-    },
-    area: {
-      type: Boolean,
-      default: true
-    },
-    town: {
-      type: Boolean,
-      default: false
-    },
-    i18n: {
-      type: String,
-      default: 'cn'
-    },
+    city: { type: Boolean, default: true },
+    area: { type: Boolean, default: true },
+    town: { type: Boolean, default: false },
+    i18n: { type: String, default: CN },
     value: Object
   },
   data () {
