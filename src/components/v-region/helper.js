@@ -113,7 +113,7 @@ export function availableLevels () {
 }
 
 /**
- * 校验数据模型格式
+ * 校验输入数据模型格式有效性
  *
  * @param {object} model - 数据模型
  * @returns {boolean} 检查结果
@@ -137,7 +137,7 @@ const getDetail = key => {
 }
 
 /**
- * Get region raw data from model
+ * 入参数据模型转换为完整数据
  *
  * 入参数据模型格式:
  * {
@@ -156,37 +156,63 @@ const getDetail = key => {
  * }
  *
  * @param {object} model - 入参数据模型
- * @param {array} levels
+ * @param {string[]} levels - 有效区域级别列表
  *
  * @returns {object} 区域原始数据模型
  */
-export function getRegionByModel (model, levels) {
+export function getRegionByModel (model, levels = LEVEL_LIST) {
+  const { province, city, area, town } = model
   const region = {
-    province: null,
-    city: null,
-    area: null,
-    town: null
+    province: undefined,
+    city: undefined,
+    area: undefined,
+    town: undefined
   }
-  const inLevel = key => levels.some(val => val === key)
+  const inLevel = key => levels.includes(key)
 
-  if (!model.province) return region
+  if (!province) return region
 
-  region.province = getDetail(model.province)
+  region.province = getDetail(province)
 
-  if (!model.city || !inLevel(CITY_KEY) || !region.province) return region
+  if (!city || !inLevel(CITY_KEY) || !region.province) return region
 
-  region.city = getDetail(model.city)
+  region.city = getDetail(city)
 
-  if (!model.area || !inLevel(AREA_KEY) || !region.city) return region
+  if (!area || !inLevel(AREA_KEY) || !region.city) return region
 
-  region.area = getDetail(model.area)
+  region.area = getDetail(area)
 
-  if (!model.town || !inLevel(TOWN_KEY) || !region.area) return region
+  if (!town || !inLevel(TOWN_KEY) || !region.area) return region
 
   const towns = loadTown(region.area)
   if (towns.length) {
-    region.town = towns.find(val => val.key === model.town)
+    region.town = towns.find(val => val.key === town)
   }
 
   return region
+}
+
+/**
+ * 入参数据模型转换为完整数据
+ *
+ * 原始数据模型格式:
+ * {
+ *   province: { key: 'xxx', value: 'yyy' },
+ *   city: { key: 'xxx', value: 'yyy' },
+ *   area: { key: 'xxx', value: 'yyy' },
+ *   town: { key: 'xxx', value: 'yyy' }
+ * }
+ *
+ * @param {object} region - 入参数据模型
+ * @param {string[]} levels - 有效区域级别列表（排列顺序需按照行政级别）
+ *
+ * @returns {object} 区域原始数据模型
+ */
+export function parseRegionToText (region, levels = LEVEL_LIST) {
+  return levels
+    .map(val => {
+      if (!val) return
+      return region[val].value
+    })
+    .filter(val => val)
 }

@@ -24,7 +24,7 @@ export default {
     const type = this.type.toLowerCase()
 
     if (!TYPE_LIST.includes(type)) {
-      console.error('Please provide selector type.("type" prop of v-region)')
+      console.error('Please provide plugin type.("type" prop of v-region)')
       return
     }
 
