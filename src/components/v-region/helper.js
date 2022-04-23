@@ -163,10 +163,10 @@ const getDetail = key => {
 export function getRegionByModel (model, levels = LEVEL_LIST) {
   const { province, city, area, town } = model
   const region = {
-    province: undefined,
-    city: undefined,
-    area: undefined,
-    town: undefined
+    [PROVINCE_KEY]: undefined,
+    [CITY_KEY]: undefined,
+    [AREA_KEY]: undefined,
+    [TOWN_KEY]: undefined
   }
   const inLevel = key => levels.includes(key)
 
@@ -210,9 +210,6 @@ export function getRegionByModel (model, levels = LEVEL_LIST) {
  */
 export function parseRegionToText (region, levels = LEVEL_LIST) {
   return levels
-    .map(val => {
-      if (!val) return
-      return region[val].value
-    })
+    .map(val => region[val] && region[val].value)
     .filter(val => val)
 }

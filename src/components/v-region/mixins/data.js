@@ -20,10 +20,10 @@ export default {
       lang: {},
 
       region: {
-        province: null,
-        city: null,
-        area: null,
-        town: null
+        province: undefined,
+        city: undefined,
+        area: undefined,
+        town: undefined
       }
     }
   },
