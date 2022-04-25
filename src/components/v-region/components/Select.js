@@ -32,6 +32,13 @@ export default {
       return (this.selected && this.selected.value)
         ? this.selected.value
         : this.blank ? this.blankText : '&nbsp;'
+    },
+    triggerClasses () {
+      return {
+        'rg-select__el': true,
+        'rg-select__el--active': this.show,
+        'rg-select_el--disabled': this.disabled
+      }
     }
   },
   render (h) {
@@ -39,13 +46,7 @@ export default {
 
     // trigger
     child.push(h('template', { slot: 'caller' }, [
-      h('div', {
-        class: {
-          'rg-select__el': true,
-          'rg-select__el--active': this.show,
-          'rg-select_el--disabled': this.disabled
-        }
-      }, [
+      h('div', { class: this.triggerClasses }, [
         h('div', { class: 'rg-select__content' }, this.content),
         h('span', { class: 'rg-select__caret' })
       ])
@@ -54,13 +55,12 @@ export default {
     const items = []
     // "Please select" option
     if (this.blank) {
-      items.push(h('li', {
+      const option = {
         on: {
-          click: () => {
-            this.pick(null)
-          }
+          click: () => this.pick(null)
         }
-      }, this.blankText))
+      }
+      items.push(h('li', option, this.blankText))
     }
     // list item
     items.push(...this.list.map(val => {

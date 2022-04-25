@@ -31,7 +31,7 @@ export default {
     const child = []
     const { province, city, area, town } = this.region
 
-    child.push(this.build(h, {
+    child.push(this.build({
       list: this.listProvince,
       model: province,
       callback: val => {
@@ -40,7 +40,7 @@ export default {
     }))
 
     if (this.city) {
-      child.push(this.build(h, {
+      child.push(this.build({
         list: this.listCity,
         model: city,
         callback: val => {
@@ -49,7 +49,7 @@ export default {
       }))
     }
     if (this.city && this.area) {
-      child.push(this.build(h, {
+      child.push(this.build({
         list: this.listArea,
         model: area,
         callback: val => {
@@ -58,7 +58,7 @@ export default {
       }))
     }
     if (this.city && this.area && this.town) {
-      child.push(this.build(h, {
+      child.push(this.build({
         list: this.listTown,
         model: town,
         callback: val => {
@@ -70,8 +70,8 @@ export default {
     return h('div', child)
   },
   methods: {
-    build (h, { list, model, callback }) {
-      return h('r-select', {
+    build ({ list, model, callback }) {
+      return this.$createElement('r-select', {
         props: {
           'blank-text': this.lang.pleaseSelect,
           list: list
