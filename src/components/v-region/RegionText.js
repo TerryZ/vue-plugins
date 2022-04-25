@@ -1,4 +1,4 @@
-import { validModel, getRegionByModel, parseRegionToText } from './helper'
+import { validModel, getRegionByModel, parseRegionToText } from './utils/helper'
 
 /**
  * 纯文本显示区域信息

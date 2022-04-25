@@ -1,4 +1,4 @@
-import { availableLevels } from '../helper'
+import { availableLevels } from '../utils/helper'
 import { CN } from '../language'
 
 export default {
@@ -6,7 +6,7 @@ export default {
     city: { type: Boolean, default: true },
     area: { type: Boolean, default: true },
     town: { type: Boolean, default: false },
-    i18n: { type: String, default: CN },
+    language: { type: String, default: CN },
     value: Object
   },
   data () {

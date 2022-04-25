@@ -12,10 +12,6 @@ export default {
   inheritAttrs: false,
   components: { dropdown },
   props: {
-    i18n: {
-      type: String,
-      default: 'cn'
-    },
     value: Array
   },
   data () {

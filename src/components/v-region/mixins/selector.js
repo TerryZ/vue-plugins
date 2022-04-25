@@ -26,18 +26,16 @@ export default {
      */
     buildCaller (h) {
       const caller = []
-      const lang = language[this.i18n]
+      const lang = language[this.language]
 
       if ('default' in this.$scopedSlots) {
         // scoped slot
-        caller.push(this.$scopedSlots.default({
-          region: this.region,
-          show: this.show
-        }))
+        const { region, show } = this
+        caller.push(this.$scopedSlots.default({ region, show }))
       } else {
         // default region caller button
         const element = []
-        element.push(h('span', this.selectedText ? this.selectedText : lang.pleaseSelect))
+        element.push(h('span', this.selectedText || lang.pleaseSelect))
 
         if (this.selectedText) {
           element.push(h('span', {

@@ -6,7 +6,7 @@ import {
   LEVEL_LIST, LEVELS
 } from '../constants'
 
-import { getRegionByModel, validModel, getLoader } from '../helper'
+import { getRegionByModel, validModel, getLoader } from '../utils/helper'
 
 export default {
   methods: {
@@ -115,7 +115,7 @@ export default {
         return gap === 0 ? Number(a.key) - Number(b.key) : gap
       })
       : srcProvince.slice()
-    this.lang = language[this.i18n]
+    this.lang = language[this.language]
     if (this.value && Object.keys(this.value).length) this.modelChange(this.value)
   }
 }
