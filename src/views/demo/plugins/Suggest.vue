@@ -6,59 +6,88 @@
         type="button"
         class="btn btn-outline-secondary btn-sm"
         @click="$router.push({path: '/demo'});"
-      >Back to List</button>
+      >
+        Back to List
+      </button>
     </h1>
 
     <hr>
 
-    <h5 class="mt-5">禁用</h5>
+    <h5 class="mt-5">
+      禁用
+    </h5>
     <p>
       <v-suggest
         v-model="disabled"
         :data="sample"
         :disabled="true"
         :show-field="showField"
-      ></v-suggest>
+      />
     </p>
 
-    <h5 class="mt-5">输入自动完成 ( {{input}} )</h5>
+    <h5 class="mt-5">
+      输入自动完成 ( {{ input }} )
+    </h5>
     <p>
-      <v-suggest :data="sample" name="abc" v-model="input" @values="values"></v-suggest>
+      <v-suggest
+        :data="sample"
+        name="abc"
+        v-model="input"
+        @values="values"
+      />
     </p>
 
-    <h5 class="mt-5">自定义行内容展示</h5>
+    <h5 class="mt-5">
+      自定义行内容展示
+    </h5>
     <p>
-      <v-suggest :data="sample"
+      <v-suggest
+        :data="sample"
         placeholder="Type something..."
-        :show-field="showField" ></v-suggest>
+        :show-field="showField"
+      />
     </p>
 
-    <h5 class="mt-5">无输入内容时，显示完整推荐列表</h5>
+    <h5 class="mt-5">
+      无输入内容时，显示完整推荐列表
+    </h5>
     <p>
       <v-suggest
         :data="sample"
         :show-field="showField"
         :full-list="true"
-      ></v-suggest>
+      />
     </p>
 
-    <h5 class="mt-5">使用 slot 进行自定义显示</h5>
+    <h5 class="mt-5">
+      使用 slot 进行自定义显示
+    </h5>
     <p>
-      <v-suggest :data="sample" >
+      <v-suggest :data="sample">
         <template #default="{ row }">
           <div>
-            <strong v-text="row.name"></strong>
-            <small class="ml-2" v-text="row.abbr"></small>
+            <strong v-text="row.name" />
+            <small
+              class="ms-2"
+              v-text="row.abbr"
+            />
           </div>
-          <div class="text-muted" v-text="row.desc"></div>
+          <div
+            class="text-muted"
+            v-text="row.desc"
+          />
         </template>
       </v-suggest>
     </p>
 
-    <h5 class="mt-5">限制显示结果列表个数</h5>
+    <h5 class="mt-5">
+      限制显示结果列表个数
+    </h5>
     <p>
-      <v-suggest :data="sample" :max-length="5" >
-      </v-suggest>
+      <v-suggest
+        :data="sample"
+        :max-length="5"
+      />
     </p>
   </div>
 </template>

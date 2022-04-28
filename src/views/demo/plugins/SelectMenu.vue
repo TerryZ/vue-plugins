@@ -11,7 +11,7 @@
     <h2>Basic</h2>
     <h5 class="mt-3">Disabled</h5>
     <p>
-      <button class="btn btn-danger mr-3" @click="available = !available">Toggle available(v-if)</button>
+      <button class="btn btn-danger me-3" @click="available = !available">Toggle available(v-if)</button>
       <button class="btn btn-outline-secondary" @click="disabled = !disabled">Toggle disabled</button>
     </p>
     <p>
@@ -43,7 +43,7 @@
       <div class="col-md-6">
         <p>Regular menu with slot</p>
         <p>
-          <button type="button" class="btn btn-secondary mr-3" @click="changeData">Menu with header</button>
+          <button type="button" class="btn btn-secondary me-3" @click="changeData">Menu with header</button>
           <button type="button" class="btn btn-secondary" @click="toMultipleLevel">Multiple level</button>
         </p>
         <v-selectmenu :data="dynamic" type="regular" :embed="true" >
@@ -52,7 +52,7 @@
           <!-- use slot to custom rendering menu row -->
           <template #row="{ row }">
           <span>
-            <fa-icon class="fa-lg mr-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
+            <fa-icon class="fa-lg me-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
             <span v-html="row.content"></span>
           </span>
           </template>
@@ -96,7 +96,7 @@
         <!-- use slot to custom rendering menu row -->
         <template #row="{ row }">
         <span>
-          <fa-icon class="fa-lg mr-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
+          <fa-icon class="fa-lg me-2" :icon="row.icon.split(',')" v-if="row.icon"></fa-icon>
           <span v-html="row.content"></span>
         </span>
         </template>

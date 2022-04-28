@@ -18,7 +18,7 @@
     </div>
     <h5 class="mt-3">Header bar</h5>
     <div>
-      <button type="button" class="btn btn-outline-dark mr-2" @click="callModal(false)" id="btn-alert-info">Close header bar</button>
+      <button type="button" class="btn btn-outline-dark me-2" @click="callModal(false)" id="btn-alert-info">Close header bar</button>
       <button type="button" class="btn btn-outline-info" @click="callModal('Modal of v-dialogs')" id="btn-alert-info">Custom content</button>
     </div>
 
@@ -38,7 +38,7 @@
     </div>
     <h5 class="mt-3">Header bar</h5>
     <div>
-      <button type="button" class="btn btn-outline-dark mr-2" @click="callAlert('info', false, false)" id="btn-alert-info">Close header bar</button>
+      <button type="button" class="btn btn-outline-dark me-2" @click="callAlert('info', false, false)" id="btn-alert-info">Close header bar</button>
       <button type="button" class="btn btn-outline-info" @click="callAlert('info', false, 'The custom header content')" id="btn-alert-info">Custom content</button>
     </div>
 

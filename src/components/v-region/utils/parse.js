@@ -1,7 +1,7 @@
 import {
   LEVEL_LIST,
   PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY
-} from './constants'
+} from '../constants'
 import { loadTown, getDetail } from './helper'
 
 /**

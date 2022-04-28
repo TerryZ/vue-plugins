@@ -4,6 +4,7 @@ import '../styles/city.styl'
 import { srcProvince, srcCity } from '../formatted'
 import selector from '../mixins/selector'
 import search from '../mixins/selectorWithSearch'
+import { CN } from '../language'
 import dropdown from 'v-dropdown'
 
 export default {
@@ -12,7 +13,8 @@ export default {
   inheritAttrs: false,
   components: { dropdown },
   props: {
-    value: Array
+    value: Array,
+    language: { type: String, default: CN }
   },
   data () {
     return {

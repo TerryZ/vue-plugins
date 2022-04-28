@@ -58,7 +58,7 @@ export function loadTown (area) {
   let towns = null
   /* eslint-disable */
   try {
-    towns = require(`./town/${area.key}.json`);
+    towns = require(`../town/${area.key}.json`);
     // towns = () => import(`../town/${area.key}.json`);
     // console.log(towns)
   } catch (e) {

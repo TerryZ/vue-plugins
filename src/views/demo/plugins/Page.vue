@@ -14,11 +14,11 @@
     <hr>
 
     <h5>照片墙实例</h5>
-    <div class="d-flex flex-wrap border px-3 pt-3 mb-3 rounded-lg shadow-sm">
+    <div class="d-flex flex-wrap border px-3 pt-3 mb-3 rounded-3 shadow-sm">
       <div
         v-for="(num, index) in pageArr"
         :key="index"
-        class="rounded-lg bg-light mr-3 mb-3 text-black-50 h1
+        class="rounded-3 bg-light me-3 mb-3 text-black-50 h1
         d-flex justify-content-center align-items-center"
         style="width: 11.2rem; height: 8rem;"
       >
@@ -35,7 +35,7 @@
     <h5 class="mt-5 mb-3">
       完整分页栏
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <v-page
         align="left"
         :total-row="101"
@@ -52,7 +52,7 @@
           >
         </div>
         <button
-          class="btn btn-primary mr-3"
+          class="btn btn-primary me-3"
           type="button"
           @click="go"
         >
@@ -71,7 +71,7 @@
     <h5 class="mt-5 mb-3">
       对齐方向
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <div class="mb-3 d-flex align-items-center">
         <div>方向：</div>
         <div>
@@ -102,7 +102,7 @@
     <h5 class="mt-5 mb-3">
       无页数选择列表
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <v-page
         :total-row="100"
         :page-size-menu="false"
@@ -113,7 +113,7 @@
     <h5 class="mt-5 mb-3">
       无分页信息栏
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <v-page
         :page-size-menu="false"
         :info="false"
@@ -125,7 +125,7 @@
     <h5 class="mt-5 mb-3">
       无首页、尾页
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <v-page
         :page-size-menu="false"
         :info="false"
@@ -139,7 +139,7 @@
     <h5 class="mt-5 mb-3">
       无分页码
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <v-page
         :page-size-menu="false"
         :info="false"
@@ -154,7 +154,7 @@
     <h5 class="mt-5 mb-3">
       禁用
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <v-page
         align="left"
         :total-row="100"
@@ -192,7 +192,7 @@
     <h5 class="mt-5 mb-3">
       边框
     </h5>
-    <div class="bg-white border p-3 rounded-lg">
+    <div class="bg-white border p-3 rounded-3">
       <v-page
         :total-row="100"
         align="left"
@@ -203,7 +203,7 @@
     <h5 class="mt-5 mb-3">
       插槽
     </h5>
-    <div class="bg-light p-3 rounded-lg">
+    <div class="bg-light p-3 rounded-3">
       <v-page
         align="left"
         :total-row="101"
@@ -235,7 +235,7 @@
     <h5 class="mt-5 mb-3">
       显示全部数据
     </h5>
-    <div class="p-3 rounded-lg border">
+    <div class="p-3 rounded-3 border">
       <v-page
         align="left"
         :total-row="101"

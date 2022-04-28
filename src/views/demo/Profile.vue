@@ -17,7 +17,7 @@
     </div>
     <p class="mt-3">
       <fa-icon icon="check"></fa-icon>
-      <button type="button" class="btn btn-primary mr-3" @click="ok">
+      <button type="button" class="btn btn-primary me-3" @click="ok">
         <fa-icon icon="check"></fa-icon> OK
       </button>
     </p>

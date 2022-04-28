@@ -18,7 +18,7 @@ export default {
     [generateComponentName(CITY)]: CityPicker
   },
   props: {
-    type: { type: String, required: true, default: SELECT }
+    type: { type: String, default: SELECT }
   },
   render (h) {
     const type = this.type.toLowerCase()

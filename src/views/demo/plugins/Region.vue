@@ -1,131 +1,223 @@
 <template>
-  <div class="card p-5">
+  <div class="p-5">
     <h1>
       v-region
       <button
         type="button"
         class="btn btn-outline-secondary btn-sm"
-        @click="$router.push({path: '/demo'});">Back to List</button>
+        @click="$router.push({path: '/demo'});"
+      >
+        Back to List
+      </button>
     </h1>
 
     <hr>
 
     <div class="alert alert-warning">
-    北京、天津、上海、重庆等直辖市与省同级，若选择的省是直辖市，则下级行政级别为 <strong>区/县</strong>，不是 <strong>市</strong>，在数据处理上注意区分！
+      北京、天津、上海、重庆等直辖市与省同级，若选择的省是直辖市，则下级行政级别为 <strong>区/县</strong>，不是 <strong>市</strong>，在数据处理上注意区分！
     </div>
 
-    <h4 class="mt-3">下拉选择器模式 Group</h4>
-    <div class="bg-light p-3 mb-3">
-      <pre class="m-0 mb-3" v-text="JSON.stringify(modelGroup, null, 2)"></pre>
-      <pre class="m-0" v-text="JSON.stringify(valuesGroup, null, 2)"></pre>
+    <h3 class="mt-3">
+      Group
+      <small>下拉选择器模式</small>
+    </h3>
+    <div class="p-3 shadow-sm rounded-3 border">
+      <div class="bg-light p-3 mb-3">
+        <pre
+          class="m-0 mb-3"
+          v-text="JSON.stringify(modelGroup, null, 2)"
+        />
+        <pre
+          class="m-0"
+          v-text="JSON.stringify(valuesGroup, null, 2)"
+        />
+      </div>
+      <p>
+        <v-region
+          :city="true"
+          :area="true"
+          :town="true"
+          type="group"
+          v-model="modelGroup"
+          class="me-3"
+          @values="cbGroup"
+        />
+        <button
+          type="button"
+          class="btn btn-secondary btn-sm"
+          @click="resetGroup"
+        >
+          reset region
+        </button>
+      </p>
+
+      <h5 class="mt-3">
+        下拉选择器模式（自定义呼出按钮）
+      </h5>
+      <div>
+        <v-region type="group">
+          <template #default="{ region, show }">
+            <button
+              type="button"
+              class="btn btn-primary"
+            >
+              region:{{ resultText(region) }},
+              show: {{ show }}
+            </button>
+          </template>
+        </v-region>
+      </div>
     </div>
-    <p>
-      <v-region
-        :city="true"
-        :area="true"
-        :town="true"
-        type="group"
-        v-model="modelGroup"
-        class="mr-3"
-        @values="cbGroup"
-      ></v-region>
-      <button
-        type="button"
-        class="btn btn-secondary btn-sm"
-        @click="resetGroup"
-      >reset region</button>
-    </p>
 
-    <h4 class="mt-3">下拉选择器模式（自定义呼出按钮）</h4>
-    <p>
-      <v-region type="group" >
-        <template #default="{ region, show }">
-          <button type="button" class="btn btn-primary">
-            region:{{resultText(region)}},
-            show: {{show}}
-          </button>
-        </template>
-      </v-region>
-    </p>
+    <h3 class="mt-5">
+      Column
+      <small>下拉选择器多列竖排模式</small>
+    </h3>
+    <div class="p-3 shadow-sm rounded-3 border">
+      <div class="bg-light p-3 mb-3">
+        <pre
+          class="m-0 mb-3"
+          v-text="JSON.stringify(modelColumn, null, 2)"
+        />
+        <pre
+          class="m-0"
+          v-text="JSON.stringify(valuesColumn, null, 2)"
+        />
+      </div>
+      <p>
+        <v-region
+          :city="true"
+          :area="true"
+          :town="true"
+          type="column"
+          v-model="modelColumn"
+          @values="cbColumn"
+        />
+      </p>
 
-    <h4 class="mt-3">下拉选择器多列竖排模式 Column</h4>
-    <div class="bg-light p-3 mb-3">
-      <pre class="m-0 mb-3" v-text="JSON.stringify(modelColumn, null, 2)"></pre>
-      <pre class="m-0" v-text="JSON.stringify(valuesColumn, null, 2)"></pre>
+      <h4 class="mt-3">
+        下拉选择器多列竖排模式（自定义呼出按钮）
+      </h4>
+      <div>
+        <v-region type="column">
+          <template #default="{ region, show }">
+            <button
+              type="button"
+              class="btn btn-primary"
+            >
+              region:{{ resultText(region) }},
+              show: {{ show }}
+            </button>
+          </template>
+        </v-region>
+      </div>
     </div>
-    <p>
-      <v-region
-        :city="true"
-        :area="true"
-        :town="true"
-        type="column"
-        v-model="modelColumn"
-        @values="cbColumn"
-      >
-      </v-region>
-    </p>
 
-    <h4 class="mt-3">下拉选择器多列竖排模式（自定义呼出按钮）</h4>
-    <p>
-      <v-region type="column">
-        <template #default="{ region, show }">
-          <button type="button" class="btn btn-primary">
-            region:{{resultText(region)}},
-            show: {{show}}
-          </button>
-        </template>
-      </v-region>
-    </p>
-
-    <h4 class="mt-3">城市选择器 City</h4>
-    <div class="bg-light p-3 mb-3">
-      <pre class="m-0 mb-3" v-text="JSON.stringify(modelCity, null, 2)"></pre>
-      <pre class="m-0" v-text="JSON.stringify(valuesCity, null, 2)"></pre>
+    <h3 class="mt-5">
+      City
+      <small>城市选择器</small>
+    </h3>
+    <div class="p-3 shadow-sm rounded-3 border">
+      <div class="bg-light p-3 mb-3">
+        <pre
+          class="m-0 mb-3"
+          v-text="JSON.stringify(modelCity, null, 2)"
+        />
+        <pre
+          class="m-0"
+          v-text="JSON.stringify(valuesCity, null, 2)"
+        />
+      </div>
+      <div>
+        <v-region
+          type="city"
+          v-model="modelCity"
+          @values="cbCity"
+        />
+      </div>
     </div>
-    <p>
-      <v-region
-        type="city"
-        v-model="modelCity"
-        @values="cbCity"
-      ></v-region>
-    </p>
 
-    <h4 class="mt-3">纯文本模式 Text <small>初始化选中的项目，以纯文本的内容显示</small></h4>
+    <h3 class="mt-5">
+      Text
+      <small>纯文本模式，初始化选中的项目，以纯文本的内容显示</small>
+    </h3>
     <p class="alert alert-secondary">
       <strong>当前选中地区：</strong>
-      <v-region :town="true" type="text" v-model="selected" ></v-region>
+      <v-region
+        :town="true"
+        type="text"
+        v-model="selected"
+      />
     </p>
 
-    <h4 class="mt-3">下拉列表模式 Select</h4>
+    <h3 class="mt-5">
+      Select
+      <small>下拉列表模式</small>
+    </h3>
+    <div class="p-3 shadow-sm rounded-3 border">
+      <h5>
+        省
+      </h5>
+      <v-region
+        :city="false"
+        :area="false"
+      />
 
-    <h4 class="mt-3">省</h4>
-    <v-region :city="false" :area="false"></v-region>
+      <h5 class="mt-3">
+        省、市
+      </h5>
+      <div class="bg-light p-3 mb-3">
+        <pre
+          class="m-0"
+          v-text="JSON.stringify(value1, null, 2)"
+        />
+      </div>
+      <v-region
+        :area="false"
+        v-model="value1"
+      />
 
-    <h4 class="mt-3">省、市</h4>
-    <div class="bg-light p-3 mb-3">
-      <pre class="m-0" v-text="JSON.stringify(value1, null, 2)"></pre>
+      <h5 class="mt-3">
+        省、市、区/县
+      </h5>
+      <v-region />
+
+      <h5 class="mt-3">
+        省、市、区/县、乡/镇/街道
+      </h5>
+      <div class="bg-light p-3 mb-3">
+        <pre
+          class="m-0 mb-3"
+          v-text="JSON.stringify(modelSelect, null, 2)"
+        />
+        <pre
+          class="m-0"
+          v-text="JSON.stringify(valuesSelect, null, 2)"
+        />
+      </div>
+      <v-region
+        :town="true"
+        v-model="modelSelect"
+        @values="cbSelect"
+      />
+
+      <h5 class="mt-3">
+        初始化值
+      </h5>
+      <v-region
+        :town="true"
+        v-model="selected"
+      />
+
+      <h5 class="mt-3">
+        初始化值并禁用
+      </h5>
+      <v-region
+        :town="true"
+        v-model="selected"
+        :disabled="true"
+      />
     </div>
-    <v-region :area="false" v-model="value1"></v-region>
-
-    <h4 class="mt-3">省、市、区/县</h4>
-    <v-region></v-region>
-
-    <h4 class="mt-3">省、市、区/县、乡/镇/街道</h4>
-    <div class="bg-light p-3 mb-3">
-      <pre class="m-0 mb-3" v-text="JSON.stringify(modelSelect, null, 2)"></pre>
-      <pre class="m-0" v-text="JSON.stringify(valuesSelect, null, 2)"></pre>
-    </div>
-    <v-region
-      :town="true"
-      v-model="modelSelect"
-      @values="cbSelect"
-    ></v-region>
-
-    <h4 class="mt-3">初始化值</h4>
-    <v-region :town="true" v-model="selected"></v-region>
-
-    <h4 class="mt-3">初始化值并禁用</h4>
-    <v-region :town="true" v-model="selected" :disabled="true"></v-region>
     <br><br><br>
 
     <h5>由于组件特殊，不能使用常规的表单验证模式，需要使用表单验证样例中特殊处理的方式</h5>
@@ -133,19 +225,27 @@
     <div class="card">
       <div class="card-header">
         表单校验
-        <button type="button" class="btn btn-outline-secondary btn-sm" @click="check">检查表单元素</button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          @click="check"
+        >
+          检查表单元素
+        </button>
       </div>
       <div class="card-body">
         <div :class="{'form-group':true, 'col-md-9':true, 'has-error':regionSet===false}">
           <label class="col-md-3 control-label">区域</label>
           <div class="col-md-9">
-            <v-region @values="validateValues"></v-region>
-            <span class="help-block" v-if="regionSet===false">请选择区域</span>
+            <v-region @values="validateValues" />
+            <span
+              class="help-block"
+              v-if="regionSet===false"
+            >请选择区域</span>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 

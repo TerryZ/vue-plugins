@@ -6,7 +6,8 @@ import {
   LEVEL_LIST, LEVELS
 } from '../constants'
 
-import { getRegionByModel, validModel, getLoader } from '../utils/helper'
+import { validModel, getLoader } from '../utils/helper'
+import { getRegionByModel } from '../utils/parse'
 
 export default {
   methods: {
