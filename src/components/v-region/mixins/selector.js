@@ -20,9 +20,6 @@ export default {
     },
     /**
      * Build region default toggle button
-     *
-     * @param {createElement} h
-     * @returns
      */
     buildCaller (h) {
       const caller = []

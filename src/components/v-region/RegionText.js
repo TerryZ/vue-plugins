@@ -1,4 +1,5 @@
-import { validModel, getRegionByModel, parseRegionToText } from './utils/helper'
+import { validModel } from './utils/helper'
+import { getRegionByModel, parseRegionToText } from './utils/parse'
 
 /**
  * 纯文本显示区域信息
@@ -11,6 +12,8 @@ export default {
   },
   render (h) {
     const { value, separator } = this
+
+    console.log('value', value)
 
     if (!validModel(value)) {
       console.error('Incorrect data format for "value/v-model"')

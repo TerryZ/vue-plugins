@@ -5,14 +5,18 @@ export default {
       this.$nextTick(() => {
         /**
          * fixed the page will scroll to top when open drop down list and set input focus
-         * that.$refs.search.focus({preventScroll:true}); only work on Chrome and EDGE
+         * that.$refs.search.focus({preventScroll:true})
+         * only work on Chrome and EDGE
          */
-        if (this.isChrome() || this.isEdge()) this.$refs.search.focus({ preventScroll: true })
-        else {
+        if (this.isChrome() || this.isEdge()) {
+          this.$refs.search.focus({ preventScroll: true })
+        } else {
           const x = window.pageXOffset
           const y = window.pageYOffset
           this.$refs.search.focus()
-          if (window.pageYOffset !== y) setTimeout(() => { window.scrollTo(x, y) }, 0)
+          if (window.pageYOffset !== y) {
+            setTimeout(() => { window.scrollTo(x, y) }, 0)
+          }
         }
       })
     },
