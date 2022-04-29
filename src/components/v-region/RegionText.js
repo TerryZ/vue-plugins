@@ -13,10 +13,8 @@ export default {
   render (h) {
     const { value, separator } = this
 
-    console.log('value', value)
-
     if (!validModel(value)) {
-      console.error('Incorrect data format for "value/v-model"')
+      console.error('Incorrect data format for "value/v-model" of v-region')
       return
     }
 

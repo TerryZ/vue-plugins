@@ -1,3 +1,7 @@
+/**
+ * 主要实现的功能当下拉层中带有输入框时，在打开下拉层时
+ * 自动让输入框获取焦点
+ */
 export default {
   methods: {
     inputFocus () {

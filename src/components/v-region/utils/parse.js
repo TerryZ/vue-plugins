@@ -3,6 +3,7 @@ import {
   PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY
 } from '../constants'
 import { loadTown, getDetail } from './helper'
+import { srcProvince, srcCity } from '../formatted'
 
 /**
  * 入参数据模型转换为完整数据
@@ -80,4 +81,42 @@ export function parseRegionToText (region, levels = LEVEL_LIST) {
   return levels
     .map(val => region[val] && region[val].value)
     .filter(val => val)
+}
+
+/**
+ * 组织城市选择器的城市目录清单，使用省份进行分组
+ */
+export function cityDirectory () {
+  // beijing, tianjin, shanghai, chongqing
+  const municipalitys = ['110000', '120000', '310000', '500000']
+  const municipality = '000000'
+  // hongkong, macao
+  const specials = ['810000', '820000']
+  const special = '000010'
+  const listTmp = []
+  const municipalityObj = {
+    province: { key: municipality, value: '直辖市' },
+    citys: []
+  }
+  const specialObj = {
+    province: { key: special, value: '特别行政区' },
+    citys: []
+  }
+  // set provinces
+  srcProvince.forEach(val => {
+    if (municipalitys.includes(val.key)) municipalityObj.citys.push(val)
+    else if (specials.includes(val.key)) specialObj.citys.push(val)
+    else listTmp.push({ province: val, citys: [] })
+  })
+  listTmp.forEach(val => {
+    val.citys = srcCity.filter(value => {
+      const num = Number.parseInt(val.province.key)
+      return (value.key - num) < 1e4 && (value.key % num) < 1e4
+    })
+  })
+  return [
+    ...[municipalityObj],
+    ...listTmp,
+    ...[specialObj]
+  ]
 }

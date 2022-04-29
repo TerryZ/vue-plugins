@@ -5,7 +5,11 @@ import { srcProvince, srcCity } from '../formatted'
 import selector from '../mixins/selector'
 import search from '../mixins/selectorWithSearch'
 import { CN } from '../language'
+import { cityDirectory } from '../utils/parse'
 import dropdown from 'v-dropdown'
+
+// 完整的城市列表（基于省份进行分组）
+const fullCityDirectory = cityDirectory()
 
 export default {
   name: 'CityPicker',
@@ -19,7 +23,7 @@ export default {
   data () {
     return {
       /**
-       * data list to display
+       * 数据列表格式
        * [{
        *   province: { key: '', value: ''},
        *   citys: [
@@ -30,9 +34,6 @@ export default {
        * }]
        */
       list: [],
-      // converted data list
-      listBuilt: [],
-      query: '',
       picked: []
     }
   },
@@ -43,42 +44,24 @@ export default {
   },
   watch: {
     /**
-     * region search
-     * search region description first, if no result, then search region key
-     * @param value
-     */
-    query (value) {
-      const keyword = value.trim()
-      if (keyword) {
-        const list = []
-        this.listBuilt.forEach(val => {
-          const citys = val.citys.filter(city => new RegExp(keyword).test(city.value))
-          if (citys.length) list.push({ province: val.province, citys: citys })
-        })
-        this.list = list
-      } else {
-        this.list = this.listBuilt.slice()
-      }
-    },
-    /**
-     * initialize selected citys
+     * 初始化数据
      */
     value: {
       handler (val) {
-        if (Array.isArray(val)) {
-          if (this.equal(val)) return
+        if (!Array.isArray(val) || this.equal(val)) return
 
-          if (val.length) {
-            const provincialCity = srcProvince.filter(item => val.includes(item.key))
-            // marge province and city
-            this.picked = [
-              ...provincialCity,
-              ...srcCity.filter(item => val.includes(item.key))
-            ]
-          } else this.picked = []
-
-          this.emit(false)
+        if (val.length) {
+          const provincialCity = srcProvince.filter(item => val.includes(item.key))
+          // marge province and city
+          this.picked = [
+            ...provincialCity,
+            ...srcCity.filter(item => val.includes(item.key))
+          ]
+        } else {
+          this.picked = []
         }
+
+        this.emit(false)
       },
       immediate: true
     }
@@ -97,13 +80,8 @@ export default {
           type: 'text',
           autocomplete: 'off'
         },
-        domProps: {
-          value: this.query.trim()
-        },
         on: {
-          input: e => {
-            this.query = e.target.value.trim()
-          }
+          input: e => this.query(e.target.value.trim())
         }
       })
     ]))
@@ -135,7 +113,7 @@ export default {
       ])
     })))
 
-    return h('dropdown', {
+    const dropdownOption = {
       ref: 'drop',
       props: {
         border: false
@@ -143,63 +121,28 @@ export default {
       on: {
         show: this.showChange
       }
-    }, child)
+    }
+    return h('dropdown', dropdownOption, child)
   },
   methods: {
-    prepared () {
-      // beijing, tianjin, shanghai, chongqing
-      const municipalitys = ['110000', '120000', '310000', '500000']
-      const municipality = '000000'
-      // hongkong, macao
-      const specials = ['810000', '820000']
-      const special = '000010'
-      const listTmp = []
-      const municipalityObj = {
-        province: { key: municipality, value: '直辖市' },
-        citys: []
-      }
-      const specialObj = {
-        province: { key: special, value: '特别行政区' },
-        citys: []
-      }
-      // set provinces
-      srcProvince.forEach(val => {
-        if (municipalitys.includes(val.key)) municipalityObj.citys.push(val)
-        else if (specials.includes(val.key)) specialObj.citys.push(val)
-        else listTmp.push({ province: val, citys: [] })
-      })
-      listTmp.forEach(val => {
-        val.citys = srcCity.filter(value => {
-          const num = Number.parseInt(val.province.key)
-          return (value.key - num) < 1e4 && (value.key % num) < 1e4
-        })
-      })
-      this.listBuilt = [...[municipalityObj], ...listTmp, ...[specialObj]]
-    },
-    // dropdown position adjust
-    adjust () {
-      this.$nextTick(() => {
-        this.$refs.drop.adjust()
-      })
-    },
     emit (input = true) {
       if (input) this.$emit('input', this.picked.map(val => val.key))
       this.$emit('values', this.picked)
     },
     /**
-     * v-model/value(keys) whether equal to picked keys
+     * 检查初始化数据是否与当前选中数据相同
      *
-     * @param {array} keys
-     * @returns
+     * @param {string[]} keys
+     * @returns {boolean}
      */
     equal (keys) {
       if (keys.length === this.picked.length) {
+        // 均为空数组
         if (!keys.length) return true
-        this.picked.forEach(val => {
-          if (!keys.includes(val.key)) return false
-        })
-        return true
-      } else return false
+        return this.picked.every(val => keys.includes(val.key))
+      } else {
+        return false
+      }
     },
     clear () {
       this.picked = []
@@ -218,10 +161,29 @@ export default {
     inPicked (city) {
       if (!city || !this.picked.length) return false
       return this.picked.some(val => val.key === city.key)
+    },
+    /**
+     * 城市快速搜索
+     *
+     * 搜索顺序
+     * 1. 城市名称
+     * 2. 城市编码
+     */
+    query (value) {
+      if (value) {
+        const list = []
+        fullCityDirectory.forEach(val => {
+          const citys = val.citys.filter(city => new RegExp(value).test(city.value))
+          if (citys.length) list.push({ province: val.province, citys: citys })
+        })
+        this.list = list
+      } else {
+        this.list = fullCityDirectory
+      }
+      this.adjust()
     }
   },
   created () {
-    this.prepared()
-    this.list = this.listBuilt.slice()
+    this.list = fullCityDirectory
   }
 }
