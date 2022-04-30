@@ -135,3 +135,25 @@ export function validModel (model) {
 export const getDetail = key => {
   return srcList.find(val => val.key === key)
 }
+
+/**
+ * 检查初始化数据是否与当前选中数据相同
+ *
+ * @param {string[]} keys - 选中城市的键值列表
+ * @param {{ key: string, value: string }[]} citys - 选中城市的模型列表
+ * @returns {boolean}
+ */
+export function keysEqualModels (keys, models) {
+  if (keys.length === models.length) {
+    // 均为空数组
+    if (!keys.length) return true
+    return models.every(val => keys.includes(val.key))
+  } else {
+    return false
+  }
+}
+
+export function isSelected (item, selectedItems) {
+  if (!item || !selectedItems.length) return false
+  return selectedItems.some(val => val.key === item.key)
+}

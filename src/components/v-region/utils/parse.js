@@ -18,10 +18,10 @@ import { srcProvince, srcCity } from '../formatted'
  *
  * 原始数据模型格式:
  * {
- *   province: { key: 'xxx', value: 'yyy' },
- *   city: { key: 'xxx', value: 'yyy' },
- *   area: { key: 'xxx', value: 'yyy' },
- *   town: { key: 'xxx', value: 'yyy' }
+ *   province: { key: string, value: string },
+ *   city: { key: string, value: string },
+ *   area: { key: string, value: string },
+ *   town: { key: string, value: string }
  * }
  *
  * @param {object} model - 入参数据模型
@@ -66,10 +66,10 @@ export function getRegionByModel (model, levels = LEVEL_LIST) {
  *
  * 原始数据模型格式:
  * {
- *   province: { key: 'xxx', value: 'yyy' },
- *   city: { key: 'xxx', value: 'yyy' },
- *   area: { key: 'xxx', value: 'yyy' },
- *   town: { key: 'xxx', value: 'yyy' }
+ *   province: { key: string, value: string },
+ *   city: { key: string, value: string },
+ *   area: { key: string, value: string },
+ *   town: { key: string, value: string }
  * }
  *
  * @param {object} region - 入参数据模型

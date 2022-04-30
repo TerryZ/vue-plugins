@@ -1,12 +1,14 @@
 import '../styles/icons.styl'
 import '../styles/city.styl'
 
-import { srcProvince, srcCity } from '../formatted'
+import dropdown from 'v-dropdown'
 import selector from '../mixins/selector'
 import search from '../mixins/selectorWithSearch'
+
+import { srcProvince, srcCity } from '../formatted'
 import { CN } from '../language'
+import { keysEqualModels, isSelected } from '../utils/helper'
 import { cityDirectory } from '../utils/parse'
-import dropdown from 'v-dropdown'
 
 // 完整的城市列表（基于省份进行分组）
 const fullCityDirectory = cityDirectory()
@@ -25,12 +27,8 @@ export default {
       /**
        * 数据列表格式
        * [{
-       *   province: { key: '', value: ''},
-       *   citys: [
-       *     {key: '', value: ''},
-       *     {key: '', value: ''},
-       *     ...
-       *   ]
+       *   province: { key: string, value: string},
+       *   citys: { key: string, value: string }[]
        * }]
        */
       list: [],
@@ -48,7 +46,7 @@ export default {
      */
     value: {
       handler (val) {
-        if (!Array.isArray(val) || this.equal(val)) return
+        if (!Array.isArray(val) || keysEqualModels(val, this.picked)) return
 
         if (val.length) {
           const provincialCity = srcProvince.filter(item => val.includes(item.key))
@@ -71,35 +69,35 @@ export default {
 
     child.push(this.buildCaller(h))
 
-    // search bar
-    child.push(h('div', { class: 'rg-search-bar' }, [
-      h('input', {
-        ref: 'search',
-        class: 'rg-input',
-        attrs: {
-          type: 'text',
-          autocomplete: 'off'
-        },
-        on: {
-          input: e => this.query(e.target.value.trim())
-        }
-      })
-    ]))
+    // 搜索栏
+    const input = h('input', {
+      ref: 'search',
+      class: 'rg-input',
+      attrs: {
+        type: 'text',
+        autocomplete: 'off'
+      },
+      on: {
+        input: e => this.query(e.target.value.trim())
+      }
+    })
+    child.push(h('div', { class: 'rg-search-bar' }, [input]))
 
-    // province grouped city list
+    // 基于省份分组的城市列表
     child.push(h('div', { class: 'rg-picker' }, this.list.map(val => {
+      const { province, citys } = val
       return h('div', {
         class: 'rg-picker__row',
-        key: val.province.key
+        key: province.key
       }, [
         h('dl', [
-          h('dt', val.province.value),
+          h('dt', province.value),
           h('dd', [
-            h('ul', val.citys.map(city => {
+            h('ul', citys.map(city => {
               return h('li', {
                 key: city.key,
                 class: {
-                  selected: this.inPicked(city)
+                  selected: isSelected(city, this.picked)
                 },
                 on: {
                   click: () => {
@@ -129,38 +127,19 @@ export default {
       if (input) this.$emit('input', this.picked.map(val => val.key))
       this.$emit('values', this.picked)
     },
-    /**
-     * 检查初始化数据是否与当前选中数据相同
-     *
-     * @param {string[]} keys
-     * @returns {boolean}
-     */
-    equal (keys) {
-      if (keys.length === this.picked.length) {
-        // 均为空数组
-        if (!keys.length) return true
-        return this.picked.every(val => keys.includes(val.key))
-      } else {
-        return false
-      }
-    },
     clear () {
       this.picked = []
       this.close()
       this.emit()
     },
     pick (item) {
-      if (this.inPicked(item)) {
+      if (isSelected(item, this.picked)) {
         this.picked.splice(this.picked.findIndex(val => val.key === item.key), 1)
       } else {
         this.picked.push(item)
       }
       this.emit()
       this.adjust()
-    },
-    inPicked (city) {
-      if (!city || !this.picked.length) return false
-      return this.picked.some(val => val.key === city.key)
     },
     /**
      * 城市快速搜索
