@@ -28,3 +28,5 @@ export const AREA_KEY = 'area'
 export const TOWN_KEY = 'town'
 
 export const LEVEL_LIST = [PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY]
+// 多语言占位符
+export const PLACEHOLDER_OTHER_CITIES = '#others-number#'

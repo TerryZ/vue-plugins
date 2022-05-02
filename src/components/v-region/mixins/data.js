@@ -1,5 +1,5 @@
 import { availableLevels } from '../utils/helper'
-import { CN } from '../language'
+import language, { CN } from '../language'
 
 export default {
   props: {
@@ -16,8 +16,6 @@ export default {
       listCity: [],
       listArea: [],
       listTown: [],
-
-      lang: {},
 
       region: {
         province: undefined,
@@ -50,6 +48,9 @@ export default {
       return Object.entries(this.region)
         .filter(([key, value]) => value)
         .map(([key, value]) => key)
+    },
+    lang () {
+      return language[this.language.toLowerCase()]
     }
   }
 }

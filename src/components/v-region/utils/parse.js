@@ -87,10 +87,10 @@ export function parseRegionToText (region, levels = LEVEL_LIST) {
  * 组织城市选择器的城市目录清单，使用省份进行分组
  */
 export function cityDirectory () {
-  // beijing, tianjin, shanghai, chongqing
+  // 北京, 天津, 上海, 重庆
   const municipalitys = ['110000', '120000', '310000', '500000']
   const municipality = '000000'
-  // hongkong, macao
+  // 香港, 澳门
   const specials = ['810000', '820000']
   const special = '000010'
   const listTmp = []

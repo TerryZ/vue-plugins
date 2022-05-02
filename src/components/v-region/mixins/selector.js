@@ -23,7 +23,7 @@ export default {
      */
     buildCaller (h) {
       const caller = []
-      const lang = language[this.language]
+      const lang = language[this.language.toLowerCase()]
 
       if ('default' in this.$scopedSlots) {
         // scoped slot

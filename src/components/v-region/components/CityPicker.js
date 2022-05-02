@@ -5,8 +5,9 @@ import dropdown from 'v-dropdown'
 import selector from '../mixins/selector'
 import search from '../mixins/selectorWithSearch'
 
+import language, { CN } from '../language'
 import { srcProvince, srcCity } from '../formatted'
-import { CN } from '../language'
+import { PLACEHOLDER_OTHER_CITIES } from '../constants'
 import { keysEqualModels, isSelected } from '../utils/helper'
 import { cityDirectory } from '../utils/parse'
 
@@ -45,16 +46,20 @@ export default {
   computed: {
     selectedText () {
       const { picked, overflow } = this
+      const values = picked.map(val => val.value)
+
       if (overflow || picked.length <= maxDisplayCitys) {
-        return picked.map(val => val.value).join(',')
+        return values.join(',')
       }
-      // TODO: 显示前两个城市名称
+
+      const lang = language[this.language.toLowerCase()]
+      const othersLength = picked.length - maxDisplayCitys
+      const others = lang.others.replace(PLACEHOLDER_OTHER_CITIES, othersLength)
+      return values.slice(0, maxDisplayCitys).join(',') + `,${others}`
     }
   },
   watch: {
-    /**
-     * 初始化数据
-     */
+    // 初始化数据
     value: {
       handler (val) {
         if (!Array.isArray(val) || keysEqualModels(val, this.picked)) return

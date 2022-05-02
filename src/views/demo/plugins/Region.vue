@@ -121,7 +121,7 @@
       <div class="bg-light p-3 mb-3">
         <pre
           class="m-0 mb-3"
-          v-text="JSON.stringify(modelCity, null, 2)"
+          v-text="modelCity"
         />
         <pre
           class="m-0"
@@ -131,6 +131,7 @@
       <div>
         <v-region
           type="city"
+          language="EN"
           v-model="modelCity"
           @values="cbCity"
         />

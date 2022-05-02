@@ -1,4 +1,3 @@
-import language from '../language'
 import { srcProvince } from '../formatted.js'
 import {
   GROUP,
@@ -116,7 +115,6 @@ export default {
         return gap === 0 ? Number(a.key) - Number(b.key) : gap
       })
       : srcProvince.slice()
-    this.lang = language[this.language]
     if (this.value && Object.keys(this.value).length) this.modelChange(this.value)
   }
 }
