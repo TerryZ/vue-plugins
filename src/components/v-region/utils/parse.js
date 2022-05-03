@@ -3,7 +3,7 @@ import {
   PROVINCE_KEY, CITY_KEY, AREA_KEY, TOWN_KEY
 } from '../constants'
 import { loadTown, getDetail } from './helper'
-import { srcProvince, srcCity } from '../formatted'
+import { regionProvinces, regionCities } from '../formatted'
 
 /**
  * 入参数据模型转换为完整数据
@@ -103,13 +103,13 @@ export function cityDirectory () {
     citys: []
   }
   // set provinces
-  srcProvince.forEach(val => {
+  regionProvinces.forEach(val => {
     if (municipalitys.includes(val.key)) municipalityObj.citys.push(val)
     else if (specials.includes(val.key)) specialObj.citys.push(val)
     else listTmp.push({ province: val, citys: [] })
   })
   listTmp.forEach(val => {
-    val.citys = srcCity.filter(value => {
+    val.citys = regionCities.filter(value => {
       const num = Number.parseInt(val.province.key)
       return (value.key - num) < 1e4 && (value.key % num) < 1e4
     })

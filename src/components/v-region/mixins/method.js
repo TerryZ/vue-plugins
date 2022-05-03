@@ -1,4 +1,4 @@
-import { srcProvince } from '../formatted.js'
+import { regionProvinces } from '../formatted.js'
 import {
   GROUP,
   PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL,
@@ -110,11 +110,11 @@ export default {
   created () {
     // sort by length and code
     this.listProvince = this.type === GROUP
-      ? srcProvince.slice().sort((a, b) => {
+      ? regionProvinces.slice().sort((a, b) => {
         const gap = a.value.length - b.value.length
         return gap === 0 ? Number(a.key) - Number(b.key) : gap
       })
-      : srcProvince.slice()
+      : regionProvinces.slice()
     if (this.value && Object.keys(this.value).length) this.modelChange(this.value)
   }
 }

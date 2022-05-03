@@ -1,4 +1,4 @@
-import { srcList, srcCity, srcArea } from '../formatted'
+import { regionFull, regionCities, regionAreas } from '../formatted'
 import {
   LEVEL_LIST,
   PROVINCE_KEY,
@@ -19,7 +19,7 @@ export function generateComponentName (typeName) {
 export function loadCity (province) {
   if (!province || !Object.keys(province).length) return []
 
-  const list = srcCity.filter(val => {
+  const list = regionCities.filter(val => {
     const num = Number.parseInt(province.key)
     return (val.key - num) < 1e4 && (val.key % num) < 1e4
   })
@@ -39,7 +39,7 @@ export function loadArea (city) {
   const cityKey = Number.parseInt(city.key)
   const isNotProvince = cityKey % 1e4
   const calcNum = isNotProvince ? 100 : 1e4
-  const list = srcArea.filter(val => {
+  const list = regionAreas.filter(val => {
     return (val.key - cityKey) < calcNum && val.key % cityKey < calcNum
   })
   // Prefecture-level city
@@ -133,7 +133,7 @@ export function validModel (model) {
  * @returns {object} 模型数据
  */
 export const getDetail = key => {
-  return srcList.find(val => val.key === key)
+  return regionFull.find(val => val.key === key)
 }
 
 /**

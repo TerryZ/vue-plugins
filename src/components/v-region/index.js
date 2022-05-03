@@ -1,4 +1,10 @@
 import Region from './Region'
+export {
+  regionFull,
+  regionProvinces,
+  regionCities,
+  regionAreas
+} from './formatted'
 
 Region.install = (Vue, options = {}) => {
   if (Object.keys(options).length) {
@@ -8,18 +14,6 @@ Region.install = (Vue, options = {}) => {
     if (typeof town === 'boolean') Region.props.town.default = town
     if (typeof search === 'boolean') Region.props.search.default = search
   }
-
-  /*
-  region.extends = {
-    props: {
-      abc: {
-        type: String,
-        default: 'abc'
-      }
-    }
-  }
-  console.log(region)
-  */
 
   Vue.component(Region.name, Region)
 }

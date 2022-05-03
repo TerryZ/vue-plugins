@@ -14,15 +14,15 @@ const list = []
 /**
  * 省/直辖市模型列表
  */
-const province = []
+const provinces = []
 /**
  * 市模型列表
  */
-const city = []
+const cities = []
 /**
  * 区/县模型列表
  */
-const area = []
+const areas = []
 
 Object.entries(data).forEach(val => {
   const [key, value] = val
@@ -31,21 +31,21 @@ Object.entries(data).forEach(val => {
   list.push(model)
   if (!(code % 1e4)) {
     // xx0000 为省级编码格式
-    province.push(model)
+    provinces.push(model)
   } else if (!(code % 100)) {
     // xxxx00 为市级编码格式
-    city.push(model)
+    cities.push(model)
   } else {
     // 后四位数处理
     if (Number(key.substring(2)) > 9000) {
-      city.push(model)
+      cities.push(model)
     } else {
-      area.push(model)
+      areas.push(model)
     }
   }
 })
 
-export { list as srcList }
-export { province as srcProvince }
-export { city as srcCity }
-export { area as srcArea }
+export { list as regionFull }
+export { provinces as regionProvinces }
+export { cities as regionCities }
+export { areas as regionAreas }

@@ -6,7 +6,7 @@ import selector from '../mixins/selector'
 import search from '../mixins/selectorWithSearch'
 
 import language, { CN } from '../language'
-import { srcProvince, srcCity } from '../formatted'
+import { regionProvinces, regionCities } from '../formatted'
 import { PLACEHOLDER_OTHER_CITIES } from '../constants'
 import { keysEqualModels, isSelected } from '../utils/helper'
 import { cityDirectory } from '../utils/parse'
@@ -65,11 +65,11 @@ export default {
         if (!Array.isArray(val) || keysEqualModels(val, this.picked)) return
 
         if (val.length) {
-          const provincialCity = srcProvince.filter(item => val.includes(item.key))
+          const provincialCity = regionProvinces.filter(item => val.includes(item.key))
           // marge province and city
           this.picked = [
             ...provincialCity,
-            ...srcCity.filter(item => val.includes(item.key))
+            ...regionCities.filter(item => val.includes(item.key))
           ]
         } else {
           this.picked = []
