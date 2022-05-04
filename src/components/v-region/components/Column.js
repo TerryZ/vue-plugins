@@ -1,4 +1,15 @@
 export default {
+  props: {
+    list: {
+      type: Array,
+      required: true
+    },
+    haveChild: {
+      type: Boolean,
+      default: true
+    },
+    value: Object
+  },
   render (h) {
     return h('ul', { class: 'rg-column' }, this.list.map(val => {
       const child = []
@@ -16,17 +27,6 @@ export default {
         }
       }, child)
     }))
-  },
-  props: {
-    list: {
-      type: Array,
-      required: true
-    },
-    haveChild: {
-      type: Boolean,
-      default: true
-    },
-    value: Object
   },
   methods: {
     click (row) {

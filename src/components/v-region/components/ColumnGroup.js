@@ -18,9 +18,9 @@ export default {
     'v-column': column
   },
   render (h) {
-    const child = []
+    const children = []
 
-    child.push(this.buildCaller(h))
+    children.push(this.buildCaller(h))
 
     const column = []
     // province
@@ -66,9 +66,9 @@ export default {
       })))
     }
 
-    child.push(h('div', { class: 'rg-column-container' }, column))
+    children.push(h('div', { class: 'rg-column-container' }, column))
 
-    return h('dropdown', {
+    const dropdownOption = {
       ref: 'drop',
       props: {
         border: false
@@ -76,7 +76,8 @@ export default {
       on: {
         show: this.showChange
       }
-    }, child)
+    }
+    return h('dropdown', dropdownOption, children)
   },
   methods: {
     build ({ list, haveChild, value, callback }) {

@@ -102,28 +102,29 @@ export default {
     // 基于省份分组的城市列表
     child.push(h('div', { class: 'rg-picker' }, this.list.map(val => {
       const { province, citys } = val
+      const listItems = citys.map(city => {
+        const liOption = {
+          key: city.key,
+          class: {
+            selected: isSelected(city, this.picked)
+          },
+          on: {
+            click: () => {
+              this.pick(city)
+            }
+          }
+        }
+        return h('li', liOption, city.value)
+      })
+      const ul = h('ul', listItems)
+
       return h('div', {
         class: 'rg-picker__row',
         key: province.key
       }, [
         h('dl', [
           h('dt', province.value),
-          h('dd', [
-            h('ul', citys.map(city => {
-              const liOption = {
-                key: city.key,
-                class: {
-                  selected: isSelected(city, this.picked)
-                },
-                on: {
-                  click: () => {
-                    this.pick(city)
-                  }
-                }
-              }
-              return h('li', liOption, city.value)
-            }))
-          ])
+          h('dd', [ul])
         ])
       ])
     })))
