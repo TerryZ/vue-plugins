@@ -22,9 +22,9 @@ export default {
 
     children.push(this.buildCaller(h))
 
-    const column = []
+    const columns = []
     // province
-    column.push(h(...this.build({
+    columns.push(h(...this.build({
       list: this.listProvince,
       haveChild: this.city,
       value: this.region.province,
@@ -34,7 +34,7 @@ export default {
     })))
     // city
     if (this.listCity.length) {
-      column.push(h(...this.build({
+      columns.push(h(...this.build({
         list: this.listCity,
         haveChild: this.area,
         value: this.region.city,
@@ -45,7 +45,7 @@ export default {
     }
     // area
     if (this.listArea.length) {
-      column.push(h(...this.build({
+      columns.push(h(...this.build({
         list: this.listArea,
         haveChild: this.town,
         value: this.region.area,
@@ -56,7 +56,7 @@ export default {
     }
     // town
     if (this.listTown.length) {
-      column.push(h(...this.build({
+      columns.push(h(...this.build({
         list: this.listTown,
         haveChild: false,
         value: this.region.town,
@@ -66,12 +66,12 @@ export default {
       })))
     }
 
-    children.push(h('div', { class: 'rg-column-container' }, column))
+    children.push(h('div', { class: 'rg-column-container' }, columns))
 
     const dropdownOption = {
       ref: 'drop',
       props: {
-        border: false
+        border: true
       },
       on: {
         show: this.showChange

@@ -1,4 +1,9 @@
+import ColumnItem from './ColumnItem'
+
 export default {
+  components: {
+    ColumnItem
+  },
   props: {
     list: {
       type: Array,
@@ -8,29 +13,25 @@ export default {
       type: Boolean,
       default: true
     },
+    /** 当前选择的项目 */
     value: Object
   },
   render (h) {
-    return h('ul', { class: 'rg-column' }, this.list.map(val => {
-      const child = []
-      child.push(h('span', val.value))
-      if (this.haveChild) {
-        child.push(h('i', { class: 'rg-iconfont rg-icon-right rg-caret-right' }))
-      }
-      return h('li', {
+    const { value, list, haveChild } = this
+    const listItems = list.map(val => {
+      const itemOption = {
         key: val.key,
-        class: {
-          selected: this.value && val.key === this.value.key
+        props: {
+          value: val,
+          selected: value && val.key === value.key,
+          haveChild
         },
-        on: {
-          click: () => this.click(val)
+        nativeOn: {
+          click: () => this.$emit('input', val)
         }
-      }, child)
-    }))
-  },
-  methods: {
-    click (row) {
-      this.$emit('input', row)
-    }
+      }
+      return h('column-item', itemOption)
+    })
+    return h('ul', { class: 'rg-column' }, listItems)
   }
 }
