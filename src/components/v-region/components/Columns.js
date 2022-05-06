@@ -1,27 +1,20 @@
 import '../styles/icons.styl'
 import '../styles/column.styl'
 
-import dropDown from 'v-dropdown'
+import RegionColumn from './Column'
+
 import data from '../mixins/data'
 import method from '../mixins/method'
-import selector from '../mixins/selector'
-import column from './Column'
-
 import { PROVINCE_LEVEL } from '../constants.js'
 
 export default {
-  name: 'ColumnGroup',
-  mixins: [data, method, selector],
+  name: 'Columns',
+  mixins: [data, method],
   inheritAttrs: false,
   components: {
-    dropdown: dropDown,
-    'v-column': column
+    RegionColumn
   },
   render (h) {
-    const children = []
-
-    children.push(this.buildCaller(h))
-
     const columns = []
     // province
     columns.push(h(...this.build({
@@ -66,22 +59,11 @@ export default {
       })))
     }
 
-    children.push(h('div', { class: 'rg-column-container' }, columns))
-
-    const dropdownOption = {
-      ref: 'drop',
-      props: {
-        border: true
-      },
-      on: {
-        show: this.showChange
-      }
-    }
-    return h('dropdown', dropdownOption, children)
+    return h('div', { class: 'rg-column-container' }, columns)
   },
   methods: {
     build ({ list, haveChild, value, callback }) {
-      return ['v-column', {
+      return ['region-column', {
         props: {
           list: list,
           haveChild: haveChild,
@@ -91,8 +73,9 @@ export default {
           input: val => {
             callback(val)
             this.change()
-            this.adjust()
-            if (this.isDone()) this.close()
+            // this.adjust()
+            this.$emit('adjust')
+            if (this.isDone()) this.done()
           }
         }
       }]
@@ -104,6 +87,9 @@ export default {
       this.clearRegion(PROVINCE_LEVEL)
       this.change()
       this.close()
+    },
+    done () {
+      this.$emit('done')
     }
   }
 }

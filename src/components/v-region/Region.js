@@ -5,7 +5,7 @@ import { generateComponentName } from './utils/helper'
 import SelectGroup from './components/SelectGroup'
 import TextRegion from './components/Text'
 import GroupRegion from './components/Group'
-import ColumnGroup from './components/ColumnGroup'
+import Columns from './components/Columns'
 import CityPicker from './components/CityPicker'
 
 export default {
@@ -14,7 +14,7 @@ export default {
     [generateComponentName(SELECT)]: SelectGroup,
     [generateComponentName(TEXT)]: TextRegion,
     [generateComponentName(GROUP)]: GroupRegion,
-    [generateComponentName(COLUMN)]: ColumnGroup,
+    [generateComponentName(COLUMN)]: Columns,
     [generateComponentName(CITY)]: CityPicker
   },
   props: {

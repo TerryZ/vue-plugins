@@ -84,8 +84,8 @@
           v-text="JSON.stringify(valuesColumn, null, 2)"
         />
       </div>
-      <p>
-        <v-region
+      <div class="mb-3">
+        <region-columns
           :city="true"
           :area="true"
           :town="true"
@@ -93,7 +93,15 @@
           v-model="modelColumn"
           @values="cbColumn"
         />
-      </p>
+      </div>
+      <div class="d-flex">
+        <region-columns-core
+          :town="true"
+          class="border rounded-3"
+          v-model="modelColumn"
+          @done="columnGroupCoreDone"
+        />
+      </div>
 
       <h4 class="mt-3">
         下拉选择器多列竖排模式（自定义呼出按钮）
@@ -259,10 +267,14 @@
 <script>
 import RegionConatiner from '@/components/v-region/RegionConatiner'
 import RegionText from '@/components/v-region/RegionText'
+import RegionColumns from '@/components/v-region/RegionColumns'
+import RegionColumnsCore from '@/components/v-region/components/Columns'
 
 export default {
   components: {
     RegionConatiner,
+    RegionColumnsCore,
+    RegionColumns,
     RegionText
   },
   data () {
@@ -351,6 +363,9 @@ export default {
         area: '350104',
         town: '350104008'
       }
+    },
+    columnGroupCoreDone () {
+      console.log('columnGroupCoreDone')
     }
   },
   watch: {
