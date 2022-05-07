@@ -1,39 +1,79 @@
 <template>
-    <div :class="tableTheme">
-        <div class="v-table-grid__scroller">
-            <table :class="classes" class="v-table-grid">
-                <thead>
-                    <tr>
-                        <th v-if="checkRow" class="select-column">
-                            <span v-if="checkRow === 'single'">选择</span>
-                            <input type="checkbox" v-model="checkAll" @click="selectAll" v-if="checkRow === 'multi'" >
-                        </th>
-                        <th v-for="(col,index) in columns" :key="index" @click="sortChange(col.data, index)"
-                            :class="titleClass(index, col.align)" :column="col.data" v-text="col.title"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr :key="index" v-for="(row,index) in dataRows"
-                        @click.stop="rowClick(index)" :class="{'row-selected':selectedIndex.includes(index)}">
-                        <td v-if="checkRow !== false" class="select-column">
-                            <input type="checkbox" :checked="selectedIndex.includes(index)">
-                        </td>
-                        <slot :row="row">
-                            <td v-for="(cell,idx) in columns" :key="idx"
-                                :class="alignClass(cell.align)" v-text="row[cell.data]"></td>
-                        </slot>
-                    </tr>
-                    <tr v-if="dataRows.length === 0" class="v-table-grid--empty">
-                        <td :colspan="checkRow !== false?columns.length+1:columns.length" >无数据返回</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="v-table-grid__pagination">
-            <v-pagination v-bind="pagerOptions" :total-row="totalRow"
-                          @page-change="pageChange" v-if="pagination" ></v-pagination>
-        </div>
+  <div :class="tableTheme">
+    <div class="v-table-grid__scroller">
+      <table
+        :class="classes"
+        class="v-table-grid"
+      >
+        <thead>
+          <tr>
+            <th
+              v-if="checkRow"
+              class="select-column"
+            >
+              <span v-if="checkRow === 'single'">选择</span>
+              <input
+                type="checkbox"
+                v-model="checkAll"
+                @click="selectAll"
+                v-if="checkRow === 'multi'"
+              >
+            </th>
+            <th
+              v-for="(col,index) in columns"
+              :key="index"
+              @click="sortChange(col.data, index)"
+              :class="titleClass(index, col.align)"
+              :column="col.data"
+              v-text="col.title"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            :key="index"
+            v-for="(row,index) in dataRows"
+            @click.stop="rowClick(index)"
+            :class="{'row-selected':selectedIndex.includes(index)}"
+          >
+            <td
+              v-if="checkRow !== false"
+              class="select-column"
+            >
+              <input
+                type="checkbox"
+                :checked="selectedIndex.includes(index)"
+              >
+            </td>
+            <slot :row="row">
+              <td
+                v-for="(cell,idx) in columns"
+                :key="idx"
+                :class="alignClass(cell.align)"
+                v-text="row[cell.data]"
+              />
+            </slot>
+          </tr>
+          <tr
+            v-if="dataRows.length === 0"
+            class="v-table-grid--empty"
+          >
+            <td :colspan="checkRow !== false?columns.length+1:columns.length">
+              无数据返回
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <div class="v-table-grid__pagination">
+      <v-pagination
+        v-bind="pagerOptions"
+        :total-row="totalRow"
+        @page-change="pageChange"
+        v-if="pagination"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -43,7 +83,7 @@ import { con } from './constants'
 import { Page } from '../v-page'
 import mixins from './mixins'
 export default {
-  name: 'v-tablegrid',
+  name: 'VTablegrid',
   components: { 'v-pagination': Page },
   mixins: [mixins],
   data () {

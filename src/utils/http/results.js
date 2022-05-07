@@ -1,22 +1,22 @@
-import con from "@/config/constants";
-import Url from '@/utils/url';
-//import Cache from '@/utils/cache/cache';
+import con from '@/config/constants'
+import Url from '@/utils/url'
+// import Cache from '@/utils/cache/cache';
 
 export default class HttpResults {
-    constructor(response, vue){
-        this.FAIL = 0;
-        this.SUCCESS = 1;
-        this.VALIDATE = 2;
-        this.TIMEOUT = 3;
+  constructor (response, vue) {
+    this.FAIL = 0
+    this.SUCCESS = 1
+    this.VALIDATE = 2
+    this.TIMEOUT = 3
 
-        this.data = response.data;
-    }
+    this.data = response.data
+  }
 
-    /**
+  /**
      * system error, business error, unexpected error
      */
-    fail(vue){
-        /*
+  fail (vue) {
+    /*
         let errmsg = [];
         if(this.data.errorMessage){
             if(Array.isArray(this.data.errorMessage) && this.data.errorMessage.length){
@@ -31,48 +31,48 @@ export default class HttpResults {
             singletonKey: 'ResponseException'
         });
         */
-        throw new Error(this.data.errorMessage || '系统异常，请联系管理员！');
-    }
+    throw new Error(this.data.errorMessage || '系统异常，请联系管理员！')
+  }
 
-    success(){
-        return this.data.values;
-    }
+  success () {
+    return this.data.values
+  }
 
-    /**
+  /**
      * server side validation
      */
-    validate(){
-        if(this.data.errorMessage && Array.isArray(this.data.errorMessage) && this.data.errorMessage.length){
-            this.data.errorMessage.map(val=>val.message);
-        }
+  validate () {
+    if (this.data.errorMessage && Array.isArray(this.data.errorMessage) && this.data.errorMessage.length) {
+      this.data.errorMessage.map(val => val.message)
     }
+  }
 
-    /**
+  /**
      * session timeout, authorization expired
      */
-    timeout(vue){
-        //Cache.remove(con.keys.auth);
-        //Cache.remove(con.keys.user);
-        vue.$dlg.alert('会话超时，请重新登录!', ()=>{
-            //console.log(vue.rootInstance);
-            vue.$dlg.closeAll(()=>{
-                //console.log(vue.$root);
-                //console.log(vue.$dlg.rootInstance.$router);
-                //vue.$root.$router.push({ path: con.login });
-                window.location.replace(Url.getVueRootPath() + con.login);
-            });
-        }, {
-            messageType: 'warning',
-            singletonKey: 'SystemSessionOut'
-        });
-    }
+  timeout (vue) {
+    // Cache.remove(con.keys.auth);
+    // Cache.remove(con.keys.user);
+    vue.$dlg.alert('会话超时，请重新登录!', () => {
+      // console.log(vue.rootInstance);
+      vue.$dlg.closeAll(() => {
+        // console.log(vue.$root);
+        // console.log(vue.$dlg.rootInstance.$router);
+        // vue.$root.$router.push({ path: con.login });
+        window.location.replace(Url.getVueRootPath() + con.login)
+      })
+    }, {
+      messageType: 'warning',
+      singletonKey: 'SystemSessionOut'
+    })
+  }
 
-    values(vue){
-        switch (this.data.httpResult) {
-            case this.FAIL: return this.fail(vue);
-            case this.VALIDATE: return this.validate(vue);
-            case this.TIMEOUT: return this.timeout(vue);
-            case this.SUCCESS: return this.success(vue);
-        }
+  values (vue) {
+    switch (this.data.httpResult) {
+      case this.FAIL: return this.fail(vue)
+      case this.VALIDATE: return this.validate(vue)
+      case this.TIMEOUT: return this.timeout(vue)
+      case this.SUCCESS: return this.success(vue)
     }
+  }
 }

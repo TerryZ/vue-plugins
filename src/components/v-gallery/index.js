@@ -1,9 +1,9 @@
-import gallery from './Gallery.vue';
+import gallery from './Gallery.vue'
 
 const Plugin = {
-    install(Vue){
-        Vue.component(gallery.name, gallery);
-    }
-};
+  install (Vue) {
+    Vue.component(gallery.name, gallery)
+  }
+}
 
-export default Plugin;
+export default Plugin

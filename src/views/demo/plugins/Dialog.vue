@@ -2,63 +2,208 @@
   <div class="card p-5">
     <h1>
       v-dialogs
-      <button type="button"
-              class="btn btn-outline-secondary btn-sm"
-              @click="$router.push({path: '/demo'})">Back to List</button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm"
+        @click="$router.push({path: '/demo'})"
+      >
+        Back to List
+      </button>
     </h1>
     <hr>
-    <h3 class="mt-2">Modal</h3>
+    <h3 class="mt-2">
+      Modal
+    </h3>
     <div class="my-2">
       <strong>Vuex content:</strong>
-      <span v-text="$store.state.user"></span>
+      <span v-text="$store.state.user" />
     </div>
     <!-- <component :is="page"></component> -->
     <div>
-      <button type="button" class="btn btn-secondary" @click="callModal()" id="btn-modal">Modal</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        @click="callModal()"
+        id="btn-modal"
+      >
+        Modal
+      </button>
     </div>
-    <h5 class="mt-3">Header bar</h5>
+    <h5 class="mt-3">
+      Header bar
+    </h5>
     <div>
-      <button type="button" class="btn btn-outline-dark me-2" @click="callModal(false)" id="btn-alert-info">Close header bar</button>
-      <button type="button" class="btn btn-outline-info" @click="callModal('Modal of v-dialogs')" id="btn-alert-info">Custom content</button>
+      <button
+        type="button"
+        class="btn btn-outline-dark me-2"
+        @click="callModal(false)"
+        id="btn-alert-info"
+      >
+        Close header bar
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-info"
+        @click="callModal('Modal of v-dialogs')"
+        id="btn-alert-info"
+      >
+        Custom content
+      </button>
     </div>
 
-    <h3 class="mt-5">Alert</h3>
+    <h3 class="mt-5">
+      Alert
+    </h3>
     <div>
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-info" @click="callAlert()" id="btn-alert-info">Info</button>
-        <button type="button" class="btn btn-warning" @click="callAlert('warning')" id="btn-alert-warning">Warning</button>
-        <button type="button" class="btn btn-danger" @click="callAlert('error')" id="btn-alert-error">Error</button>
-        <button type="button" class="btn btn-success" @click="callAlert('success')" id="btn-alert-success">Success</button>
-        <button type="button" class="btn btn-secondary" @click="callAlert('confirm')" id="btn-alert-confirm">Confirm</button>
+      <div
+        class="btn-group"
+        role="group"
+      >
+        <button
+          type="button"
+          class="btn btn-info"
+          @click="callAlert()"
+          id="btn-alert-info"
+        >
+          Info
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning"
+          @click="callAlert('warning')"
+          id="btn-alert-warning"
+        >
+          Warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          @click="callAlert('error')"
+          id="btn-alert-error"
+        >
+          Error
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          @click="callAlert('success')"
+          id="btn-alert-success"
+        >
+          Success
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          @click="callAlert('confirm')"
+          id="btn-alert-confirm"
+        >
+          Confirm
+        </button>
       </div>
     </div>
-    <h5 class="mt-3">No icon</h5>
+    <h5 class="mt-3">
+      No icon
+    </h5>
     <div>
-      <button type="button" class="btn btn-outline-info" @click="callAlert('info', false)" id="btn-alert-info">Info</button>
+      <button
+        type="button"
+        class="btn btn-outline-info"
+        @click="callAlert('info', false)"
+        id="btn-alert-info"
+      >
+        Info
+      </button>
     </div>
-    <h5 class="mt-3">Header bar</h5>
+    <h5 class="mt-3">
+      Header bar
+    </h5>
     <div>
-      <button type="button" class="btn btn-outline-dark me-2" @click="callAlert('info', false, false)" id="btn-alert-info">Close header bar</button>
-      <button type="button" class="btn btn-outline-info" @click="callAlert('info', false, 'The custom header content')" id="btn-alert-info">Custom content</button>
+      <button
+        type="button"
+        class="btn btn-outline-dark me-2"
+        @click="callAlert('info', false, false)"
+        id="btn-alert-info"
+      >
+        Close header bar
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-info"
+        @click="callAlert('info', false, 'The custom header content')"
+        id="btn-alert-info"
+      >
+        Custom content
+      </button>
     </div>
 
-    <h3 class="mt-5">Mask</h3>
+    <h3 class="mt-5">
+      Mask
+    </h3>
     <p>
-      <button type="button" class="btn btn-secondary" @click="callMask" id="btn-mask">Mask</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        @click="callMask"
+        id="btn-mask"
+      >
+        Mask
+      </button>
     </p>
 
-    <h3 class="mt-5">Toast</h3>
+    <h3 class="mt-5">
+      Toast
+    </h3>
     <div>
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-info" @click="callToast()" id="btn-toast-info">Info</button>
-        <button type="button" class="btn btn-warning" @click="callToast('warning')" id="btn-toast-warning">Warning</button>
-        <button type="button" class="btn btn-danger" @click="callToast('error')" id="btn-toast-error">Error</button>
-        <button type="button" class="btn btn-success" @click="callToast('success')" id="btn-toast-success">Success</button>
+      <div
+        class="btn-group"
+        role="group"
+      >
+        <button
+          type="button"
+          class="btn btn-info"
+          @click="callToast()"
+          id="btn-toast-info"
+        >
+          Info
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning"
+          @click="callToast('warning')"
+          id="btn-toast-warning"
+        >
+          Warning
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          @click="callToast('error')"
+          id="btn-toast-error"
+        >
+          Error
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          @click="callToast('success')"
+          id="btn-toast-success"
+        >
+          Success
+        </button>
       </div>
     </div>
-    <h5 class="mt-3">No icon</h5>
+    <h5 class="mt-3">
+      No icon
+    </h5>
     <div>
-      <button type="button" class="btn btn-outline-info" @click="callToast('info', false)" id="btn-toast-info">Info</button>
+      <button
+        type="button"
+        class="btn btn-outline-info"
+        @click="callToast('info', false)"
+        id="btn-toast-info"
+      >
+        Info
+      </button>
     </div>
   </div>
 </template>
@@ -111,8 +256,8 @@ export default {
       console.log(title)
     },
     callMask () {
-      let dlg = this.$dlg
-      let key = dlg.mask(null, function () {
+      const dlg = this.$dlg
+      const key = dlg.mask(null, function () {
       }, {
         // language: 'en',
         closeTime: 0

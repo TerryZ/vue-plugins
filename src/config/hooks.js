@@ -1,4 +1,4 @@
-const FILE_UPLOAD_API = process.env.FILE_UPLOAD_API;
+const FILE_UPLOAD_API = process.env.FILE_UPLOAD_API
 
 /**
  * v-tablegrid plugin data load hooks
@@ -9,22 +9,22 @@ const FILE_UPLOAD_API = process.env.FILE_UPLOAD_API;
  * @return a Promise instance
  */
 const gridConfig = {
-    dataLoad: (vue, data, params)=>{
-        return new Promise((resolve, reject)=>{
-            vue.$http(data, params).then(resp=>{
-        resolve(resp && resp.gridResult);
+  dataLoad: (vue, data, params) => {
+    return new Promise((resolve, reject) => {
+      vue.$http(data, params).then(resp => {
+        resolve(resp && resp.gridResult)
       }, resp => {
-        reject(resp);
-      });
-        });
-    }
-};
+        reject(resp)
+      })
+    })
+  }
+}
 
 /**
  * v-uploader plugin global config
  */
 const uploaderConfig = {
-    /**
+  /**
      * file uploader service url
      *
      * return result
@@ -44,25 +44,25 @@ const uploaderConfig = {
      * for detail, visit fine-uploader site
      * https://docs.fineuploader.com/branch/master/endpoint_handlers/traditional.html
      */
-    uploadFileUrl: FILE_UPLOAD_API + '/upload/publicFileUpload',
-    /**
+  uploadFileUrl: FILE_UPLOAD_API + '/upload/publicFileUpload',
+  /**
      * file delete service url
      * the server just response 200 status, no need to return data
      *
      * for detail, visit fine-uploader site
      * https://docs.fineuploader.com/branch/master/endpoint_handlers/traditional.html
      */
-    deleteFileUrl: FILE_UPLOAD_API + '/upload/deleteUploadFile',
-    /**
+  deleteFileUrl: FILE_UPLOAD_API + '/upload/deleteUploadFile',
+  /**
      * set the way to show upload message(upload fail message)
      *
      * @param vue - the Vue instance
      * @param message - upload file message
      */
-    showMessage(vue, message){
-        vue.$dlg.alert(message, {messageType: 'error'});
-    }
-};
+  showMessage (vue, message) {
+    vue.$dlg.alert(message, { messageType: 'error' })
+  }
+}
 
 /**
  * editor file uploader server side url
@@ -70,9 +70,9 @@ const uploaderConfig = {
  * @type {{uploadFileUrl: string}}
  */
 const editorUploadConfig = {
-    uploadFileUrl: FILE_UPLOAD_API + '/upload/editorFileUpload?upload_name=upload'
-};
+  uploadFileUrl: FILE_UPLOAD_API + '/upload/editorFileUpload?upload_name=upload'
+}
 
-export {gridConfig};
-export {uploaderConfig};
-export {editorUploadConfig};
+export { gridConfig }
+export { uploaderConfig }
+export { editorUploadConfig }

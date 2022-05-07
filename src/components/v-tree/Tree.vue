@@ -1,9 +1,12 @@
 <template>
-    <ul class="ztree" ref="ztree"></ul>
+  <ul
+    class="ztree"
+    ref="ztree"
+  />
 </template>
 
 <script>
-    /* eslint-disable */
+/* eslint-disable */
     import ztree from 'ztree';
     import 'ztree/css/metroStyle/metroStyle.css'
     // import 'ztree/css/zTreeStyle/zTreeStyle.css'

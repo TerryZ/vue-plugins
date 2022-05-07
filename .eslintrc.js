@@ -5,7 +5,7 @@ module.exports = {
     node: true,
     mocha: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/strongly-recommended',
     // 'eslint:recommended'
     '@vue/standard'
@@ -13,8 +13,8 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    //disabled function args unused error
-    "no-unused-vars": ["error", {"args": "none"}]
+    // disabled function args unused error
+    'no-unused-vars': ['error', { args: 'none' }]
   },
   parserOptions: {
     parser: 'babel-eslint'
