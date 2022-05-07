@@ -8,7 +8,7 @@ export default [
   { path: '/demo/selectMenu', component: () => import('@/views/demo/plugins/SelectMenu') },
   { path: '/demo/selectPage', component: () => import('@/views/demo/plugins/SelectPage') },
   { path: '/demo/tree', component: () => import('@/views/demo/plugins/Tree') },
-  { path: '/demo/region', component: () => import('@/views/demo/plugins/Region') },
+  { path: '/demo/region', component: () => import('@/views/demo/plugins/region/Index') },
   { path: '/demo/upload', component: () => import('@/views/demo/plugins/Upload') },
   { path: '/demo/page', component: () => import('@/views/demo/plugins/Page') },
   { path: '/demo/editor', component: () => import('@/views/demo/plugins/Editor') },

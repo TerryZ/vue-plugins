@@ -1,5 +1,5 @@
 import Dropdown from 'v-dropdown'
-import RegionColumns from './components/Columns'
+import Columns from './components/Columns'
 import selector from './mixins/selector'
 
 // import { PROVINCE_LEVEL } from './constants.js'
@@ -10,7 +10,7 @@ export default {
   mixins: [selector],
   components: {
     Dropdown,
-    RegionColumns
+    Columns
   },
   props: {
     language: { type: String, default: CN }
@@ -27,7 +27,7 @@ export default {
         done: this.done
       }
     }
-    children.push(h('region-columns', columnsOption))
+    children.push(h('columns', columnsOption))
 
     const dropdownOption = {
       ref: 'drop',

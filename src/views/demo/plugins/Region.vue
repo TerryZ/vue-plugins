@@ -233,40 +233,11 @@
         :disabled="true"
       />
     </div>
-    <br><br><br>
-
-    <h5>由于组件特殊，不能使用常规的表单验证模式，需要使用表单验证样例中特殊处理的方式</h5>
-
-    <div class="card">
-      <div class="card-header">
-        表单校验
-        <button
-          type="button"
-          class="btn btn-outline-secondary btn-sm"
-          @click="check"
-        >
-          检查表单元素
-        </button>
-      </div>
-      <div class="card-body">
-        <div :class="{'form-group':true, 'col-md-9':true, 'has-error':regionSet===false}">
-          <label class="col-md-3 control-label">区域</label>
-          <div class="col-md-9">
-            <v-region @values="validateValues" />
-            <span
-              class="help-block"
-              v-if="regionSet===false"
-            >请选择区域</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import RegionConatiner from '@/components/v-region/RegionConatiner'
-import RegionText from '@/components/v-region/RegionText'
 import RegionColumns from '@/components/v-region/RegionColumns'
 import RegionColumnsCore from '@/components/v-region/components/Columns'
 
@@ -274,8 +245,7 @@ export default {
   components: {
     RegionConatiner,
     RegionColumnsCore,
-    RegionColumns,
-    RegionText
+    RegionColumns
   },
   data () {
     return {
@@ -337,14 +307,6 @@ export default {
         this.model.province = data.province
         this.model.city = data.city
         this.model.area = data.area
-      }
-    },
-    check () {
-      if (this.model.province && this.model.area) {
-        this.$vDialog.alert('校验成功！', null, { messageType: 'success' })
-      } else {
-        this.regionSet = false
-        this.$vDialog.alert('校验不通过', null, { messageType: 'error' })
       }
     },
     uiValues (d) {
