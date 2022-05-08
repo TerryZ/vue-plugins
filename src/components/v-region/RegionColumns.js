@@ -2,7 +2,7 @@ import Dropdown from 'v-dropdown'
 import Columns from './components/Columns'
 import selector from './mixins/selector'
 
-// import { PROVINCE_LEVEL } from './constants.js'
+import { PROVINCE_LEVEL } from './constants.js'
 import { CN } from './language'
 
 export default {
@@ -21,6 +21,7 @@ export default {
     children.push(this.buildCaller())
 
     const columnsOption = {
+      ref: 'module',
       props: this.$attrs,
       on: {
         ...this.$listeners,
@@ -43,8 +44,9 @@ export default {
   },
   methods: {
     clear () {
-      // this.clearRegion(PROVINCE_LEVEL)
-      // this.change()
+      const module = this.$refs.module
+      module.clearRegion(PROVINCE_LEVEL)
+      module.change()
       this.close()
     }
   }

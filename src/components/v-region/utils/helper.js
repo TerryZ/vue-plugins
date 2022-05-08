@@ -55,7 +55,7 @@ export function loadArea (city) {
 export function loadTown (area) {
   if (!area || !Object.keys(area).length) return []
 
-  let towns = null
+  let towns
   /* eslint-disable */
   try {
     towns = require(`../town/${area.key}.json`);

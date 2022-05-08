@@ -29,7 +29,7 @@ import { regionProvinces, regionCities } from '../formatted'
  *
  * @returns {object} 区域原始数据模型
  */
-export function getRegionByModel (model, levels = LEVEL_LIST) {
+export function modelToRegion (model, levels = LEVEL_LIST) {
   const { province, city, area, town } = model
   const region = {
     [PROVINCE_KEY]: undefined,
@@ -59,6 +59,20 @@ export function getRegionByModel (model, levels = LEVEL_LIST) {
   }
 
   return region
+}
+
+/**
+ * 区域完整数据模型转换为入参数据模型
+ * @param {object} region - 原始数据模型
+ * @returns {object} 入参数据模型
+ */
+export function regionToModel (region) {
+  if (!region) return {}
+  return Object.fromEntries(
+    Object
+      .entries(region)
+      .map(([key, value]) => [key, value && value.key])
+  )
 }
 
 /**

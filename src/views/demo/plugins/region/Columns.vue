@@ -81,7 +81,7 @@ export default {
       if (!region) return ''
 
       if (!Object.values(region).some(val => val) || !region) {
-        return 'null'
+        return '无数据'
       }
       return Object.values(region).filter(val => val).map(val => val.value).join(',')
     }

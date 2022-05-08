@@ -6,14 +6,14 @@ import {
 } from '../constants'
 
 import { validModel, getLoader } from '../utils/helper'
-import { getRegionByModel } from '../utils/parse'
+import { modelToRegion, regionToModel } from '../utils/parse'
 
 export default {
   methods: {
     modelChange (val) {
       if (validModel(val) && this.differentModel(val)) {
         this.clearRegion(PROVINCE_LEVEL)
-        this.region = getRegionByModel(val, this.availableLevels)
+        this.region = modelToRegion(val, this.availableLevels)
         this.change(true)
       }
     },
@@ -37,16 +37,11 @@ export default {
      * @param {boolean} [input=false]
      */
     emit (input = false) {
+      const { region } = this
       if (!input) {
-        const model = {}
-        Object.entries(this.region)
-          .forEach(([key, value]) => {
-            model[key] = value ? value.key : null
-          })
-        this.$emit('input', model)
+        this.$emit('input', regionToModel(region))
       }
-      this.$emit('change', JSON.parse(JSON.stringify(this.region)))
-      this.$emit('', this.selectedText)
+      this.$emit('change', JSON.parse(JSON.stringify(region)))
     },
     /**
      * Check if model and region data are equal
@@ -73,7 +68,7 @@ export default {
     },
     levelHandle (level, load) {
       const key = LEVEL_LIST[level]
-      const parentKey = level === PROVINCE_LEVEL ? null : LEVEL_LIST[level - 1]
+      const parentKey = level === PROVINCE_LEVEL ? undefined : LEVEL_LIST[level - 1]
       const listName = 'list' + key.charAt().toUpperCase() + key.substring(1)
       if (level === PROVINCE_LEVEL || this[key]) {
         if (this.region[parentKey]) {
@@ -98,7 +93,7 @@ export default {
     clearRegion (level) {
       const fields = LEVEL_LIST.slice(level)
       Object.keys(this.region).forEach(val => {
-        if (fields.includes(val)) this.region[val] = null
+        if (fields.includes(val)) this.region[val] = undefined
       })
       /* eslint-disable no-fallthrough */
       switch (level) {

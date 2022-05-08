@@ -2,6 +2,10 @@ import language from '../language'
 
 /**
  * 选择器基础 API
+ *
+ * 引用要求：
+ * - 应用在组件中时，需要对 dropdown 组件定义 ref 属性，并指定为 drop
+ * - 对功能组件定义 ref 属性，并指定为 module
  */
 export default {
   data () {
@@ -28,15 +32,16 @@ export default {
       const h = this.$createElement
       const caller = []
       const lang = language[this.language.toLowerCase()]
-      const { show, selectedText } = this
+      const { show } = this
+      const { module } = this.$refs
 
       if ('default' in this.$scopedSlots) {
         // scoped slot
-        // TODO: 功能与选择顺剥离后，需要处理 region 数据的获取问题
-        const { region } = this
+        const region = module && module.region
         caller.push(this.$scopedSlots.default({ region, show }))
       } else {
         const elements = []
+        const selectedText = module && module.selectedText
         elements.push(h('span', selectedText || lang.pleaseSelect))
 
         if (selectedText) {

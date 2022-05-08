@@ -1,5 +1,5 @@
 import { validModel } from './utils/helper'
-import { getRegionByModel, parseRegionToText } from './utils/parse'
+import { modelToRegion, parseRegionToText } from './utils/parse'
 
 /**
  * 纯文本显示区域信息
@@ -18,6 +18,6 @@ export default {
       return
     }
 
-    return h('span', parseRegionToText(getRegionByModel(value)).join(separator))
+    return h('span', parseRegionToText(modelToRegion(value)).join(separator))
   }
 }

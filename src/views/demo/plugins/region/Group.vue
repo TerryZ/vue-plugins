@@ -38,7 +38,7 @@
         下拉选择器模式（自定义呼出按钮）
       </h5>
       <div>
-        <v-region type="group">
+        <!-- <v-region type="group">
           <template #default="{ region, show }">
             <button
               type="button"
@@ -48,7 +48,7 @@
               show: {{ show }}
             </button>
           </template>
-        </v-region>
+        </v-region> -->
       </div>
     </div>
   </section>

@@ -57,7 +57,7 @@ export default {
     if (this.blank) {
       const option = {
         on: {
-          click: () => this.pick(null)
+          click: () => this.pick()
         }
       }
       items.push(h('li', option, this.blankText))
