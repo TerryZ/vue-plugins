@@ -23,7 +23,7 @@
           type="group"
           v-model="modelGroup"
           class="me-3"
-          @values="cbGroup"
+          @change="cbGroup"
         />
         <button
           type="button"

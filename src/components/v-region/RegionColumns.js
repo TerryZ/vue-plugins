@@ -18,13 +18,14 @@ export default {
   render (h) {
     const children = []
 
-    children.push(this.buildCaller(h))
+    children.push(this.buildCaller())
 
     const columnsOption = {
       props: this.$attrs,
       on: {
         ...this.$listeners,
-        done: this.done
+        complete: this.close,
+        adjust: this.adjust
       }
     }
     children.push(h('columns', columnsOption))
@@ -41,13 +42,10 @@ export default {
     return h('dropdown', dropdownOption, children)
   },
   methods: {
-    done () {
-      console.log('RegionColumns done')
-    },
     clear () {
       // this.clearRegion(PROVINCE_LEVEL)
       // this.change()
-      // this.close()
+      this.close()
     }
   }
 }

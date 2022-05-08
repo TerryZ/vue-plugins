@@ -15,25 +15,25 @@
           v-text="JSON.stringify(valuesColumn, null, 2)"
         />
       </div>
-      <div class="mb-3">
-        <region-columns
-          :city="true"
-          :area="true"
-          :town="true"
-          v-model="modelColumn"
-          @values="cbColumn"
-        />
-      </div>
-      <div class="d-flex">
+      <div class="d-flex mb-3">
         <region-columns-core
           :town="true"
           class="border rounded-3"
+          v-model="modelCore"
+          @complete="columnGroupCoreDone"
+        />
+      </div>
+      <div class="mb-3">
+        <region-columns
+          :city="true"
+          :area="false"
+          :town="true"
           v-model="modelColumn"
-          @done="columnGroupCoreDone"
+          @change="cbColumn"
         />
       </div>
 
-      <h4 class="mt-3">
+      <h4 class="">
         下拉选择器多列竖排模式（自定义呼出按钮）
       </h4>
       <div>
@@ -64,6 +64,7 @@ export default {
   },
   data () {
     return {
+      modelCore: null,
       modelColumn: null,
       valuesColumn: null
     }
@@ -71,6 +72,7 @@ export default {
   methods: {
     cbColumn (data) {
       // this.valuesColumn = data
+      console.log(data)
     },
     columnGroupCoreDone () {
       console.log('columnGroupCoreDone')

@@ -1,5 +1,8 @@
 import language from '../language'
 
+/**
+ * 选择器基础 API
+ */
 export default {
   data () {
     return {
@@ -19,23 +22,25 @@ export default {
       })
     },
     /**
-     * Build region default toggle button
+     * 构建选择器触发按钮
      */
-    buildCaller (h) {
+    buildCaller () {
+      const h = this.$createElement
       const caller = []
       const lang = language[this.language.toLowerCase()]
+      const { show, selectedText } = this
 
       if ('default' in this.$scopedSlots) {
         // scoped slot
-        const { region, show } = this
+        // TODO: 功能与选择顺剥离后，需要处理 region 数据的获取问题
+        const { region } = this
         caller.push(this.$scopedSlots.default({ region, show }))
       } else {
-        // default region caller button
-        const element = []
-        element.push(h('span', this.selectedText || lang.pleaseSelect))
+        const elements = []
+        elements.push(h('span', selectedText || lang.pleaseSelect))
 
-        if (this.selectedText) {
-          element.push(h('span', {
+        if (selectedText) {
+          elements.push(h('span', {
             class: 'rg-iconfont rg-icon-clear rg-clear-btn',
             attrs: {
               title: lang.clear
@@ -48,18 +53,19 @@ export default {
             }
           }))
         } else {
-          element.push(h('span', { class: 'rg-caret-down' }))
+          elements.push(h('span', { class: 'rg-caret-down' }))
         }
 
-        caller.push(h('button', {
+        const btnOption = {
           class: {
             'rg-default-btn': true,
-            'rg-opened': this.show
+            'rg-opened': show
           },
           attrs: {
             type: 'button'
           }
-        }, element))
+        }
+        caller.push(h('button', btnOption, elements))
       }
 
       return h('template', { slot: 'caller' }, [

@@ -84,7 +84,15 @@
           v-text="JSON.stringify(valuesColumn, null, 2)"
         />
       </div>
-      <div class="mb-3">
+      <div class="d-flex mb-3">
+        <region-columns-core
+          :town="true"
+          class="border rounded-3"
+          v-model="modelColumn"
+          @done="columnGroupCoreDone"
+        />
+      </div>
+      <div class="">
         <region-columns
           :city="true"
           :area="true"
@@ -92,14 +100,6 @@
           type="column"
           v-model="modelColumn"
           @values="cbColumn"
-        />
-      </div>
-      <div class="d-flex">
-        <region-columns-core
-          :town="true"
-          class="border rounded-3"
-          v-model="modelColumn"
-          @done="columnGroupCoreDone"
         />
       </div>
 

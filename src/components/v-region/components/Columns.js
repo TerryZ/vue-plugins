@@ -73,23 +73,21 @@ export default {
           input: val => {
             callback(val)
             this.change()
-            // this.adjust()
             this.$emit('adjust')
-            if (this.isDone()) this.done()
+            if (this.isComplete()) {
+              this.$emit('complete')
+            }
           }
         }
       }]
     },
-    isDone () {
+    isComplete () {
       return this.availableLevels.join(',') === this.currentLevels.join(',')
     },
     clear () {
       this.clearRegion(PROVINCE_LEVEL)
       this.change()
       this.close()
-    },
-    done () {
-      this.$emit('done')
     }
   }
 }

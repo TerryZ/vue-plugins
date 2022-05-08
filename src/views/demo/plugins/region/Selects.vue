@@ -48,7 +48,7 @@
       <v-region
         :town="true"
         v-model="modelSelect"
-        @values="cbSelect"
+        @change="cbSelect"
       />
 
       <h5 class="mt-3">

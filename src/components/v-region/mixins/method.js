@@ -45,7 +45,8 @@ export default {
           })
         this.$emit('input', model)
       }
-      this.$emit('values', JSON.parse(JSON.stringify(this.region)))
+      this.$emit('change', JSON.parse(JSON.stringify(this.region)))
+      this.$emit('', this.selectedText)
     },
     /**
      * Check if model and region data are equal

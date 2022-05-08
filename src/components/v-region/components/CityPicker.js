@@ -143,7 +143,7 @@ export default {
   methods: {
     emit (input = true) {
       if (input) this.$emit('input', this.picked.map(val => val.key))
-      this.$emit('values', this.picked)
+      this.$emit('change', this.picked)
     },
     clear () {
       this.picked = []

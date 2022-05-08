@@ -20,7 +20,7 @@
           type="city"
           language="EN"
           v-model="modelCity"
-          @values="cbCity"
+          @change="cbCity"
         />
       </div>
     </div>
