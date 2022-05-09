@@ -1,13 +1,16 @@
+import Dropdown from 'v-dropdown'
 import languages, { CN } from '../language'
 
 /**
- * 选择器基础 API
+ * 下拉层选择器基础 API
  *
  * 引用要求：
- * - 应用在组件中时，需要对 dropdown 组件定义 ref 属性，并指定为 drop
  * - 对功能组件定义 ref 属性，并指定为 module
  */
 export default {
+  components: {
+    Dropdown
+  },
   data () {
     return {
       show: false
@@ -76,6 +79,23 @@ export default {
       return h('template', { slot: 'caller' }, [
         h('div', { class: 'rg-caller-container' }, caller)
       ])
+    },
+    /**
+     * 构建下拉层
+     * @param {VNode[]} contents - 下拉层中的内容
+     * @returns VNode
+     */
+    buildDropdown (contents) {
+      const dropdownOption = {
+        ref: 'drop',
+        props: {
+          border: true
+        },
+        on: {
+          show: this.showChange
+        }
+      }
+      return this.$createElement('dropdown', dropdownOption, contents)
     }
   }
 }
