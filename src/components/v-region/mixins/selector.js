@@ -1,4 +1,4 @@
-import language from '../language'
+import languages, { CN } from '../language'
 
 /**
  * 选择器基础 API
@@ -31,9 +31,9 @@ export default {
     buildCaller () {
       const h = this.$createElement
       const caller = []
-      const lang = language[this.language.toLowerCase()]
-      const { show } = this
+      const { show, language } = this
       const { module } = this.$refs
+      const lang = languages[(language || CN).toLowerCase()]
 
       if ('default' in this.$scopedSlots) {
         // scoped slot

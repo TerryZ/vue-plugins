@@ -45,8 +45,10 @@ export default {
   methods: {
     clear () {
       const module = this.$refs.module
-      module.clearRegion(PROVINCE_LEVEL)
-      module.change()
+      if (module) {
+        module.clearRegion(PROVINCE_LEVEL)
+        module.change()
+      }
       this.close()
     }
   }

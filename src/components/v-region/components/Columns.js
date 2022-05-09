@@ -5,8 +5,10 @@ import RegionColumn from './Column'
 
 import data from '../mixins/data'
 import method from '../mixins/method'
-import { PROVINCE_LEVEL } from '../constants.js'
 
+/**
+ * 级联数据列核心模块
+ */
 export default {
   name: 'Columns',
   mixins: [data, method],
@@ -83,11 +85,6 @@ export default {
     },
     isComplete () {
       return this.availableLevels.join(',') === this.currentLevels.join(',')
-    },
-    clear () {
-      this.clearRegion(PROVINCE_LEVEL)
-      this.change()
-      this.close()
     }
   }
 }

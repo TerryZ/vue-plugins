@@ -71,8 +71,11 @@ export default {
   },
   methods: {
     cbColumn (data) {
-      // this.valuesColumn = data
-      console.log(data)
+      if (!this.valuesColumn) {
+        this.valuesColumn = data
+        console.log('set data')
+      }
+      console.dir(data)
     },
     columnGroupCoreDone () {
       console.log('columnGroupCoreDone')

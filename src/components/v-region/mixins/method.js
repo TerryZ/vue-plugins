@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep'
 import { regionProvinces } from '../formatted.js'
 import {
   GROUP,
@@ -41,7 +42,7 @@ export default {
       if (!input) {
         this.$emit('input', regionToModel(region))
       }
-      this.$emit('change', JSON.parse(JSON.stringify(region)))
+      this.$emit('change', cloneDeep(region))
     },
     /**
      * Check if model and region data are equal
