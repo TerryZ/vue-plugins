@@ -17,59 +17,52 @@ export default {
     RegionColumn
   },
   render (h) {
+    const { region, listProvince, listCity, listArea, listTown } = this
     const columns = []
     // province
-    columns.push(h(...this.build({
-      list: this.listProvince,
+    columns.push(this.buildColumn({
+      list: listProvince,
       haveChild: this.city,
-      value: this.region.province,
-      callback: val => {
-        this.region.province = val
-      }
-    })))
+      value: region.province,
+      callback: val => { this.region.province = val }
+    }))
     // city
-    if (this.listCity.length) {
-      columns.push(h(...this.build({
-        list: this.listCity,
+    if (listCity.length) {
+      columns.push(this.buildColumn({
+        list: listCity,
         haveChild: this.area,
-        value: this.region.city,
-        callback: val => {
-          this.region.city = val
-        }
-      })))
+        value: region.city,
+        callback: val => { this.region.city = val }
+      }))
     }
     // area
-    if (this.listArea.length) {
-      columns.push(h(...this.build({
-        list: this.listArea,
+    if (listArea.length) {
+      columns.push(this.buildColumn({
+        list: listArea,
         haveChild: this.town,
-        value: this.region.area,
-        callback: val => {
-          this.region.area = val
-        }
-      })))
+        value: region.area,
+        callback: val => { this.region.area = val }
+      }))
     }
     // town
-    if (this.listTown.length) {
-      columns.push(h(...this.build({
-        list: this.listTown,
+    if (listTown.length) {
+      columns.push(this.buildColumn({
+        list: listTown,
         haveChild: false,
-        value: this.region.town,
-        callback: val => {
-          this.region.town = val
-        }
-      })))
+        value: region.town,
+        callback: val => { this.region.town = val }
+      }))
     }
 
     return h('div', { class: 'rg-column-container' }, columns)
   },
   methods: {
-    build ({ list, haveChild, value, callback }) {
-      return ['region-column', {
+    buildColumn ({ list, haveChild, value, callback }) {
+      return this.$createElement('region-column', {
         props: {
-          list: list,
-          haveChild: haveChild,
-          value: value
+          list,
+          haveChild,
+          value
         },
         on: {
           input: val => {
@@ -81,7 +74,7 @@ export default {
             }
           }
         }
-      }]
+      })
     },
     isComplete () {
       return this.availableLevels.join(',') === this.currentLevels.join(',')
