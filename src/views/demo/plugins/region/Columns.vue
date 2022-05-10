@@ -19,6 +19,7 @@
         <region-columns-core
           :town="true"
           class="border rounded-3"
+          language="en"
           v-model="modelCore"
           @complete="columnGroupCoreDone"
         />
@@ -26,10 +27,12 @@
       <div class="mb-3">
         <region-columns
           :city="true"
-          :area="false"
-          :town="true"
+          :area="true"
+          :town="false"
+          language="en"
           v-model="modelColumn"
           @change="cbColumn"
+          @complete="columnGroupCoreDone"
         />
       </div>
 
@@ -65,7 +68,12 @@ export default {
   data () {
     return {
       modelCore: null,
-      modelColumn: null,
+      modelColumn: {
+        province: '350000',
+        city: '350100',
+        area: '350104',
+        town: '350104008'
+      },
       valuesColumn: null
     }
   },
@@ -81,7 +89,7 @@ export default {
       console.log('columnGroupCoreDone')
     },
     resultText (region) {
-      if (!region) return ''
+      if (!region) return '无数据'
 
       if (!Object.values(region).some(val => val) || !region) {
         return '无数据'

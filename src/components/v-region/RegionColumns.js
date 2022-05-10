@@ -23,7 +23,7 @@ export default {
       props: this.$attrs,
       on: {
         ...this.$listeners,
-        complete: this.close,
+        complete: this.complete,
         adjust: this.adjust
       }
     }
@@ -32,6 +32,10 @@ export default {
     return this.buildDropdown(contents)
   },
   methods: {
+    complete () {
+      this.close()
+      this.$emit('complete')
+    },
     clear () {
       const module = this.$refs.module
       if (module) {
