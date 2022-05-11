@@ -5,6 +5,10 @@ export {
   regionCities,
   regionAreas
 } from './formatted'
+export { default as RegionText } from './RegionText'
+export { default as RegionColumnsCore } from './components/Columns'
+export { default as RegionColumns } from './RegionColumns'
+export { default as RegionSelects } from './RegionSelects'
 
 Region.install = (Vue, options = {}) => {
   if (Object.keys(options).length) {

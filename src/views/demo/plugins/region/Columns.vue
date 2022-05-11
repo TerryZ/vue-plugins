@@ -5,7 +5,18 @@
       <small>下拉选择器多列竖排模式</small>
     </h3>
     <div class="p-3 shadow-sm rounded-3 border">
-      <div class="bg-light p-3 mb-3">
+      <div class="mb-3">
+        <region-columns
+          :city="true"
+          :area="true"
+          :town="false"
+          language="en"
+          v-model="modelColumn"
+          @change="cbColumn"
+          @complete="columnGroupCoreDone"
+        />
+      </div>
+      <div class="bg-light p-3 mb-3 rounded-3">
         <pre
           class="m-0 mb-3"
           v-text="JSON.stringify(modelColumn, null, 2)"
@@ -21,17 +32,6 @@
           class="border rounded-3"
           language="en"
           v-model="modelCore"
-          @complete="columnGroupCoreDone"
-        />
-      </div>
-      <div class="mb-3">
-        <region-columns
-          :city="true"
-          :area="true"
-          :town="false"
-          language="en"
-          v-model="modelColumn"
-          @change="cbColumn"
           @complete="columnGroupCoreDone"
         />
       </div>
@@ -57,8 +57,7 @@
 </template>
 
 <script>
-import RegionColumns from '@/components/v-region/RegionColumns'
-import RegionColumnsCore from '@/components/v-region/components/Columns'
+import { RegionColumnsCore, RegionColumns } from '@/components/v-region'
 
 export default {
   components: {

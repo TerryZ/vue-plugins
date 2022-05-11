@@ -2,7 +2,7 @@ import './styles/region.styl'
 import { SELECT, TEXT, GROUP, COLUMN, CITY, TYPE_LIST } from './constants'
 import { generateComponentName } from './utils/helper'
 
-import SelectGroup from './components/SelectGroup'
+import SelectGroup from './components/Selects'
 import TextRegion from './components/Text'
 import GroupRegion from './components/Group'
 import Columns from './components/Columns'

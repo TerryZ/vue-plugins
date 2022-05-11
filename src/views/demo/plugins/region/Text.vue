@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import RegionText from '@/components/v-region/RegionText'
+import { RegionText } from '@/components/v-region'
 
 export default {
   components: {

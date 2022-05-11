@@ -2,13 +2,13 @@ import '../styles/select.styl'
 
 import data from '../mixins/data'
 import method from '../mixins/method'
-import select from './Select'
+import RegionSelect from './Select'
 
 export default {
-  name: 'SelectGroup',
+  name: 'Selects',
   mixins: [data, method],
   components: {
-    'r-select': select
+    RegionSelect
   },
   props: {
     blank: {
@@ -28,10 +28,10 @@ export default {
     }
   },
   render (h) {
-    const child = []
+    const selects = []
     const { province, city, area, town } = this.region
 
-    child.push(this.build({
+    selects.push(this.build({
       list: this.listProvince,
       model: province,
       callback: val => {
@@ -40,7 +40,7 @@ export default {
     }))
 
     if (this.city) {
-      child.push(this.build({
+      selects.push(this.build({
         list: this.listCity,
         model: city,
         callback: val => {
@@ -49,7 +49,7 @@ export default {
       }))
     }
     if (this.city && this.area) {
-      child.push(this.build({
+      selects.push(this.build({
         list: this.listArea,
         model: area,
         callback: val => {
@@ -58,7 +58,7 @@ export default {
       }))
     }
     if (this.city && this.area && this.town) {
-      child.push(this.build({
+      selects.push(this.build({
         list: this.listTown,
         model: town,
         callback: val => {
@@ -67,11 +67,11 @@ export default {
       }))
     }
 
-    return h('div', child)
+    return h('div', selects)
   },
   methods: {
     build ({ list, model, callback }) {
-      return this.$createElement('r-select', {
+      return this.$createElement('region-select', {
         props: {
           'blank-text': this.lang.pleaseSelect,
           list: list
