@@ -159,14 +159,42 @@
           <p>输入建议组件</p>
           <small>v-suggest</small>
         </router-link>
-        <router-link
-          to="/demo/region"
-          class="list-group-item list-group-item-action bg-primary text-white"
-        >
+        <div class="list-group-item list-group-item-action bg-primary text-white">
           <h5>Region</h5>
           <p>提供最多 4 级联动的行政区划选择器</p>
-          <small>v-region</small>
-        </router-link>
+          <div>
+            <router-link
+              to="/demo/region/selects"
+              class="btn btn-light"
+            >
+              Selects
+            </router-link>
+            <router-link
+              to="/demo/region/group"
+              class="btn btn-light"
+            >
+              Group
+            </router-link>
+            <router-link
+              to="/demo/region/columns"
+              class="btn btn-light"
+            >
+              Columns
+            </router-link>
+            <router-link
+              to="/demo/region/city"
+              class="btn btn-light"
+            >
+              City
+            </router-link>
+            <router-link
+              to="/demo/region/text"
+              class="btn btn-light"
+            >
+              Text
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
   </div>

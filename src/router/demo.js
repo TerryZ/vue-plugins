@@ -8,7 +8,17 @@ export default [
   { path: '/demo/selectMenu', component: () => import('@/views/demo/plugins/SelectMenu') },
   { path: '/demo/selectPage', component: () => import('@/views/demo/plugins/SelectPage') },
   { path: '/demo/tree', component: () => import('@/views/demo/plugins/Tree') },
-  { path: '/demo/region', component: () => import('@/views/demo/plugins/region/Index') },
+  {
+    path: '/demo/region',
+    component: () => import('@/views/demo/plugins/region/Index'),
+    children: [
+      { path: '/demo/region/selects', component: () => import('@/views/demo/plugins/region/Selects') },
+      { path: '/demo/region/group', component: () => import('@/views/demo/plugins/region/Group') },
+      { path: '/demo/region/columns', component: () => import('@/views/demo/plugins/region/Columns') },
+      { path: '/demo/region/city', component: () => import('@/views/demo/plugins/region/City') },
+      { path: '/demo/region/text', component: () => import('@/views/demo/plugins/region/Text') }
+    ]
+  },
   { path: '/demo/upload', component: () => import('@/views/demo/plugins/Upload') },
   { path: '/demo/page', component: () => import('@/views/demo/plugins/Page') },
   { path: '/demo/editor', component: () => import('@/views/demo/plugins/Editor') },
