@@ -83,13 +83,15 @@ export default {
     /**
      * 构建下拉层
      * @param {VNode[]} contents - 下拉层中的内容
+     * @param {VNode[]} props - 参数集
      * @returns VNode
      */
-    buildDropdown (contents) {
+    buildDropdown (contents, props) {
       const dropdownOption = {
         ref: 'drop',
         props: {
-          border: true
+          border: true,
+          ...props
         },
         on: {
           show: this.showChange

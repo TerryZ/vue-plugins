@@ -79,17 +79,7 @@ export default {
 
     child.push(h('ul', { class: 'rg-select__list' }, items))
 
-    return h('dropdown', {
-      ref: 'drop',
-      class: 'rg-select',
-      props: {
-        border: false,
-        disabled: this.disabled
-      },
-      on: {
-        show: this.showChange
-      }
-    }, child)
+    return this.buildDropdown(child, { disabled: this.disabled })
   },
   methods: {
     pick (val) {

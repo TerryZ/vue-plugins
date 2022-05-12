@@ -64,8 +64,8 @@
       </h5>
       <region-selects
         :town="true"
-        v-model="selected"
         :disabled="true"
+        v-model="selected"
       />
     </div>
   </section>

@@ -72,6 +72,7 @@ export default {
   methods: {
     build ({ list, model, callback }) {
       return this.$createElement('region-select', {
+        class: 'rg-select',
         props: {
           'blank-text': this.lang.pleaseSelect,
           list: list
