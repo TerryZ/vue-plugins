@@ -1,14 +1,14 @@
-import '../styles/icons.styl'
-import '../styles/city.styl'
+import './styles/icons.styl'
+import './styles/city.styl'
 
-import selector from '../mixins/selector'
-import search from '../mixins/selectorWithSearch'
+import selector from './mixins/selector'
+import search from './mixins/selectorWithSearch'
 
-import language, { CN } from '../language'
-import { regionProvinces, regionCities } from '../formatted'
-import { PLACEHOLDER_OTHER_CITIES } from '../constants'
-import { keysEqualModels, isSelected } from '../utils/helper'
-import { cityDirectory } from '../utils/parse'
+import language, { CN } from './language'
+import { regionProvinces, regionCities } from './formatted'
+import { PLACEHOLDER_OTHER_CITIES } from './constants'
+import { keysEqualModels, isSelected } from './utils/helper'
+import { cityDirectory } from './utils/parse'
 
 const maxDisplayCitys = 2
 // 完整的城市列表（基于省份进行分组）

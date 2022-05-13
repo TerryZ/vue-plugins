@@ -16,7 +16,7 @@
         />
       </div>
       <div>
-        <v-region
+        <region-city-picker
           type="city"
           language="EN"
           v-model="modelCity"
@@ -28,7 +28,12 @@
 </template>
 
 <script>
+import { RegionCityPicker } from '@/components/v-region'
+
 export default {
+  components: {
+    RegionCityPicker
+  },
   data () {
     return {
       modelCity: ['110000', '350100'],

@@ -1,8 +1,8 @@
 import './styles/select.styl'
 
+import RegionSelect from './components/Select'
 import data from './mixins/data'
 import method from './mixins/method'
-import RegionSelect from './components/Select'
 
 export default {
   name: 'Selects',
@@ -20,7 +20,6 @@ export default {
       default: false
     }
   },
-  inheritAttrs: false,
   provide () {
     return {
       disabled: this.disabled,
@@ -75,7 +74,7 @@ export default {
         class: 'rg-select',
         props: {
           'blank-text': this.lang.pleaseSelect,
-          list: list
+          list
         },
         attrs: {
           value: model

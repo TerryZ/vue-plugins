@@ -4,7 +4,7 @@ import vDialog from '@/components/v-dialogs'
 import vPage from '@/components/v-page'
 import vTableGrid from '@/components/v-tablegrid'
 import vUploader from '@/components/v-uploader'
-import vRegion from '@/components/v-region'
+// import vRegion from '@/components/v-region'
 import vSelectMenu from '@/components/v-selectmenu'
 import vSelectPage from '@/components/v-selectpage'
 // import vTree from '@/components/v-tree';
@@ -36,7 +36,7 @@ Vue.use(vDialog)
 Vue.use(vTableGrid, hooks.gridConfig)
 Vue.use(vPage)
 Vue.use(vUploader, hooks.uploaderConfig)
-Vue.use(vRegion)
+// Vue.use(vRegion)
 Vue.use(vSelectMenu, {
   // title: false
 })

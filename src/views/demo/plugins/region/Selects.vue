@@ -46,6 +46,7 @@
         />
       </div>
       <region-selects
+        language="en"
         :town="true"
         v-model="modelSelect"
         @change="cbSelect"
