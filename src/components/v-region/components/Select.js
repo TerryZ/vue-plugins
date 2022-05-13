@@ -1,9 +1,7 @@
-import dropdown from 'v-dropdown'
 import selector from '../mixins/selector'
 
 export default {
   name: 'SelectElement',
-  components: { dropdown },
   mixins: [selector],
   props: {
     list: {
@@ -13,24 +11,12 @@ export default {
     blankText: String,
     value: Object
   },
-  data () {
-    return {
-      selected: this.value
-    }
-  },
   inject: ['disabled', 'blank'],
-  watch: {
-    value: {
-      handler (val) {
-        this.selected = val
-      },
-      deep: true
-    }
-  },
   computed: {
     content () {
-      return (this.selected && this.selected.value)
-        ? this.selected.value
+      const { value } = this
+      return (value && value.value)
+        ? value.value
         : this.blank ? this.blankText : '&nbsp;'
     },
     triggerClasses () {
@@ -42,32 +28,22 @@ export default {
     }
   },
   render (h) {
-    const child = []
+    const { value } = this
+    const contents = []
 
     // trigger
-    child.push(h('template', { slot: 'caller' }, [
+    contents.push(h('template', { slot: 'caller' }, [
       h('div', { class: this.triggerClasses }, [
         h('div', { class: 'rg-select__content' }, this.content),
         h('span', { class: 'rg-select__caret' })
       ])
     ]))
 
-    const items = []
-    // "Please select" option
-    if (this.blank) {
-      const option = {
-        on: {
-          click: () => this.pick()
-        }
-      }
-      items.push(h('li', option, this.blankText))
-    }
-    // list item
-    items.push(...this.list.map(val => {
+    const listItems = this.list.map(val => {
       return h('li', {
         key: val.key,
         class: {
-          selected: this.selected && this.selected.key === val.key
+          selected: value && value.key === val.key
         },
         on: {
           click: () => {
@@ -75,15 +51,23 @@ export default {
           }
         }
       }, val.value)
-    }))
+    })
+    // "Please select" option
+    if (this.blank) {
+      const option = {
+        on: {
+          click: () => this.pick()
+        }
+      }
+      listItems.unshift(h('li', option, this.blankText))
+    }
 
-    child.push(h('ul', { class: 'rg-select__list' }, items))
+    contents.push(h('ul', { class: 'rg-select__list' }, listItems))
 
-    return this.buildDropdown(child, { disabled: this.disabled })
+    return this.buildDropdown(contents, { disabled: this.disabled })
   },
   methods: {
     pick (val) {
-      this.selected = val
       this.$emit('input', val)
       this.close()
     }
