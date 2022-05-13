@@ -93,7 +93,11 @@ export default {
       if (!Object.values(region).some(val => val) || !region) {
         return '无数据'
       }
-      return Object.values(region).filter(val => val).map(val => val.value).join(',')
+      return Object
+        .values(region)
+        .filter(val => val)
+        .map(val => val.value)
+        .join(',')
     }
   }
 }

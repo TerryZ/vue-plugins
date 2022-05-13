@@ -27,7 +27,7 @@ export default {
     return {
       list: [],
       query: '',
-      level: -1
+      level: PROVINCE_LEVEL
     }
   },
   watch: {

@@ -5,7 +5,12 @@
       <small>下拉选择器模式</small>
     </h3>
     <div class="p-3 shadow-sm rounded-3 border">
-      <div class="bg-light p-3 mb-3">
+      <h5>核心功能模块</h5>
+      <div class="mb-3">
+        <region-group-core class="border rounded-3 shadow-sm" />
+      </div>
+
+      <div class="bg-light p-3 mb-3 rounded-3">
         <pre
           class="m-0 mb-3"
           v-text="JSON.stringify(modelGroup, null, 2)"
@@ -15,7 +20,8 @@
           v-text="JSON.stringify(valuesGroup, null, 2)"
         />
       </div>
-      <p>
+
+      <div>
         <region-group
           :city="true"
           :area="true"
@@ -31,7 +37,7 @@
         >
           reset region
         </button>
-      </p>
+      </div>
 
       <h5 class="mt-3">
         下拉选择器模式（自定义呼出按钮）
@@ -54,10 +60,11 @@
 </template>
 
 <script>
-import { RegionGroup } from '@/components/v-region'
+import { RegionGroupCore, RegionGroup } from '@/components/v-region'
 
 export default {
   components: {
+    RegionGroupCore,
     RegionGroup
   },
   data () {
@@ -80,10 +87,16 @@ export default {
       }
     },
     resultText (region) {
+      if (!region) return '无数据'
+
       if (!Object.values(region).some(val => val) || !region) {
-        return 'null'
+        return '无数据'
       }
-      return Object.values(region).filter(val => val).map(val => val.value).join(',')
+      return Object
+        .values(region)
+        .filter(val => val)
+        .map(val => val.value)
+        .join(',')
     }
   }
 }
