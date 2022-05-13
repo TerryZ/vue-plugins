@@ -17,7 +17,6 @@
       </div>
       <div>
         <region-city-picker
-          type="city"
           language="EN"
           v-model="modelCity"
           @change="cbCity"

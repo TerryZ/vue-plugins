@@ -1,11 +1,18 @@
-import '../styles/icons.styl'
-import '../styles/group.styl'
+import './styles/icons.styl'
+import './styles/group.styl'
 
-import data from '../mixins/data'
-import method from '../mixins/method'
-import search from '../mixins/selectorWithSearch'
-import selector from '../mixins/selector'
-import { PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL, TOWN_LEVEL, LEVELS, LEVEL_LIST } from '../constants'
+import data from './mixins/data'
+import method from './mixins/method'
+import search from './mixins/selectorWithSearch'
+import selector from './mixins/selector'
+import {
+  PROVINCE_LEVEL,
+  CITY_LEVEL,
+  AREA_LEVEL,
+  TOWN_LEVEL,
+  LEVELS,
+  LEVEL_LIST
+} from './constants'
 
 export default {
   name: 'RegionGroup',

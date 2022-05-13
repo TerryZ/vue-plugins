@@ -1,10 +1,11 @@
 import './styles/region.styl'
 
-import RegionText from './RegionText'
+import RegionGroup from './RegionGroup'
+import RegionSelects from './RegionSelects'
 import RegionColumnsCore from './components/Columns'
 import RegionColumns from './RegionColumns'
-import RegionSelects from './RegionSelects'
 import RegionCityPicker from './RegionCityPicker'
+import RegionText from './RegionText'
 
 export {
   regionFull,
@@ -24,18 +25,20 @@ Region.install = (Vue, options = {}) => {
   //   if (typeof search === 'boolean') Region.props.search.default = search
   // }
 
-  Vue.component('v-region-text', RegionText)
-  Vue.component('v-region-columns', RegionColumns)
+  Vue.component('v-region-group', RegionGroup)
   Vue.component('v-region-selects', RegionSelects)
+  Vue.component('v-region-columns', RegionColumns)
   Vue.component('v-region-city-picker', RegionCityPicker)
+  Vue.component('v-region-text', RegionText)
 }
 
 export {
-  RegionText,
+  RegionGroup,
+  RegionSelects,
   RegionColumnsCore,
   RegionColumns,
-  RegionSelects,
-  RegionCityPicker
+  RegionCityPicker,
+  RegionText
 }
 
 export default Region

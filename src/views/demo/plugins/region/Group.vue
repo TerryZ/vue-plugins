@@ -16,11 +16,10 @@
         />
       </div>
       <p>
-        <v-region
+        <region-group
           :city="true"
           :area="true"
           :town="true"
-          type="group"
           v-model="modelGroup"
           class="me-3"
           @change="cbGroup"
@@ -38,7 +37,7 @@
         下拉选择器模式（自定义呼出按钮）
       </h5>
       <div>
-        <!-- <v-region type="group">
+        <region-group>
           <template #default="{ region, show }">
             <button
               type="button"
@@ -48,14 +47,19 @@
               show: {{ show }}
             </button>
           </template>
-        </v-region> -->
+        </region-group>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import { RegionGroup } from '@/components/v-region'
+
 export default {
+  components: {
+    RegionGroup
+  },
   data () {
     return {
       modelGroup: null,
