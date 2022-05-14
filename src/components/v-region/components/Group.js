@@ -45,23 +45,23 @@ export default {
     contents.push(this.buildTabs())
     contents.push(this.buildContent())
 
-    return h('div', contents)
+    return h('div', { class: 'rg-group' }, contents)
   },
   methods: {
     buildHeader () {
       const h = this.$createElement
-      const child = []
+      const contents = []
 
-      child.push(h('h3', [
-        h('span', {
-          class: {
-            'rg-header-selected': this.selectedText
-          }
-        }, this.selectedText || this.lang.defaultHead)
-      ]))
+      const title = this.selectedText || this.lang.defaultHead
+      const titleOption = {
+        class: 'rg-header-text',
+        domProps: { title }
+      }
+      contents.push(h('div', titleOption, [title]))
 
       // TODO:按钮通过绝对定位，会有消失不见的问题
-      child.push(h('button', {
+      const btnIcon = h('i', { class: 'rg-iconfont rg-icon-remove' })
+      const btnOption = {
         attrs: {
           type: 'button',
           title: this.lang.clear
@@ -70,9 +70,9 @@ export default {
         on: {
           click: this.clear
         }
-      }, [
-        h('i', { class: 'rg-iconfont rg-icon-remove' })
-      ]))
+      }
+      const btn = h('button', btnOption, [btnIcon])
+      contents.push(h('div', { class: 'rg-header-control' }, [btn]))
 
       // child.push(h('button', {
       //   attrs: {
@@ -87,7 +87,7 @@ export default {
       //   h('i', { class: 'rg-iconfont rg-icon-done' })
       // ]))
 
-      return h('div', { class: 'rg-header' }, child)
+      return h('div', { class: 'rg-header' }, contents)
     },
     // 构建搜索栏
     buildSearch () {

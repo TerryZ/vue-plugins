@@ -7,7 +7,10 @@
     <div class="p-3 shadow-sm rounded-3 border">
       <h5>核心功能模块</h5>
       <div class="mb-3">
-        <region-group-core class="border rounded-3 shadow-sm" />
+        <region-group-core
+          :town="true"
+          class="border rounded-3 shadow-sm"
+        />
       </div>
 
       <div class="bg-light p-3 mb-3 rounded-3">
