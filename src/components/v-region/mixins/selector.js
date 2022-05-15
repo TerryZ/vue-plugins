@@ -17,11 +17,27 @@ export default {
     }
   },
   methods: {
+    /**
+     * 查询输入元素设置焦点
+     * @interface
+     */
+    searchFocus () {},
+    /**
+     * 清理并关闭窗口
+     * @interface
+     */
+    clear () {},
     close () {
-      if (this.show) this.$refs.drop.visible()
+      if (!this.show) return
+      this.$refs.drop.visible()
     },
     showChange (val) {
       this.show = val
+      if (!val) return
+
+      // 打开下拉层时激活查询输入框的焦点
+      const { searchFocus } = this
+      searchFocus && searchFocus()
     },
     adjust () {
       this.$nextTick(() => {

@@ -37,7 +37,7 @@ export default {
       this.$emit('complete')
     },
     clear () {
-      const module = this.$refs.module
+      const { module } = this.$refs
       if (module) {
         module.clearRegion(PROVINCE_LEVEL)
         module.change()

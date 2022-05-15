@@ -29,9 +29,7 @@ export default {
     }
   },
   watch: {
-    /**
-     * current region group
-     */
+    // 当前分组
     level (val) {
       this.list = this.getList(val)
       this.$emit('adjust')
@@ -59,7 +57,6 @@ export default {
       }
       contents.push(h('div', titleOption, [title]))
 
-      // TODO:按钮通过绝对定位，会有消失不见的问题
       const btnIcon = h('i', { class: 'rg-iconfont rg-icon-remove' })
       const btnOption = {
         attrs: {
@@ -111,30 +108,29 @@ export default {
     // 构建选择卡栏
     buildTabs () {
       const h = this.$createElement
-      const child = []
-      LEVELS.forEach(val => {
-        if (this.levelAvailable(val.index)) {
-          child.push(h('li', {
+      const tabs = LEVELS
+        .filter(val => this.levelAvailable(val.index))
+        .map(val => {
+          const link = h('a', {
+            attrs: {
+              href: 'javascript:void(0)'
+            },
+            on: {
+              click: () => {
+                this.level = val.index
+              }
+            }
+          }, val.title)
+          const option = {
             key: val.index,
             class: {
               active: val.index === this.level
             }
-          }, [
-            h('a', {
-              attrs: {
-                href: 'javascript:void(0)'
-              },
-              on: {
-                click: () => {
-                  this.level = val.index
-                }
-              }
-            }, val.title)
-          ]))
-        }
-      })
+          }
+          return h('li', option, [link])
+        })
       return h('div', { class: 'rg-level-tabs' }, [
-        h('ul', child)
+        h('ul', tabs)
       ])
     },
     // 构建内容区域

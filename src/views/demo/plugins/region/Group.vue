@@ -8,8 +8,9 @@
       <h5>核心功能模块</h5>
       <div class="mb-3">
         <region-group-core
-          :town="true"
           class="border rounded-3 shadow-sm"
+          :town="true"
+          @complete="complete"
         />
       </div>
 
@@ -77,6 +78,9 @@ export default {
     }
   },
   methods: {
+    complete () {
+      console.log('complete')
+    },
     cbGroup (data) {
       // console.log(data)
       this.valuesGroup = data

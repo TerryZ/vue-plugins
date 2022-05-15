@@ -2,12 +2,11 @@ import './styles/icons.styl'
 import './styles/city.styl'
 
 import selector from './mixins/selector'
-import search from './mixins/selectorWithSearch'
 
 import language, { CN } from './language'
 import { regionProvinces, regionCities } from './formatted'
 import { PLACEHOLDER_OTHER_CITIES } from './constants'
-import { keysEqualModels, isSelected } from './utils/helper'
+import { keysEqualModels, isSelected, inputFocus } from './utils/helper'
 import { cityDirectory } from './utils/parse'
 
 const maxDisplayCitys = 2
@@ -16,7 +15,7 @@ const fullCityDirectory = cityDirectory()
 
 export default {
   name: 'CityPicker',
-  mixins: [search, selector],
+  mixins: [selector],
   props: {
     value: Array,
     /**
@@ -137,6 +136,11 @@ export default {
       this.picked = []
       this.close()
       this.emit()
+    },
+    searchFocus () {
+      this.$nextTick(() => {
+        inputFocus(this.$refs.search)
+      })
     },
     pick (item) {
       if (isSelected(item, this.picked)) {

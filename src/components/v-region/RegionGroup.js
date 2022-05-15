@@ -1,10 +1,5 @@
-import './styles/icons.styl'
-import './styles/group.styl'
-
-import data from './mixins/data'
-import method from './mixins/method'
-import search from './mixins/selectorWithSearch'
 import selector from './mixins/selector'
+import { inputFocus } from './utils/helper'
 import {
   PROVINCE_LEVEL,
   CITY_LEVEL,
@@ -16,7 +11,7 @@ import {
 
 export default {
   name: 'RegionGroup',
-  mixins: [data, method, search, selector],
+  mixins: [selector],
   props: {
     search: {
       type: Boolean,
@@ -221,6 +216,20 @@ export default {
         this.close()
       }
     },
+    /**
+     * 查询输入设置焦点
+     * @override
+     */
+    searchFocus () {
+      if (!this.search) return
+      this.$nextTick(() => {
+        inputFocus(this.$refs.search)
+      })
+    },
+    /**
+     * 清理数据
+     * @override
+     */
     clear () {
       this.clearRegion(PROVINCE_LEVEL)
       this.level = PROVINCE_LEVEL

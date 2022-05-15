@@ -157,3 +157,30 @@ export function isSelected (item, selectedItems) {
   if (!item || !selectedItems.length) return false
   return selectedItems.some(val => val.key === item.key)
 }
+
+export function isChrome () {
+  return navigator.vendor !== undefined && navigator.vendor.indexOf('Google') !== -1
+}
+
+export function isEdge () {
+  return navigator.userAgent.indexOf('Edge') >= 0
+}
+
+export function inputFocus (input) {
+  if (!input) return
+  /**
+   * fixed the page will scroll to top when open drop down list and set input focus
+   * that.$refs.search.focus({preventScroll:true})
+   * only work on Chrome and EDGE
+   */
+  if (isChrome() || isEdge()) {
+    input.focus({ preventScroll: true })
+  } else {
+    const x = window.pageXOffset
+    const y = window.pageYOffset
+    input.focus()
+    if (window.pageYOffset !== y) {
+      setTimeout(() => { window.scrollTo(x, y) }, 0)
+    }
+  }
+}
