@@ -1,3 +1,6 @@
+import cloneDeep from 'lodash.clonedeep'
+import { regionProvinces } from '../formatted.js'
+
 import '../styles/icons.styl'
 import '../styles/group.styl'
 
@@ -218,11 +221,27 @@ export default {
     query (value) {
       const list = this.getList(this.level)
       let tmp = []
+      // 首先匹配描述内容
       tmp = list.filter(val => val.value.toLowerCase().includes(value.toLowerCase()))
       if (tmp.length === 0) {
+        // 其次使用编码进行匹配查询
         tmp = list.filter(val => val.key.includes(value))
       }
       this.list = tmp
+    },
+    /**
+     * @override
+     */
+    prepareProvinceList () {
+      const { value } = this
+      // sort by length and code
+      this.listProvince = cloneDeep(regionProvinces).sort((a, b) => {
+        const gap = a.value.length - b.value.length
+        return gap === 0 ? Number(a.key) - Number(b.key) : gap
+      })
+      if (value && Object.keys(value).length) {
+        this.modelChange(value)
+      }
     }
   },
   beforeMount () {

@@ -17,10 +17,10 @@ export default {
     RegionColumn
   },
   render (h) {
-    const { region, listProvince, listCity, listArea, listTown } = this
+    const { region, buildColumn, listProvince, listCity, listArea, listTown } = this
     const columns = []
     // province
-    columns.push(this.buildColumn({
+    columns.push(buildColumn({
       list: listProvince,
       haveChild: this.city,
       value: region.province,
@@ -28,7 +28,7 @@ export default {
     }))
     // city
     if (listCity.length) {
-      columns.push(this.buildColumn({
+      columns.push(buildColumn({
         list: listCity,
         haveChild: this.area,
         value: region.city,
@@ -37,7 +37,7 @@ export default {
     }
     // area
     if (listArea.length) {
-      columns.push(this.buildColumn({
+      columns.push(buildColumn({
         list: listArea,
         haveChild: this.town,
         value: region.area,
@@ -46,7 +46,7 @@ export default {
     }
     // town
     if (listTown.length) {
-      columns.push(this.buildColumn({
+      columns.push(buildColumn({
         list: listTown,
         haveChild: false,
         value: region.town,

@@ -1,7 +1,6 @@
 import cloneDeep from 'lodash.clonedeep'
 import { regionProvinces } from '../formatted.js'
 import {
-  GROUP,
   PROVINCE_LEVEL, CITY_LEVEL, AREA_LEVEL,
   LEVEL_LIST, LEVELS
 } from '../constants'
@@ -70,6 +69,7 @@ export default {
     levelHandle (level, load) {
       const key = LEVEL_LIST[level]
       const parentKey = level === PROVINCE_LEVEL ? undefined : LEVEL_LIST[level - 1]
+      // 获得当前级别的列表变量名，例如 level = 1 则为 listCity
       const listName = 'list' + key.charAt().toUpperCase() + key.substring(1)
       if (level === PROVINCE_LEVEL || this[key]) {
         if (this.region[parentKey]) {
@@ -96,22 +96,28 @@ export default {
       Object.keys(this.region).forEach(val => {
         if (fields.includes(val)) this.region[val] = undefined
       })
-      /* eslint-disable no-fallthrough */
       switch (level) {
-        case PROVINCE_LEVEL: this.listCity = []
-        case CITY_LEVEL: this.listArea = []
-        case AREA_LEVEL: this.listTown = []
+        case PROVINCE_LEVEL:
+          this.listCity = []
+          break
+        case CITY_LEVEL:
+          this.listArea = []
+          break
+        case AREA_LEVEL:
+          this.listTown = []
+          break
+      }
+    },
+    prepareProvinceList () {
+      const { value } = this
+      // sort by length and code
+      this.listProvince = cloneDeep(regionProvinces)
+      if (value && Object.keys(value).length) {
+        this.modelChange(value)
       }
     }
   },
   created () {
-    // sort by length and code
-    this.listProvince = this.type === GROUP
-      ? regionProvinces.slice().sort((a, b) => {
-        const gap = a.value.length - b.value.length
-        return gap === 0 ? Number(a.key) - Number(b.key) : gap
-      })
-      : regionProvinces.slice()
-    if (this.value && Object.keys(this.value).length) this.modelChange(this.value)
+    this.prepareProvinceList()
   }
 }

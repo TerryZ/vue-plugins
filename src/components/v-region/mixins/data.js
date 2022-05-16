@@ -46,8 +46,8 @@ export default {
     },
     currentLevels () {
       return Object.entries(this.region)
-        .filter(([key, value]) => value)
-        .map(([key, value]) => key)
+        .filter(val => val.value)
+        .map(val => val.key)
     },
     lang () {
       return language[this.language.toLowerCase()]
