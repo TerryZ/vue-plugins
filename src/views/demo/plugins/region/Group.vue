@@ -32,6 +32,7 @@
           :town="true"
           v-model="modelGroup"
           class="me-3"
+          @complete="complete"
           @change="cbGroup"
         />
         <button

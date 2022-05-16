@@ -4,18 +4,18 @@
       Text
       <small>纯文本模式，初始化选中的项目，以纯文本的内容显示</small>
     </h3>
-    <div class="alert alert-secondary">
-      <strong>当前选中地区：</strong>
-      <v-region
-        :town="true"
-        type="text"
-        v-model="selected"
-      />
-      <!-- <region-conatiner v-model="selected">
-        <region-text />
-      </region-conatiner> -->
-      <div>
+    <div class="p-3 shadow-sm rounded-3 border">
+      <h5>默认显示文本</h5>
+      <div class="mb-3">
         <region-text v-model="selected" />
+      </div>
+
+      <h5>带分隔符</h5>
+      <div>
+        <region-text
+          v-model="selected"
+          separator="-"
+        />
       </div>
     </div>
   </section>

@@ -65,8 +65,8 @@ export default {
         caller.push(this.$scopedSlots.default({ region, show }))
       } else {
         const elements = []
-        const selectedText = this.getSelectedText() || lang.pleaseSelect
-        elements.push(h('span', selectedText))
+        const selectedText = this.getSelectedText()
+        elements.push(h('span', selectedText || lang.pleaseSelect))
 
         if (selectedText) {
           // 清除图标
@@ -107,7 +107,7 @@ export default {
     /**
      * 构建下拉层
      * @param {VNode[]} contents - 下拉层中的内容
-     * @param {VNode[]} props - 参数集
+     * @param {object} props - 参数集
      * @returns VNode
      */
     buildDropdown (contents, props) {
