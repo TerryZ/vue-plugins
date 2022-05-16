@@ -234,6 +234,13 @@ export default {
       this.clearRegion(PROVINCE_LEVEL)
       this.level = PROVINCE_LEVEL
       this.change()
+    },
+    /**
+     * @override
+     */
+    getSelectedText () {
+      if (!this.$refs.module) return ''
+      return this.$refs.module.selectedText
     }
   },
   beforeMount () {

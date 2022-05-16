@@ -79,10 +79,10 @@ export default {
   render (h) {
     const contents = []
 
-    contents.push(this.buildCaller(h))
+    contents.push(this.buildCaller())
 
     // 搜索栏
-    const input = h('input', {
+    const search = h('input', {
       ref: 'search',
       class: 'rg-input',
       attrs: {
@@ -93,10 +93,10 @@ export default {
         input: e => this.query(e.target.value.trim())
       }
     })
-    contents.push(h('div', { class: 'rg-search-bar' }, [input]))
+    contents.push(h('div', { class: 'rg-search-bar' }, [search]))
 
     // 基于省份分组的城市列表
-    contents.push(h('div', { class: 'rg-picker' }, this.list.map(val => {
+    const provinces = this.list.map(val => {
       const { province, citys } = val
       const listItems = citys.map(city => {
         const liOption = {
@@ -115,32 +115,46 @@ export default {
       const ul = h('ul', listItems)
 
       return h('div', {
-        class: 'rg-picker__row',
-        key: province.key
+        key: province.key,
+        class: 'rg-picker__row'
       }, [
         h('dl', [
           h('dt', province.value),
           h('dd', [ul])
         ])
       ])
-    })))
+    })
+    contents.push(h('div', { class: 'rg-picker' }, provinces))
 
     return this.buildDropdown(contents)
   },
   methods: {
-    emit (input = true) {
-      if (input) this.$emit('input', this.picked.map(val => val.key))
-      this.$emit('change', this.picked)
-    },
+    /**
+     * @override
+     */
     clear () {
       this.picked = []
       this.close()
       this.emit()
     },
+    /**
+     * @override
+     */
     searchFocus () {
       this.$nextTick(() => {
         inputFocus(this.$refs.search)
       })
+    },
+    /**
+     * @override
+     * @returns {string}
+     */
+    getSelectedText () {
+      return this.selectedText
+    },
+    emit (input = true) {
+      if (input) this.$emit('input', this.picked.map(val => val.key))
+      this.$emit('change', this.picked)
     },
     pick (item) {
       if (isSelected(item, this.picked)) {

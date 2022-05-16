@@ -27,6 +27,11 @@ export default {
      * @interface
      */
     clear () {},
+    /**
+     * 获得当前选择内容文本描述
+     * @interface
+     */
+    getSelectedText () {},
     close () {
       if (!this.show) return
       this.$refs.drop.visible()
@@ -60,11 +65,12 @@ export default {
         caller.push(this.$scopedSlots.default({ region, show }))
       } else {
         const elements = []
-        const selectedText = module && module.selectedText
-        elements.push(h('span', selectedText || lang.pleaseSelect))
+        const selectedText = this.getSelectedText() || lang.pleaseSelect
+        elements.push(h('span', selectedText))
 
         if (selectedText) {
-          elements.push(h('span', {
+          // 清除图标
+          const clearOption = {
             class: 'rg-iconfont rg-icon-clear rg-clear-btn',
             attrs: {
               title: lang.clear
@@ -75,8 +81,10 @@ export default {
                 this.clear()
               }
             }
-          }))
+          }
+          elements.push(h('span', clearOption))
         } else {
+          // 下拉图标
           elements.push(h('span', { class: 'rg-caret-down' }))
         }
 

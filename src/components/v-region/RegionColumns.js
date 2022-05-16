@@ -36,6 +36,9 @@ export default {
       this.close()
       this.$emit('complete')
     },
+    /**
+     * @override
+     */
     clear () {
       const { module } = this.$refs
       if (module) {
@@ -43,6 +46,13 @@ export default {
         module.change()
       }
       this.close()
+    },
+    /**
+     * @override
+     */
+    getSelectedText () {
+      if (!this.$refs.module) return ''
+      return this.$refs.module.selectedText
     }
   }
 }
