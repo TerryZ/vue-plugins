@@ -212,6 +212,7 @@ export default {
       this.clearRegion(PROVINCE_LEVEL)
       this.level = PROVINCE_LEVEL
       this.change()
+      this.$emit('adjust')
     },
     /**
      * region search

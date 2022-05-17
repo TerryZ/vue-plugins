@@ -34,6 +34,7 @@
           class="me-3"
           @complete="complete"
           @change="cbGroup"
+          @input="input"
         />
         <button
           type="button"
@@ -81,6 +82,9 @@ export default {
   methods: {
     complete () {
       console.log('complete')
+    },
+    input (data) {
+      console.log(data)
     },
     cbGroup (data) {
       // console.log(data)
