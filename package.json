@@ -9,7 +9,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit --require tests/unit/setup.js tests/unit/**/*.spec.js",
     "test:unit-p": "vue-cli-service test:unit --require tests/unit/setup.js tests/unit/v-page.spec.js",
-    "test:unit:region": "vue-cli-service test:unit --require tests/unit/setup.js tests/unit/v-region/group.spec.js"
+    "test:unit:region": "vue-cli-service test:unit --require tests/unit/setup.js tests/unit/v-region/**/*.spec.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
