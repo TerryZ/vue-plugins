@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
-import Column from '@/components/v-region/components/ColumnGroup'
+import Column from '@/components/v-region/components/Columns'
 
 // 虚拟地级济源市（区/县级为虚拟级别，数据直接使用父级）
 describe('v-region Column 竖排多列模式', function () {

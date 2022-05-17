@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
-import Select from '@/components/v-region/components/SelectGroup'
+import Select from '@/components/v-region/RegionSelects'
 
 describe('v-region Select 表单元素下拉列表模式', function () {
   const w = mount(Select, {

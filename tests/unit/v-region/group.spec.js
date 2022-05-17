@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
-import Group from '@/components/v-region/components/Group'
+import Group from '@/components/v-region/RegionGroup'
 
 describe('v-region Group 多级别分组模式', function () {
   const w = mount(Group, {
