@@ -96,16 +96,12 @@ export default {
       Object.keys(this.region).forEach(val => {
         if (fields.includes(val)) this.region[val] = undefined
       })
+      // 不设置 break 让后面的级别也清空
+      /* eslint-disable no-fallthrough */
       switch (level) {
-        case PROVINCE_LEVEL:
-          this.listCity = []
-          break
-        case CITY_LEVEL:
-          this.listArea = []
-          break
-        case AREA_LEVEL:
-          this.listTown = []
-          break
+        case PROVINCE_LEVEL: this.listCity = []
+        case CITY_LEVEL: this.listArea = []
+        case AREA_LEVEL: this.listTown = []
       }
     },
     prepareProvinceList () {

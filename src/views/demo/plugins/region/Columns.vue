@@ -9,7 +9,7 @@
         <region-columns
           :city="true"
           :area="true"
-          :town="false"
+          :town="true"
           language="en"
           v-model="modelColumn"
           @change="cbColumn"
