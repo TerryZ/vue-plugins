@@ -102,7 +102,7 @@ describe('v-region Group 多级别分组模式', function () {
         province: '440000',
         city: '442000',
         area: '442000',
-        town: '442000001000'
+        town: '442000001'
       }
     })
     expect(w.findAll('.rg-default-btn span').at(0).text()).to.equal('广东省中山市中山市石岐区街道办事处')
