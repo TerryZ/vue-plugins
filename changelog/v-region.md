@@ -19,6 +19,26 @@
 - 增加 **RegionGroupCore** 与 **RegionColumnsCore** 模块输出，可用于直接嵌入页面使用，而非默认的选择器形态，更可以进一步进行二次封装使用
 - 更新部分风格样式
 
+### 使用方式变化内容
+
+- 所有功能模块均以独立模块输出，不再统一以 v-region 标准，输出的功能模块有：
+  - RegionText
+  - RegionCityPicker
+  - RegionSelects
+  - RegionColumnsCore
+  - RegionColumns
+  - RegionGroupCore
+  - RegionGroup
+- 增加数据模型输出
+  - 三级行政区划数据模型列表
+  - 省/直辖市/特别行政区模型列表输出
+  - 城市模型列表
+  - 区/县模型列表
+- 为 RegionText 模块增加 `separator` prop
+- 为 RegionCityPicker 模块增加 `overflow` prop
+- 全局修改 `values` 响应事件名为 `change`
+- 全局修改 `i18n` prop 名为 `language`
+
 ## v2.2.2
 
 - 多数组件使用 render 函数进行重构
