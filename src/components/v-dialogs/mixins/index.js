@@ -1,82 +1,58 @@
-import { commonConstants } from '../constants'
+import { commonConstants, types } from '../constants'
 
 export default {
   props: {
-    type: String,
+    type: { type: String, default: types.ALERT },
     /**
      * Dialog background layer
      */
-    backdrop: {
-      type: Boolean,
-      default: true
-    },
+    backdrop: { type: Boolean, default: true },
     /**
      * Click backdrop to close dialog
      */
-    backdropClose: {
-      type: Boolean,
-      default: false
-    },
+    backdropClose: { type: Boolean, default: false },
     /**
      * The message show in dialog (work on alert, mask, toast mode)
      */
-    message: String,
+    message: { type: String, default: '' },
     /**
      * Dialog title bar text or title bar show control
      *
      * @example
-     * titleBar: false// close title bar
+     * titleBar: false // close title bar
      */
-    titleBar: {
-      type: [String, Boolean],
-      default: 'Dialog'
-    },
-    contentClass: String,
+    titleBar: { type: [String, Boolean], default: 'Dialog' },
+    contentClass: { type: String, default: '' },
     /**
      * Dialog width
      */
-    width: {
-      type: Number,
-      default: 700
-    },
+    width: { type: Number, default: 700 },
     /**
      * Dialog height
      */
-    height: {
-      type: Number,
-      default: 400
-    },
+    height: { type: Number, default: 400 },
     i18n: Object,
     /**
      * Dialog inner key
      * @private
      */
-    dialogKey: String,
+    dialogKey: { type: String, default: '' },
     /**
      * auto close dialog seconds
      */
-    closeTime: {
-      type: [Boolean, Number],
-      default: false
-    },
+    closeTime: { type: [Boolean, Number], default: false },
     /**
      * Close dialog callback, trigger by some case:
      *
      * click the close button in top right corner(Modal,Toast mode)
      * click 'cancel' button in Alert mode ('confirm' message type)
      */
-    cancelCallback: Function,
+    cancelCallback: { type: Function, default: undefined },
     /**
      * dialog outside click with shaking animation
      */
-    shaking: {
-      type: Boolean,
-      default: true
-    },
-    dialogIndex: {
-      type: Number,
-      required: true
-    }
+    shaking: { type: Boolean, default: true },
+    dialogIndex: { type: Number, required: true }
   },
   data () {
     return {
@@ -132,21 +108,21 @@ export default {
     },
     autoClose () {
       // auto close dialog
-      if (this.closeTime) {
-        setTimeout(() => {
-          this.closeDialog(false)
-        }, this.closeTime * 1000)
-      }
+      if (!this.closeTime) return
+
+      setTimeout(() => {
+        this.closeDialog(false)
+      }, this.closeTime * 1000)
     },
     resizeThrottler () {
       // ignore resize events as long as an actualResizeHandler execution is in the queue
-      if (!this.resizeTimeout) {
-        this.resizeTimeout = setTimeout(() => {
-          this.resizeTimeout = null
-          this.adjust()
-          // The actualResizeHandler will execute at a rate of 15fps
-        }, 100)
-      }
+      if (this.resizeTimeout) return
+
+      this.resizeTimeout = setTimeout(() => {
+        this.resizeTimeout = null
+        this.adjust()
+        // The actualResizeHandler will execute at a rate of 15fps
+      }, 100)
     }
   },
   mounted () {

@@ -14,26 +14,14 @@ export default {
      * @enum 'success'
      * @enum 'confirm' ( not available for toast )
      */
-    messageType: {
-      type: String,
-      default: messageTypes.info
-    },
-    icon: {
-      type: Boolean,
-      default: true
-    },
+    messageType: { type: String, default: messageTypes.info },
+    icon: { type: Boolean, default: true },
     iconClassName: String,
     /**
      * Dialog corner position type
      */
-    position: {
-      type: String,
-      default: 'bottomRight'
-    },
-    closeButton: {
-      type: Boolean,
-      default: true
-    }
+    position: { type: String, default: 'bottomRight' },
+    closeButton: { type: Boolean, default: true }
   },
   data () {
     return {
@@ -81,7 +69,13 @@ export default {
         height: this.bodyHeight + 'px'
       }
     }, [
-      h('div', { class: ['v-dialog-toast__container', this.contentClass, this.icon ? '' : 'no-icon'] }, child)
+      h('div', {
+        class: [
+          'v-dialog-toast__container',
+          this.contentClass,
+          this.icon ? '' : 'no-icon'
+        ]
+      }, child)
     ])
 
     const dialog = h('div', {

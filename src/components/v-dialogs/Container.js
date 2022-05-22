@@ -4,6 +4,11 @@ import language from './language'
 import { types, messageTypes, alertIconClass, toastConstants } from './constants'
 import { getTitle, toastTheme, stringSub } from './helper'
 
+import DialogModel from './components/Modal'
+import DialogAlert from './components/Alert'
+import DialogToast from './components/Toast'
+import DialogMask from './components/Mask'
+
 const { info } = messageTypes
 const { MODAL, ALERT, MASK, TOAST } = types
 
@@ -14,10 +19,10 @@ let keyNum = 0
 export default {
   name: 'v-dialogs',
   components: {
-    'dlg-modal': () => import('./components/Modal'),
-    'dlg-alert': () => import('./components/Alert'),
-    'dlg-mask': () => import('./components/Mask'),
-    'dlg-toast': () => import('./components/Toast')
+    DialogModel,
+    DialogAlert,
+    DialogToast,
+    DialogMask
   },
   data () {
     return {
@@ -87,7 +92,7 @@ export default {
           }
           break
       }
-      return h(`dlg-${val.type}`, options)
+      return h(`dialog-${val.type}`, options)
     }))
   },
   methods: {
