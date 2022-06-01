@@ -3,6 +3,7 @@ import './styles/dialog.sass'
 import language from './language'
 import { types, messageTypes, alertIconClass, toastConstants } from './constants'
 import { getTitle, toastTheme, stringSub } from './helper'
+import { generateDialogOption } from './utils/options'
 
 import DialogModel from './components/Modal'
 import DialogAlert from './components/Alert'
@@ -29,77 +30,19 @@ export default {
       dialogs: []
     }
   },
-  // The render functions is fired twice when the component(async) is first time used
   render (h) {
-    return h('div', {
-      class: 'v-dialog-container'
-      // directives: [{
-      //   name: 'show',
-      //   value: this.dialogs.length
-      // }]
-    },
-    this.dialogs.map((val, index) => {
-      const options = {
-        key: val.dialogKey,
-        props: {
-          type: val.type,
-          dialogIndex: index,
-          dialogKey: val.dialogKey,
-          width: val.width,
-          height: val.height,
-          closeTime: val.closeTime,
-          backdrop: val.backdrop,
-          backdropClose: val.backdropClose,
-          shaking: val.shaking,
-          titleBar: val.title
-        },
-        on: {
-          close: this.closeDialog
-        }
-      }
-      if (val.customClass) options.class = val.customClass
-      if (val.singletonKey) options.props.singletonKey = val.singletonKey
-      if (val.type !== MODAL) {
-        options.props.message = val.message
-        options.props.icon = val.icon
-      }
-      if (val.type !== MASK) {
-        options.props.cancelCallback = val.cancelCallback
-      }
-      switch (val.type) {
-        case MODAL:
-          options.props = {
-            ...options.props,
-            component: val.component,
-            params: val.params,
-            fullWidth: val.fullWidth,
-            closeButton: val.closeButton,
-            maxButton: val.maxButton
-          }
-          break
-        case MASK:
-          options.props.backdrop = true
-          break
-        case ALERT:
-          options.props.i18n = val.i18n
-        // eslint-disable-next-line no-fallthrough
-        case TOAST:
-          options.props.iconClassName = val.iconClassName
-          options.props.messageType = val.messageType
-          if (val.type === TOAST) {
-            options.props.position = val.position
-            options.props.contentClass = val.contentClass
-          }
-          break
-      }
-      return h(`dialog-${val.type}`, options)
-    }))
+    const { dialogs, closeDialog } = this
+    const dialogList = dialogs.map((val, index) => {
+      const option = generateDialogOption(val, index, closeDialog)
+      return h(`dialog-${val.type}`, option)
+    })
+    return h('div', { class: 'v-dialogs-container' }, dialogList)
   },
   methods: {
     /**
      * Merge user options and default options
-     * @param config - user options
-     * @return merged options
+     * @param {object} config - user options
+     * @return {object} merged options
      */
     buildConfig (config) {
       // let merged = Object.assign({}, dialogDefaults, config);
@@ -175,7 +118,8 @@ export default {
      *
      * @param p - options
      *
-     * @enum p.position
+     * p.position option accept items:
+     *
      * 'topLeft'
      * 'topCenter'
      * 'topRight'
@@ -203,8 +147,9 @@ export default {
      * const key = this.$dlg.alert('your msg')
      */
     close (key) {
-      if (!this.dialogs.length) return
-      const dKey = key || this.dialogs[this.dialogs.length - 1].dialogKey
+      const { dialogs } = this
+      if (!dialogs.length) return
+      const dKey = key || dialogs[dialogs.length - 1].dialogKey
       this.closeDialog(dKey)
     },
     /**

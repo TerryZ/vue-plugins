@@ -39,7 +39,7 @@ describe('v-dialogs', function () {
     })
     it('close all opened dialog', () => {
       wapper.vm.closeAll()
-      expect(wapper.find('.v-dialog-container').isEmpty()).to.equal(true)
+      expect(wapper.find('.v-dialogs-container').isEmpty()).to.equal(true)
     })
   })
 })

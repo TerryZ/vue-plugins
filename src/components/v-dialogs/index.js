@@ -4,7 +4,6 @@ export default {
   install (Vue, options = {}) {
     const DialogContainer = Vue.extend(Container)
     const dlg = new DialogContainer()
-    // document.body.appendChild(dlg.$mount().$el)
     dlg.$mount(document.body.appendChild(document.createElement('div')))
 
     /**
@@ -80,6 +79,9 @@ export default {
           return dlg.addAlert(paramSet(arguments))
         },
         mask () {
+          const div = document.getElementById('v-dialogs-container')
+          console.dir(div)
+          console.dir(dlg)
           return dlg.addMask(paramSet(arguments))
         },
         toast () {
