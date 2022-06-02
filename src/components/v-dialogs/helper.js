@@ -40,12 +40,12 @@ export function toastTheme (type) {
 }
 
 /**
- * String cut
+ * Text truncation
  * @param str [string] src string
  * @param n   [number] save string length
  * @returns string
  */
-export function stringSub (str, n) {
+export function textTruncate (str, n) {
   if (typeof str !== 'string') return ''
   if (str.length <= n) return str
   return str.substring(0, n) + '...'

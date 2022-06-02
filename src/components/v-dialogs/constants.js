@@ -1,3 +1,5 @@
+export const DIALOG_KEY_PREFIX = 'v-dialogs-'
+
 export const types = {
   MODAL: 'modal',
   ALERT: 'alert',

@@ -10,10 +10,11 @@ const { MODAL, ALERT, MASK, TOAST } = types
  * @returns {object} - merged dialog object
  */
 export function generateDialogOption (option, index, close) {
+  const { type } = option
   const options = {
     key: option.dialogKey,
     props: {
-      type: option.type,
+      type,
       dialogIndex: index,
       dialogKey: option.dialogKey,
       width: option.width,
@@ -30,14 +31,14 @@ export function generateDialogOption (option, index, close) {
   }
   if (option.customClass) options.class = option.customClass
   if (option.singletonKey) options.props.singletonKey = option.singletonKey
-  if (option.type !== MODAL) {
+  if (type !== MODAL) {
     options.props.message = option.message
     options.props.icon = option.icon
   }
-  if (option.type !== MASK) {
+  if (type !== MASK) {
     options.props.cancelCallback = option.cancelCallback
   }
-  switch (option.type) {
+  switch (type) {
     case MODAL:
       options.props = {
         ...options.props,
@@ -57,7 +58,7 @@ export function generateDialogOption (option, index, close) {
     case TOAST:
       options.props.iconClassName = option.iconClassName
       options.props.messageType = option.messageType
-      if (option.type === TOAST) {
+      if (type === TOAST) {
         options.props.position = option.position
         options.props.contentClass = option.contentClass
       }

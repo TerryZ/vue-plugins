@@ -1,8 +1,14 @@
 import './styles/dialog.sass'
 
 import language from './language'
-import { types, messageTypes, alertIconClass, toastConstants } from './constants'
-import { getTitle, toastTheme, stringSub } from './helper'
+import {
+  types,
+  messageTypes,
+  alertIconClass,
+  toastConstants,
+  DIALOG_KEY_PREFIX
+} from './constants'
+import { getTitle, toastTheme, textTruncate } from './helper'
 import { generateDialogOption } from './utils/options'
 
 import DialogModel from './components/Modal'
@@ -13,9 +19,7 @@ import DialogMask from './components/Mask'
 const { info } = messageTypes
 const { MODAL, ALERT, MASK, TOAST } = types
 
-const KEY_PREFIX = 'v-dialogs-'
-
-let keyNum = 0
+let serialNumber = 0
 
 export default {
   name: 'v-dialogs',
@@ -55,20 +59,23 @@ export default {
      * Initialize default options
      */
     buildDialog (config) {
-      const exist = this.dialogs.some(val => {
-        return config.singletonKey && val.singletonKey === config.singletonKey
-      })
-      if (exist) return null
+      const { singletonKey } = config
+      if (singletonKey) {
+        if (this.dialogs.some(val => val.singletonKey === singletonKey)) {
+          return
+        }
+      }
 
-      keyNum++
-      const key = KEY_PREFIX + keyNum
+      serialNumber++
+      const key = DIALOG_KEY_PREFIX + serialNumber
       config.dialogKey = key
       this.dialogs.push(config)
       return key
     },
     /**
      * Open a Modal dialog
-     * @param p - options
+     * @param {object} p - options
+     * @returns {string} new dialog key
      */
     addModal (p) {
       p.type = MODAL
@@ -77,7 +84,8 @@ export default {
     },
     /**
      * Open a message alert dialog, types including info, warning, error, success, confirm
-     * @param p - options
+     * @param {object} p - options
+     * @returns {string} new dialog key
      */
     addAlert (p) {
       p.type = ALERT
@@ -99,14 +107,15 @@ export default {
     },
     /**
      * Open a full screen mask
-     * @param p - options
+     * @param {object} p - options
+     * @returns {string} new dialog key
      */
     addMask (p) {
       p.type = MASK
       const config = this.buildConfig(p)
       const MAX_CONTENT_LENGTH = 65
       config.message = config.message || config.i18n.maskText
-      if (config.message.length > MAX_CONTENT_LENGTH) config.message = stringSub(config.message, 65)
+      if (config.message.length > MAX_CONTENT_LENGTH) config.message = textTruncate(config.message, 65)
       config.width = 300
       config.height = 80
       config.backdrop = true
@@ -116,7 +125,7 @@ export default {
     /**
      * Open a Toast dialog (corner dialog)
      *
-     * @param p - options
+     * @param {object} p - options
      *
      * p.position option accept items:
      *
@@ -126,11 +135,12 @@ export default {
      * 'bottomLeft'
      * 'bottomCenter'
      * 'bottomRight'
+     * @returns {string} new dialog key
      */
     addToast (p) {
       p.type = TOAST
       const config = this.buildConfig(p)
-      config.message = stringSub(config.message, 56)
+      config.message = textTruncate(config.message, 56)
       config.width = 300
       config.height = 80
       config.iconClassName = toastConstants.iconClass[config.messageType]
@@ -140,42 +150,50 @@ export default {
       return this.buildDialog(config)
     },
     /**
-     * Close dialog, last one or specified key dialog (Modal, Alert, Mask, Toast)
+     * Close dialog, the last one or specified key dialog (Modal, Alert, Mask, Toast)
      *
-     * @param {string} key - the dialog key, you can get it like below
+     * @param {string} key - the dialog key
      *
-     * const key = this.$dlg.alert('your msg')
+     * @example
+     * const key = this.$dlg.mask('your msg')
+     * this.$dlg.close(key)
      */
     close (key) {
       const { dialogs } = this
       if (!dialogs.length) return
-      const dKey = key || dialogs[dialogs.length - 1].dialogKey
-      this.closeDialog(dKey)
+      this.closeDialog(key || dialogs[dialogs.length - 1].dialogKey)
     },
     /**
      * Close dialog (remove dialogs array item) and call user callback function
      * @private
      *
-     * @param key[string] - dialog key
-     * @param cancel[boolean] - trigger cancelCallback or not
-     * @param data[object] - return data when close dialog(Modal)
+     * @param {string} key - dialog key
+     * @param {boolean} cancel - trigger cancelCallback or not
+     * @param {object} data - return data when close dialog(Modal)
      */
     closeDialog (key, cancel, data) {
       if (!key) return
       const dlg = this.dialogs.find(val => val.dialogKey === key)
-      if (dlg) {
-        this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)
-        this.$nextTick(() => {
-          if (dlg.callback && typeof dlg.callback === 'function' && !cancel) dlg.callback(data)
-          if (cancel && dlg.cancelCallback && typeof dlg.cancelCallback === 'function') {
-            dlg.cancelCallback()
+      if (!dlg) return
+      // remove current dialog from list
+      this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)
+      this.$nextTick(() => {
+        const { callback, cancelCallback } = dlg
+
+        if (cancel) {
+          if (cancelCallback && typeof cancelCallback === 'function') {
+            cancelCallback()
           }
-        })
-      }
+        } else {
+          if (callback && typeof callback === 'function') {
+            callback(data)
+          }
+        }
+      })
     },
     /**
      * Close all dialog
-     * @param callback[function] the callback fired when all dialogs closed
+     * @param {function} callback - the callback fired when all dialogs closed
      */
     closeAll (callback) {
       if (this.dialogs.length) this.dialogs = []
