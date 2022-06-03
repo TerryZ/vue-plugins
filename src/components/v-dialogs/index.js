@@ -1,19 +1,18 @@
-import Container from './Container'
+import { CN } from './language'
+import { getInstance } from './utils/instance'
 
 export default {
   install (Vue, options = {}) {
-    const DialogContainer = Vue.extend(Container)
-    const dlg = new DialogContainer()
-    dlg.$mount(document.body.appendChild(document.createElement('div')))
+    const dlg = getInstance()
 
     /**
      * Merge options
      * @param {object} p
      */
     const merge = p => {
-      const params = {}
       const { language, closeButton, maxButton, icon } = options
-      params.language = typeof language === 'string' ? language : 'cn'
+      const params = {}
+      params.language = typeof language === 'string' ? language : CN
       if (typeof closeButton === 'boolean') params.closeButton = closeButton
       if (typeof maxButton === 'boolean') params.maxButton = maxButton
       if (typeof icon === 'boolean') params.icon = icon
@@ -66,20 +65,27 @@ export default {
          * this.$dlg.alert('some message...')
          *
          * open a information type Alert dialog and do something after dialog close
-         * this.$dlg.alert('some message...', ()=>{ do something... })
+         * this.$dlg.alert('some message...', () => { do something... })
          *
          * open a Alert dialog with options
-         * this.$dlg.alert('some message...', { messageType: 'error' })
+         * this.$dlg.alert('some message...', {
+         *   messageType: 'error'
+         * })
          *
          * open a Alert dialog with callback and options
-         * this.$dlg.alert('some message...', ()=>{ do something... }, { messageType: 'error' })
+         * this.$dlg.alert('some message...',
+         * () => {
+         *   do something...
+         * }, {
+         *   messageType: 'error'
+         * })
          */
         alert () {
           if (!arguments.length || !arguments[0]) return
           return dlg.addAlert(paramSet(arguments))
         },
         mask () {
-          const div = document.getElementById('v-dialogs-container')
+          const div = document.querySelector('.v-dialogs-container')
           console.dir(div)
           console.dir(dlg)
           return dlg.addMask(paramSet(arguments))

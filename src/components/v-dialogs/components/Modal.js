@@ -110,11 +110,7 @@ export default {
         'v-dialog-dialog': true,
         'v-dialog-default-animated': this.animate
       },
-      style: {
-        width: this.width + 'px',
-        height: this.height + 'px',
-        top: this.dialogTop + 'px'
-      }
+      style: this.dialogStyles
     }, [
       this.buildDlgContent(h, {
         className: 'v-dialog-content',
@@ -133,13 +129,18 @@ export default {
      * dialog max size
      */
     max () {
-      if (!this.animate) this.animate = true
+      if (!this.animate) {
+        this.animate = true
+      }
       this.maximize = !this.maximize
       this.modalAdjust()
     },
     modalAdjust () {
-      if (this.maximize) this.dialogTop = 0
-      else this.adjust()
+      if (this.maximize) {
+        this.dialogTop = 0
+        return
+      }
+      this.adjust()
     },
     modalClose (data) {
       this.closeDialog(false, data)
@@ -148,9 +149,12 @@ export default {
   mounted () {
     this.$nextTick(() => {
       if (this.titleBar) {
-        const headerHeight = this.$refs.header.offsetHeight// this.$refs.header.getBoundingClientRect().height;
+        // this.$refs.header.getBoundingClientRect().height
+        const headerHeight = this.$refs.header.offsetHeight
         this.bodyHeight = this.height - headerHeight
-      } else this.bodyHeight = this.height
+      } else {
+        this.bodyHeight = this.height
+      }
 
       this.modalAdjust()
     })

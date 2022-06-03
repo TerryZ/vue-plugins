@@ -80,11 +80,7 @@ export default {
 
     const dialog = h('div', {
       class: 'v-dialog-dialog',
-      style: {
-        width: this.width + 'px',
-        height: this.height + 'px',
-        top: this.dialogTop + 'px'
-      }
+      style: this.dialogStyles
     }, [
       h('div', { class: 'v-dialog-content' }, [body])
     ])

@@ -3,13 +3,9 @@ import { commonConstants, types } from '../constants'
 export default {
   props: {
     type: { type: String, default: types.ALERT },
-    /**
-     * Dialog background layer
-     */
+    /** Display dialog backdrop */
     backdrop: { type: Boolean, default: true },
-    /**
-     * Click backdrop to close dialog
-     */
+    /** Click backdrop to close dialog */
     backdropClose: { type: Boolean, default: false },
     /**
      * The message show in dialog (work on alert, mask, toast mode)
@@ -23,13 +19,9 @@ export default {
      */
     titleBar: { type: [String, Boolean], default: 'Dialog' },
     contentClass: { type: String, default: '' },
-    /**
-     * Dialog width
-     */
+    /** Dialog width */
     width: { type: Number, default: 700 },
-    /**
-     * Dialog height
-     */
+    /** Dialog height */
     height: { type: Number, default: 400 },
     i18n: Object,
     /**
@@ -63,6 +55,15 @@ export default {
       resizeTimeout: null,
       shake: false,
       show: false
+    }
+  },
+  computed: {
+    dialogStyles () {
+      return {
+        width: this.width + 'px',
+        height: this.height + 'px',
+        top: this.dialogTop + 'px'
+      }
     }
   },
   methods: {

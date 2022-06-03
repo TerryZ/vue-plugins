@@ -1,3 +1,4 @@
+import { CN } from './language'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
 
 export const types = {
@@ -40,4 +41,23 @@ export const alertIconClass = {
 
 export const commonConstants = {
   baseZIndex: 5100
+}
+
+const defaultOptionsCore = {
+  language: CN
+}
+
+export const defaultAlertOptions = {
+}
+
+export const defaultModalOptions = {
+}
+
+export const defaultMaskOptions = {
+}
+
+export const defaultToastOptions = {
+}
+
+export const defaultDrawerOptions = {
 }
