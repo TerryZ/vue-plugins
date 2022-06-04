@@ -8,7 +8,7 @@ import {
   toastConstants,
   DIALOG_KEY_PREFIX
 } from './constants'
-import { getTitle, toastTheme, textTruncate } from './helper'
+import { getTitle, toastTheme, textTruncate } from './utils/helper'
 import { generateDialogOption } from './utils/options'
 
 import DialogModel from './components/Modal'
@@ -43,6 +43,20 @@ export default {
     return h('div', { class: 'v-dialogs-container' }, dialogList)
   },
   methods: {
+    addDialog (option) {
+      const { singletonKey } = option
+      if (singletonKey) {
+        if (this.dialogs.some(val => val.singletonKey === singletonKey)) {
+          return
+        }
+      }
+
+      serialNumber++
+      const key = DIALOG_KEY_PREFIX + serialNumber
+      option.dialogKey = key
+      this.dialogs.push(option)
+      return key
+    },
     /**
      * Merge user options and default options
      * @param {object} config - user options
@@ -115,7 +129,9 @@ export default {
       const config = this.buildConfig(p)
       const MAX_CONTENT_LENGTH = 65
       config.message = config.message || config.i18n.maskText
-      if (config.message.length > MAX_CONTENT_LENGTH) config.message = textTruncate(config.message, 65)
+      if (config.message.length > MAX_CONTENT_LENGTH) {
+        config.message = textTruncate(config.message, 65)
+      }
       config.width = 300
       config.height = 80
       config.backdrop = true

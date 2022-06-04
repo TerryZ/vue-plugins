@@ -1,6 +1,14 @@
 import { CN } from './language'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
 
+export const [
+  MODEL,
+  ALERT,
+  TOAST,
+  DRAWER,
+  MASK
+] = ['modal', 'alert', 'toast', 'drawer', 'mask']
+
 export const types = {
   MODAL: 'modal',
   ALERT: 'alert',
@@ -47,10 +55,15 @@ const defaultOptionsCore = {
   language: CN
 }
 
-export const defaultAlertOptions = {
+export const defaultModalOptions = {
+  ...defaultOptionsCore,
+  type: MODEL
 }
 
-export const defaultModalOptions = {
+export const defaultAlertOptions = {
+  ...defaultOptionsCore,
+  type: ALERT,
+  messageType: messageTypes.info
 }
 
 export const defaultMaskOptions = {

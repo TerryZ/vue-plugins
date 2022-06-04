@@ -50,7 +50,7 @@
 import cp from './Company'
 export default {
   props: {
-    name: String
+    name: { type: String, default: '' }
   },
   data () {
     return {

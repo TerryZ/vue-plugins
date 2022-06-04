@@ -1,8 +1,12 @@
 import { CN } from './language'
 import { getInstance } from './utils/instance'
 
+export { DialogAlert } from './utils/instance'
+
 export default {
   install (Vue, options = {}) {
+    const { language, closeButton, maxButton, icon, instanceName } = options
+
     const dlg = getInstance()
 
     /**
@@ -10,7 +14,6 @@ export default {
      * @param {object} p
      */
     const merge = p => {
-      const { language, closeButton, maxButton, icon } = options
       const params = {}
       params.language = typeof language === 'string' ? language : CN
       if (typeof closeButton === 'boolean') params.closeButton = closeButton
@@ -44,7 +47,7 @@ export default {
     /**
      * Define v-dialogs api
      */
-    Object.defineProperty(Vue.prototype, options.instanceName || '$dlg', {
+    Object.defineProperty(Vue.prototype, instanceName || '$dlg', {
       value: {
         modal (component, params = {}) {
           if (!component) return
@@ -88,6 +91,18 @@ export default {
           const div = document.querySelector('.v-dialogs-container')
           console.dir(div)
           console.dir(dlg)
+
+          const p = new Promise((resolve, reject) => {
+            resolve(1)
+          })
+            .then(() => {
+              console.log('ok')
+            })
+            .catch(() => {
+              console.log('error')
+            })
+          console.dir(p.catch)
+
           return dlg.addMask(paramSet(arguments))
         },
         toast () {

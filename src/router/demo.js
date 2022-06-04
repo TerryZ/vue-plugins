@@ -3,7 +3,7 @@ export default [
   { path: '/demo/list', component: () => import('@/views/demo/List') },
   { path: '/demo/form', component: () => import('@/views/demo/Form') },
   { path: '/demo/datetime', component: () => import('@/views/demo/plugins/DateTime') },
-  { path: '/demo/dialog', component: () => import('@/views/demo/plugins/Dialog') },
+  { path: '/demo/dialog', component: () => import('@/views/demo/plugins/dialog/Index.vue') },
   { path: '/demo/dropdown', component: () => import('@/views/demo/plugins/Dropdown') },
   { path: '/demo/selectMenu', component: () => import('@/views/demo/plugins/SelectMenu') },
   { path: '/demo/selectPage', component: () => import('@/views/demo/plugins/SelectPage') },

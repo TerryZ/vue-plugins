@@ -3,6 +3,34 @@ import { types } from '../constants'
 const { MODAL, ALERT, MASK, TOAST } = types
 
 /**
+ * Arguments identification and parse to dialog option
+ * @param {any[]} args - arguments
+ *
+ * @example alert type dialog
+ *
+ * this.$dlg.alert(message)
+ * this.$dlg.alert(message, callback)
+ * this.$dlg.alert(message, options)
+ * this.$dlg.alert(message, callback, options)
+ */
+export function argumentsParse (args) {
+  let params = {}
+
+  if (args.length === 3 && typeof args[2] === 'object') {
+    params = args[2]
+  }
+  if (args.length === 2 && typeof args[1] === 'object') {
+    params = args[1]
+  }
+  if (typeof args[1] === 'function') {
+    params.callback = args[1]
+  }
+
+  params.message = typeof args[0] === 'string' ? args[0] : ''
+  return params
+}
+
+/**
  * merge user option and type default option
  * @param {object} option - dialog option
  * @param {number} index - dialog index

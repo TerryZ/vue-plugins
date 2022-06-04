@@ -1,10 +1,10 @@
-import languages from './language'
-import { messageTypes, toastConstants } from './constants'
+import languages from '../language'
+import { messageTypes, toastConstants } from '../constants'
 
 const { warning, error, success, confirm } = messageTypes
 
 /**
- * Get message type i18n text
+ * Get message type text in i18n resources
  *
  * @export
  * @param {string} type - message type
