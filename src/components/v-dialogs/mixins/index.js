@@ -1,4 +1,5 @@
 import { commonConstants, types } from '../constants'
+import { CN } from '../language'
 
 export default {
   props: {
@@ -24,6 +25,7 @@ export default {
     /** Dialog height */
     height: { type: Number, default: 400 },
     i18n: Object,
+    language: { type: String, default: CN },
     /**
      * Dialog inner key
      * @private

@@ -1,6 +1,6 @@
 export const [CN, EN, PT, JP] = ['cn', 'en', 'pt', 'jp']
 
-export default {
+const language = {
   [CN]: {
     titleInfo: '提示',
     titleWarning: '警告',
@@ -42,3 +42,14 @@ export default {
     maskText: 'データロード……'
   }
 }
+
+/**
+ * Get language resource by language code
+ * @param {string} code - language code
+ * @returns {object} language resource
+ */
+export function getLanguage (code = CN) {
+  return language[code]
+}
+
+export default language

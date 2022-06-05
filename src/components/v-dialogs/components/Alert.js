@@ -1,4 +1,6 @@
 import { messageTypes } from '../constants'
+import { getLanguage } from '../language'
+
 import mixins from '../mixins'
 import render from '../mixins/render'
 
@@ -44,6 +46,7 @@ export default {
     }
   },
   render (h) {
+    const i18n = getLanguage(this.language)
     const child = []
     // dialog header
     if (this.titleBar !== false) {
@@ -67,7 +70,7 @@ export default {
           this.closeDialog(false)
         }
       }
-    }, this.i18n.btnOk))
+    }, i18n.btnOk))
     // Cancel button
     if (this.messageType === confirm) {
       buttons.push(h('button', {
@@ -80,7 +83,7 @@ export default {
             this.closeDialog(true)
           }
         }
-      }, this.i18n.btnCancel))
+      }, i18n.btnCancel))
     }
     // dialog body
     child.push(h('div', {
@@ -119,9 +122,12 @@ export default {
   mounted () {
     this.$nextTick(() => {
       if (this.titleBar) {
-        const headerHeight = this.$refs.header.offsetHeight// this.$refs.header.getBoundingClientRect().height;
+        // this.$refs.header.getBoundingClientRect().height
+        const headerHeight = this.$refs.header.offsetHeight
         this.bodyHeight = this.height - headerHeight
-      } else this.bodyHeight = this.height
+      } else {
+        this.bodyHeight = this.height
+      }
 
       this.adjust()
       this.$refs.btnOk.focus()

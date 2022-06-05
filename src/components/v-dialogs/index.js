@@ -1,7 +1,7 @@
 import { CN } from './language'
-import { getInstance } from './utils/instance'
+import { getInstance, DialogAlert } from './utils/instance'
 
-export { DialogAlert } from './utils/instance'
+export { DialogAlert }
 
 export default {
   install (Vue, options = {}) {
@@ -84,8 +84,7 @@ export default {
          * })
          */
         alert () {
-          if (!arguments.length || !arguments[0]) return
-          return dlg.addAlert(paramSet(arguments))
+          return DialogAlert(...arguments)
         },
         mask () {
           const div = document.querySelector('.v-dialogs-container')

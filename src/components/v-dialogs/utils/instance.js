@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Container from '../Container'
-import { defaultAlertOptions, alertIconClass } from '../constants'
+import { ALERT, defaultAlertOptions, alertIconClass } from '../constants'
 import { argumentsParse } from './options'
 import { getTitle } from './helper'
 
@@ -19,15 +19,28 @@ export function getInstance () {
   return new DialogContainer().$mount(div)
 }
 
-export function DialogModel (component, params) {
+export function DialogModal (component, params) {
   if (!component) return
   // params = merge(params)
   params.component = component
   return getInstance().addModal(params)
 }
 
+/**
+ * Open a message alert dialog, types including
+ *
+ * - info(default)
+ * - warning
+ * - error
+ * - success
+ * - confirm
+ *
+ * @param {object} p - options
+ * @returns {string} new dialog key
+ */
 export function DialogAlert () {
-  const option = argumentsParse(arguments)
+  const option = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
+  option.type = ALERT
   const MAX_CONTENT_LENGTH = 70
 
   if ('title' in option === false || option.title !== false) {
@@ -40,6 +53,7 @@ export function DialogAlert () {
     : typeof option.title === 'string' || typeof option.title === 'undefined'
       ? 210
       : 180
+  return getInstance().addDialog(option)
 }
 
 export function DialogToast () {

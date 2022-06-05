@@ -25,9 +25,8 @@ export function getTitle (type, language) {
 /**
  * Get toast theme class name
  *
- * @export
- * @param {string} type
- * @returns
+ * @param {string} type - message type
+ * @returns {string} class name
  */
 export function toastTheme (type) {
   const { contentClass } = toastConstants
@@ -41,12 +40,12 @@ export function toastTheme (type) {
 
 /**
  * Text truncation
- * @param str [string] src string
- * @param n   [number] save string length
- * @returns string
+ * @param {string} text - source string
+ * @param {number} keepLength - save string length
+ * @returns {string} truncated string
  */
-export function textTruncate (str, n) {
-  if (typeof str !== 'string') return ''
-  if (str.length <= n) return str
-  return str.substring(0, n) + '...'
+export function textTruncate (text, keepLength) {
+  if (typeof text !== 'string') return ''
+  if (text.length <= keepLength) return text
+  return text.substring(0, keepLength) + '...'
 }

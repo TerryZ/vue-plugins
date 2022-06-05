@@ -1,8 +1,14 @@
 import { CN } from './language'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
 
+export const ALERT_WIDTH = 450
+export const ALERT_WIDTH_LARGE = 700
+export const ALERT_HEIGHT = 210
+export const ALERT_HEIGHT_NO_HEADER = 180
+export const ALERT_HEIGHT_LARGE = 400
+
 export const [
-  MODEL,
+  MODAL,
   ALERT,
   TOAST,
   DRAWER,
@@ -57,12 +63,11 @@ const defaultOptionsCore = {
 
 export const defaultModalOptions = {
   ...defaultOptionsCore,
-  type: MODEL
+  type: MODAL
 }
 
 export const defaultAlertOptions = {
   ...defaultOptionsCore,
-  type: ALERT,
   messageType: messageTypes.info
 }
 

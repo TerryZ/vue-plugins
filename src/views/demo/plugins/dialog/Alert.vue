@@ -115,20 +115,22 @@ export default {
           dlg.alert('You canceled the confirm Alert')
         }
       }
-      const key = dlg.alert('This is a Dialog plugin for <b>Vue2</b>, the name is <b>v-dialog</b>!', function () {
+      const msg = 'This is a Dialog plugin for <b>Vue2</b>, the name is <b>v-dialog</b>!'
+      const key = dlg.alert(msg, () => {
         dlg.alert('You selected Ok!')
       }, option)
       console.log('Alert key:', key)
-      console.log(title)
+      // console.log(title)
     },
     newAlert () {
-      DialogAlert('the new alert', { type: 'error' })
-        .then(() => {
-          console.log('alert closed')
-        })
-        .catch(() => {
-          console.log('confirm alert cancel')
-        })
+      // DialogAlert('the new alert', { type: 'error' })
+      //   .then(() => {
+      //     console.log('alert closed')
+      //   })
+      //   .catch(() => {
+      //     console.log('confirm alert cancel')
+      //   })
+      DialogAlert('the new alert', { messageType: 'error' })
     }
   }
 }

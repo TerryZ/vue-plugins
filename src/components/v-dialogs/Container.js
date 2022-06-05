@@ -2,29 +2,27 @@ import './styles/dialog.sass'
 
 import language from './language'
 import {
-  types,
+  MODAL, MASK, TOAST,
   messageTypes,
-  alertIconClass,
   toastConstants,
   DIALOG_KEY_PREFIX
 } from './constants'
 import { getTitle, toastTheme, textTruncate } from './utils/helper'
 import { generateDialogOption } from './utils/options'
 
-import DialogModel from './components/Modal'
+import DialogModal from './components/Modal'
 import DialogAlert from './components/Alert'
 import DialogToast from './components/Toast'
 import DialogMask from './components/Mask'
 
 const { info } = messageTypes
-const { MODAL, ALERT, MASK, TOAST } = types
 
 let serialNumber = 0
 
 export default {
   name: 'v-dialogs',
   components: {
-    DialogModel,
+    DialogModal,
     DialogAlert,
     DialogToast,
     DialogMask
@@ -54,6 +52,7 @@ export default {
       serialNumber++
       const key = DIALOG_KEY_PREFIX + serialNumber
       option.dialogKey = key
+      // console.dir(option)
       this.dialogs.push(option)
       return key
     },
@@ -94,29 +93,6 @@ export default {
     addModal (p) {
       p.type = MODAL
       const config = this.buildConfig(p)
-      return this.buildDialog(config)
-    },
-    /**
-     * Open a message alert dialog, types including info, warning, error, success, confirm
-     * @param {object} p - options
-     * @returns {string} new dialog key
-     */
-    addAlert (p) {
-      p.type = ALERT
-      const config = this.buildConfig(p)
-      const MAX_CONTENT_LENGTH = 70
-
-      if ('title' in config === false || config.title !== false) {
-        config.title = getTitle(config.messageType, config.language)
-      }
-      config.iconClassName = alertIconClass[config.messageType]
-      config.width = config.message.length > MAX_CONTENT_LENGTH ? 700 : 450
-      config.height = config.message.length > MAX_CONTENT_LENGTH
-        ? 400
-        : typeof config.title === 'string' || typeof config.title === 'undefined'
-          ? 210
-          : 180
-
       return this.buildDialog(config)
     },
     /**
