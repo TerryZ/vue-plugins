@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Container from '../Container'
 import { ALERT, defaultAlertOptions, alertIconClass } from '../constants'
 import { argumentsParse } from './options'
-import { getTitle } from './helper'
+import { getTitle, getAlertSize } from './helper'
 
 /**
  * Get v-dialogs container instance, if not exist, create a new one
@@ -35,24 +35,25 @@ export function DialogModal (component, params) {
  * - success
  * - confirm
  *
- * @param {object} p - options
+ * @param {string} message - message content
+ * @param {function} [callback] - callback function
+ * @param {object} [option] - options
  * @returns {string} new dialog key
  */
 export function DialogAlert () {
   const option = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
   option.type = ALERT
-  const MAX_CONTENT_LENGTH = 70
+  const { messageType, icon } = option
 
-  if ('title' in option === false || option.title !== false) {
-    option.title = getTitle(option.messageType, option.language)
+  if ('title' in option === false) {
+    option.title = getTitle(messageType, option.language)
   }
-  option.iconClassName = alertIconClass[option.messageType]
-  option.width = option.message.length > MAX_CONTENT_LENGTH ? 700 : 450
-  option.height = option.message.length > MAX_CONTENT_LENGTH
-    ? 400
-    : typeof option.title === 'string' || typeof option.title === 'undefined'
-      ? 210
-      : 180
+  if (icon) {
+    option.iconClassName = alertIconClass[messageType]
+  }
+  const { width, height } = getAlertSize(option)
+  option.width = width
+  option.height = height
   return getInstance().addDialog(option)
 }
 

@@ -6,10 +6,17 @@
     <div class="mb-3">
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn btn-primary me-2"
         @click="newAlert"
       >
         new alert
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click="noParameters"
+      >
+        no parameters
       </button>
     </div>
     <div>
@@ -131,6 +138,9 @@ export default {
       //     console.log('confirm alert cancel')
       //   })
       DialogAlert('the new alert', { messageType: 'error' })
+    },
+    noParameters () {
+      DialogAlert()
     }
   }
 }

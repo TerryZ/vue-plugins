@@ -31,11 +31,11 @@ export function argumentsParse (args) {
 }
 
 /**
- * merge user option and type default option
+ * Merge user option and type default option
  * @param {object} option - dialog option
  * @param {number} index - dialog index
  * @param {function} close - the function of close dialog
- * @returns {object} - merged dialog object
+ * @returns {object} - merged dialog option
  */
 export function generateDialogOption (option, index, close) {
   const { type } = option

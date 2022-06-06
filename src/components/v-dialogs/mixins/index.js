@@ -1,9 +1,9 @@
-import { commonConstants, types } from '../constants'
+import { commonConstants, ALERT } from '../constants'
 import { CN } from '../language'
 
 export default {
   props: {
-    type: { type: String, default: types.ALERT },
+    type: { type: String, default: ALERT },
     /** Display dialog backdrop */
     backdrop: { type: Boolean, default: true },
     /** Click backdrop to close dialog */
@@ -41,7 +41,7 @@ export default {
      * click the close button in top right corner(Modal,Toast mode)
      * click 'cancel' button in Alert mode ('confirm' message type)
      */
-    cancelCallback: { type: Function, default: undefined },
+    cancelCallback: { type: [Boolean, Function], default: false },
     /**
      * dialog outside click with shaking animation
      */
@@ -74,15 +74,16 @@ export default {
      */
     outsideClick () {
       if (!this.backdrop) return
+
       if (this.backdropClose) {
         this.closeDialog(true)
-      } else {
-        if (!this.shaking) return
-        this.shake = true
-        setTimeout(() => {
-          this.shake = false
-        }, 750)
+        return
       }
+
+      if (!this.shaking) return
+
+      this.shake = true
+      setTimeout(() => { this.shake = false }, 750)
     },
     /**
      * adjust position and size
@@ -113,9 +114,8 @@ export default {
       // auto close dialog
       if (!this.closeTime) return
 
-      setTimeout(() => {
-        this.closeDialog(false)
-      }, this.closeTime * 1000)
+      const time = this.closeTime * 1000
+      setTimeout(() => { this.closeDialog(false) }, time)
     },
     resizeThrottler () {
       // ignore resize events as long as an actualResizeHandler execution is in the queue
@@ -133,13 +133,13 @@ export default {
     this.calcLayerLevel()
     this.autoClose()
 
-    if (this.type !== 'toast') {
-      window.addEventListener('resize', this.resizeThrottler, false)
-    }
+    if (this.type === 'toast') return
+
+    window.addEventListener('resize', this.resizeThrottler, false)
   },
   destroyed () {
-    if (this.type !== 'toast') {
-      window.removeEventListener('resize', this.resizeThrottler, false)
-    }
+    if (this.type === 'toast') return
+
+    window.removeEventListener('resize', this.resizeThrottler, false)
   }
 }

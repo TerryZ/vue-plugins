@@ -13,21 +13,15 @@ export default {
     /**
      * Dialog message type (work on alert, toast mode)
      *
-     * @enum 'info' - default
-     * @enum 'warning'
-     * @enum 'error'
-     * @enum 'success'
-     * @enum 'confirm'
+     * -'info' - default
+     * -'warning'
+     * -'error'
+     * -'success'
+     * -'confirm'
      */
-    messageType: {
-      type: String,
-      default: info
-    },
-    icon: {
-      type: Boolean,
-      default: true
-    },
-    iconClassName: String
+    messageType: { type: String, default: info },
+    icon: { type: Boolean, default: true },
+    iconClassName: { type: String, default: '' }
   },
   computed: {
     shadow () {
@@ -50,16 +44,15 @@ export default {
     const child = []
     // dialog header
     if (this.titleBar !== false) {
-      child.push(h('div', {
+      const titleOption = {
         class: 'v-dialog-header',
         ref: 'header'
-      }, [
-        h('h3', this.titleBar)
-      ]))
+      }
+      child.push(h('div', titleOption, [h('h3', this.titleBar)]))
     }
     const buttons = []
     // Okey button
-    buttons.push(h('button', {
+    const okButtonOption = {
       attrs: {
         type: 'button'
       },
@@ -70,10 +63,11 @@ export default {
           this.closeDialog(false)
         }
       }
-    }, i18n.btnOk))
+    }
+    buttons.push(h('button', okButtonOption, i18n.btnOk))
     // Cancel button
     if (this.messageType === confirm) {
-      buttons.push(h('button', {
+      const cancelButtonOption = {
         attrs: {
           type: 'button'
         },
@@ -83,23 +77,26 @@ export default {
             this.closeDialog(true)
           }
         }
-      }, i18n.btnCancel))
+      }
+      buttons.push(h('button', cancelButtonOption, i18n.btnCancel))
     }
     // dialog body
-    child.push(h('div', {
+    const contentOption = {
+      class: 'v-dialog-alert__content',
+      domProps: {
+        innerHTML: this.message
+      }
+    }
+    const bodyOption = {
       class: 'v-dialog-body',
       style: {
         height: this.bodyHeight + 'px'
       }
-    }, [
+    }
+    child.push(h('div', bodyOption, [
       h('div', { class: ['v-dialog-alert', this.icon ? this.iconClassName : 'no-icon'] }, [
-        h('div', {
-          class: 'v-dialog-alert__content',
-          domProps: {
-            innerHTML: this.message
-          }
-        }),
-        h('div', { class: 'v-dialog-alert__buttons' }, [buttons])
+        h('div', contentOption),
+        h('div', { class: 'v-dialog-alert__buttons' }, buttons)
       ])
     ]))
 
@@ -110,13 +107,13 @@ export default {
       this.buildDlgContent(h, {
         className: ['v-dialog-content', this.shadow],
         transitionName: 'v-dialog--candy',
-        child: child
+        child
       })
     ])
 
     return h('div', [
       this.buildDlgScreen(h, dialog),
-      this.buildBackdrop(h)
+      this.buildBackdrop()
     ])
   },
   mounted () {

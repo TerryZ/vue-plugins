@@ -6,6 +6,7 @@ export const ALERT_WIDTH_LARGE = 700
 export const ALERT_HEIGHT = 210
 export const ALERT_HEIGHT_NO_HEADER = 180
 export const ALERT_HEIGHT_LARGE = 400
+export const ALERT_MAX_CONTENT_LENGTH = 70
 
 export const [
   MODAL,
@@ -58,7 +59,9 @@ export const commonConstants = {
 }
 
 const defaultOptionsCore = {
-  language: CN
+  language: CN,
+  customClass: undefined,
+  singletonKey: undefined
 }
 
 export const defaultModalOptions = {
@@ -68,7 +71,11 @@ export const defaultModalOptions = {
 
 export const defaultAlertOptions = {
   ...defaultOptionsCore,
-  messageType: messageTypes.info
+  messageType: messageTypes.info,
+  icon: true,
+  shaking: true,
+  closeTime: false,
+  cancelCallback: false
 }
 
 export const defaultMaskOptions = {

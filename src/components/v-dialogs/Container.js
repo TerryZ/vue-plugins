@@ -184,8 +184,8 @@ export default {
       })
     },
     /**
-     * Close all dialog
-     * @param {function} callback - the callback fired when all dialogs closed
+     * Close all dialogs
+     * @param {function} callback - the callback fired when all of dialogs closed
      */
     closeAll (callback) {
       if (this.dialogs.length) this.dialogs = []

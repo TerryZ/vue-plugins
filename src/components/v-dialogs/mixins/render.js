@@ -2,19 +2,18 @@ export default {
   methods: {
     /**
      * Building backdrop layer
-     *
-     * @param {*} h
-     * @returns
      */
-    buildBackdrop (h) {
+    buildBackdrop () {
+      const h = this.$createElement
       const child = []
       if (this.backdrop && this.show) {
-        child.push(h('div', {
+        const backdropOption = {
           class: 'v-dialog-overlay',
           style: {
             'z-index': this.backdropZIndex
           }
-        }))
+        }
+        child.push(h('div', backdropOption))
       }
       return h('transition', {
         props: {
@@ -33,19 +32,21 @@ export default {
     buildDlgContent (h, options) {
       const { className, transitionName, child } = options
 
-      const content = h('div', {
+      const option = {
         class: className,
         directives: [{
           name: 'show',
           value: this.show
         }]
-      }, child)
-      return h('transition', {
+      }
+      const content = h('div', option, child)
+      const transitionOption = {
         props: {
           name: transitionName,
           appear: true
         }
-      }, [content])
+      }
+      return h('transition', transitionOption, [content])
     },
     /**
      * Build dialog major screen
@@ -55,7 +56,7 @@ export default {
      * @returns
      */
     buildDlgScreen (h, dialog) {
-      return h('div', {
+      const option = {
         class: this.classes,
         style: {
           'z-index': this.dialogZIndex
@@ -66,7 +67,8 @@ export default {
             this.outsideClick()
           }
         }
-      }, [dialog])
+      }
+      return h('div', option, [dialog])
     }
   }
 }

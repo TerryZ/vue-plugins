@@ -43,7 +43,7 @@ export default {
 
     return h('div', [
       this.buildDlgScreen(h, dialog),
-      this.buildBackdrop(h)
+      this.buildBackdrop()
     ])
   },
   mounted () {

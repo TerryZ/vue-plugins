@@ -1,12 +1,20 @@
 import languages from '../language'
-import { messageTypes, toastConstants } from '../constants'
+import {
+  messageTypes,
+  toastConstants,
+  ALERT_HEIGHT,
+  ALERT_HEIGHT_LARGE,
+  ALERT_HEIGHT_NO_HEADER,
+  ALERT_WIDTH,
+  ALERT_WIDTH_LARGE,
+  ALERT_MAX_CONTENT_LENGTH
+} from '../constants'
 
 const { warning, error, success, confirm } = messageTypes
 
 /**
  * Get message type text in i18n resources
  *
- * @export
  * @param {string} type - message type
  * @param {string} language
  * @returns
@@ -22,6 +30,25 @@ export function getTitle (type, language) {
     default: return lang.titleInfo
   }
 }
+
+/**
+ * Get Alert dialog size
+ * @param {object} option - dialog options
+ * @returns {object} dialog size
+ */
+export function getAlertSize (option) {
+  const { message, title } = option
+  const isLargeText = message.length > ALERT_MAX_CONTENT_LENGTH
+
+  if (isLargeText) {
+    return { width: ALERT_WIDTH_LARGE, height: ALERT_HEIGHT_LARGE }
+  }
+
+  const isHaveHeader = typeof title === 'string' || typeof title === 'undefined'
+  const height = isHaveHeader ? ALERT_HEIGHT : ALERT_HEIGHT_NO_HEADER
+  return { width: ALERT_WIDTH, height }
+}
+
 /**
  * Get toast theme class name
  *
