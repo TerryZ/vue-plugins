@@ -42,14 +42,9 @@ export default {
   render (h) {
     const i18n = getLanguage(this.language)
     const child = []
-    // dialog header
-    if (this.titleBar !== false) {
-      const titleOption = {
-        class: 'v-dialog-header',
-        ref: 'header'
-      }
-      child.push(h('div', titleOption, [h('h3', this.titleBar)]))
-    }
+
+    child.push(this.generateHeader())
+
     const buttons = []
     // Okey button
     const okButtonOption = {
@@ -115,6 +110,24 @@ export default {
       this.buildDlgScreen(h, dialog),
       this.buildBackdrop()
     ])
+  },
+  methods: {
+    generateHeader () {
+      const { titleBar } = this
+      if (titleBar === false) return
+
+      const h = this.$createElement
+      const titleOption = {
+        class: 'v-dialog-header',
+        ref: 'header'
+      }
+      return h('div', titleOption, [h('h3', titleBar)])
+    },
+    generateBody () {
+
+    },
+    generateButtons () {
+    }
   },
   mounted () {
     this.$nextTick(() => {
