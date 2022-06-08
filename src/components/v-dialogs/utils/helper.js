@@ -58,9 +58,10 @@ export function getAlertSize (option) {
 export function toastTheme (type) {
   const { contentClass } = toastConstants
   switch (type) {
-    case warning: return contentClass.warning
-    case error: return contentClass.error
-    case success: return contentClass.success
+    case warning:
+    case error:
+    case success:
+      return contentClass[type]
     default: return ''
   }
 }
@@ -75,4 +76,13 @@ export function textTruncate (text, keepLength) {
   if (typeof text !== 'string') return ''
   if (text.length <= keepLength) return text
   return text.substring(0, keepLength) + '...'
+}
+
+/**
+ * Calculate the top of the dialog
+ * @param {number} height - dialog height
+ */
+export function calculateDialogTop (height) {
+  const browserHeight = window.innerHeight || document.documentElement.clientHeight
+  return (browserHeight - height) / 2
 }

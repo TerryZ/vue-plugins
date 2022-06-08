@@ -8,18 +8,15 @@ export default {
     /**
      * Dialog message type (work on alert, toast mode)
      *
-     * @enum 'info' - default
-     * @enum 'warning'
-     * @enum 'error'
-     * @enum 'success'
-     * @enum 'confirm' ( not available for toast )
+     * - 'info'(default)
+     * - 'warning'
+     * - 'error'
+     * - 'success'
      */
     messageType: { type: String, default: messageTypes.info },
     icon: { type: Boolean, default: true },
     iconClassName: String,
-    /**
-     * Dialog corner position type
-     */
+    /** Dialog corner position type */
     position: { type: String, default: 'bottomRight' },
     closeButton: { type: Boolean, default: true }
   },

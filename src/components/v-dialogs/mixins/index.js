@@ -1,5 +1,6 @@
 import { commonConstants, ALERT } from '../constants'
 import { CN } from '../language'
+import { calculateDialogTop } from '../utils/helper'
 
 export default {
   props: {
@@ -86,13 +87,6 @@ export default {
       setTimeout(() => { this.shake = false }, 750)
     },
     /**
-     * adjust position and size
-     */
-    adjust () {
-      const browserHeight = window.innerHeight || document.documentElement.clientHeight
-      this.dialogTop = (browserHeight - this.height) / 2
-    },
-    /**
      * Close current dialog
      *
      * @param trigger [boolean] whether close dialog and trigger callback function
@@ -123,7 +117,7 @@ export default {
 
       this.resizeTimeout = setTimeout(() => {
         this.resizeTimeout = null
-        this.adjust()
+        this.dialogTop = calculateDialogTop(this.height)
         // The actualResizeHandler will execute at a rate of 15fps
       }, 100)
     }

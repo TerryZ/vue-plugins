@@ -1,5 +1,6 @@
 import mixins from '../mixins'
 import render from '../mixins/render'
+import { calculateDialogTop } from '../utils/helper'
 
 export default {
   name: 'DialogMask',
@@ -13,20 +14,22 @@ export default {
     }
   },
   render (h) {
-    const body = h('div', {
+    const contentOption = {
+      class: 'v-dialog-mask__content',
+      domProps: {
+        innerHTML: this.message
+      }
+    }
+    const bodyOption = {
       class: 'v-dialog-body',
       style: {
         height: this.bodyHeight + 'px'
       }
-    }, [
+    }
+    const body = h('div', bodyOption, [
       h('div', { class: 'v-dialog-mask__container' }, [
         h('div', { class: 'v-dialog-timer' }),
-        h('div', {
-          class: 'v-dialog-mask__content',
-          domProps: {
-            innerHTML: this.message
-          }
-        })
+        h('div', contentOption)
       ])
     ])
 
@@ -34,7 +37,7 @@ export default {
       class: 'v-dialog-dialog',
       style: this.dialogStyles
     }, [
-      this.buildDlgContent(h, {
+      this.generateDialogContent({
         className: 'v-dialog-content',
         transitionName: 'v-dialog--candy',
         child: [body]
@@ -42,12 +45,13 @@ export default {
     ])
 
     return h('div', [
-      this.buildDlgScreen(h, dialog),
-      this.buildBackdrop()
+      this.generateDialogScreen(dialog),
+      this.generateBackdrop()
     ])
   },
   mounted () {
-    this.bodyHeight = this.height
-    this.adjust()
+    const { height } = this
+    this.bodyHeight = height
+    this.dialogTop = calculateDialogTop(height)
   }
 }

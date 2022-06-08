@@ -1,5 +1,6 @@
 import { messageTypes } from '../constants'
 import { getLanguage } from '../language'
+import { calculateDialogTop } from '../utils/helper'
 
 import mixins from '../mixins'
 import render from '../mixins/render'
@@ -25,10 +26,12 @@ export default {
   },
   computed: {
     shadow () {
-      switch (this.messageType) {
-        case warning: return 'v-dialog__shadow--warning'
-        case error: return 'v-dialog__shadow--error'
-        case success: return 'v-dialog__shadow--success'
+      const { messageType } = this
+      switch (messageType) {
+        case warning:
+        case error:
+        case success:
+          return `v-dialog__shadow--${messageType.toLowerCase()}`
         default: return ''
       }
     },
@@ -52,7 +55,7 @@ export default {
       class: 'v-dialog-dialog',
       style: this.dialogStyles
     }, [
-      this.buildDlgContent(h, {
+      this.generateDialogContent({
         className: ['v-dialog-content', this.shadow],
         transitionName: 'v-dialog--candy',
         child: contents
@@ -60,8 +63,8 @@ export default {
     ])
 
     return h('div', [
-      this.buildDlgScreen(h, dialog),
-      this.buildBackdrop()
+      this.generateDialogScreen(dialog),
+      this.generateBackdrop()
     ])
   },
   methods: {
@@ -110,9 +113,7 @@ export default {
         class: 'v-dialog-btn__ok',
         ref: 'btnOk',
         on: {
-          click: () => {
-            this.closeDialog(false)
-          }
+          click: () => { this.closeDialog(false) }
         }
       }
       buttons.push(h('button', okButtonOption, i18n.btnOk))
@@ -124,9 +125,7 @@ export default {
           },
           class: 'v-dialog-btn__cancel',
           on: {
-            click: () => {
-              this.closeDialog(true)
-            }
+            click: () => { this.closeDialog(true) }
           }
         }
         buttons.push(h('button', cancelButtonOption, i18n.btnCancel))
@@ -137,15 +136,16 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      const { height } = this
       if (this.titleBar) {
         // this.$refs.header.getBoundingClientRect().height
         const headerHeight = this.$refs.header.offsetHeight
-        this.bodyHeight = this.height - headerHeight
+        this.bodyHeight = height - headerHeight
       } else {
-        this.bodyHeight = this.height
+        this.bodyHeight = height
       }
 
-      this.adjust()
+      this.dialogTop = calculateDialogTop(height)
       this.$refs.btnOk.focus()
     })
   }

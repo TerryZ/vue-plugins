@@ -137,7 +137,10 @@ export default {
       //   .catch(() => {
       //     console.log('confirm alert cancel')
       //   })
-      DialogAlert('the new alert', { messageType: 'error' })
+      DialogAlert('the new alert', {
+        messageType: 'error',
+        backdrop: false
+      })
     },
     noParameters () {
       DialogAlert()

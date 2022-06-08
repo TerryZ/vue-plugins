@@ -1,5 +1,6 @@
 import mixins from '../mixins'
 import render from '../mixins/render'
+import { calculateDialogTop } from '../utils/helper'
 
 export default {
   name: 'DialogModal',
@@ -112,7 +113,7 @@ export default {
       },
       style: this.dialogStyles
     }, [
-      this.buildDlgContent(h, {
+      this.generateDialogContent({
         className: 'v-dialog-content',
         transitionName: 'v-dialog--smooth',
         child: child
@@ -120,8 +121,8 @@ export default {
     ])
 
     return h('div', [
-      this.buildDlgScreen(h, dialog),
-      this.buildBackdrop()
+      this.generateDialogScreen(dialog),
+      this.generateBackdrop()
     ])
   },
   methods: {
@@ -140,7 +141,7 @@ export default {
         this.dialogTop = 0
         return
       }
-      this.adjust()
+      this.dialogTop = calculateDialogTop(this.height)
     },
     modalClose (data) {
       this.closeDialog(false, data)

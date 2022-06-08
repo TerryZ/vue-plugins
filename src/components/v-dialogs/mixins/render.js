@@ -1,12 +1,14 @@
 export default {
   methods: {
     /**
-     * Building backdrop layer
+     * Generate backdrop layer
      */
-    buildBackdrop () {
+    generateBackdrop () {
+      if (!this.backdrop) return
+
       const h = this.$createElement
       const child = []
-      if (this.backdrop && this.show) {
+      if (this.show) {
         const backdropOption = {
           class: 'v-dialog-overlay',
           style: {
@@ -15,21 +17,23 @@ export default {
         }
         child.push(h('div', backdropOption))
       }
-      return h('transition', {
+
+      const transitionOption = {
         props: {
           name: 'v-dialog--fade',
           appear: true
         }
-      }, child)
+      }
+      return h('transition', transitionOption, child)
     },
     /**
-     * Build dialog content
+     * Generate dialog content
      *
-     * @param {function} h - createElement
      * @param {object} options
      * @returns
      */
-    buildDlgContent (h, options) {
+    generateDialogContent (options) {
+      const h = this.$createElement
       const { className, transitionName, child } = options
 
       const option = {
@@ -49,13 +53,12 @@ export default {
       return h('transition', transitionOption, [content])
     },
     /**
-     * Build dialog major screen
+     * Generate dialog major screen
      *
-     * @param {*} h
-     * @param {*} dialog
-     * @returns
+     * @param {VNode} dialog
+     * @returns {VNode}
      */
-    buildDlgScreen (h, dialog) {
+    generateDialogScreen (dialog) {
       const option = {
         class: this.classes,
         style: {
@@ -68,7 +71,7 @@ export default {
           }
         }
       }
-      return h('div', option, [dialog])
+      return this.$createElement('div', option, [dialog])
     }
   }
 }
