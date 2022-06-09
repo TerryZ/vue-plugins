@@ -1,6 +1,7 @@
 import mixins from '../mixins'
 import render from '../mixins/render'
-import { calculateDialogTop } from '../utils/helper'
+import { calculateDialogTop, textTruncate } from '../utils/helper'
+import { MASK_MAX_CONTENT_LENGTH } from '../constants'
 
 export default {
   name: 'DialogMask',
@@ -11,13 +12,20 @@ export default {
         'v-dialog': true,
         'v-dialog--buzz-out': this.shake
       }
+    },
+    messageText () {
+      const { message } = this
+      if (message.length > MASK_MAX_CONTENT_LENGTH) {
+        return textTruncate(message, MASK_MAX_CONTENT_LENGTH)
+      }
+      return message
     }
   },
   render (h) {
     const contentOption = {
       class: 'v-dialog-mask__content',
       domProps: {
-        innerHTML: this.message
+        innerHTML: this.messageText
       }
     }
     const bodyOption = {

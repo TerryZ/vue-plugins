@@ -40,6 +40,7 @@ export function argumentsParse (args) {
 export function generateDialogOption (option, index, close) {
   const { type } = option
   const options = {
+    ref: option.dialogKey,
     key: option.dialogKey,
     props: {
       type,

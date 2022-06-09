@@ -93,10 +93,7 @@ export default {
      * @param data [object] return data when dialog close(only for modal)
      */
     closeDialog (trigger, data) {
-      this.show = false
-      setTimeout(() => {
-        this.$emit('close', this.dialogKey, trigger, data)
-      }, 200)
+      this.$emit('close', this.dialogKey, trigger, data)
     },
     calcLayerLevel () {
       // z-index step number
@@ -104,11 +101,12 @@ export default {
       this.dialogZIndex = commonConstants.baseZIndex + (step * this.dialogIndex)
       this.backdropZIndex = this.dialogZIndex - 10
     },
+    // auto close dialog
     autoClose () {
-      // auto close dialog
-      if (!this.closeTime) return
+      const { closeTime } = this
+      if (!closeTime) return
 
-      const time = this.closeTime * 1000
+      const time = closeTime * 1000
       setTimeout(() => { this.closeDialog(false) }, time)
     },
     resizeThrottler () {
@@ -123,8 +121,9 @@ export default {
     }
   },
   mounted () {
-    this.show = true
     this.calcLayerLevel()
+    this.show = true
+
     this.autoClose()
 
     if (this.type === 'toast') return

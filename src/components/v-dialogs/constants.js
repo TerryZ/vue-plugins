@@ -8,6 +8,8 @@ export const ALERT_HEIGHT_NO_HEADER = 180
 export const ALERT_HEIGHT_LARGE = 400
 export const ALERT_MAX_CONTENT_LENGTH = 70
 
+export const MASK_MAX_CONTENT_LENGTH = 65
+
 export const [
   MODAL,
   ALERT,
@@ -79,6 +81,9 @@ export const defaultAlertOptions = {
 }
 
 export const defaultMaskOptions = {
+  ...defaultOptionsCore,
+  shaking: true,
+  closeTime: false
 }
 
 export const defaultToastOptions = {

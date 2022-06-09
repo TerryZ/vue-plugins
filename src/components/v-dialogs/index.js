@@ -1,7 +1,7 @@
 import { CN } from './language'
-import { getInstance, DialogAlert } from './utils/instance'
+import { getInstance, DialogAlert, DialogMask } from './utils/instance'
 
-export { DialogAlert }
+export { DialogAlert, DialogMask }
 
 export default {
   install (Vue, options = {}) {
@@ -55,54 +55,11 @@ export default {
           params.component = component
           return dlg.addModal(params)
         },
-        /**
-         * Open a Alert dialog
-         *
-         * @param message [string] (required)
-         * @param callback [function] (optional)
-         * @param params [object] (optional)
-         *
-         * @returns dialog key [string]
-         *
-         * open a information type Alert dialog
-         * this.$dlg.alert('some message...')
-         *
-         * open a information type Alert dialog and do something after dialog close
-         * this.$dlg.alert('some message...', () => { do something... })
-         *
-         * open a Alert dialog with options
-         * this.$dlg.alert('some message...', {
-         *   messageType: 'error'
-         * })
-         *
-         * open a Alert dialog with callback and options
-         * this.$dlg.alert('some message...',
-         * () => {
-         *   do something...
-         * }, {
-         *   messageType: 'error'
-         * })
-         */
         alert () {
           return DialogAlert(...arguments)
         },
         mask () {
-          const div = document.querySelector('.v-dialogs-container')
-          console.dir(div)
-          console.dir(dlg)
-
-          const p = new Promise((resolve, reject) => {
-            resolve(1)
-          })
-            .then(() => {
-              console.log('ok')
-            })
-            .catch(() => {
-              console.log('error')
-            })
-          console.dir(p.catch)
-
-          return dlg.addMask(paramSet(arguments))
+          return DialogMask(...arguments)
         },
         toast () {
           if (!arguments.length || !arguments[0]) return

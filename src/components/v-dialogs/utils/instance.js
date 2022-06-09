@@ -1,8 +1,15 @@
 import Vue from 'vue'
 import Container from '../Container'
-import { ALERT, defaultAlertOptions, alertIconClass } from '../constants'
+import {
+  ALERT,
+  MASK,
+  defaultAlertOptions,
+  defaultMaskOptions,
+  alertIconClass
+} from '../constants'
 import { argumentsParse } from './options'
 import { getTitle, getAlertSize } from './helper'
+import { getLanguage } from '../language'
 
 /**
  * Get v-dialogs container instance, if not exist, create a new one
@@ -61,8 +68,20 @@ export function DialogToast () {
 
 }
 
+/**
+ * Open a full screen mask
+ */
 export function DialogMask () {
+  const option = Object.assign({}, defaultMaskOptions, argumentsParse(arguments))
 
+  option.type = MASK
+  const i18n = getLanguage(option.language)
+  option.message = option.message || i18n.maskText
+  option.width = 300
+  option.height = 80
+  option.backdrop = true
+
+  return getInstance().addDialog(option)
 }
 
 export function DialogDrawer () {

@@ -6,7 +6,7 @@ export default {
   mixins: [mixins],
   props: {
     /**
-     * Dialog message type (work on alert, toast mode)
+     * Toast dialog message type
      *
      * - 'info'(default)
      * - 'warning'
@@ -29,7 +29,7 @@ export default {
     const child = []
     // Close button
     if (this.closeButton) {
-      child.push(h('button', {
+      const buttonOption = {
         attrs: { type: 'button' },
         class: 'v-dialog-toast__close',
         on: {
@@ -37,42 +37,38 @@ export default {
             this.closeDialog(false)
           }
         }
-      }, '×'))
+      }
+      child.push(h('button', buttonOption, '×'))
     }
     // Type icon
     if (this.icon) {
-      child.push(h('div', {
-        class: 'v-dialog-toast__icon'
-      }, [
-        h('i', { class: ['dlg-icon-font', this.iconClassName] })
-      ]))
+      const icon = h('i', { class: ['dlg-icon-font', this.iconClassName] })
+      child.push(h('div', { class: 'v-dialog-toast__icon' }, [icon]))
     }
 
+    const contentOption = {
+      domProps: {
+        innerHTML: this.message
+      }
+    }
     // Title and content
-    child.push(h('div', {
-      class: 'v-dialog-toast__content'
-    }, [
+    child.push(h('div', { class: 'v-dialog-toast__content' }, [
       h('h3', this.titleBar),
-      h('p', {
-        domProps: {
-          innerHTML: this.message
-        }
-      })
+      h('p', contentOption)
     ]))
 
-    const body = h('div', {
+    const bodyOption = {
       class: 'v-dialog-body',
       style: {
         height: this.bodyHeight + 'px'
       }
-    }, [
-      h('div', {
-        class: [
-          'v-dialog-toast__container',
-          this.contentClass,
-          this.icon ? '' : 'no-icon'
-        ]
-      }, child)
+    }
+    const bodyClasses = ['v-dialog-toast__container', this.contentClass]
+    if (!this.icon) {
+      bodyClasses.push('no-icon')
+    }
+    const body = h('div', bodyOption, [
+      h('div', { class: bodyClasses }, child)
     ])
 
     const dialog = h('div', {
@@ -82,23 +78,24 @@ export default {
       h('div', { class: 'v-dialog-content' }, [body])
     ])
 
+    const containerOption = {
+      class: ['v-dialog', 'v-dialog-toast', this.position],
+      style: {
+        ...this.dialogSize,
+        'z-index': this.dialogZIndex
+      },
+      directives: [{
+        name: 'show',
+        value: this.show
+      }]
+    }
     return h('transition', {
       props: {
         name: 'v-dialog--smooth',
         appear: true
       }
     }, [
-      h('div', {
-        class: ['v-dialog', 'v-dialog-toast', this.position],
-        style: {
-          ...this.dialogSize,
-          'z-index': this.dialogZIndex
-        },
-        directives: [{
-          name: 'show',
-          value: this.show
-        }]
-      }, [dialog])
+      h('div', containerOption, [dialog])
     ])
   },
   mounted () {

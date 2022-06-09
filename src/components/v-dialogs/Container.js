@@ -2,7 +2,7 @@ import './styles/dialog.sass'
 
 import language from './language'
 import {
-  MODAL, MASK, TOAST,
+  MODAL, TOAST,
   messageTypes,
   toastConstants,
   DIALOG_KEY_PREFIX
@@ -96,25 +96,6 @@ export default {
       return this.buildDialog(config)
     },
     /**
-     * Open a full screen mask
-     * @param {object} p - options
-     * @returns {string} new dialog key
-     */
-    addMask (p) {
-      p.type = MASK
-      const config = this.buildConfig(p)
-      const MAX_CONTENT_LENGTH = 65
-      config.message = config.message || config.i18n.maskText
-      if (config.message.length > MAX_CONTENT_LENGTH) {
-        config.message = textTruncate(config.message, 65)
-      }
-      config.width = 300
-      config.height = 80
-      config.backdrop = true
-
-      return this.buildDialog(config)
-    },
-    /**
      * Open a Toast dialog (corner dialog)
      *
      * @param {object} p - options
@@ -167,21 +148,25 @@ export default {
       if (!key) return
       const dlg = this.dialogs.find(val => val.dialogKey === key)
       if (!dlg) return
-      // remove current dialog from list
-      this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)
-      this.$nextTick(() => {
-        const { callback, cancelCallback } = dlg
+      this.$refs[dlg.dialogKey].show = false
+      // wait for dialog close animation finish
+      window.setTimeout(() => {
+        // remove current dialog from list
+        this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)
+        this.$nextTick(() => {
+          const { callback, cancelCallback } = dlg
 
-        if (cancel) {
-          if (cancelCallback && typeof cancelCallback === 'function') {
-            cancelCallback()
+          if (cancel) {
+            if (cancelCallback && typeof cancelCallback === 'function') {
+              cancelCallback()
+            }
+          } else {
+            if (callback && typeof callback === 'function') {
+              callback(data)
+            }
           }
-        } else {
-          if (callback && typeof callback === 'function') {
-            callback(data)
-          }
-        }
-      })
+        })
+      }, 200)
     },
     /**
      * Close all dialogs

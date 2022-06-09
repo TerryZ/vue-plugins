@@ -3,33 +3,53 @@
     <h3 class="mt-5">
       Mask
     </h3>
-    <p>
+    <div>
       <button
         type="button"
-        class="btn btn-secondary"
-        @click="callMask"
+        class="btn btn-secondary me-3"
+        @click="callInstanceMask"
         id="btn-mask"
       >
-        Mask
+        Dialog instance call Mask
       </button>
-    </p>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        @click="callMaskFunction"
+        id="btn-mask"
+      >
+        Mask funciton call Dialog
+      </button>
+    </div>
   </section>
 </template>
 
 <script>
+import { DialogMask } from '@/components/v-dialogs'
+
 export default {
   methods: {
-    callMask () {
+    callInstanceMask () {
       const dlg = this.$dlg
-      const key = dlg.mask(null, function () {
-      }, {
+      const callback = () => {}
+      const option = {
         // language: 'en',
         closeTime: 0
-      })
+      }
+      const key = dlg.mask(null, callback, option)
+
       console.log('mask dialog key:', key)
+
       setTimeout(function () {
         dlg.close(key)
       }, 3000)
+    },
+    callMaskFunction () {
+      DialogMask('Functional mask dialog', {
+        closeTime: 3
+      })
+
+      // setTimeout(() => { this.$dlg.close() }, 3000)
     }
   }
 }
