@@ -1,4 +1,5 @@
-import { messageTypes } from '../constants'
+import { messageTypes, TOAST_MAX_CONTENT_LENGTH } from '../constants'
+import { textTruncate } from '../utils/helper'
 import mixins from '../mixins'
 
 export default {
@@ -48,7 +49,7 @@ export default {
 
     const contentOption = {
       domProps: {
-        innerHTML: this.message
+        innerHTML: textTruncate(this.message, TOAST_MAX_CONTENT_LENGTH)
       }
     }
     // Title and content

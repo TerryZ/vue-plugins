@@ -10,6 +10,8 @@ export const ALERT_MAX_CONTENT_LENGTH = 70
 
 export const MASK_MAX_CONTENT_LENGTH = 65
 
+export const TOAST_MAX_CONTENT_LENGTH = 56
+
 export const [
   MODAL,
   ALERT,
@@ -87,6 +89,12 @@ export const defaultMaskOptions = {
 }
 
 export const defaultToastOptions = {
+  ...defaultOptionsCore,
+  messageType: messageTypes.info,
+  icon: true,
+  closeButton: true,
+  closeTime: false,
+  position: 'bottomRight'
 }
 
 export const defaultDrawerOptions = {

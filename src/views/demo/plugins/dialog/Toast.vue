@@ -3,6 +3,43 @@
     <h3 class="mt-5">
       Toast
     </h3>
+    <div class="mb-3">
+      Position:
+      <div class="d-inline-flex col-md-2">
+        <select
+          class="form-select"
+          v-model="position"
+        >
+          <option value="topLeft">
+            topLeft
+          </option>
+          <option value="topCenter">
+            topCenter
+          </option>
+          <option value="topRight">
+            topRight
+          </option>
+          <option value="bottomLeft">
+            bottomLeft
+          </option>
+          <option value="bottomCenter">
+            bottomCenter
+          </option>
+          <option value="bottomRight">
+            bottomRight
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3">
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click="callToastFunction"
+      >
+        Toast function
+      </button>
+    </div>
     <div>
       <div
         class="btn-group"
@@ -11,15 +48,15 @@
         <button
           type="button"
           class="btn btn-info"
-          @click="callToast()"
+          @click="callInstanceToast()"
           id="btn-toast-info"
         >
-          Info
+          Info(Auto close in 3 second)
         </button>
         <button
           type="button"
           class="btn btn-warning"
-          @click="callToast('warning')"
+          @click="callInstanceToast('warning')"
           id="btn-toast-warning"
         >
           Warning
@@ -27,7 +64,7 @@
         <button
           type="button"
           class="btn btn-danger"
-          @click="callToast('error')"
+          @click="callInstanceToast('error')"
           id="btn-toast-error"
         >
           Error
@@ -35,7 +72,7 @@
         <button
           type="button"
           class="btn btn-success"
-          @click="callToast('success')"
+          @click="callInstanceToast('success')"
           id="btn-toast-success"
         >
           Success
@@ -49,7 +86,7 @@
       <button
         type="button"
         class="btn btn-outline-info"
-        @click="callToast('info', false)"
+        @click="callInstanceToast('info', false)"
         id="btn-toast-info"
       >
         Info
@@ -59,20 +96,32 @@
 </template>
 
 <script>
+import { DialogToast } from '@/components/v-dialogs'
+
 export default {
+  data () {
+    return {
+      position: 'bottomRight'
+    }
+  },
   methods: {
-    callToast (type = 'info', icon = true, title) {
-      const options = {
+    callInstanceToast (type = 'info', icon = true, title) {
+      const option = {
         messageType: type,
         icon: icon,
-        position: 'topCenter'
+        position: this.position
       }
-      if (typeof title !== 'undefined') options.titleBar = title
+      if (typeof title !== 'undefined') {
+        option.titleBar = title
+      }
       if (type === 'info') {
-        options.closeTime = 3
-        options.dialogCloseButton = false
+        option.closeTime = 3
+        option.dialogCloseButton = false
       }
-      this.$dlg.toast('this is a Vue <b>v-dialog</b> Toast!', options)
+      this.$dlg.toast('This is a Vue <b>v-dialog</b> Toast!', option)
+    },
+    callToastFunction () {
+      DialogToast()
     }
   }
 }

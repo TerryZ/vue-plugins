@@ -149,7 +149,7 @@ export default {
       const dlg = this.dialogs.find(val => val.dialogKey === key)
       if (!dlg) return
       this.$refs[dlg.dialogKey].show = false
-      // wait for dialog close animation finish
+      // waiting for dialog close animation finish
       window.setTimeout(() => {
         // remove current dialog from list
         this.dialogs = this.dialogs.filter(val => val.dialogKey !== key)

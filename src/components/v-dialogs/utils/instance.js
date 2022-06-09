@@ -3,12 +3,15 @@ import Container from '../Container'
 import {
   ALERT,
   MASK,
+  TOAST,
   defaultAlertOptions,
   defaultMaskOptions,
-  alertIconClass
+  defaultToastOptions,
+  alertIconClass,
+  toastConstants
 } from '../constants'
 import { argumentsParse } from './options'
-import { getTitle, getAlertSize } from './helper'
+import { getTitle, getAlertSize, toastTheme } from './helper'
 import { getLanguage } from '../language'
 
 /**
@@ -64,12 +67,39 @@ export function DialogAlert () {
   return getInstance().addDialog(option)
 }
 
+/**
+ * Open a Toast dialog (corner dialog)
+ *
+ * @see DialogAlert
+ *
+ * position option accept items:
+ *
+ * - 'topLeft'
+ * - 'topCenter'
+ * - 'topRight'
+ * - 'bottomLeft'
+ * - 'bottomCenter'
+ * - 'bottomRight'
+ */
 export function DialogToast () {
+  const option = Object.assign({}, defaultToastOptions, argumentsParse(arguments))
+  const { messageType, icon } = option
+  option.type = TOAST
+  option.width = 300
+  option.height = 80
+  if (icon) {
+    option.iconClassName = toastConstants.iconClass[messageType]
+  }
+  option.title = getTitle(messageType, option.language)
+  option.contentClass = toastTheme(messageType)
 
+  return getInstance().addDialog(option)
 }
 
 /**
  * Open a full screen mask
+ *
+ * @see DialogAlert
  */
 export function DialogMask () {
   const option = Object.assign({}, defaultMaskOptions, argumentsParse(arguments))
