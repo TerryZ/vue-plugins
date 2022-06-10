@@ -38,14 +38,15 @@ export function argumentsParse (args) {
  * @returns {object} - merged dialog option
  */
 export function generateDialogOption (option, index, close) {
-  const { type } = option
+  const { type, dialogKey } = option
   const options = {
-    ref: option.dialogKey,
-    key: option.dialogKey,
+    ref: dialogKey,
+    key: dialogKey,
+    class: option.customClass,
     props: {
       type,
+      dialogKey,
       dialogIndex: index,
-      dialogKey: option.dialogKey,
       width: option.width,
       height: option.height,
       closeTime: option.closeTime,
@@ -59,8 +60,7 @@ export function generateDialogOption (option, index, close) {
       close
     }
   }
-  if (option.customClass) options.class = option.customClass
-  if (option.singletonKey) options.props.singletonKey = option.singletonKey
+
   if (type !== MODAL) {
     options.props.message = option.message
     options.props.icon = option.icon
@@ -83,8 +83,6 @@ export function generateDialogOption (option, index, close) {
       options.props.backdrop = true
       break
     case ALERT:
-      options.props.i18n = option.i18n
-    // eslint-disable-next-line no-fallthrough
     case TOAST:
       options.props.iconClassName = option.iconClassName
       options.props.messageType = option.messageType

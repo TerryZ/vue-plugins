@@ -114,8 +114,7 @@ export function DialogMask () {
   const option = Object.assign({}, defaultMaskOptions, argumentsParse(arguments))
 
   option.type = MASK
-  const i18n = getLanguage(option.language)
-  option.message = option.message || i18n.maskText
+  option.message = option.message || getLanguage(option.language).maskText
   option.width = 300
   option.height = 80
   option.backdrop = true
