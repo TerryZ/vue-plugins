@@ -86,3 +86,7 @@ export function calculateDialogTop (height) {
   const browserHeight = window.innerHeight || document.documentElement.clientHeight
   return (browserHeight - height) / 2
 }
+
+export function isDocumentBodyOverflowing () {
+  return document.body.scrollHeight > window.innerHeight
+}

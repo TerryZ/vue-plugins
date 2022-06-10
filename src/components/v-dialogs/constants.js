@@ -1,5 +1,8 @@
 import { CN } from './language'
+
+export const DEFAULT_INSTANCE_NAME = '$dlg'
 export const DIALOG_KEY_PREFIX = 'v-dialogs-'
+export const START_Z_INDEX = 5100
 
 export const ALERT_WIDTH = 450
 export const ALERT_WIDTH_LARGE = 700
@@ -11,6 +14,9 @@ export const ALERT_MAX_CONTENT_LENGTH = 70
 export const MASK_MAX_CONTENT_LENGTH = 65
 
 export const TOAST_MAX_CONTENT_LENGTH = 56
+
+export const MODAL_WIDTH = 700
+export const MODAL_HEIGHT = 400
 
 export const [
   MODAL,
@@ -58,10 +64,6 @@ export const alertIconClass = {
   confirm: 'alertConfirm'
 }
 
-export const commonConstants = {
-  baseZIndex: 5100
-}
-
 const defaultOptionsCore = {
   language: CN,
   customClass: undefined,
@@ -70,7 +72,14 @@ const defaultOptionsCore = {
 
 export const defaultModalOptions = {
   ...defaultOptionsCore,
-  type: MODAL
+  shaking: true,
+  title: 'Dialog',
+  width: MODAL_WIDTH,
+  height: MODAL_HEIGHT,
+  params: undefined,
+  closeButton: true,
+  maxButton: true,
+  callback: undefined
 }
 
 export const defaultAlertOptions = {

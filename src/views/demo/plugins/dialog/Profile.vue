@@ -1,14 +1,16 @@
 <template>
   <div class="p-3">
     <p>
-      Name (received by params):<input
+      Name (received by params option):
+      <input
         type="text"
         class="form-control"
         v-model="name"
       >
     </p>
     <p>
-      Age:<input
+      Age:
+      <input
         type="text"
         class="form-control"
         v-model="age"

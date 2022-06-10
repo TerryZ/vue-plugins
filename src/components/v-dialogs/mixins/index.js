@@ -1,5 +1,5 @@
-import { commonConstants, ALERT } from '../constants'
 import { CN } from '../language'
+import { ALERT, START_Z_INDEX } from '../constants'
 import { calculateDialogTop } from '../utils/helper'
 
 export default {
@@ -89,16 +89,16 @@ export default {
     /**
      * Close current dialog
      *
-     * @param trigger [boolean] whether close dialog and trigger callback function
-     * @param data [object] return data when dialog close(only for modal)
+     * @param {boolean} trigger whether close dialog and trigger callback function
+     * @param {object} data return data when dialog close(only for modal)
      */
     closeDialog (trigger, data) {
       this.$emit('close', this.dialogKey, trigger, data)
     },
     calcLayerLevel () {
-      // z-index step number
+      // setup dialog and backdrop z-index
       const step = 50
-      this.dialogZIndex = commonConstants.baseZIndex + (step * this.dialogIndex)
+      this.dialogZIndex = START_Z_INDEX + (step * this.dialogIndex)
       this.backdropZIndex = this.dialogZIndex - 10
     },
     // auto close dialog

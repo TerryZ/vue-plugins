@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Container from '../Container'
 import {
+  MODAL,
   ALERT,
   MASK,
   TOAST,
+  defaultModalOptions,
   defaultAlertOptions,
   defaultMaskOptions,
   defaultToastOptions,
@@ -29,11 +31,18 @@ export function getInstance () {
   return new DialogContainer().$mount(div)
 }
 
+/**
+ * Open a Modal dialog
+ * @param {VNode} component - vue component
+ * @param {object} params - modal parameters
+ * @returns {string} new dialog key
+ */
 export function DialogModal (component, params) {
   if (!component) return
-  // params = merge(params)
-  params.component = component
-  return getInstance().addModal(params)
+  const option = { ...defaultModalOptions, ...params }
+  option.type = MODAL
+  option.component = component
+  return getInstance().addDialog(option)
 }
 
 /**
@@ -116,4 +125,34 @@ export function DialogMask () {
 
 export function DialogDrawer () {
 
+}
+
+export const DialogHelper = {
+  close (key) {
+    getInstance().close(key)
+  },
+  closeAll (callback) {
+    getInstance().closeAll(callback)
+  }
+}
+
+export const instanceApi = {
+  modal () {
+    return DialogModal(...arguments)
+  },
+  alert () {
+    return DialogAlert(...arguments)
+  },
+  mask () {
+    return DialogMask(...arguments)
+  },
+  toast () {
+    return DialogToast(...arguments)
+  },
+  close (key) {
+    DialogHelper.close(key)
+  },
+  closeAll (callback) {
+    DialogHelper.closeAll(callback)
+  }
 }

@@ -1,21 +1,12 @@
 import './styles/dialog.sass'
 
-import language from './language'
-import {
-  MODAL, TOAST,
-  messageTypes,
-  toastConstants,
-  DIALOG_KEY_PREFIX
-} from './constants'
-import { getTitle, toastTheme, textTruncate } from './utils/helper'
+import { DIALOG_KEY_PREFIX } from './constants'
 import { generateDialogOption } from './utils/options'
 
 import DialogModal from './components/Modal'
 import DialogAlert from './components/Alert'
 import DialogToast from './components/Toast'
 import DialogMask from './components/Mask'
-
-const { info } = messageTypes
 
 let serialNumber = 0
 
@@ -55,72 +46,6 @@ export default {
       // console.dir(option)
       this.dialogs.push(option)
       return key
-    },
-    /**
-     * Merge user options and default options
-     * @param {object} config - user options
-     * @return {object} merged options
-     */
-    buildConfig (config) {
-      // let merged = Object.assign({}, dialogDefaults, config);
-      // return merged;
-      config.i18n = language[config.language]
-      if (!config.messageType) config.messageType = info
-      return config
-    },
-    /**
-     * Initialize default options
-     */
-    buildDialog (config) {
-      const { singletonKey } = config
-      if (singletonKey) {
-        if (this.dialogs.some(val => val.singletonKey === singletonKey)) {
-          return
-        }
-      }
-
-      serialNumber++
-      const key = DIALOG_KEY_PREFIX + serialNumber
-      config.dialogKey = key
-      this.dialogs.push(config)
-      return key
-    },
-    /**
-     * Open a Modal dialog
-     * @param {object} p - options
-     * @returns {string} new dialog key
-     */
-    addModal (p) {
-      p.type = MODAL
-      const config = this.buildConfig(p)
-      return this.buildDialog(config)
-    },
-    /**
-     * Open a Toast dialog (corner dialog)
-     *
-     * @param {object} p - options
-     *
-     * p.position option accept items:
-     *
-     * 'topLeft'
-     * 'topCenter'
-     * 'topRight'
-     * 'bottomLeft'
-     * 'bottomCenter'
-     * 'bottomRight'
-     * @returns {string} new dialog key
-     */
-    addToast (p) {
-      p.type = TOAST
-      const config = this.buildConfig(p)
-      config.message = textTruncate(config.message, 56)
-      config.width = 300
-      config.height = 80
-      config.iconClassName = toastConstants.iconClass[config.messageType]
-      config.title = getTitle(config.messageType, config.language)
-      config.contentClass = toastTheme(config.messageType)
-
-      return this.buildDialog(config)
     },
     /**
      * Close dialog, the last one or specified key dialog (Modal, Alert, Mask, Toast)

@@ -8,24 +8,32 @@
       <span v-text="$store.state.user" />
     </div>
     <!-- <component :is="page"></component> -->
-    <div>
+    <div class="mb-3">
       <button
         type="button"
-        class="btn btn-secondary"
-        @click="callModal()"
+        class="btn btn-secondary me-3"
+        @click="instanceOpenModal()"
         id="btn-modal"
       >
-        Modal
+        Dialog instance open Modal
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        @click="functionOpenModal()"
+        id="btn-modal"
+      >
+        Modal function open Dialog
       </button>
     </div>
-    <h5 class="mt-3">
+    <h5 class="">
       Header bar
     </h5>
     <div>
       <button
         type="button"
         class="btn btn-outline-dark me-2"
-        @click="callModal(false)"
+        @click="instanceOpenModal(false)"
         id="btn-alert-info"
       >
         Close header bar
@@ -33,7 +41,7 @@
       <button
         type="button"
         class="btn btn-outline-info"
-        @click="callModal('Modal of v-dialogs')"
+        @click="instanceOpenModal('Modal of v-dialogs')"
         id="btn-alert-info"
       >
         Custom content
@@ -44,10 +52,11 @@
 
 <script>
 import profile from './Profile.vue'
+import { DialogModal } from '@/components/v-dialogs'
 
 export default {
   methods: {
-    callModal (title) {
+    instanceOpenModal (title) {
       const options = {
         width: 500,
         height: 620,
@@ -63,6 +72,9 @@ export default {
       }
       if (typeof title !== 'undefined') options.title = title
       this.$dlg.modal(profile, options)
+    },
+    functionOpenModal () {
+      DialogModal(profile)
     }
   }
 }
