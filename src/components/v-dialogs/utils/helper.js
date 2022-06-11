@@ -1,16 +1,28 @@
 import languages from '../language'
 import {
-  toastConstants,
   ALERT_HEIGHT,
   ALERT_HEIGHT_LARGE,
   ALERT_HEIGHT_NO_HEADER,
   ALERT_WIDTH,
   ALERT_WIDTH_LARGE,
   ALERT_MAX_CONTENT_LENGTH,
+  ALERT_ICON_INFO,
+  ALERT_ICON_WARNING,
+  ALERT_ICON_SUCCESS,
+  ALERT_ICON_ERROR,
+  ALERT_ICON_CONFIRM,
+  MESSAGE_TYPE_INFO,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  MESSAGE_TYPE_CONFIRM
+  MESSAGE_TYPE_CONFIRM,
+  TOAST_CLASS_WARNING,
+  TOAST_CLASS_ERROR,
+  TOAST_CLASS_SUCCESS,
+  TOAST_ICON_INFO,
+  TOAST_ICON_WARNING,
+  TOAST_ICON_ERROR,
+  TOAST_ICON_SUCCESS
 } from '../constants'
 
 /**
@@ -51,18 +63,47 @@ export function getAlertSize (option) {
 }
 
 /**
+ * Get alert icon class name
+ * @param {string} type - message type
+ * @returns {string} class name
+ */
+export function getAlertIcon (type) {
+  switch (type) {
+    case MESSAGE_TYPE_INFO: return ALERT_ICON_INFO
+    case MESSAGE_TYPE_WARNING: return ALERT_ICON_WARNING
+    case MESSAGE_TYPE_ERROR: return ALERT_ICON_ERROR
+    case MESSAGE_TYPE_SUCCESS: return ALERT_ICON_SUCCESS
+    case MESSAGE_TYPE_CONFIRM: return ALERT_ICON_CONFIRM
+    default: return ''
+  }
+}
+
+/**
  * Get toast theme class name
  *
  * @param {string} type - message type
  * @returns {string} class name
  */
-export function toastTheme (type) {
-  const { contentClass } = toastConstants
+export function getToastTheme (type) {
   switch (type) {
-    case MESSAGE_TYPE_WARNING:
-    case MESSAGE_TYPE_ERROR:
-    case MESSAGE_TYPE_SUCCESS:
-      return contentClass[type]
+    case MESSAGE_TYPE_WARNING: return TOAST_CLASS_WARNING
+    case MESSAGE_TYPE_ERROR: return TOAST_CLASS_ERROR
+    case MESSAGE_TYPE_SUCCESS: return TOAST_CLASS_SUCCESS
+    default: return ''
+  }
+}
+
+/**
+ * Get toast icon class name
+ * @param {string} type - message type
+ * @returns {string} class name
+ */
+export function getToastIcon (type) {
+  switch (type) {
+    case MESSAGE_TYPE_INFO: return TOAST_ICON_INFO
+    case MESSAGE_TYPE_WARNING: return TOAST_ICON_WARNING
+    case MESSAGE_TYPE_ERROR: return TOAST_ICON_ERROR
+    case MESSAGE_TYPE_SUCCESS: return TOAST_ICON_SUCCESS
     default: return ''
   }
 }

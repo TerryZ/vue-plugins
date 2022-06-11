@@ -10,10 +10,22 @@ export const ALERT_HEIGHT = 210
 export const ALERT_HEIGHT_NO_HEADER = 180
 export const ALERT_HEIGHT_LARGE = 400
 export const ALERT_MAX_CONTENT_LENGTH = 70
+export const ALERT_ICON_INFO = 'alertInfo'
+export const ALERT_ICON_WARNING = 'alertWarning'
+export const ALERT_ICON_SUCCESS = 'alertSuccess'
+export const ALERT_ICON_ERROR = 'alertError'
+export const ALERT_ICON_CONFIRM = 'alertConfirm'
 
 export const MASK_MAX_CONTENT_LENGTH = 65
 
 export const TOAST_MAX_CONTENT_LENGTH = 56
+export const TOAST_CLASS_WARNING = 'toast-warning'
+export const TOAST_CLASS_SUCCESS = 'toast-success'
+export const TOAST_CLASS_ERROR = 'toast-error'
+export const TOAST_ICON_INFO = 'dlg-icon-toast--info'
+export const TOAST_ICON_WARNING = 'dlg-icon-toast--warn'
+export const TOAST_ICON_SUCCESS = 'dlg-icon-toast--success'
+export const TOAST_ICON_ERROR = 'dlg-icon-toast--error'
 
 export const MODAL_WIDTH = 700
 export const MODAL_HEIGHT = 400
@@ -31,29 +43,6 @@ export const [
   DRAWER,
   MASK
 ] = ['modal', 'alert', 'toast', 'drawer', 'mask']
-
-export const toastConstants = {
-  contentClass: {
-    info: '',
-    warning: 'toast-warning',
-    success: 'toast-success',
-    error: 'toast-error'
-  },
-  iconClass: {
-    info: 'dlg-icon-toast--info',
-    warning: 'dlg-icon-toast--warn',
-    success: 'dlg-icon-toast--success',
-    error: 'dlg-icon-toast--error'
-  }
-}
-
-export const alertIconClass = {
-  info: 'alertInfo',
-  warning: 'alertWarning',
-  success: 'alertSuccess',
-  error: 'alertError',
-  confirm: 'alertConfirm'
-}
 
 const defaultOptionsCore = {
   language: CN,

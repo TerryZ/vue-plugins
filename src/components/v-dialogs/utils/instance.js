@@ -8,12 +8,10 @@ import {
   defaultModalOptions,
   defaultAlertOptions,
   defaultMaskOptions,
-  defaultToastOptions,
-  alertIconClass,
-  toastConstants
+  defaultToastOptions
 } from '../constants'
 import { argumentsParse } from './options'
-import { getTitle, getAlertSize, toastTheme } from './helper'
+import { getTitle, getAlertSize, getAlertIcon, getToastTheme, getToastIcon } from './helper'
 import { getLanguage } from '../language'
 
 /**
@@ -68,7 +66,7 @@ export function DialogAlert () {
     option.title = getTitle(messageType, option.language)
   }
   if (icon) {
-    option.iconClassName = alertIconClass[messageType]
+    option.iconClassName = getAlertIcon(messageType)
   }
   const { width, height } = getAlertSize(option)
   option.width = width
@@ -97,10 +95,10 @@ export function DialogToast () {
   option.width = 300
   option.height = 80
   if (icon) {
-    option.iconClassName = toastConstants.iconClass[messageType]
+    option.iconClassName = getToastIcon(messageType)
   }
   option.title = getTitle(messageType, option.language)
-  option.contentClass = toastTheme(messageType)
+  option.contentClass = getToastTheme(messageType)
 
   return getInstance().addDialog(option)
 }
