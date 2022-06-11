@@ -18,6 +18,12 @@ export const TOAST_MAX_CONTENT_LENGTH = 56
 export const MODAL_WIDTH = 700
 export const MODAL_HEIGHT = 400
 
+export const MESSAGE_TYPE_INFO = 'info'
+export const MESSAGE_TYPE_WARNING = 'warning'
+export const MESSAGE_TYPE_ERROR = 'error'
+export const MESSAGE_TYPE_SUCCESS = 'success'
+export const MESSAGE_TYPE_CONFIRM = 'confirm'
+
 export const [
   MODAL,
   ALERT,
@@ -25,21 +31,6 @@ export const [
   DRAWER,
   MASK
 ] = ['modal', 'alert', 'toast', 'drawer', 'mask']
-
-export const types = {
-  MODAL: 'modal',
-  ALERT: 'alert',
-  MASK: 'mask',
-  TOAST: 'toast'
-}
-
-export const messageTypes = {
-  info: 'info',
-  success: 'success',
-  warning: 'warning',
-  error: 'error',
-  confirm: 'confirm'
-}
 
 export const toastConstants = {
   contentClass: {
@@ -84,7 +75,7 @@ export const defaultModalOptions = {
 
 export const defaultAlertOptions = {
   ...defaultOptionsCore,
-  messageType: messageTypes.info,
+  messageType: MESSAGE_TYPE_INFO,
   icon: true,
   shaking: true,
   closeTime: false,
@@ -99,7 +90,7 @@ export const defaultMaskOptions = {
 
 export const defaultToastOptions = {
   ...defaultOptionsCore,
-  messageType: messageTypes.info,
+  messageType: MESSAGE_TYPE_INFO,
   icon: true,
   closeButton: true,
   closeTime: false,

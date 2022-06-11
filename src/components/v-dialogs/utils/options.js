@@ -1,6 +1,4 @@
-import { types } from '../constants'
-
-const { MODAL, ALERT, MASK, TOAST } = types
+import { MODAL, ALERT, MASK, TOAST } from '../constants'
 
 /**
  * Arguments identification and parse to dialog option

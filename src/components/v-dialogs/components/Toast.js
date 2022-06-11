@@ -1,4 +1,4 @@
-import { messageTypes, TOAST_MAX_CONTENT_LENGTH } from '../constants'
+import { TOAST_MAX_CONTENT_LENGTH, MESSAGE_TYPE_INFO } from '../constants'
 import { textTruncate } from '../utils/helper'
 import mixins from '../mixins'
 
@@ -14,7 +14,7 @@ export default {
      * - 'error'
      * - 'success'
      */
-    messageType: { type: String, default: messageTypes.info },
+    messageType: { type: String, default: MESSAGE_TYPE_INFO },
     icon: { type: Boolean, default: true },
     iconClassName: String,
     /** Dialog corner position type */
@@ -34,9 +34,7 @@ export default {
         attrs: { type: 'button' },
         class: 'v-dialog-toast__close',
         on: {
-          click: () => {
-            this.closeDialog(false)
-          }
+          click: () => { this.closeDialog(false) }
         }
       }
       child.push(h('button', buttonOption, '×'))

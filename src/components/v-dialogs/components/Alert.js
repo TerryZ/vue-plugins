@@ -1,11 +1,15 @@
-import { messageTypes } from '../constants'
+import {
+  MESSAGE_TYPE_INFO,
+  MESSAGE_TYPE_WARNING,
+  MESSAGE_TYPE_ERROR,
+  MESSAGE_TYPE_SUCCESS,
+  MESSAGE_TYPE_CONFIRM
+} from '../constants'
 import { getLanguage } from '../language'
 import { calculateDialogTop } from '../utils/helper'
 
 import mixins from '../mixins'
 import render from '../mixins/render'
-
-const { info, warning, error, success, confirm } = messageTypes
 
 export default {
   name: 'DialogAlert',
@@ -20,20 +24,17 @@ export default {
      * -'success'
      * -'confirm'
      */
-    messageType: { type: String, default: info },
+    messageType: { type: String, default: MESSAGE_TYPE_INFO },
     icon: { type: Boolean, default: true },
     iconClassName: { type: String, default: '' }
   },
   computed: {
     shadow () {
       const { messageType } = this
-      switch (messageType) {
-        case warning:
-        case error:
-        case success:
-          return `v-dialog__shadow--${messageType.toLowerCase()}`
-        default: return ''
+      if (messageType === MESSAGE_TYPE_WARNING || messageType === MESSAGE_TYPE_ERROR || messageType === MESSAGE_TYPE_SUCCESS) {
+        return `v-dialog__shadow--${messageType.toLowerCase()}`
       }
+      return ''
     },
     classes () {
       return {
@@ -118,7 +119,7 @@ export default {
       }
       buttons.push(h('button', okButtonOption, i18n.btnOk))
       // Cancel button
-      if (this.messageType === confirm) {
+      if (this.messageType === MESSAGE_TYPE_CONFIRM) {
         const cancelButtonOption = {
           attrs: {
             type: 'button'

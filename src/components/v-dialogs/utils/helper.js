@@ -1,16 +1,17 @@
 import languages from '../language'
 import {
-  messageTypes,
   toastConstants,
   ALERT_HEIGHT,
   ALERT_HEIGHT_LARGE,
   ALERT_HEIGHT_NO_HEADER,
   ALERT_WIDTH,
   ALERT_WIDTH_LARGE,
-  ALERT_MAX_CONTENT_LENGTH
+  ALERT_MAX_CONTENT_LENGTH,
+  MESSAGE_TYPE_WARNING,
+  MESSAGE_TYPE_ERROR,
+  MESSAGE_TYPE_SUCCESS,
+  MESSAGE_TYPE_CONFIRM
 } from '../constants'
-
-const { warning, error, success, confirm } = messageTypes
 
 /**
  * Get message type text in i18n resources
@@ -21,13 +22,13 @@ const { warning, error, success, confirm } = messageTypes
  */
 export function getTitle (type, language) {
   if (!type || !language) return ''
-  const lang = languages[language]
+  const i18n = languages[language]
   switch (type) {
-    case warning: return lang.titleWarning
-    case error: return lang.titleError
-    case success: return lang.titleSuccess
-    case confirm: return lang.titleConfirm
-    default: return lang.titleInfo
+    case MESSAGE_TYPE_WARNING: return i18n.titleWarning
+    case MESSAGE_TYPE_ERROR: return i18n.titleError
+    case MESSAGE_TYPE_SUCCESS: return i18n.titleSuccess
+    case MESSAGE_TYPE_CONFIRM: return i18n.titleConfirm
+    default: return i18n.titleInfo
   }
 }
 
@@ -58,9 +59,9 @@ export function getAlertSize (option) {
 export function toastTheme (type) {
   const { contentClass } = toastConstants
   switch (type) {
-    case warning:
-    case error:
-    case success:
+    case MESSAGE_TYPE_WARNING:
+    case MESSAGE_TYPE_ERROR:
+    case MESSAGE_TYPE_SUCCESS:
       return contentClass[type]
     default: return ''
   }
