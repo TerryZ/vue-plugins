@@ -132,3 +132,17 @@ export function calculateDialogTop (height) {
 export function isDocumentBodyOverflowing () {
   return document.body.scrollHeight > window.innerHeight
 }
+
+export function hideDocumentBodyOverflow () {
+  if (!isDocumentBodyOverflowing()) return
+  if (document.body.style.overflowY === 'hidden') return
+  const documentWidth = document.documentElement.clientWidth
+  const scrollBarWidth = window.innerWidth - documentWidth
+  document.body.style.paddingRight = `${scrollBarWidth}px`
+  document.body.style.overflowY = 'hidden'
+}
+
+export function restoreDocumentBodyOverflow () {
+  document.body.style.removeProperty('overflow-y')
+  document.body.style.removeProperty('padding-right')
+}

@@ -1,6 +1,10 @@
 import mixins from '../mixins'
 import render from '../mixins/render'
-import { calculateDialogTop } from '../utils/helper'
+import {
+  calculateDialogTop,
+  hideDocumentBodyOverflow,
+  restoreDocumentBodyOverflow
+} from '../utils/helper'
 
 export default {
   name: 'DialogModal',
@@ -12,21 +16,10 @@ export default {
      * you need use props to receive this params in component
      */
     params: Object,
-    /**
-     * Full screen dialog
-     */
-    fullWidth: {
-      type: Boolean,
-      default: false
-    },
-    maxButton: {
-      type: Boolean,
-      default: true
-    },
-    closeButton: {
-      type: Boolean,
-      default: true
-    }
+    /** Full screen dialog */
+    fullWidth: { type: Boolean, default: false },
+    maxButton: { type: Boolean, default: true },
+    closeButton: { type: Boolean, default: true }
   },
   data () {
     return {
@@ -48,27 +41,27 @@ export default {
     }
   },
   render (h) {
-    const child = []
+    const contents = []
     // dialog header
     if (this.titleBar !== false) {
       const buttons = []
       if (this.closeButton) {
-        buttons.push(h('button', {
+        const closeButtonOption = {
           class: 'v-dialog-btn__close',
           attrs: {
             type: 'button'
           },
           on: {
-            click: () => {
-              this.closeDialog(true)
-            }
+            click: this.closeButtonHandle
           }
-        }, [
-          h('i', { class: 'dlg-icon-font dlg-icon-close' })
-        ]))
+        }
+        const closeButtonIcon = h('i', {
+          class: 'dlg-icon-font dlg-icon-close'
+        })
+        buttons.push(h('button', closeButtonOption, [closeButtonIcon]))
       }
       if (this.maxButton) {
-        buttons.push(h('button', {
+        const maxButtonOption = {
           class: 'v-dialog-btn__maximize',
           attrs: {
             type: 'button'
@@ -76,13 +69,13 @@ export default {
           on: {
             click: this.max
           }
-        }, [
-          h('i', {
-            class: ['dlg-icon-font', this.maxClass]
-          })
-        ]))
+        }
+        const maxButtonIcon = h('i', {
+          class: ['dlg-icon-font', this.maxClass]
+        })
+        buttons.push(h('button', maxButtonOption, [maxButtonIcon]))
       }
-      child.push(h('div', {
+      contents.push(h('div', {
         class: 'v-dialog-header',
         ref: 'header'
       }, [
@@ -90,21 +83,21 @@ export default {
         h('h3', this.titleBar)
       ]))
     }
-    // dialog body
-    child.push(h('div', {
+    // Dynamic component
+    const component = h(this.component, {
+      props: this.params,
+      on: {
+        close: this.closeModal
+      }
+    })
+    const dialogOption = {
       class: 'v-dialog-body',
       style: {
         height: this.bodyHeight + 'px'
       }
-    }, [
-      // Dynamic component
-      h(this.component, {
-        props: this.params,
-        on: {
-          close: this.modalClose
-        }
-      })
-    ]))
+    }
+    // dialog body
+    contents.push(h('div', dialogOption, [component]))
 
     const dialog = h('div', {
       class: {
@@ -116,7 +109,7 @@ export default {
       this.generateDialogContent({
         className: 'v-dialog-content',
         transitionName: 'v-dialog--smooth',
-        child: child
+        child: contents
       })
     ])
 
@@ -126,15 +119,13 @@ export default {
     ])
   },
   methods: {
-    /**
-     * dialog max size
-     */
+    // Maximize the dialog
     max () {
       if (!this.animate) {
         this.animate = true
       }
       this.maximize = !this.maximize
-      this.modalAdjust()
+      this.setBodyHeight()
     },
     modalAdjust () {
       if (this.maximize) {
@@ -143,21 +134,28 @@ export default {
       }
       this.dialogTop = calculateDialogTop(this.height)
     },
-    modalClose (data) {
+    // Close button in header
+    closeButtonHandle () {
+      restoreDocumentBodyOverflow()
+      this.closeDialog(true)
+    },
+    closeModal (data) {
+      restoreDocumentBodyOverflow()
       this.closeDialog(false, data)
+    },
+    setBodyHeight () {
+      const { titleBar, maximize, height } = this
+      const headerHeight = titleBar ? this.$refs.header.offsetHeight : 0
+      const dialogHeight = maximize ? window.innerHeight : height
+
+      this.bodyHeight = dialogHeight - headerHeight
+      this.$nextTick(() => {
+        this.modalAdjust()
+      })
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      if (this.titleBar) {
-        // this.$refs.header.getBoundingClientRect().height
-        const headerHeight = this.$refs.header.offsetHeight
-        this.bodyHeight = this.height - headerHeight
-      } else {
-        this.bodyHeight = this.height
-      }
-
-      this.modalAdjust()
-    })
+    this.setBodyHeight()
+    hideDocumentBodyOverflow()
   }
 }
