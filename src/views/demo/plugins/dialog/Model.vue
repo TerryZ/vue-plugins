@@ -20,7 +20,7 @@
       <button
         type="button"
         class="btn btn-outline-secondary"
-        @click="functionOpenModal()"
+        @click="functionalOpenModal()"
         id="btn-modal"
       >
         Modal function open Dialog
@@ -73,7 +73,7 @@ export default {
       if (typeof title !== 'undefined') options.title = title
       this.$dlg.modal(profile, options)
     },
-    functionOpenModal () {
+    functionalOpenModal () {
       DialogModal(profile)
     }
   }

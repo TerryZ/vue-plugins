@@ -5,6 +5,7 @@ import {
   hideDocumentBodyOverflow,
   restoreDocumentBodyOverflow
 } from '../utils/helper'
+import { DIALOG_HEADER_CLASS } from '../constants'
 
 export default {
   name: 'DialogModal',
@@ -42,8 +43,34 @@ export default {
   },
   render (h) {
     const contents = []
-    // dialog header
-    if (this.titleBar !== false) {
+
+    contents.push(this.generateHeader())
+    contents.push(this.generateBody())
+
+    const dialog = h('div', {
+      class: {
+        'v-dialog-dialog': true,
+        'v-dialog-default-animated': this.animate
+      },
+      style: this.dialogStyles
+    }, [
+      this.generateDialogContent({
+        className: 'v-dialog-content',
+        transitionName: 'v-dialog--smooth',
+        child: contents
+      })
+    ])
+
+    return h('div', [
+      this.generateDialogScreen(dialog),
+      this.generateBackdrop()
+    ])
+  },
+  methods: {
+    generateHeader () {
+      if (this.titleBar === false) return
+
+      const h = this.$createElement
       const buttons = []
       if (this.closeButton) {
         const closeButtonOption = {
@@ -75,50 +102,28 @@ export default {
         })
         buttons.push(h('button', maxButtonOption, [maxButtonIcon]))
       }
-      contents.push(h('div', {
-        class: 'v-dialog-header',
-        ref: 'header'
-      }, [
+      return h('div', { class: DIALOG_HEADER_CLASS }, [
         ...buttons,
         h('h3', this.titleBar)
-      ]))
-    }
-    // Dynamic component
-    const component = h(this.component, {
-      props: this.params,
-      on: {
-        close: this.closeModal
-      }
-    })
-    const dialogOption = {
-      class: 'v-dialog-body',
-      style: {
-        height: this.bodyHeight + 'px'
-      }
-    }
-    // dialog body
-    contents.push(h('div', dialogOption, [component]))
-
-    const dialog = h('div', {
-      class: {
-        'v-dialog-dialog': true,
-        'v-dialog-default-animated': this.animate
-      },
-      style: this.dialogStyles
-    }, [
-      this.generateDialogContent({
-        className: 'v-dialog-content',
-        transitionName: 'v-dialog--smooth',
-        child: contents
+      ])
+    },
+    generateBody () {
+      const h = this.$createElement
+      // Dynamic component
+      const component = h(this.component, {
+        props: this.params,
+        on: {
+          close: this.closeModal
+        }
       })
-    ])
-
-    return h('div', [
-      this.generateDialogScreen(dialog),
-      this.generateBackdrop()
-    ])
-  },
-  methods: {
+      const dialogOption = {
+        class: 'v-dialog-body',
+        style: {
+          height: this.bodyHeight + 'px'
+        }
+      }
+      return h('div', dialogOption, [component])
+    },
     // Maximize the dialog
     max () {
       if (!this.animate) {
@@ -145,7 +150,8 @@ export default {
     },
     setBodyHeight () {
       const { titleBar, maximize, height } = this
-      const headerHeight = titleBar ? this.$refs.header.offsetHeight : 0
+      const header = this.$el.querySelector(`.${DIALOG_HEADER_CLASS}`)
+      const headerHeight = titleBar ? header.offsetHeight : 0
       const dialogHeight = maximize ? window.innerHeight : height
 
       this.bodyHeight = dialogHeight - headerHeight

@@ -3,7 +3,8 @@ import {
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
   MESSAGE_TYPE_SUCCESS,
-  MESSAGE_TYPE_CONFIRM
+  MESSAGE_TYPE_CONFIRM,
+  DIALOG_HEADER_CLASS
 } from '../constants'
 import { getLanguage } from '../language'
 import { calculateDialogTop } from '../utils/helper'
@@ -74,11 +75,8 @@ export default {
       if (titleBar === false) return
 
       const h = this.$createElement
-      const titleOption = {
-        class: 'v-dialog-header',
-        ref: 'header'
-      }
-      return h('div', titleOption, [h('h3', titleBar)])
+      const headerText = h('h3', titleBar)
+      return h('div', { class: DIALOG_HEADER_CLASS }, [headerText])
     },
     generateBody () {
       const h = this.$createElement
@@ -138,13 +136,9 @@ export default {
   mounted () {
     this.$nextTick(() => {
       const { height } = this
-      if (this.titleBar) {
-        // this.$refs.header.getBoundingClientRect().height
-        const headerHeight = this.$refs.header.offsetHeight
-        this.bodyHeight = height - headerHeight
-      } else {
-        this.bodyHeight = height
-      }
+      const header = this.$el.querySelector(`.${DIALOG_HEADER_CLASS}`)
+      const headerHeight = this.titleBar ? header.offsetHeight : 0
+      this.bodyHeight = height - headerHeight
 
       this.dialogTop = calculateDialogTop(height)
       this.$refs.btnOk.focus()

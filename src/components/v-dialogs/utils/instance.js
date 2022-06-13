@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Container from '../Container'
+
+import { getLanguage } from '../language'
+import { argumentsParse } from './options'
 import {
   MODAL,
   ALERT,
@@ -10,9 +13,13 @@ import {
   defaultMaskOptions,
   defaultToastOptions
 } from '../constants'
-import { argumentsParse } from './options'
-import { getTitle, getAlertSize, getAlertIcon, getToastTheme, getToastIcon } from './helper'
-import { getLanguage } from '../language'
+import {
+  getTitle,
+  getAlertSize,
+  getAlertIcon,
+  getToastTheme,
+  getToastIcon
+} from './helper'
 
 /**
  * Get v-dialogs container instance, if not exist, create a new one

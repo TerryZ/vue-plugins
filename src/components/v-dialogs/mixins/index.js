@@ -92,6 +92,7 @@ export default {
      * @param {object} data return data when dialog close(only for modal)
      */
     closeDialog (trigger, data) {
+      // TODO: restore overflow before close dialog
       this.$emit('close', this.dialogKey, trigger, data)
     },
     calcLayerLevel () {
@@ -108,7 +109,7 @@ export default {
       const time = closeTime * 1000
       setTimeout(() => { this.closeDialog(false) }, time)
     },
-    resizeThrottler () {
+    resizeHandler () {
       // ignore resize events as long as an actualResizeHandler execution is in the queue
       if (this.resizeTimeout) return
 
@@ -127,11 +128,11 @@ export default {
 
     if (this.type === 'toast') return
 
-    window.addEventListener('resize', this.resizeThrottler, false)
+    window.addEventListener('resize', this.resizeHandler, false)
   },
   destroyed () {
     if (this.type === 'toast') return
 
-    window.removeEventListener('resize', this.resizeThrottler, false)
+    window.removeEventListener('resize', this.resizeHandler, false)
   }
 }

@@ -28,57 +28,16 @@ export default {
   },
   render (h) {
     const child = []
-    // Close button
-    if (this.closeButton) {
-      const buttonOption = {
-        attrs: { type: 'button' },
-        class: 'v-dialog-toast__close',
-        on: {
-          click: () => { this.closeDialog(false) }
-        }
-      }
-      child.push(h('button', buttonOption, '×'))
-    }
-    // Type icon
-    if (this.icon) {
-      const icon = h('i', { class: ['dlg-icon-font', this.iconClassName] })
-      child.push(h('div', { class: 'v-dialog-toast__icon' }, [icon]))
-    }
+    child.push(this.generateCloseButton())
+    child.push(this.generateIcon())
+    child.push(this.generateContent())
 
-    const contentOption = {
-      domProps: {
-        innerHTML: textTruncate(this.message, TOAST_MAX_CONTENT_LENGTH)
-      }
-    }
-    // Title and content
-    child.push(h('div', { class: 'v-dialog-toast__content' }, [
-      h('h3', this.titleBar),
-      h('p', contentOption)
-    ]))
-
-    const bodyOption = {
-      class: 'v-dialog-body',
-      style: {
-        height: this.bodyHeight + 'px'
-      }
-    }
-    const bodyClasses = ['v-dialog-toast__container', this.contentClass]
+    const classes = ['v-dialog', 'v-dialog-toast', this.contentClass, this.position]
     if (!this.icon) {
-      bodyClasses.push('no-icon')
+      classes.push('no-icon')
     }
-    const body = h('div', bodyOption, [
-      h('div', { class: bodyClasses }, child)
-    ])
-
-    const dialog = h('div', {
-      class: 'v-dialog-dialog',
-      style: this.dialogStyles
-    }, [
-      h('div', { class: 'v-dialog-content' }, [body])
-    ])
-
     const containerOption = {
-      class: ['v-dialog', 'v-dialog-toast', this.position],
+      class: classes,
       style: {
         ...this.dialogSize,
         'z-index': this.dialogZIndex
@@ -94,8 +53,42 @@ export default {
         appear: true
       }
     }, [
-      h('div', containerOption, [dialog])
+      h('div', containerOption, child)
     ])
+  },
+  methods: {
+    generateCloseButton () {
+      if (!this.closeButton) return
+
+      const buttonOption = {
+        attrs: { type: 'button' },
+        class: 'v-dialog-toast__close',
+        on: {
+          click: () => { this.closeDialog(false) }
+        }
+      }
+      return this.$createElement('button', buttonOption, '×')
+    },
+    generateIcon () {
+      if (!this.icon) return
+
+      const h = this.$createElement
+      const icon = h('i', { class: ['dlg-icon-font', this.iconClassName] })
+      return h('div', { class: 'v-dialog-toast__icon' }, [icon])
+    },
+    generateContent () {
+      const contentOption = {
+        domProps: {
+          innerHTML: textTruncate(this.message, TOAST_MAX_CONTENT_LENGTH)
+        }
+      }
+      const h = this.$createElement
+      // Title and content
+      return h('div', { class: 'v-dialog-toast__content' }, [
+        h('h3', this.titleBar),
+        h('div', contentOption)
+      ])
+    }
   },
   mounted () {
     this.dialogSize = {
