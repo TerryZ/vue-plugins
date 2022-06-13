@@ -1,10 +1,7 @@
 import mixins from '../mixins'
 import render from '../mixins/render'
-import {
-  calculateDialogTop,
-  hideDocumentBodyOverflow,
-  restoreDocumentBodyOverflow
-} from '../utils/helper'
+import { calculateDialogTop } from '../utils/helper'
+import { hideDocumentBodyOverflow } from '../utils/instance'
 import { DIALOG_HEADER_CLASS } from '../constants'
 
 export default {
@@ -79,7 +76,7 @@ export default {
             type: 'button'
           },
           on: {
-            click: this.closeButtonHandle
+            click: () => { this.closeDialog(true) }
           }
         }
         const closeButtonIcon = h('i', {
@@ -139,13 +136,7 @@ export default {
       }
       this.dialogTop = calculateDialogTop(this.height)
     },
-    // Close button in header
-    closeButtonHandle () {
-      restoreDocumentBodyOverflow()
-      this.closeDialog(true)
-    },
     closeModal (data) {
-      restoreDocumentBodyOverflow()
       this.closeDialog(false, data)
     },
     setBodyHeight () {

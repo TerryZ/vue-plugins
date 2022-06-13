@@ -1,16 +1,15 @@
 $gap: 15px
 
 div.v-dialog-toast
-  display: flex
   padding: 0 !important
   overflow: hidden
   box-shadow: 0 1px 8px rgba(0,0,0,0.5)
   border-radius: 5px
-  border-width: 1px
+  border-width: 2px
   border-style: solid
   border-color: #999
   color: #333
-  position: fixed
+  background-color: white
   &.bottomLeft
     bottom: $gap
     left: $gap
@@ -44,10 +43,10 @@ div.v-dialog-toast
     background-color: #F5CF87
   &.toast-error
     background-color: #FF5252
-    border-color: #FF5252
+    border-color: #bf2a2a
   &.toast-success
     background-color: #2CBE4E
-    border-color: #2CBE4E
+    border-color: #0a8427
   &.toast-error,
   &.toast-success,
   &.toast-error .v-dialog-toast__close,
@@ -58,6 +57,8 @@ div.v-dialog-toast
   &.no-icon
     .v-dialog-toast__content
       padding-left: 15px
+  .v-dialog-toast__container
+    display: flex
   .v-dialog-toast__close
     position: absolute
     right: 5px

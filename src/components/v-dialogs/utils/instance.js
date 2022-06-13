@@ -8,6 +8,7 @@ import {
   ALERT,
   MASK,
   TOAST,
+  DRAWER,
   defaultModalOptions,
   defaultAlertOptions,
   defaultMaskOptions,
@@ -18,7 +19,8 @@ import {
   getAlertSize,
   getAlertIcon,
   getToastTheme,
-  getToastIcon
+  getToastIcon,
+  isDocumentBodyOverflowing
 } from './helper'
 
 /**
@@ -159,4 +161,32 @@ export const instanceApi = {
   closeAll (callback) {
     DialogHelper.closeAll(callback)
   }
+}
+
+/**
+ * Get the number of container type dialog(Modal, Drawer)
+ * @returns {number}
+ */
+export function getContainerDialogCount () {
+  return getInstance()
+    .dialogs
+    .filter(dialog => [MODAL, DRAWER].includes(dialog.type))
+    .length
+}
+
+export function hideDocumentBodyOverflow () {
+  if (!isDocumentBodyOverflowing()) return
+  if (document.body.style.overflowY === 'hidden') return
+
+  const documentWidth = document.documentElement.clientWidth
+  const scrollBarWidth = window.innerWidth - documentWidth
+  document.body.style.paddingRight = `${scrollBarWidth}px`
+  document.body.style.overflowY = 'hidden'
+}
+
+export function restoreDocumentBodyOverflow () {
+  if (getContainerDialogCount()) return
+
+  document.body.style.removeProperty('overflow-y')
+  document.body.style.removeProperty('padding-right')
 }

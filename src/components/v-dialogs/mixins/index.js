@@ -92,7 +92,6 @@ export default {
      * @param {object} data return data when dialog close(only for modal)
      */
     closeDialog (trigger, data) {
-      // TODO: restore overflow before close dialog
       this.$emit('close', this.dialogKey, trigger, data)
     },
     calcLayerLevel () {

@@ -2,6 +2,7 @@ import './styles/dialog.sass'
 
 import { DIALOG_KEY_PREFIX } from './constants'
 import { generateDialogOption } from './utils/options'
+import { restoreDocumentBodyOverflow } from './utils/instance'
 
 import DialogModal from './components/Modal'
 import DialogAlert from './components/Alert'
@@ -90,6 +91,7 @@ export default {
               callback(data)
             }
           }
+          restoreDocumentBodyOverflow()
         })
       }, 200)
     },
@@ -98,7 +100,12 @@ export default {
      * @param {function} callback - the callback fired when all of dialogs closed
      */
     closeAll (callback) {
-      if (this.dialogs.length) this.dialogs = []
+      if (this.dialogs.length) {
+        this.dialogs = []
+      }
+
+      restoreDocumentBodyOverflow()
+
       this.$nextTick(() => {
         if (callback && typeof callback === 'function') callback()
       })

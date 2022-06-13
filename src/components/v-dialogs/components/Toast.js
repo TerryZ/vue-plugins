@@ -53,7 +53,9 @@ export default {
         appear: true
       }
     }, [
-      h('div', containerOption, child)
+      h('div', containerOption, [
+        h('div', { class: 'v-dialog-toast__container' }, child)
+      ])
     ])
   },
   methods: {
