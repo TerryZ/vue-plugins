@@ -10,6 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules"]
 }
