@@ -72,7 +72,7 @@ export function generateDialogOption (option, index, close) {
         ...options.props,
         component: option.component,
         params: option.params,
-        fullWidth: option.fullWidth,
+        fullscreen: option.fullscreen,
         closeButton: option.closeButton,
         maxButton: option.maxButton
       }

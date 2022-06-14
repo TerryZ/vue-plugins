@@ -13,7 +13,6 @@
         type="button"
         class="btn btn-secondary me-3"
         @click="instanceOpenModal()"
-        id="btn-modal"
       >
         Dialog instance open Modal
       </button>
@@ -21,7 +20,6 @@
         type="button"
         class="btn btn-outline-secondary"
         @click="functionalOpenModal()"
-        id="btn-modal"
       >
         Modal function open Dialog
       </button>
@@ -34,7 +32,6 @@
         type="button"
         class="btn btn-outline-dark me-2"
         @click="instanceOpenModal(false)"
-        id="btn-alert-info"
       >
         Close header bar
       </button>
@@ -42,9 +39,20 @@
         type="button"
         class="btn btn-outline-info"
         @click="instanceOpenModal('Modal of v-dialogs')"
-        id="btn-alert-info"
       >
         Custom content
+      </button>
+    </div>
+    <h5 class="mt-3">
+      Modal size
+    </h5>
+    <div>
+      <button
+        type="button"
+        class="btn btn-primary me-2"
+        @click="maximizeModal"
+      >
+        Open a maximize dialog
       </button>
     </div>
   </section>
@@ -75,6 +83,20 @@ export default {
     },
     functionalOpenModal () {
       DialogModal(profile)
+    },
+    maximizeModal () {
+      const option = {
+        title: 'Maximize dialog',
+        backdrop: true,
+        backdropClose: true,
+        fullscreen: true,
+        params: { name: 'Terry Zeng' },
+        callback: data => {
+          // console.log(data);
+          this.$dlg.alert(`Received user name: ${data.name}`)
+        }
+      }
+      DialogModal(profile, option)
     }
   }
 }

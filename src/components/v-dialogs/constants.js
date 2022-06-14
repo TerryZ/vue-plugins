@@ -60,6 +60,7 @@ export const defaultModalOptions = {
   params: undefined,
   closeButton: true,
   maxButton: true,
+  fullscreen: false,
   callback: undefined
 }
 

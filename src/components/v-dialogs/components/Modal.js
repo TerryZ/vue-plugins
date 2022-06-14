@@ -14,8 +14,8 @@ export default {
      * you need use props to receive this params in component
      */
     params: Object,
-    /** Full screen dialog */
-    fullWidth: { type: Boolean, default: false },
+    /** Open maximized dialog */
+    fullscreen: { type: Boolean, default: false },
     maxButton: { type: Boolean, default: true },
     closeButton: { type: Boolean, default: true }
   },
@@ -91,7 +91,7 @@ export default {
             type: 'button'
           },
           on: {
-            click: this.max
+            click: this.maximizeModal
           }
         }
         const maxButtonIcon = h('i', {
@@ -122,7 +122,7 @@ export default {
       return h('div', dialogOption, [component])
     },
     // Maximize the dialog
-    max () {
+    maximizeModal () {
       if (!this.animate) {
         this.animate = true
       }
@@ -152,7 +152,14 @@ export default {
     }
   },
   mounted () {
-    this.setBodyHeight()
+    if (this.fullscreen) {
+      // do maximize after `show` data property set to true in `mixins/index.js`
+      this.$nextTick(() => {
+        this.maximizeModal()
+      })
+    } else {
+      this.setBodyHeight()
+    }
     hideDocumentBodyOverflow()
   }
 }
