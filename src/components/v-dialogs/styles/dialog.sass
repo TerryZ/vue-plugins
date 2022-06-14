@@ -4,15 +4,8 @@ $borderRadius: 2px
 @import 'animated.sass'
 
 div.v-dialogs-container
-  //width: 100%
-  //height: 100%
   width: 0
   height: 0
-  // position: fixed
-  /* left: 0
-   * top: 0 */
-  // z-index: 2000
-
 div.v-dialog
   position: fixed
   top: 0
@@ -46,13 +39,9 @@ div.v-dialog
     outline: 0
     position: relative
     background-color: white
-
     -webkit-box-shadow: 0 3rem 5rem rgba(0,0,0,0.5)
     -moz-box-shadow: 0 3rem 5rem rgba(0,0,0,0.5)
     box-shadow: 0 3rem 5rem rgba(0,0,0,0.5)
-
-    -webkit-border-radius: $borderRadius
-    -moz-border-radius: $borderRadius
     border-radius: $borderRadius
     border: 0
     overflow: hidden
@@ -99,7 +88,6 @@ div.v-dialog
     width: 100%
     padding: 0
     overflow: auto
-    -moz-box-sizing: border-box
     box-sizing: border-box
 
 div.v-dialog-overlay

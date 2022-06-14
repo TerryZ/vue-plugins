@@ -1,5 +1,5 @@
 import { CN } from '../language'
-import { ALERT, START_Z_INDEX } from '../constants'
+import { ALERT, TOAST, START_Z_INDEX } from '../constants'
 import { calculateDialogTop } from '../utils/helper'
 
 export default {
@@ -94,13 +94,13 @@ export default {
     closeDialog (trigger, data) {
       this.$emit('close', this.dialogKey, trigger, data)
     },
-    calcLayerLevel () {
+    calculateLayerLevel () {
       // setup dialog and backdrop z-index
       const step = 50
       this.dialogZIndex = START_Z_INDEX + (step * this.dialogIndex)
       this.backdropZIndex = this.dialogZIndex - 10
     },
-    // auto close dialog
+    // auto close dialog in specify times
     autoClose () {
       const { closeTime } = this
       if (!closeTime) return
@@ -120,17 +120,17 @@ export default {
     }
   },
   mounted () {
-    this.calcLayerLevel()
+    this.calculateLayerLevel()
     this.show = true
 
     this.autoClose()
 
-    if (this.type === 'toast') return
+    if (this.type === TOAST) return
 
     window.addEventListener('resize', this.resizeHandler, false)
   },
   destroyed () {
-    if (this.type === 'toast') return
+    if (this.type === TOAST) return
 
     window.removeEventListener('resize', this.resizeHandler, false)
   }

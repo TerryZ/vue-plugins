@@ -78,7 +78,9 @@ export default {
           this.$dlg.alert(`Received user name: ${data.name}`)
         }
       }
-      if (typeof title !== 'undefined') options.title = title
+      if (typeof title !== 'undefined') {
+        options.title = title
+      }
       this.$dlg.modal(profile, options)
     },
     functionalOpenModal () {
