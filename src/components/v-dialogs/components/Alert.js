@@ -71,11 +71,11 @@ export default {
   },
   methods: {
     generateHeader () {
-      const { titleBar } = this
-      if (titleBar === false) return
+      const { titleContent } = this
+      if (titleContent === false) return
 
       const h = this.$createElement
-      const headerText = h('h3', titleBar)
+      const headerText = h('h3', titleContent)
       return h('div', { class: DIALOG_HEADER_CLASS }, [headerText])
     },
     generateBody () {
@@ -137,7 +137,7 @@ export default {
     this.$nextTick(() => {
       const { height } = this
       const header = this.$el.querySelector(`.${DIALOG_HEADER_CLASS}`)
-      const headerHeight = this.titleBar ? header.offsetHeight : 0
+      const headerHeight = this.titleContent ? header.offsetHeight : 0
       this.bodyHeight = height - headerHeight
 
       this.dialogTop = calculateDialogTop(height)

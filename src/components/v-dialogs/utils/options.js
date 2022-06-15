@@ -51,7 +51,7 @@ export function generateDialogOption (option, index, close) {
       backdrop: option.backdrop,
       backdropClose: option.backdropClose,
       shaking: option.shaking,
-      titleBar: option.title,
+      titleContent: option.title,
       language: option.language
     },
     on: {

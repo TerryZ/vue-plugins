@@ -17,9 +17,9 @@ export default {
      * Dialog title bar text or title bar show control
      *
      * @example
-     * titleBar: false // close title bar
+     * titleContent: false // close title bar
      */
-    titleBar: { type: [String, Boolean], default: 'Dialog' },
+    titleContent: { type: [String, Boolean], default: 'Dialog' },
     contentClass: { type: String, default: '' },
     /** Dialog width */
     width: { type: Number, default: 700 },

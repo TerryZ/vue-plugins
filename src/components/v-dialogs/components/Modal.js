@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     generateHeader () {
-      if (this.titleBar === false) return
+      if (this.titleContent === false) return
 
       const h = this.$createElement
       const buttons = []
@@ -101,7 +101,7 @@ export default {
       }
       return h('div', { class: DIALOG_HEADER_CLASS }, [
         ...buttons,
-        h('h3', this.titleBar)
+        h('h3', this.titleContent)
       ])
     },
     generateBody () {
@@ -140,9 +140,9 @@ export default {
       this.closeDialog(false, data)
     },
     setBodyHeight () {
-      const { titleBar, maximize, height } = this
+      const { titleContent, maximize, height } = this
       const header = this.$el.querySelector(`.${DIALOG_HEADER_CLASS}`)
-      const headerHeight = titleBar ? header.offsetHeight : 0
+      const headerHeight = titleContent ? header.offsetHeight : 0
       const dialogHeight = maximize ? window.innerHeight : height
 
       this.bodyHeight = dialogHeight - headerHeight

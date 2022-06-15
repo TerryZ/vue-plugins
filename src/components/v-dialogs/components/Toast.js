@@ -87,7 +87,7 @@ export default {
       const h = this.$createElement
       // Title and content
       return h('div', { class: 'v-dialog-toast__content' }, [
-        h('h3', this.titleBar),
+        h('h3', this.titleContent),
         h('div', contentOption)
       ])
     }
