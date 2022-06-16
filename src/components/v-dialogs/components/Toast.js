@@ -1,3 +1,5 @@
+import '../styles/toast.sass'
+
 import { TOAST_MAX_CONTENT_LENGTH, MESSAGE_TYPE_INFO } from '../constants'
 import { textTruncate } from '../utils/helper'
 import mixins from '../mixins'

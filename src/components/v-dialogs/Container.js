@@ -1,3 +1,5 @@
+import './styles/icon.scss'
+import './styles/animated.sass'
 import './styles/dialog.sass'
 
 import { DIALOG_KEY_PREFIX } from './constants'

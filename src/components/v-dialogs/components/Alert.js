@@ -1,3 +1,5 @@
+import '../styles/alert.sass'
+
 import {
   MESSAGE_TYPE_INFO,
   MESSAGE_TYPE_WARNING,

@@ -1,3 +1,5 @@
+import '../styles/mask.sass'
+
 import mixins from '../mixins'
 import render from '../mixins/render'
 import { calculateDialogTop, textTruncate } from '../utils/helper'

@@ -1,3 +1,5 @@
+import '../styles/modal.sass'
+
 import mixins from '../mixins'
 import render from '../mixins/render'
 import { calculateDialogTop } from '../utils/helper'
