@@ -1,27 +1,14 @@
 import Vue from 'vue'
 import Container from '../Container'
 
-import { getLanguage } from '../language'
-import { argumentsParse } from './options'
 import {
-  MODAL,
-  ALERT,
-  MASK,
-  TOAST,
-  DRAWER,
-  defaultModalOptions,
-  defaultAlertOptions,
-  defaultMaskOptions,
-  defaultToastOptions
-} from '../constants'
-import {
-  getTitle,
-  getAlertSize,
-  getAlertIcon,
-  getToastTheme,
-  getToastIcon,
-  isDocumentBodyOverflowing
-} from './helper'
+  generateAlertOption,
+  generateModalOption,
+  generateToastOption,
+  generateMaskOption
+} from './options'
+import { MODAL, DRAWER } from '../constants'
+import { isDocumentBodyOverflowing } from './helper'
 
 /**
  * Get v-dialogs container instance, if not exist, create a new one
@@ -46,10 +33,7 @@ export function getInstance () {
  */
 export function DialogModal (component, params) {
   if (!component) return
-  const option = { ...defaultModalOptions, ...params }
-  option.type = MODAL
-  option.component = component
-  return getInstance().addDialog(option)
+  return getInstance().addDialog(generateModalOption(component, params))
 }
 
 /**
@@ -67,20 +51,7 @@ export function DialogModal (component, params) {
  * @returns {string} new dialog key
  */
 export function DialogAlert () {
-  const option = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
-  option.type = ALERT
-  const { messageType, icon } = option
-
-  if ('title' in option === false) {
-    option.title = getTitle(messageType, option.language)
-  }
-  if (icon) {
-    option.iconClassName = getAlertIcon(messageType)
-  }
-  const { width, height } = getAlertSize(option)
-  option.width = width
-  option.height = height
-  return getInstance().addDialog(option)
+  return getInstance().addDialog(generateAlertOption(...arguments))
 }
 
 /**
@@ -98,18 +69,7 @@ export function DialogAlert () {
  * - 'bottomRight'
  */
 export function DialogToast () {
-  const option = Object.assign({}, defaultToastOptions, argumentsParse(arguments))
-  const { messageType, icon } = option
-  option.type = TOAST
-  option.width = 300
-  option.height = 80
-  if (icon) {
-    option.iconClassName = getToastIcon(messageType)
-  }
-  option.title = getTitle(messageType, option.language)
-  option.contentClass = getToastTheme(messageType)
-
-  return getInstance().addDialog(option)
+  return getInstance().addDialog(generateToastOption(...arguments))
 }
 
 /**
@@ -118,15 +78,7 @@ export function DialogToast () {
  * @see DialogAlert
  */
 export function DialogMask () {
-  const option = Object.assign({}, defaultMaskOptions, argumentsParse(arguments))
-
-  option.type = MASK
-  option.message = option.message || getLanguage(option.language).maskText
-  option.width = 300
-  option.height = 80
-  option.backdrop = true
-
-  return getInstance().addDialog(option)
+  return getInstance().addDialog(generateMaskOption(...arguments))
 }
 
 export function DialogDrawer () {

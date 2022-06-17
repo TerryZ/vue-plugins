@@ -3,7 +3,7 @@ import './styles/animated.sass'
 import './styles/dialog.sass'
 
 import { DIALOG_KEY_PREFIX } from './constants'
-import { generateDialogOption } from './utils/options'
+import { generateDialogRenderOption } from './utils/options'
 import { restoreDocumentBodyOverflow } from './utils/instance'
 
 import DialogModal from './components/Modal'
@@ -14,7 +14,7 @@ import DialogMask from './components/Mask'
 let serialNumber = 0
 
 export default {
-  name: 'v-dialogs',
+  name: 'v-dialogs-container',
   components: {
     DialogModal,
     DialogAlert,
@@ -29,7 +29,7 @@ export default {
   render (h) {
     const { dialogs, closeDialog } = this
     const dialogList = dialogs.map((val, index) => {
-      const option = generateDialogOption(val, index, closeDialog)
+      const option = generateDialogRenderOption(val, index, closeDialog)
       return h(`dialog-${val.type}`, option)
     })
     return h('div', { class: 'v-dialogs-container' }, dialogList)
@@ -76,7 +76,10 @@ export default {
       if (!key) return
       const dlg = this.dialogs.find(val => val.dialogKey === key)
       if (!dlg) return
-      this.$refs[dlg.dialogKey].show = false
+
+      if (this.$refs[dlg.dialogKey]) {
+        this.$refs[dlg.dialogKey].show = false
+      }
       // waiting for dialog close animation finish
       window.setTimeout(() => {
         // remove current dialog from list

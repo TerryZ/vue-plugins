@@ -1,4 +1,21 @@
-import { MODAL, ALERT, MASK, TOAST } from '../constants'
+import { getLanguage } from '../language'
+import {
+  MODAL,
+  ALERT,
+  MASK,
+  TOAST,
+  defaultModalOptions,
+  defaultAlertOptions,
+  defaultMaskOptions,
+  defaultToastOptions
+} from '../constants'
+import {
+  getTitle,
+  getAlertSize,
+  getAlertIcon,
+  getToastTheme,
+  getToastIcon
+} from './helper'
 
 /**
  * Arguments identification and parse to dialog option
@@ -28,6 +45,59 @@ export function argumentsParse (args) {
   return params
 }
 
+export function generateAlertOption () {
+  const option = Object.assign({}, defaultAlertOptions, argumentsParse(arguments))
+  option.type = ALERT
+  const { messageType, icon } = option
+
+  if ('title' in option === false) {
+    option.title = getTitle(messageType, option.language)
+  }
+  if (icon) {
+    option.iconClassName = getAlertIcon(messageType)
+  }
+  const { width, height } = getAlertSize(option)
+  option.width = width
+  option.height = height
+  return option
+}
+
+export function generateModalOption (component, params) {
+  const option = { ...defaultModalOptions, ...params }
+  option.type = MODAL
+  option.component = component
+  return option
+}
+
+export function generateToastOption () {
+  const option = Object.assign({}, defaultToastOptions, argumentsParse(arguments))
+  const { messageType, icon } = option
+  option.type = TOAST
+  option.width = 300
+  option.height = 80
+  if (icon) {
+    option.iconClassName = getToastIcon(messageType)
+  }
+  option.title = getTitle(messageType, option.language)
+  option.contentClass = getToastTheme(messageType)
+  return option
+}
+
+export function generateMaskOption () {
+  const option = Object.assign({}, defaultMaskOptions, argumentsParse(arguments))
+
+  option.type = MASK
+  option.message = option.message || getLanguage(option.language).maskText
+  option.width = 300
+  option.height = 80
+  option.backdrop = true
+  return option
+}
+
+export function generateDrawerOption () {
+
+}
+
 /**
  * Merge user option and type default option
  * @param {object} option - dialog option
@@ -35,7 +105,7 @@ export function argumentsParse (args) {
  * @param {function} close - the function of close dialog
  * @returns {object} - merged dialog option
  */
-export function generateDialogOption (option, index, close) {
+export function generateDialogRenderOption (option, index, close) {
   const { type, dialogKey } = option
   const options = {
     ref: dialogKey,
