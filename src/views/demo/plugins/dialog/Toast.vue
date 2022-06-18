@@ -79,8 +79,9 @@
         </button>
       </div>
     </div>
+
     <h5 class="mt-3">
-      No icon
+      Icon
     </h5>
     <div>
       <button
@@ -89,7 +90,29 @@
         @click="callInstanceToast('info', false)"
         id="btn-toast-info"
       >
-        Info
+        No icon
+      </button>
+    </div>
+
+    <h5 class="mt-3">
+      Header
+    </h5>
+    <div>
+      <button
+        type="button"
+        class="btn btn-outline-secondary me-3"
+        @click="noHeader"
+        id="btn-toast-info"
+      >
+        No header
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        @click="largeHeader"
+        id="btn-toast-info"
+      >
+        large header text
       </button>
     </div>
   </section>
@@ -122,6 +145,17 @@ export default {
     },
     callToastFunction () {
       DialogToast()
+    },
+    noHeader () {
+      DialogToast('', {
+        messageType: 'warning',
+        title: false
+      })
+    },
+    largeHeader () {
+      DialogToast('', {
+        title: '这是一段用于演示的文本内容这是一段用于演示的文本内容'
+      })
     }
   }
 }

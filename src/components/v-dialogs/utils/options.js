@@ -78,7 +78,9 @@ export function generateToastOption () {
   if (icon) {
     option.iconClassName = getToastIcon(messageType)
   }
-  option.title = getTitle(messageType, option.language)
+  if ('title' in option === false) {
+    option.title = getTitle(messageType, option.language)
+  }
   option.contentClass = getToastTheme(messageType)
   return option
 }

@@ -1,6 +1,7 @@
 import '../styles/alert.sass'
 
 import {
+  TITLE_TEXT_MAX_LENGTH,
   MESSAGE_TYPE_INFO,
   MESSAGE_TYPE_WARNING,
   MESSAGE_TYPE_ERROR,
@@ -9,7 +10,7 @@ import {
   DIALOG_HEADER_CLASS
 } from '../constants'
 import { getLanguage } from '../language'
-import { calculateDialogTop } from '../utils/helper'
+import { calculateDialogTop, textTruncate } from '../utils/helper'
 
 import mixins from '../mixins'
 import render from '../mixins/render'
@@ -77,7 +78,8 @@ export default {
       if (titleContent === false) return
 
       const h = this.$createElement
-      const headerText = h('h3', titleContent)
+      const text = textTruncate(titleContent, TITLE_TEXT_MAX_LENGTH)
+      const headerText = h('h3', text)
       return h('div', { class: DIALOG_HEADER_CLASS }, [headerText])
     },
     generateBody () {

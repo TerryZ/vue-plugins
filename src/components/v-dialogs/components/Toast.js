@@ -1,6 +1,10 @@
 import '../styles/toast.sass'
 
-import { TOAST_MAX_CONTENT_LENGTH, MESSAGE_TYPE_INFO } from '../constants'
+import {
+  TITLE_TEXT_MAX_LENGTH,
+  TOAST_MAX_CONTENT_LENGTH,
+  MESSAGE_TYPE_INFO
+} from '../constants'
 import { textTruncate } from '../utils/helper'
 import mixins from '../mixins'
 
@@ -80,6 +84,13 @@ export default {
       const icon = h('i', { class: ['dlg-icon-font', this.iconClassName] })
       return h('div', { class: 'v-dialog-toast__icon' }, [icon])
     },
+    generateHeader () {
+      const { titleContent } = this
+      if (!titleContent) return
+
+      const text = textTruncate(titleContent, TITLE_TEXT_MAX_LENGTH)
+      return this.$createElement('h3', text)
+    },
     generateContent () {
       const contentOption = {
         domProps: {
@@ -89,7 +100,7 @@ export default {
       const h = this.$createElement
       // Title and content
       return h('div', { class: 'v-dialog-toast__content' }, [
-        h('h3', this.titleContent),
+        this.generateHeader(),
         h('div', contentOption)
       ])
     }
