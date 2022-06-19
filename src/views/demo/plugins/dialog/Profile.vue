@@ -44,7 +44,7 @@
         class="btn btn-primary me-3"
         @click="ok"
       >
-        <fa-icon icon="check" /> OK
+        OK
       </button>
     </p>
   </div>
@@ -84,7 +84,7 @@ export default {
     }
   },
   mounted () {
-    console.dir(this)
+    // console.dir(this)
   }
 }
 </script>
