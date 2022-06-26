@@ -84,7 +84,11 @@ export default {
       this.$dlg.modal(profile, options)
     },
     functionalOpenModal () {
-      DialogModal(profile)
+      DialogModal(profile, {
+        params: {
+          name: 'Terry Zeng'
+        }
+      })
     },
     maximizeModal () {
       const option = {

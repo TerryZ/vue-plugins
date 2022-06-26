@@ -1,13 +1,20 @@
 <template>
   <div class="p-3">
-    <p>
-      Name (received by params option):
+    <div>
+      <div>Name (received by params option):</div>
+      <div class="my-2">
+        UpperCased Name:
+        <span
+          class="bg-primary bg-opacity-50 text-white px-2 py-1 rounded-3"
+          v-text="upperCasedName"
+        />
+      </div>
       <input
         type="text"
         class="form-control"
-        v-model="name"
+        v-model="userName"
       >
-    </p>
+    </div>
     <p>
       Age:
       <input
@@ -51,15 +58,24 @@
 </template>
 
 <script>
-import cp from './Company'
+import mixins from './mixins'
+import Company from './Company'
+
 export default {
+  mixins: [mixins],
   props: {
     name: { type: String, default: '' }
   },
   data () {
     return {
+      userName: this.name,
       company: '',
       age: 20
+    }
+  },
+  computed: {
+    upperCasedName () {
+      return this.upperCase(this.userName)
     }
   },
   methods: {
@@ -72,7 +88,7 @@ export default {
     },
     chooseCompany () {
       console.log(this)
-      this.$dlg.modal(cp, {
+      this.$dlg.modal(Company, {
         width: 500,
         height: 500,
         title: 'Company list',

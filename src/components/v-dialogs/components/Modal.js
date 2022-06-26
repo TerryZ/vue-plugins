@@ -10,12 +10,13 @@ export default {
   name: 'DialogModal',
   mixins: [mixins, render],
   props: {
-    component: Object,
+    // component: [Object, Function],
+    component: { type: Object, default: undefined },
     /**
      * Send parameters to Component
      * you need use props to receive this params in component
      */
-    params: Object,
+    params: { type: Object, default: undefined },
     /** Open maximized dialog */
     fullscreen: { type: Boolean, default: false },
     maxButton: { type: Boolean, default: true },
