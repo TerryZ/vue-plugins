@@ -58,11 +58,11 @@
 </template>
 
 <script>
-import mixins from './mixins'
+// import mixins from './mixins'
 import Company from './Company'
 
 export default {
-  mixins: [mixins],
+  // mixins: [mixins],
   props: {
     name: { type: String, default: '' }
   },

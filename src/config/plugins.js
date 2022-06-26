@@ -17,12 +17,16 @@ import http from '@/utils/http/index'
 
 import * as hooks from './hooks'
 
+import mixins from '@/views/demo/plugins/dialog/mixins'
+
 // font-awesome 5.x
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+Vue.mixin(mixins)
 
 library.add(fas)
 library.add(fab)
